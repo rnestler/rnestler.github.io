@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Blog of rnestler</title><link href="http://rnestler.github.io/" rel="alternate"></link><link href="http://rnestler.github.io/feeds/2013.atom.xml" rel="self"></link><id>http://rnestler.github.io/</id><updated>2013-10-23T00:00:00+02:00</updated><entry><title>Creating this Blog</title><link href="http://rnestler.github.io/creating-this-blog.html" rel="alternate"></link><updated>2013-10-23T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2013-10-23:creating-this-blog.html</id><summary type="html">&lt;p&gt;Recently a friend of mine asked me how I configured my system so that &lt;a class="reference external" href="http://tools.suckless.org/slock"&gt;slock&lt;/a&gt; locks the screen when I close the lid.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="http://rnestler.github.io/" rel="alternate"></link><link href="http://rnestler.github.io/feeds/2013.atom.xml" rel="self"></link><id>http://rnestler.github.io/</id><updated>2013-10-25T00:00:00+02:00</updated><entry><title>Run slock before going to sleep</title><link href="http://rnestler.github.io/run-slock-before-going-to-sleep.html" rel="alternate"></link><updated>2013-10-25T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2013-10-25:run-slock-before-going-to-sleep.html</id><summary type="html">&lt;p&gt;As noted in my previous post, I configured my system to run slock as soon as
+the system enters sleep state.  This is how its done.&lt;/p&gt;
+&lt;p&gt;First we create a new systemd unit in /etc/systemd/system called
+suspend&amp;#64;.service&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;User suspend actions&lt;/span&gt;
+&lt;span class="na"&gt;Before&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sleep.target&lt;/span&gt;
+
+&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;span class="na"&gt;User&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;%I&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;
+&lt;span class="na"&gt;Environment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;DISPLAY=:0&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/slock&lt;/span&gt;
+
+&lt;span class="k"&gt;[Install]&lt;/span&gt;
+&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sleep.target&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So what did we do? We created a unit that runs before sleep.target is reached.
+This unit will run as a configurable user by enabling &lt;cite&gt;suspend&amp;#64;$USER.service&lt;/cite&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;#&lt;/span&gt; systemctl &lt;span class="nb"&gt;enable suspend&lt;/span&gt;@&lt;span class="nv"&gt;$USER&lt;/span&gt;.service
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So the /usr/bin/slock runs as $USER.  To be able to communicate with the
+X-Server we need to set the DISPLAY variable to :0.&lt;/p&gt;
+&lt;p&gt;So now when your system is going to sleep systemd should start slock.&lt;/p&gt;
+&lt;p&gt;Sadly this works only for a one user system since the username is hardcoded
+when enabling the unit file.  To make it work with multible users one would
+need to create a script which determines which user is running the X-Server
+then change to this user and lock the screen.&lt;/p&gt;
+</summary><category term="systemd"></category><category term="slock"></category><category term="suspend"></category></entry><entry><title>Creating this Blog</title><link href="http://rnestler.github.io/creating-this-blog.html" rel="alternate"></link><updated>2013-10-23T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2013-10-23:creating-this-blog.html</id><summary type="html">&lt;p&gt;Recently a friend of mine asked me how I configured my system so that &lt;a class="reference external" href="http://tools.suckless.org/slock"&gt;slock&lt;/a&gt; locks the screen when I close the lid.&lt;/p&gt;
 &lt;p&gt;Since I couldn't remember how I did it, I thought it's time to create a blog
 where I can write down stuff like this.&lt;/p&gt;
 &lt;p&gt;The same friend recommended me to use &lt;a class="reference external" href="http://getpelican.com/"&gt;pelican&lt;/a&gt; to

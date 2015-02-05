@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="http://rnestler.github.io/" rel="alternate"></link><link href="http://rnestler.github.io/feeds/2015.atom.xml" rel="self"></link><id>http://rnestler.github.io/</id><updated>2015-02-04T00:00:00+01:00</updated><entry><title>Learning Rust</title><link href="http://rnestler.github.io/learning-rust.html" rel="alternate"></link><updated>2015-02-04T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-04:learning-rust.html</id><summary type="html">&lt;p&gt;Reading the news that Rust reached &lt;a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html"&gt;1.0 Alpha&lt;/a&gt; I decided to take
+a deeper look at &lt;a class="reference external" href="http://www.rust-lang.org/"&gt;it&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="section" id="getting-rust"&gt;
+&lt;h2&gt;Getting Rust&lt;/h2&gt;
+&lt;p&gt;Installing Rust under arch is as easy&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pacman -S rust
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above will install the latest version from the &lt;a class="reference external" href="https://www.archlinux.org/packages/community/x86_64/rust/"&gt;community repo&lt;/a&gt;.  If you want the
+latest and greatest version you could also try &lt;a class="reference external" href="https://aur.archlinux.org/packages/rust-nightly/"&gt;the nightly build&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The lazy people can try it &lt;a class="reference external" href="https://play.rust-lang.org/?code=%2F%2F%20This%20code%20is%20editable%20and%20runnable!%0Afn%20main()%20%7B%0A%20%20%20%20println!(%22Hello%20World!%22%3B%0A%7D"&gt;online&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="hello-world"&gt;
+&lt;h2&gt;Hello World!&lt;/h2&gt;
+&lt;p&gt;Here comes the obligatory &amp;quot;Hello World!&amp;quot; code in rust&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello World!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="immutability"&gt;
+&lt;h2&gt;Immutability&lt;/h2&gt;
+&lt;p&gt;Beeing a &lt;a class="reference external" href="http://gamesfromwithin.com/wp-content/uploads/2010/07/const_nazi.mov"&gt;C++ const-nazi&lt;/a&gt; I
+really liked that by default all variable bindings are immutable.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The example above will give you a compile error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mut.rs:4:5: 4:9 error: re-assignment of immutable variable &lt;span class="sb"&gt;`&lt;/span&gt;x&lt;span class="sb"&gt;`&lt;/span&gt;
+mut.rs:4     x+&lt;span class="o"&gt;=&lt;/span&gt;1&lt;span class="p"&gt;;&lt;/span&gt;
+             ^~~~
+mut.rs:3:9: 3:10 note: prior assignment occurs here
+mut.rs:3     &lt;span class="nb"&gt;let &lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 1&lt;span class="p"&gt;;&lt;/span&gt;
+                 ^
+error: aborting due to previous error
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;By using the &amp;quot;mut&amp;quot; keyword we mark the variable as mutable&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So the code will print &amp;quot;2&amp;quot;&lt;/p&gt;
+&lt;p&gt;Rust will also emit a warning when not using variables or an error when trying
+to use uninitialized variables.&lt;/p&gt;
+&lt;!-- Ownership, Borrowing and Livetime
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+One of the first things I tried out was the ownership concept: --&gt;
+&lt;/div&gt;
+</summary><category term="programming"></category><category term="rust"></category></entry></feed>

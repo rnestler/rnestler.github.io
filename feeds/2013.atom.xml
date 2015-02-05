@@ -44,7 +44,7 @@ create my blog.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The next step is to create the base structure with the interactive
 pelican-quickstart&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir blog; &lt;span class="nb"&gt;cd &lt;/span&gt;blog
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir blog&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;cd &lt;/span&gt;blog
 &lt;span class="nv"&gt;$ &lt;/span&gt;pelican-quickstart
 &lt;span class="nv"&gt;$ &lt;/span&gt;ls
 content/            fabfile.py  output/         publishconf.py
@@ -72,8 +72,8 @@ develop_server.sh*  Makefile    pelicanconf.py
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Then change SITEURL in publishconf.py to &lt;a class="reference external" href="http://username.github.io"&gt;http://username.github.io&lt;/a&gt; and edit the
 github target in the Makefile to look like this&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;github: publish
-  ghp-import $(OUTPUTDIR)
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nf"&gt;github&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;publish&lt;/span&gt;
+  ghp-import &lt;span class="k"&gt;$(&lt;/span&gt;OUTPUTDIR&lt;span class="k"&gt;)&lt;/span&gt;
   git push git@github.com:username.username.io.git gh-pages:master
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;ghp-import will create a branch in the current git repository called gh-pages

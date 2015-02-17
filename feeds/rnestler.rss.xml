@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>rnestler.github.io</title><link>http://rnestler.github.io/</link><description></description><atom:link href="http://rnestler.github.io/feeds/rnestler.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 04 Feb 2015 00:00:00 +0100</lastBuildDate><item><title>Learning Rust</title><link>http://rnestler.github.io/learning-rust.html</link><description>&lt;p&gt;Reading the news that Rust reached &lt;a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html"&gt;1.0 Alpha&lt;/a&gt; I decided to take
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>rnestler.github.io</title><link>//rnestler.github.io/</link><description></description><atom:link href="//rnestler.github.io/feeds/rnestler.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 04 Feb 2015 00:00:00 +0100</lastBuildDate><item><title>Learning Rust</title><link>//rnestler.github.io/learning-rust.html</link><description>&lt;p&gt;Reading the news that Rust reached &lt;a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html"&gt;1.0 Alpha&lt;/a&gt; I decided to take
 a deeper look at &lt;a class="reference external" href="http://www.rust-lang.org/"&gt;it&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="getting-rust"&gt;
 &lt;h2&gt;Getting Rust&lt;/h2&gt;
@@ -51,7 +51,7 @@ to use uninitialized variables.&lt;/p&gt;
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 One of the first things I tried out was the ownership concept: --&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Wed, 04 Feb 2015 00:00:00 +0100</pubDate><guid>tag:rnestler.github.io,2015-02-04:learning-rust.html</guid><category>programming</category><category>rust</category></item><item><title>Run slock before going to sleep</title><link>http://rnestler.github.io/run-slock-before-going-to-sleep.html</link><description>&lt;p&gt;As noted in my previous post, I configured my system to run slock as soon as
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Wed, 04 Feb 2015 00:00:00 +0100</pubDate><guid>tag:rnestler.github.io,2015-02-04:learning-rust.html</guid><category>programming</category><category>rust</category></item><item><title>Run slock before going to sleep</title><link>//rnestler.github.io/run-slock-before-going-to-sleep.html</link><description>&lt;p&gt;As noted in my previous post, I configured my system to run slock as soon as
 the system enters sleep state.  This is how its done.&lt;/p&gt;
 &lt;p&gt;First we create a new systemd unit in /etc/systemd/system called
 suspend&amp;#64;.service&lt;/p&gt;
@@ -79,7 +79,7 @@ X-Server we need to set the DISPLAY variable to :0.&lt;/p&gt;
 when enabling the unit file.  To make it work with multible users one would
 need to create a script which determines which user is running the X-Server
 then change to this user and lock the screen.&lt;/p&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Fri, 25 Oct 2013 00:00:00 +0200</pubDate><guid>tag:rnestler.github.io,2013-10-25:run-slock-before-going-to-sleep.html</guid><category>systemd</category><category>slock</category><category>suspend</category></item><item><title>Creating this Blog</title><link>http://rnestler.github.io/creating-this-blog.html</link><description>&lt;p&gt;Recently a friend of mine asked me how I configured my system so that &lt;a class="reference external" href="http://tools.suckless.org/slock"&gt;slock&lt;/a&gt; locks the screen when I close the lid.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Fri, 25 Oct 2013 00:00:00 +0200</pubDate><guid>tag:rnestler.github.io,2013-10-25:run-slock-before-going-to-sleep.html</guid><category>systemd</category><category>slock</category><category>suspend</category></item><item><title>Creating this Blog</title><link>//rnestler.github.io/creating-this-blog.html</link><description>&lt;p&gt;Recently a friend of mine asked me how I configured my system so that &lt;a class="reference external" href="http://tools.suckless.org/slock"&gt;slock&lt;/a&gt; locks the screen when I close the lid.&lt;/p&gt;
 &lt;p&gt;Since I couldn't remember how I did it, I thought it's time to create a blog
 where I can write down stuff like this.&lt;/p&gt;
 &lt;p&gt;The same friend recommended me to use &lt;a class="reference external" href="http://getpelican.com/"&gt;pelican&lt;/a&gt; to

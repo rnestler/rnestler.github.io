@@ -233,7 +233,7 @@ latest and greatest version you could also try &lt;a class="reference external" 
 &lt;/div&gt;
 &lt;div class="section" id="hello-world"&gt;
 &lt;h2&gt;Hello World!&lt;/h2&gt;
-&lt;p&gt;Here comes the obligatory &amp;quot;Hello World!&amp;quot; code in rust&lt;/p&gt;
+&lt;p&gt;Here comes the obligatory &amp;quot;Hello World!&amp;quot; code in Rust&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello World!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
@@ -268,11 +268,8 @@ error: aborting due to previous error
 &lt;p&gt;So the code will print &amp;quot;2&amp;quot;&lt;/p&gt;
 &lt;p&gt;Rust will also emit a warning when not using variables or an error when trying
 to use uninitialized variables.&lt;/p&gt;
-&lt;!-- Ownership, Borrowing and Livetime
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-One of the first things I tried out was the ownership concept: --&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Wed, 04 Feb 2015 00:00:00 +0100</pubDate><guid>tag:rnestler.github.io,2015-02-04:learning-rust.html</guid><category>programming</category><category>rust</category></item><item><title>Run slock before going to sleep</title><link>//rnestler.github.io/run-slock-before-going-to-sleep.html</link><description>&lt;p&gt;As noted in my previous post, I configured my system to run slock as soon as
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Wed, 04 Feb 2015 00:00:00 +0100</pubDate><guid>tag:rnestler.github.io,2015-02-04:learning-rust.html</guid><category>programming</category><category>Rust</category></item><item><title>Run slock before going to sleep</title><link>//rnestler.github.io/run-slock-before-going-to-sleep.html</link><description>&lt;p&gt;As noted in my previous post, I configured my system to run slock as soon as
 the system enters sleep state.  This is how its done.&lt;/p&gt;
 &lt;p&gt;First we create a new systemd unit in /etc/systemd/system called
 suspend&amp;#64;.service&lt;/p&gt;

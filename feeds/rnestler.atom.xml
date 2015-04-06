@@ -218,6 +218,7 @@ To fix the issue we need to limit the scope of &lt;tt class="docutils literal"&g
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Have comments? Discuss on &lt;a class="reference external" href="https://news.ycombinator.com/item?id=9329506"&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="programming"></category><category term="Rust"></category><category term="C++"></category></entry><entry><title>Learning Rust</title><link href="//rnestler.github.io/learning-rust.html" rel="alternate"></link><updated>2015-02-04T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-04:learning-rust.html</id><summary type="html">&lt;p&gt;Reading the news that Rust reached &lt;a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html"&gt;1.0 Alpha&lt;/a&gt; I decided to take
 a deeper look at &lt;a class="reference external" href="http://www.rust-lang.org/"&gt;it&lt;/a&gt;.&lt;/p&gt;

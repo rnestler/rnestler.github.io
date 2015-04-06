@@ -22,7 +22,251 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/learning-rust.html">Learning Rust</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/more-rust-compared-to-c.html">More Rust compared to C++</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-02-06T00:00:00+01:00">
+                Published: Fre 06 Februar 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>. </p>
+<p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
+</footer><!-- /.post-info --><p>After <a class="reference external" href="http://rnestler.github.io/learning-rust.html">getting in touch with Rust</a>, the next thing I was looking
+at were pointers and the concept of ownership and borrowing in Rust.</p>
+<div class="section" id="pointers">
+<h2>Pointers</h2>
+<p>Rust has a lot of different pointer types, reminding me of the C++ references,
+raw and smart pointers like <a class="reference external" href="http://en.cppreference.com/w/cpp/memory/unique_ptr">std::unique_ptr</a>, <a class="reference external" href="http://en.cppreference.com/w/cpp/memory/shared_ptr">std::shared_ptr</a>.  For a nice comparison
+see <a class="reference external" href="https://github.com/sarojaba/rust-doc-korean/wiki/Rust-for-CXX-programmers#pointers-and-references">here</a>.</p>
+<div class="section" id="references">
+<h3>References</h3>
+<p>One of the first pointer type you will meet in Rust is the reference type.</p>
+<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;x = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;x = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>In C++ this would look something like this:</p>
+<div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
+
+<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+    <span class="n">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>What is think is nice in Rust is:</p>
+<blockquote>
+<ul class="simple">
+<li>It's explicit that x will be modified (<tt class="docutils literal">&amp;mut x</tt>)</li>
+<li>It's guaranteed that x is neither dangling nor 0</li>
+</ul>
+</blockquote>
+<p>In C++ references have value syntax. To avoid that I prefer the <a class="reference external" href="https://google-styleguide.googlecode.com/svn/trunk/cppguide.html#Reference_Arguments">style</a>
+of using pointers for mutable and only <tt class="docutils literal">const</tt> reference for immutable data.</p>
+<div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
+
+<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">*</span><span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+    <span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>This way the syntax looks much more like the Rust example, but you can pass 0:</p>
+<div class="highlight"><pre>    <span class="n">add_one</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="o">-&gt;</span> <span class="n">Segmentation</span> <span class="n">fault</span> <span class="p">(</span><span class="n">core</span> <span class="n">dumped</span><span class="p">)</span>
+</pre></div>
+<p>Trying the same with C++ references yields a compile error, because a non
+<tt class="docutils literal">const</tt> reference can't bind to a temporary (rvalue)</p>
+<div class="highlight"><pre>reference.cpp: In function &#39;int main()&#39;:
+reference.cpp:12:11: error: invalid initialization of non-const reference of type &#39;int&amp;&#39; from an rvalue of type &#39;int&#39;
+  add_one(0);
+           ^
+reference.cpp:3:6: note: in passing argument 1 of &#39;void add_one(int&amp;)&#39;
+ void add_one(int&amp; num) {
+      ^
+</pre></div>
+<p>Surprising to me, doing the same within Rust works</p>
+<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;adding one to {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot; -&gt; {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Output: <tt class="docutils literal">adding one to 0 <span class="pre">-&gt;</span> 1</tt>.  Apparently one can bind mutable references
+to temporaries in Rust.</p>
+</div>
+<div class="section" id="heap-pointers">
+<h3>Heap pointers</h3>
+<p>For managing data on the heap Rust has the <tt class="docutils literal">Box&lt;T&gt;</tt> type</p>
+<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Box</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Output: <tt class="docutils literal">5</tt></p>
+<p>The equivalent in C++ would be</p>
+<div class="highlight"><pre><span class="cp">#include &lt;memory&gt;</span>
+<span class="cp">#include &lt;cstdio&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>Note that the compiler takes care of freeing the used resources as soon as x
+goes out of scope. In the C++ world this is called <a class="reference external" href="https://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization">RAII</a>.</p>
+</div>
+</div>
+<div class="section" id="ownership-borrowing-and-lifetime">
+<h2>Ownership, Borrowing and Lifetime</h2>
+<p>The Box type is an owning type. Meaning that it owns the resources it is
+pointing to. The same is true for <tt class="docutils literal"><span class="pre">std::unique_ptr</span></tt>.</p>
+<p>When passing a Box type to a function the ownership transfers to this function:</p>
+<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="n">Box</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Box</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>This will result in a compile error:</p>
+<div class="highlight"><pre>boxed.rs:10:20: 10:22 error: use of moved value: `*x`
+boxed.rs:10     println!(&quot;{}&quot;, * x);
+                               ^~
+note: in expansion of format_args!
+&lt;std macros&gt;:2:43: 2:76 note: expansion site
+&lt;std macros&gt;:1:1: 2:78 note: in expansion of println!
+boxed.rs:10:5: 10:24 note: expansion site
+boxed.rs:9:13: 9:14 note: `x` moved here because it has type `Box&lt;i32&gt;`, which is non-copyable
+boxed.rs:9     add_one(x);
+</pre></div>
+<p>Because a Box owns the resource, x will become invalid.
+If we try same in C++</p>
+<div class="highlight"><pre><span class="cp">#include &lt;memory&gt;</span>
+<span class="cp">#include &lt;cstdio&gt;</span>
+
+<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">*</span> <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">add_one</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>It will result in a segmentation fault:</p>
+<div class="highlight"><pre>% g++ -Wall -std=c++14 cpp_smart_pointers.cpp  -o cpp_smart_pointers
+% ./cpp_smart_pointers
+5
+[1]    28585 segmentation fault (core dumped)  ./cpp_smart_pointers
+</pre></div>
+<p>Because the unique_pointer moved from x into the function argument x remains
+invalid and dereferencing it will leave it invalid.  Note that <tt class="docutils literal">g++</tt> doesn't
+even issue a warning even when compiling this code with <tt class="docutils literal"><span class="pre">-Wall</span></tt>.</p>
+<p>What I think is nice in the C++ version is the explicit <tt class="docutils literal"><span class="pre">std::move</span></tt> which
+makes it obvious to the reader, that <tt class="docutils literal">x</tt> shouldn't be used afterwards.</p>
+<p>The compile errors Rust gives can be intimidating when learning Rust, since it
+is not obvious from the code that <tt class="docutils literal">x</tt> just moved.</p>
+<p>But Rust's lifetime concept doesn't stop here.  It even tracks down usage of
+invalidated references.  Consider the following C++ code:</p>
+<div class="highlight"><pre><span class="cp">#include&lt;cstdio&gt;</span>
+<span class="cp">#include&lt;vector&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="kt">int</span><span class="o">&amp;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i, &quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>Executing this code will output <tt class="docutils literal">5, 0</tt> on my machine.  According to the <a class="reference external" href="http://en.cppreference.com/w/cpp/container/vector#Iterator_invalidation">C++
+standard</a>
+<tt class="docutils literal">push_back</tt> invalidates any reference to elements (iterators).  So accessing
+it triggers undefined behaviour.</p>
+<p>Trying the same in Rust</p>
+<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[];</span><span class="w"></span>
+<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Triggers a compile error:</p>
+<div class="highlight"><pre>rust_dangling.rs:6:5: 6:6 error: cannot borrow `v` as mutable because it is also borrowed as immutable
+rust_dangling.rs:6     v.push(6);
+                       ^
+rust_dangling.rs:4:14: 4:15 note: previous borrow of `v` occurs here; the immutable borrow prevents subsequent moves or mutable borrows of `v` until the borrow ends
+rust_dangling.rs:4     let x = &amp;v[0];
+                                ^
+rust_dangling.rs:8:2: 8:2 note: previous borrow ends here
+rust_dangling.rs:1 fn main() {
+...
+rust_dangling.rs:8 }
+                   ^
+</pre></div>
+<p>Rust tries to tell us, that we can't change the vector, because there is still
+a reference to it in scope, namely <tt class="docutils literal">x</tt>!
+To fix the issue we need to limit the scope of <tt class="docutils literal">x</tt>:</p>
+<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[];</span><span class="w"></span>
+<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">        </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/learning-rust.html" rel="bookmark"
+                           title="Permalink to Learning Rust">Learning Rust</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-02-04T00:00:00+01:00">
                 Published: Mit 04 Februar 2015
@@ -33,64 +277,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2015.html">2015</a>. </p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">rust</a> </p>
-</footer><!-- /.post-info --><p>Reading the news that Rust reached <a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html">1.0 Alpha</a> I decided to take
-a deeper look at <a class="reference external" href="http://www.rust-lang.org/">it</a>.</p>
-<div class="section" id="getting-rust">
-<h2>Getting Rust</h2>
-<p>Installing Rust under arch is as easy</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo pacman -S rust
-</pre></div>
-<p>The above will install the latest version from the <a class="reference external" href="https://www.archlinux.org/packages/community/x86_64/rust/">community repo</a>.  If you want the
-latest and greatest version you could also try <a class="reference external" href="https://aur.archlinux.org/packages/rust-nightly/">the nightly build</a>.</p>
-<p>The lazy people can try it <a class="reference external" href="https://play.rust-lang.org/?code=%2F%2F%20This%20code%20is%20editable%20and%20runnable!%0Afn%20main()%20%7B%0A%20%20%20%20println!(%22Hello%20World!%22%3B%0A%7D">online</a>.</p>
-</div>
-<div class="section" id="hello-world">
-<h2>Hello World!</h2>
-<p>Here comes the obligatory &quot;Hello World!&quot; code in rust</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-<div class="section" id="immutability">
-<h2>Immutability</h2>
-<p>Beeing a <a class="reference external" href="http://gamesfromwithin.com/wp-content/uploads/2010/07/const_nazi.mov">C++ const-nazi</a> I
-really liked that by default all variable bindings are immutable.</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>The example above will give you a compile error:</p>
-<div class="highlight"><pre>mut.rs:4:5: 4:9 error: re-assignment of immutable variable <span class="sb">`</span>x<span class="sb">`</span>
-mut.rs:4     x+<span class="o">=</span>1<span class="p">;</span>
-             ^~~~
-mut.rs:3:9: 3:10 note: prior assignment occurs here
-mut.rs:3     <span class="nb">let </span><span class="nv">x</span> <span class="o">=</span> 1<span class="p">;</span>
-                 ^
-error: aborting due to previous error
-</pre></div>
-<p>By using the &quot;mut&quot; keyword we mark the variable as mutable</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>So the code will print &quot;2&quot;</p>
-<p>Rust will also emit a warning when not using variables or an error when trying
-to use uninitialized variables.</p>
-<!-- Ownership, Borrowing and Livetime
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-One of the first things I tried out was the ownership concept: -->
-</div>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p class="first last">Learning the programming language rust</p>
+
+                <a class="readmore" href="//rnestler.github.io/learning-rust.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

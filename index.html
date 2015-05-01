@@ -22,7 +22,178 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/more-rust-compared-to-c.html">More Rust compared to C++</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/serialization-in-rust.html">Serialization in Rust</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-04-09T00:00:00+02:00">
+                Published: Don 09 April 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>. </p>
+<p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/json.html">JSON</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> </p>
+</footer><!-- /.post-info --><p>One of my first projects with Rust is the <a class="reference external" href="https://spaceapi.net/">spaceapi</a>
+implementation of my local <a class="reference external" href="https://coredump.ch">hackerspace</a>.</p>
+<p>You can find the source for it on <a class="reference external" href="https://github.com/coredump-ch/spaceapi">github</a>.</p>
+<div class="section" id="the-space-api">
+<h2>The Space API</h2>
+<p>The Space API is a rather simple JSON API used to expose information about a
+hackerspace.  It consist of some static data like the location or some contact
+information and some dynamic data like the current state of the space.</p>
+<p>Implementing JSON serialization in Rust is easy when using the <a class="reference external" href="https://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/index.html">rustc_serialize</a>
+crate.</p>
+<p>Using the <tt class="docutils literal">#[derive(RustcEncodable)]</tt> attribute on a type, serializing a
+struct is as easy as calling <tt class="docutils literal"><span class="pre">json::encode(&amp;status).unwrap()</span></tt>.</p>
+<div class="highlight"><pre><span class="k">extern</span><span class="w"> </span><span class="n">crate</span><span class="w"> </span><span class="n">rustc_serialize</span><span class="p">;</span><span class="w"></span>
+<span class="kn">use</span><span class="w"> </span><span class="n">rustc_serialize</span><span class="o">::</span><span class="n">json</span><span class="p">;</span><span class="w"></span>
+
+<span class="cp">#[derive(RustcEncodable)]</span><span class="w"></span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">api</span><span class="o">:</span><span class="w"> </span><span class="n">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">space</span><span class="o">:</span><span class="w"> </span><span class="n">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="n">String</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">status</span><span class="o">:</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="o">::</span><span class="n">encode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Status</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">api</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;0.13&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="n">space</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;coredump&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;https://www.coredump.ch/&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"></span>
+<span class="w">    </span><span class="p">}).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>This code will output:</p>
+<div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;api&quot;</span><span class="p">:</span><span class="s2">&quot;0.13&quot;</span><span class="p">,</span><span class="nt">&quot;space&quot;</span><span class="p">:</span><span class="s2">&quot;coredump&quot;</span><span class="p">,</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;https://www.coredump.ch/&quot;</span><span class="p">}</span>
+</pre></div>
+<p>As you can see, the field names map directly to keys in the JSON output. That
+way we can model the Space API objects with structs and have a simple typesave
+solution!</p>
+</div>
+<div class="section" id="the-type-property">
+<h2>The 'type' property</h2>
+<p>Unfortunately <a class="reference external" href="http://spaceapi.net/documentation#documentation-ref-13-root-feeds-blog-type">parts</a>
+of the Space API contain the property <tt class="docutils literal">type</tt> which is a keyword in Rust.
+Of course using it as an identifier for a Struct field yields a compile error:</p>
+<div class="highlight"><pre><span class="cp">#[derive(RustcEncodable)]</span><span class="w"></span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">type</span><span class="o">:</span><span class="w"> </span><span class="n">String</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="n">String</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<pre class="literal-block">
+main.rs:7:9: 7:13 error: expected identifier, found keyword `type`
+main.rs:7     pub type: String,
+                  ^~~~
+</pre>
+<p>So we need to rename the field to something like <tt class="docutils literal">_type</tt> and change the
+serialization.</p>
+</div>
+<div class="section" id="implementing-tojson">
+<h2>Implementing ToJson</h2>
+<p>My first idea was to implement the <a class="reference external" href="http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/trait.ToJson.html">ToJson</a>
+trait for Feed.  Implementing <tt class="docutils literal">ToJson</tt> is easy, there is just one method
+<tt class="docutils literal">to_json</tt> which returns the <tt class="docutils literal">Json</tt> object:</p>
+<div class="highlight"><pre><span class="k">impl</span><span class="w"> </span><span class="n">json</span><span class="o">::</span><span class="n">ToJson</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="n">to_json</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Json</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">feed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BTreeMap</span><span class="o">::</span><span class="n">new</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">feed</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">_type</span><span class="p">.</span><span class="n">to_json</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="n">feed</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="p">.</span><span class="n">to_json</span><span class="p">());</span><span class="w"></span>
+<span class="w">        </span><span class="n">Json</span><span class="o">::</span><span class="n">Object</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Sadly this means the <tt class="docutils literal">Feeds</tt> struct can't hold the Feed struct directly
+anymore, but needs it as a <tt class="docutils literal">Json</tt> object:</p>
+<div class="highlight"><pre><span class="cp">#[derive(RustcEncodable)]</span><span class="w"></span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="n">Feeds</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">blog</span><span class="o">:</span><span class="w"> </span><span class="n">Json</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Otherwise the Encodable trait can't be derived anymore, because it's not
+implemented for the type Feed.  Since this reduces type safety somewhat (we
+could set <tt class="docutils literal">blog</tt> field to any Json string), I discarded this solution.</p>
+</div>
+<div class="section" id="implementing-encodable">
+<h2>Implementing Encodable</h2>
+<p>To regain type safety we need to implement the <a class="reference external" href="https://doc.rust-lang.org/rustc-serialize/rustc_serialize/trait.Encodable.html">Encodable trait</a>
+for Feed.
+The required method for Encodable may be a bit intimidating at the first look:</p>
+<div class="highlight"><pre><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">Encodable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="n">encode</span><span class="o">&lt;</span><span class="n">S</span><span class="o">:</span><span class="w"> </span><span class="n">Encoder</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">S</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Basically it takes a reference to self and an Encoder and returns an <a class="reference external" href="http://doc.rust-lang.org/nightly/core/result/enum.Result.html">Result</a> containing
+either <tt class="docutils literal">OK()</tt> on success or <tt class="docutils literal">Err(S)</tt> on failure.  But how does one use the
+encoder?</p>
+<div class="section" id="using-the-generated-code-as-base">
+<h3>Using the generated code as base</h3>
+<p>After some googleing I found out that one can show the macro expanded source
+code. It's kinda like the pre-processor output when coming from the C/C++
+world.</p>
+<pre class="literal-block">
+rustc -Z unstable-options src/spaceapi.rs --pretty expanded
+</pre>
+<p>The expanded code is pretty readable and it was easy to find the corresponding
+trait implementation generated by the Rust compiler:</p>
+<div class="highlight"><pre><span class="k">impl</span><span class="w"> </span><span class="o">::</span><span class="n">rustc_serialize</span><span class="o">::</span><span class="n">Encodable</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="n">encode</span><span class="o">&lt;</span><span class="n">__S</span><span class="o">:</span><span class="w"> </span><span class="o">::</span><span class="n">rustc_serialize</span><span class="o">::</span><span class="n">Encoder</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">__arg_0</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">__S</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">result</span><span class="o">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">__S</span><span class="o">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="bp">self</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_type</span><span class="o">:</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">__self_0_0</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">__self_0_1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
+<span class="w">            </span><span class="n">__arg_0</span><span class="p">.</span><span class="n">emit_struct</span><span class="p">(</span><span class="s">&quot;Feed&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="n">usize</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">_e</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                                </span><span class="k">match</span><span class="w"> </span><span class="n">_e</span><span class="p">.</span><span class="n">emit_struct_field</span><span class="p">(</span><span class="s">&quot;_type&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">usize</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                           </span><span class="o">|</span><span class="n">_e</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                                                           </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">__self_0_0</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="n">_e</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                                       </span><span class="p">})</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                                    </span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">result</span><span class="o">::</span><span class="nb">Result</span><span class="o">::</span><span class="nb">Ok</span><span class="p">(</span><span class="n">__try_var</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">__try_var</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">result</span><span class="o">::</span><span class="nb">Result</span><span class="o">::</span><span class="nb">Err</span><span class="p">(</span><span class="n">__try_var</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
+<span class="w">                                    </span><span class="k">return</span><span class="w"> </span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">result</span><span class="o">::</span><span class="nb">Result</span><span class="o">::</span><span class="nb">Err</span><span class="p">(</span><span class="n">__try_var</span><span class="p">),</span><span class="w"></span>
+<span class="w">                                </span><span class="p">};</span><span class="w"></span>
+<span class="w">                                </span><span class="k">return</span><span class="w"> </span><span class="n">_e</span><span class="p">.</span><span class="n">emit_struct_field</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">usize</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                            </span><span class="o">|</span><span class="n">_e</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                                                            </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">__self_0_1</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="n">_e</span><span class="p">)</span><span class="w"></span>
+<span class="w">                                                        </span><span class="p">});</span><span class="w"> </span><span class="p">}),</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>So from there I tried to make the code a bit more readable which resulted in
+the following:</p>
+<div class="highlight"><pre><span class="k">impl</span><span class="w"> </span><span class="n">Encodable</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="n">encode</span><span class="o">&lt;</span><span class="n">S</span><span class="o">:</span><span class="w"> </span><span class="n">Encoder</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">encoder</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">S</span><span class="o">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="bp">self</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_type</span><span class="o">:</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">p_type</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">p_url</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
+<span class="w">                </span><span class="n">encoder</span><span class="p">.</span><span class="n">emit_struct</span><span class="p">(</span><span class="s">&quot;Feed&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="n">usize</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">enc</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">try</span><span class="o">!</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">emit_struct_field</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;type&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="n">usize</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">enc</span><span class="o">|</span><span class="w"> </span><span class="n">p_type</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enc</span><span class="p">)));</span><span class="w"></span>
+<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="n">enc</span><span class="p">.</span><span class="n">emit_struct_field</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="n">usize</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">enc</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">p_url</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<span class="w">                </span><span class="p">}),</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>The final encoded String looks like this:</p>
+<div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;https://www.coredump.ch/feed/&quot;</span><span class="p">}</span>
+</pre></div>
+<p>Have comments? Discuss on <a class="reference external" href="tbd">Hacker News</a>.</p>
+</div>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/more-rust-compared-to-c.html" rel="bookmark"
+                           title="Permalink to More Rust compared to C++">More Rust compared to C++</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-02-06T00:00:00+01:00">
                 Published: Fre 06 Februar 2015
@@ -33,233 +204,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2015.html">2015</a>. </p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
-</footer><!-- /.post-info --><p>After <a class="reference external" href="http://rnestler.github.io/learning-rust.html">getting in touch with Rust</a>, the next thing I was looking
-at were pointers and the concept of ownership and borrowing in Rust.</p>
-<div class="section" id="pointers">
-<h2>Pointers</h2>
-<p>Rust has a lot of different pointer types, reminding me of the C++ references,
-raw and smart pointers like <a class="reference external" href="http://en.cppreference.com/w/cpp/memory/unique_ptr">std::unique_ptr</a>, <a class="reference external" href="http://en.cppreference.com/w/cpp/memory/shared_ptr">std::shared_ptr</a>.  For a nice comparison
-see <a class="reference external" href="https://github.com/rust-lang/rust-wiki-backup/blob/master/Rust-for-CXX-programmers.rest">here</a>.</p>
-<div class="section" id="references">
-<h3>References</h3>
-<p>One of the first pointer type you will meet in Rust is the reference type.</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;x = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;x = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+</footer><!-- /.post-info -->                <p class="first last">More about the programming language Rust</p>
 
-<span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>In C++ this would look something like this:</p>
-<div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
-
-<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-    <span class="n">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>What is think is nice in Rust is:</p>
-<blockquote>
-<ul class="simple">
-<li>It's explicit that x will be modified (<tt class="docutils literal">&amp;mut x</tt>)</li>
-<li>It's guaranteed that x is neither dangling nor 0</li>
-</ul>
-</blockquote>
-<p>In C++ references have value syntax. To avoid that I prefer the <a class="reference external" href="https://google-styleguide.googlecode.com/svn/trunk/cppguide.html#Reference_Arguments">style</a>
-of using pointers for mutable and only <tt class="docutils literal">const</tt> reference for immutable data.</p>
-<div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
-
-<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">*</span><span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-    <span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>This way the syntax looks much more like the Rust example, but you can pass 0:</p>
-<div class="highlight"><pre>    <span class="n">add_one</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="o">-&gt;</span> <span class="n">Segmentation</span> <span class="n">fault</span> <span class="p">(</span><span class="n">core</span> <span class="n">dumped</span><span class="p">)</span>
-</pre></div>
-<p>Trying the same with C++ references yields a compile error, because a non
-<tt class="docutils literal">const</tt> reference can't bind to a temporary (rvalue)</p>
-<div class="highlight"><pre>reference.cpp: In function &#39;int main()&#39;:
-reference.cpp:12:11: error: invalid initialization of non-const reference of type &#39;int&amp;&#39; from an rvalue of type &#39;int&#39;
-  add_one(0);
-           ^
-reference.cpp:3:6: note: in passing argument 1 of &#39;void add_one(int&amp;)&#39;
- void add_one(int&amp; num) {
-      ^
-</pre></div>
-<p>Surprising to me, doing the same within Rust works</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;adding one to {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot; -&gt; {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Output: <tt class="docutils literal">adding one to 0 <span class="pre">-&gt;</span> 1</tt>.  Apparently one can bind mutable references
-to temporaries in Rust.</p>
-</div>
-<div class="section" id="heap-pointers">
-<h3>Heap pointers</h3>
-<p>For managing data on the heap Rust has the <tt class="docutils literal">Box&lt;T&gt;</tt> type</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Box</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Output: <tt class="docutils literal">5</tt></p>
-<p>The equivalent in C++ would be</p>
-<div class="highlight"><pre><span class="cp">#include &lt;memory&gt;</span>
-<span class="cp">#include &lt;cstdio&gt;</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>Note that the compiler takes care of freeing the used resources as soon as x
-goes out of scope. In the C++ world this is called <a class="reference external" href="https://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization">RAII</a>.</p>
-</div>
-</div>
-<div class="section" id="ownership-borrowing-and-lifetime">
-<h2>Ownership, Borrowing and Lifetime</h2>
-<p>The Box type is an owning type. Meaning that it owns the resources it is
-pointing to. The same is true for <tt class="docutils literal"><span class="pre">std::unique_ptr</span></tt>.</p>
-<p>When passing a Box type to a function the ownership transfers to this function:</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="n">Box</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Box</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>This will result in a compile error:</p>
-<div class="highlight"><pre>boxed.rs:10:20: 10:22 error: use of moved value: `*x`
-boxed.rs:10     println!(&quot;{}&quot;, * x);
-                               ^~
-note: in expansion of format_args!
-&lt;std macros&gt;:2:43: 2:76 note: expansion site
-&lt;std macros&gt;:1:1: 2:78 note: in expansion of println!
-boxed.rs:10:5: 10:24 note: expansion site
-boxed.rs:9:13: 9:14 note: `x` moved here because it has type `Box&lt;i32&gt;`, which is non-copyable
-boxed.rs:9     add_one(x);
-</pre></div>
-<p>Because a Box owns the resource, x will become invalid.
-If we try same in C++</p>
-<div class="highlight"><pre><span class="cp">#include &lt;memory&gt;</span>
-<span class="cp">#include &lt;cstdio&gt;</span>
-
-<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">*</span> <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
-    <span class="n">add_one</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>It will result in a segmentation fault:</p>
-<div class="highlight"><pre>% g++ -Wall -std=c++14 cpp_smart_pointers.cpp  -o cpp_smart_pointers
-% ./cpp_smart_pointers
-5
-[1]    28585 segmentation fault (core dumped)  ./cpp_smart_pointers
-</pre></div>
-<p>Because the unique_pointer moved from x into the function argument x remains
-invalid and dereferencing it will leave it invalid.  Note that <tt class="docutils literal">g++</tt> doesn't
-even issue a warning even when compiling this code with <tt class="docutils literal"><span class="pre">-Wall</span></tt>.</p>
-<p>What I think is nice in the C++ version is the explicit <tt class="docutils literal"><span class="pre">std::move</span></tt> which
-makes it obvious to the reader, that <tt class="docutils literal">x</tt> shouldn't be used afterwards.</p>
-<p>The compile errors Rust gives can be intimidating when learning Rust, since it
-is not obvious from the code that <tt class="docutils literal">x</tt> just moved.</p>
-<p>But Rust's lifetime concept doesn't stop here.  It even tracks down usage of
-invalidated references.  Consider the following C++ code:</p>
-<div class="highlight"><pre><span class="cp">#include&lt;cstdio&gt;</span>
-<span class="cp">#include&lt;vector&gt;</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
-    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-    <span class="kt">int</span><span class="o">&amp;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i, &quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>Executing this code will output <tt class="docutils literal">5, 0</tt> on my machine.  According to the <a class="reference external" href="http://en.cppreference.com/w/cpp/container/vector#Iterator_invalidation">C++
-standard</a>
-<tt class="docutils literal">push_back</tt> invalidates any reference to elements (iterators).  So accessing
-it triggers undefined behaviour.</p>
-<p>Trying the same in Rust</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[];</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Triggers a compile error:</p>
-<div class="highlight"><pre>rust_dangling.rs:6:5: 6:6 error: cannot borrow `v` as mutable because it is also borrowed as immutable
-rust_dangling.rs:6     v.push(6);
-                       ^
-rust_dangling.rs:4:14: 4:15 note: previous borrow of `v` occurs here; the immutable borrow prevents subsequent moves or mutable borrows of `v` until the borrow ends
-rust_dangling.rs:4     let x = &amp;v[0];
-                                ^
-rust_dangling.rs:8:2: 8:2 note: previous borrow ends here
-rust_dangling.rs:1 fn main() {
-...
-rust_dangling.rs:8 }
-                   ^
-</pre></div>
-<p>Rust tries to tell us, that we can't change the vector, because there is still
-a reference to it in scope, namely <tt class="docutils literal">x</tt>!
-To fix the issue we need to limit the scope of <tt class="docutils literal">x</tt>:</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[];</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
-<span class="w">        </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Have comments? Discuss on <a class="reference external" href="https://news.ycombinator.com/item?id=9329506">Hacker News</a>.</p>
-</div>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+                <a class="readmore" href="//rnestler.github.io/more-rust-compared-to-c.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

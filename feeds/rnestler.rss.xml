@@ -36,7 +36,7 @@ Plugin &lt;span class="s1"&gt;&amp;#39;bling/vim-airline&amp;#39;&lt;/span&gt;
 &lt;h2&gt;Configuring airline&lt;/h2&gt;
 &lt;p&gt;Out of the box airline does show the status bar only if at least one split is
 active:&lt;/p&gt;
-&lt;img alt="Vim screen shot with airline" class="align-center" src="images/vim-airline0.png" style="width: 100%;" /&gt;
+&lt;img alt="Vim screen shot with airline" class="align-center" src="/images/vim-airline0.png" style="width: 100%;" /&gt;
 &lt;p&gt;Also the default symbols used in the statusline aren't that fancy. Adding &lt;tt class="docutils literal"&gt;set
 laststatus=2&lt;/tt&gt; enables the statusline by default and &lt;tt class="docutils literal"&gt;let
 g:airline_powerline_fonts = 1&lt;/tt&gt; lets one use the &lt;a class="reference external" href="https://github.com/powerline/fonts"&gt;powerline fonts&lt;/a&gt;&lt;/p&gt;
@@ -60,7 +60,7 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!&lt;/p&
 % urxvtd -q -o -f
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;After that it worked like a charm and the special symbols did show up nicely:&lt;/p&gt;
-&lt;img alt="Vim screen shot with airline and powerline fonts" class="align-center" src="images/vim-airline1.png" style="width: 100%;" /&gt;
+&lt;img alt="Vim screen shot with airline and powerline fonts" class="align-center" src="/images/vim-airline1.png" style="width: 100%;" /&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Fri, 03 Jul 2015 00:00:00 +0200</pubDate><guid>tag:rnestler.github.io,2015-07-03:setting-up-airline-vim.html</guid><category>Vim</category><category>airline</category><category>urxvt</category><category>ArchLinux</category></item><item><title>Serialization in Rust</title><link>//rnestler.github.io/serialization-in-rust.html</link><description>&lt;p&gt;One of my first projects with Rust is the &lt;a class="reference external" href="https://spaceapi.net/"&gt;spaceapi&lt;/a&gt;
 implementation of my local &lt;a class="reference external" href="https://coredump.ch"&gt;hackerspace&lt;/a&gt;.&lt;/p&gt;

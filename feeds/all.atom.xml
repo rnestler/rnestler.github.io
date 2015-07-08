@@ -1,5 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2015-04-09T00:00:00+02:00</updated><entry><title>Serialization in Rust</title><link href="//rnestler.github.io/serialization-in-rust.html" rel="alternate"></link><updated>2015-04-09T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-04-09:serialization-in-rust.html</id><summary type="html">&lt;p&gt;One of my first projects with Rust is the &lt;a class="reference external" href="https://spaceapi.net/"&gt;spaceapi&lt;/a&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2015-07-03T00:00:00+02:00</updated><entry><title>Setting up airline-vim</title><link href="//rnestler.github.io/setting-up-airline-vim.html" rel="alternate"></link><updated>2015-07-03T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-07-03:setting-up-airline-vim.html</id><summary type="html">&lt;p&gt;Recently I noticed, that my Vim configuration is getting a bit outdated. The
+configuration of one of my mate had a fancy status line, showed syntax errors
+when saving a buffer and he used &lt;a class="reference external" href="https://github.com/gmarik/Vundle.vim"&gt;vundle&lt;/a&gt; to manage his Vim plug-ins.  I used to
+manage my Vim plug-ins with &lt;a class="reference external" href="https://github.com/archlinuxfr/yaourt"&gt;yaourt&lt;/a&gt;, a
+package manager for &lt;a class="reference external" href="https://aur4.archlinux.org/"&gt;user packages&lt;/a&gt; in ArchLinux.&lt;/p&gt;
+&lt;div class="section" id="installing-vundle"&gt;
+&lt;h2&gt;Installing vundle&lt;/h2&gt;
+&lt;p&gt;First one needs to get the vundle plug-in via git:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git clone https://github.com/gmarik/vundle.git /home/roughl/.vim/bundle/vundle
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then one needs to setup Vim to use it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;&amp;quot; ~/.vimrc&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;nocompatible&lt;/span&gt;
+&lt;span class="k"&gt;filetype&lt;/span&gt; off
+
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;rtp&lt;/span&gt;&lt;span class="p"&gt;+=~&lt;/span&gt;&lt;span class="sr"&gt;/.vim/&lt;/span&gt;bundle&lt;span class="sr"&gt;/Vundle.vim/&lt;/span&gt;
+&lt;span class="k"&gt;call&lt;/span&gt; vundle#rc&lt;span class="p"&gt;()&lt;/span&gt;
+
+Plugin &lt;span class="s1"&gt;&amp;#39;gmarik/Vundle.vim&amp;#39;&lt;/span&gt;
+
+&lt;span class="k"&gt;filetype&lt;/span&gt; plugin indent &lt;span class="k"&gt;on&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;From there adding additional plug-ins is as easy as adding a &lt;tt class="docutils literal"&gt;Plugin ...&lt;/tt&gt; line
+right after the vundle plug-in.&lt;/p&gt;
+&lt;p&gt;So adding &lt;a class="reference external" href="https://github.com/bling/vim-airline"&gt;airline&lt;/a&gt; for a fancy status
+line, &lt;a class="reference external" href="https://github.com/scrooloose/syntastic"&gt;syntastic&lt;/a&gt; as a syntax checker
+and git support with &lt;a class="reference external" href="https://github.com/tpope/vim-fugitive"&gt;fugitive&lt;/a&gt; is as
+easy as this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Plugin &lt;span class="s1"&gt;&amp;#39;scrooloose/syntastic&amp;#39;&lt;/span&gt;
+Plugin &lt;span class="s1"&gt;&amp;#39;tpope/vim-fugitive&amp;#39;&lt;/span&gt;
+Plugin &lt;span class="s1"&gt;&amp;#39;bling/vim-airline&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuring-airline"&gt;
+&lt;h2&gt;Configuring airline&lt;/h2&gt;
+&lt;p&gt;Out of the box airline does show the status bar only if at least one split is
+active:&lt;/p&gt;
+&lt;img alt="Vim screen shot with airline" class="align-center" src="images/vim-airline0.png" style="width: 100%;" /&gt;
+&lt;p&gt;Also the default symbols used in the statusline aren't that fancy. Adding &lt;tt class="docutils literal"&gt;set
+laststatus=2&lt;/tt&gt; enables the statusline by default and &lt;tt class="docutils literal"&gt;let
+g:airline_powerline_fonts = 1&lt;/tt&gt; lets one use the &lt;a class="reference external" href="https://github.com/powerline/fonts"&gt;powerline fonts&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Configuring my terminal emulator of choice, urxvt, turned out to be a bit of a
+hassle.&lt;/p&gt;
+&lt;p&gt;Installing the fonts was easy:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;git clone https://github.com/powerline/fonts.git
+&lt;span class="nb"&gt;cd &lt;/span&gt;fonts
+./install.sh
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.Xresources&lt;/span&gt;&lt;/tt&gt; configure urxvt to use a powerline font:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;URxvt.font: xft:DejaVu Sans Mono &lt;span class="k"&gt;for&lt;/span&gt; Powerline:size&lt;span class="o"&gt;=&lt;/span&gt;11
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then reloading the configuration&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;xrdb -merge ~/.Xresources
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The problem was that urxvt didn't like that at all and displayed the fonts with
+the spacing all messed up. After an hour of googling and trying out different
+stuff, it turned out I just needed to kill and restart the urxvtd daemon!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;% killall urxvtd
+% urxvtd -q -o -f
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that it worked like a charm and the special symbols did show up nicely:&lt;/p&gt;
+&lt;img alt="Vim screen shot with airline and powerline fonts" class="align-center" src="images/vim-airline1.png" style="width: 100%;" /&gt;
+&lt;/div&gt;
+</summary><category term="Vim"></category><category term="airline"></category><category term="urxvt"></category><category term="ArchLinux"></category></entry><entry><title>Serialization in Rust</title><link href="//rnestler.github.io/serialization-in-rust.html" rel="alternate"></link><updated>2015-04-09T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-04-09:serialization-in-rust.html</id><summary type="html">&lt;p&gt;One of my first projects with Rust is the &lt;a class="reference external" href="https://spaceapi.net/"&gt;spaceapi&lt;/a&gt;
 implementation of my local &lt;a class="reference external" href="https://coredump.ch"&gt;hackerspace&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;You can find the source for it on &lt;a class="reference external" href="https://github.com/coredump-ch/spaceapi"&gt;github&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="the-space-api"&gt;

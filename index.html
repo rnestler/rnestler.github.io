@@ -7,7 +7,7 @@
         <link href="//rnestler.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
 
         <!--[if IE]>
-            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 </head>
 
@@ -22,7 +22,80 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/setting-up-airline-vim.html">Setting up airline-vim</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html">Reading the SHTC1 smart gadget BLE device</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2015-08-16T00:00:00+02:00">
+                Published: Son 16 August 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/ble.html">BLE</a> <a href="//rnestler.github.io/tag/bluetooth.html">bluetooth</a> <a href="//rnestler.github.io/tag/bluez.html">bluez</a> <a href="//rnestler.github.io/tag/shtc1.html">SHTC1</a> <a href="//rnestler.github.io/tag/smartgadget.html">SmartGadget</a> </p>
+</footer><!-- /.post-info --><div class="section" id="requirements">
+<h2>Requirements</h2>
+<p>First we need to install the bluez bluetooth stack:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo pacman -S bluez bluez-utils
+</pre></div>
+<p>To be able to switch the bluetooth on and off I use the bluetooth command from
+tlp:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo pacman -S tlp
+<span class="nv">$ </span>sudo bluetooth on
+</pre></div>
+<p>Next we activate the bluetooth service:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo systemctl daemon-reload
+<span class="nv">$ </span>sudo systemctl start bluetooth.service
+</pre></div>
+</div>
+<div class="section" id="connecting">
+<h2>Connecting</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo hcitool dev
+Devices:
+        hci0    F8:16:54:CD:5F:CC
+<span class="nv">$ </span>sudo hcitool lescan
+LE Scan ...
+BC:6A:29:C1:A9:3B SHTC1 smart gadget
+
+<span class="nv">$ </span>sudo gatttool -b BC:6A:29:C1:A9:3B -I
+<span class="o">[</span>BC:6A:29:C1:A9:3B<span class="o">][</span>LE<span class="o">]</span>&gt; connect
+Attempting to connect to BC:6A:29:C1:A9:3B
+Connection successful
+</pre></div>
+</div>
+<div class="section" id="reading-the-sensordata">
+<h2>Reading the sensordata</h2>
+<p>According to <a class="reference external" href="https://github.com/Sensirion/SmartGadget-iOS/blob/50dc0f36c0624f825f7637bceeb5a34da7c878f3/Classes/Peripheral/Services/Sensirion/Shtc1/Shtc1RhtService.m">the SmartGadget-iOS code</a>
+The UUID to read the temperature is 0xAA21.
+So we try to read it:</p>
+<div class="highlight"><pre><span class="o">[</span>BC:6A:29:C1:A9:3B<span class="o">][</span>LE<span class="o">]</span>&gt; char-read-uuid 0xAA21
+handle: 0x0025   value: <span class="m">66</span> 0b b9 14
+</pre></div>
+<p>The first 16-bit value is the temperature and the second the humidity. Note
+that the byte order of the values is big endian.</p>
+<p>So to calculate the measured temperature in python we need to:</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">temperature</span> <span class="o">=</span> <span class="mh">0x0b66</span><span class="o">/</span><span class="mf">100.0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span><span class="o">+</span> <span class="s">&quot;°C&quot;</span><span class="p">)</span>
+<span class="mf">29.18</span><span class="err">°</span><span class="n">C</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">humidity</span> <span class="o">=</span> <span class="mh">0x14b9</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span><span class="o">+</span> <span class="s">&quot;%RH&quot;</span><span class="p">)</span>
+<span class="mf">53.05</span><span class="o">%</span><span class="n">RH</span>
+</pre></div>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/setting-up-airline-vim.html" rel="bookmark"
+                           title="Permalink to Setting up airline-vim">Setting up airline-vim</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-07-03T00:00:00+02:00">
                 Published: Fre 03 Juli 2015
@@ -31,77 +104,13 @@
         <address class="vcard author">
                 By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>. </p>
+<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/vim.html">Vim</a> <a href="//rnestler.github.io/tag/airline.html">airline</a> <a href="//rnestler.github.io/tag/urxvt.html">urxvt</a> <a href="//rnestler.github.io/tag/archlinux.html">ArchLinux</a> </p>
-</footer><!-- /.post-info --><p>Recently I noticed, that my Vim configuration is getting a bit outdated. The
-configuration of one of my mate had a fancy status line, showed syntax errors
-when saving a buffer and he used <a class="reference external" href="https://github.com/gmarik/Vundle.vim">vundle</a> to manage his Vim plug-ins.  I used to
-manage my Vim plug-ins with <a class="reference external" href="https://github.com/archlinuxfr/yaourt">yaourt</a>, a
-package manager for <a class="reference external" href="https://aur4.archlinux.org/">user packages</a> in ArchLinux.</p>
-<div class="section" id="installing-vundle">
-<h2>Installing vundle</h2>
-<p>First one needs to get the vundle plug-in via git:</p>
-<div class="highlight"><pre>git clone https://github.com/gmarik/vundle.git /home/roughl/.vim/bundle/vundle
-</pre></div>
-<p>Then one needs to setup Vim to use it:</p>
-<div class="highlight"><pre><span class="c">&quot; ~/.vimrc</span>
-<span class="k">set</span> <span class="nb">nocompatible</span>
-<span class="k">filetype</span> off
+</footer><!-- /.post-info -->                <p class="first last">Setting up the airline-vim plug-in and configure the powerline fonts</p>
 
-<span class="k">set</span> <span class="nb">rtp</span><span class="p">+=~</span><span class="sr">/.vim/</span>bundle<span class="sr">/Vundle.vim/</span>
-<span class="k">call</span> vundle#rc<span class="p">()</span>
-
-Plugin <span class="s1">&#39;gmarik/Vundle.vim&#39;</span>
-
-<span class="k">filetype</span> plugin indent <span class="k">on</span>
-</pre></div>
-<p>From there adding additional plug-ins is as easy as adding a <tt class="docutils literal">Plugin ...</tt> line
-right after the vundle plug-in.</p>
-<p>So adding <a class="reference external" href="https://github.com/bling/vim-airline">airline</a> for a fancy status
-line, <a class="reference external" href="https://github.com/scrooloose/syntastic">syntastic</a> as a syntax checker
-and git support with <a class="reference external" href="https://github.com/tpope/vim-fugitive">fugitive</a> is as
-easy as this:</p>
-<div class="highlight"><pre>Plugin <span class="s1">&#39;scrooloose/syntastic&#39;</span>
-Plugin <span class="s1">&#39;tpope/vim-fugitive&#39;</span>
-Plugin <span class="s1">&#39;bling/vim-airline&#39;</span>
-</pre></div>
-</div>
-<div class="section" id="configuring-airline">
-<h2>Configuring airline</h2>
-<p>Out of the box airline does show the status bar only if at least one split is
-active:</p>
-<img alt="Vim screen shot with airline" class="align-center" src="/images/vim-airline0.png" style="width: 100%;" />
-<p>Also the default symbols used in the statusline aren't that fancy. Adding <tt class="docutils literal">set
-laststatus=2</tt> enables the statusline by default and <tt class="docutils literal">let
-g:airline_powerline_fonts = 1</tt> lets one use the <a class="reference external" href="https://github.com/powerline/fonts">powerline fonts</a></p>
-<p>Configuring my terminal emulator of choice, urxvt, turned out to be a bit of a
-hassle.</p>
-<p>Installing the fonts was easy:</p>
-<div class="highlight"><pre>git clone https://github.com/powerline/fonts.git
-<span class="nb">cd </span>fonts
-./install.sh
-</pre></div>
-<p>Then in <tt class="docutils literal"><span class="pre">~/.Xresources</span></tt> configure urxvt to use a powerline font:</p>
-<div class="highlight"><pre>URxvt.font: xft:DejaVu Sans Mono <span class="k">for</span> Powerline:size<span class="o">=</span>11
-</pre></div>
-<p>Then reloading the configuration</p>
-<div class="highlight"><pre>xrdb -merge ~/.Xresources
-</pre></div>
-<p>The problem was that urxvt didn't like that at all and displayed the fonts with
-the spacing all messed up. After an hour of googling and trying out different
-stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
-<div class="highlight"><pre>% killall urxvtd
-% urxvtd -q -o -f
-</pre></div>
-<p>After that it worked like a charm and the special symbols did show up nicely:</p>
-<img alt="Vim screen shot with airline and powerline fonts" class="align-center" src="/images/vim-airline1.png" style="width: 100%;" />
-</div>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+                <a class="readmore" href="//rnestler.github.io/setting-up-airline-vim.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -118,7 +127,7 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
         <address class="vcard author">
                 By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>. </p>
+<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/json.html">JSON</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Using the Rust JSON serialization to implement the Space API</p>
 
@@ -141,7 +150,7 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
         <address class="vcard author">
                 By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>. </p>
+<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">More about the programming language Rust</p>
 
@@ -164,7 +173,7 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
         <address class="vcard author">
                 By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>. </p>
+<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Learning the programming language rust</p>
 
@@ -187,7 +196,7 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
         <address class="vcard author">
                 By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2013.html">2013</a>. </p>
+<p>In <a href="//rnestler.github.io/category/2013.html">2013</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/systemd.html">systemd</a> <a href="//rnestler.github.io/tag/slock.html">slock</a> <a href="//rnestler.github.io/tag/suspend.html">suspend</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">How to configure systemd to run slock when going to sleep</p>
 
@@ -210,7 +219,7 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
         <address class="vcard author">
                 By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2013.html">2013</a>. </p>
+<p>In <a href="//rnestler.github.io/category/2013.html">2013</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/blog.html">blog</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">How and why I created this blog.</p>
 
@@ -257,7 +266,7 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
     _gaq.push(['_trackPageview']);
     (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        ga.src = 'https://ssl.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
     </script>

@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2015-07-03T00:00:00+02:00</updated><entry><title>Setting up airline-vim</title><link href="//rnestler.github.io/setting-up-airline-vim.html" rel="alternate"></link><updated>2015-07-03T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-07-03:setting-up-airline-vim.html</id><summary type="html">&lt;p&gt;Recently I noticed, that my Vim configuration is getting a bit outdated. The
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2015-08-16T00:00:00+02:00</updated><entry><title>Reading the SHTC1 smart gadget BLE device</title><link href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html" rel="alternate"></link><updated>2015-08-16T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-08-16:reading-the-shtc1-smart-gadget-ble-device.html</id><summary type="html">&lt;div class="section" id="requirements"&gt;
+&lt;h2&gt;Requirements&lt;/h2&gt;
+&lt;p&gt;First we need to install the bluez bluetooth stack:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pacman -S bluez bluez-utils
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To be able to switch the bluetooth on and off I use the bluetooth command from
+tlp:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pacman -S tlp
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo bluetooth on
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next we activate the bluetooth service:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl daemon-reload
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo systemctl start bluetooth.service
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="connecting"&gt;
+&lt;h2&gt;Connecting&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo hcitool dev
+Devices:
+        hci0    F8:16:54:CD:5F:CC
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo hcitool lescan
+LE Scan ...
+BC:6A:29:C1:A9:3B SHTC1 smart gadget
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo gatttool -b BC:6A:29:C1:A9:3B -I
+&lt;span class="o"&gt;[&lt;/span&gt;BC:6A:29:C1:A9:3B&lt;span class="o"&gt;][&lt;/span&gt;LE&lt;span class="o"&gt;]&lt;/span&gt;&amp;gt; connect
+Attempting to connect to BC:6A:29:C1:A9:3B
+Connection successful
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="reading-the-sensordata"&gt;
+&lt;h2&gt;Reading the sensordata&lt;/h2&gt;
+&lt;p&gt;According to &lt;a class="reference external" href="https://github.com/Sensirion/SmartGadget-iOS/blob/50dc0f36c0624f825f7637bceeb5a34da7c878f3/Classes/Peripheral/Services/Sensirion/Shtc1/Shtc1RhtService.m"&gt;the SmartGadget-iOS code&lt;/a&gt;
+The UUID to read the temperature is 0xAA21.
+So we try to read it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;[&lt;/span&gt;BC:6A:29:C1:A9:3B&lt;span class="o"&gt;][&lt;/span&gt;LE&lt;span class="o"&gt;]&lt;/span&gt;&amp;gt; char-read-uuid 0xAA21
+handle: 0x0025   value: &lt;span class="m"&gt;66&lt;/span&gt; 0b b9 14
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The first 16-bit value is the temperature and the second the humidity. Note
+that the byte order of the values is big endian.&lt;/p&gt;
+&lt;p&gt;So to calculate the measured temperature in python we need to:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;temperature&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0x0b66&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;100.0&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;temperature&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;°C&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;29.18&lt;/span&gt;&lt;span class="err"&gt;°&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;humidity&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mh"&gt;0x14b9&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;humidity&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;%RH&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="mf"&gt;53.05&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;RH&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="BLE"></category><category term="bluetooth"></category><category term="bluez"></category><category term="SHTC1"></category><category term="SmartGadget"></category></entry><entry><title>Setting up airline-vim</title><link href="//rnestler.github.io/setting-up-airline-vim.html" rel="alternate"></link><updated>2015-07-03T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-07-03:setting-up-airline-vim.html</id><summary type="html">&lt;p&gt;Recently I noticed, that my Vim configuration is getting a bit outdated. The
 configuration of one of my mate had a fancy status line, showed syntax errors
 when saving a buffer and he used &lt;a class="reference external" href="https://github.com/gmarik/Vundle.vim"&gt;vundle&lt;/a&gt; to manage his Vim plug-ins.  I used to
 manage my Vim plug-ins with &lt;a class="reference external" href="https://github.com/archlinuxfr/yaourt"&gt;yaourt&lt;/a&gt;, a

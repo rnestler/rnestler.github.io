@@ -44,20 +44,23 @@ asked me about a C++ pattern to undo parts of an action if an exception gets
 thrown in the middle of it.</p>
 <p>Of course he basically described the main usage of a ScopeGuard. I went ahead
 and <a class="reference external" href="https://github.com/LibrePCB/LibrePCB/pull/57">implemented one</a> based on
-a <a class="reference external" href="https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C">talk of Andrei Alexandrescu</a></p>
+a <a class="reference external" href="https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C">talk by Andrei Alexandrescu</a>.</p>
 <div class="section" id="basic-use-of-a-scopeguard">
-<h2>Basic Use of a ScopeGuard</h2>
+<h2>Basic use of a ScopeGuard</h2>
 <p>The ScopeGuard allows to write transactional code that will undo previous parts
 if later code throws an exception.</p>
 <div class="highlight"><pre><span></span><span class="n">myVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
 <span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">myVector</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span> <span class="p">});</span>
 
-<span class="c1">// Do stuff that may trow</span>
+<span class="c1">// Do stuff that may throw</span>
 <span class="n">database</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
 
 <span class="c1">// everything worked, so don&#39;t undo</span>
 <span class="n">guard</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
 </pre></div>
+<p>So if <tt class="docutils literal">database.add(item)</tt> throws, the item in myVector will be removed. For
+more about the motivation behind ScopeGuard see the talk above or <a class="reference external" href="http://www.drdobbs.com/cpp/generic-change-the-way-you-write-excepti/184403758">this drdobbs
+article</a>.</p>
 <p>Using C++11 and later the implementation is fairly simple:</p>
 <pre class="code cpp literal-block">
 <span class="k">struct</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
@@ -136,7 +139,7 @@ need to be undone it leads to code like the following:</p>
 <tt class="docutils literal">dismiss()</tt> we came up with a <tt class="docutils literal">ScopeGuardList</tt>.</p>
 </div>
 <div class="section" id="implementation-with-std-function">
-<h2>Implementation With std::function&lt;&gt;</h2>
+<h2>Implementation with std::function&lt;&gt;</h2>
 <p>A simple implementation just contains a list of <tt class="docutils literal"><span class="pre">std::function&lt;&gt;</span></tt>:</p>
 <pre class="code cpp literal-block">
 <span class="cp">#include</span> <span class="cpf">&quot;scopeguard.h&quot;</span><span class="cp">
@@ -246,7 +249,7 @@ above ScopeGuard implementation.</p>
 LibrePCB we didn't look further for a better performing way without type
 erasure.</p>
 <p>Do you have any comments, found a bug or an error? Please leave a note on
-<a class="reference external" href="https://www.reddit.com/r/cpp/comments/4ecf5a/c_list_of_scopeguard/">Reddit</a></p>
+<a class="reference external" href="https://www.reddit.com/r/cpp/comments/4ecf5a/c_list_of_scopeguard/">Reddit</a>.</p>
 </div>
 
     </div><!-- /.entry-content -->

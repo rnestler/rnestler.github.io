@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>rnestler.github.io</title><link>//rnestler.github.io/</link><description></description><lastBuildDate>Sun, 13 Mar 2016 00:00:00 +0100</lastBuildDate><item><title>C++ List of ScopeGuard</title><link>//rnestler.github.io/c-list-of-scopeguard.html</link><description>&lt;p&gt;Recently the developer of &lt;a class="reference external" href="https://github.com/LibrePCB/LibrePCB"&gt;LibrePCB&lt;/a&gt;
+<rss version="2.0"><channel><title>rnestler.github.io</title><link>//rnestler.github.io/</link><description></description><lastBuildDate>Mon, 11 Apr 2016 00:00:00 +0200</lastBuildDate><item><title>C++ List of ScopeGuard</title><link>//rnestler.github.io/c-list-of-scopeguard.html</link><description>&lt;p&gt;Recently the developer of &lt;a class="reference external" href="https://github.com/LibrePCB/LibrePCB"&gt;LibrePCB&lt;/a&gt;
 asked me about a C++ pattern to undo parts of an action if an exception gets
 thrown in the middle of it.&lt;/p&gt;
 &lt;p&gt;Of course he basically described the main usage of a ScopeGuard. I went ahead
@@ -208,7 +208,7 @@ erasure.&lt;/p&gt;
 &lt;p&gt;Do you have any comments, found a bug or an error? Please leave a note on
 &lt;a class="reference external" href="https://reddit.org"&gt;Reddit&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Sun, 13 Mar 2016 00:00:00 +0100</pubDate><guid isPermaLink="false">tag:rnestler.github.io,2016-03-13:c-list-of-scopeguard.html</guid><category>programming</category><category>C++</category></item><item><title>Reading the SHTC1 smart gadget BLE device</title><link>//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html</link><description>&lt;div class="section" id="requirements"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Mon, 11 Apr 2016 00:00:00 +0200</pubDate><guid isPermaLink="false">tag:rnestler.github.io,2016-04-11:c-list-of-scopeguard.html</guid><category>programming</category><category>C++</category></item><item><title>Reading the SHTC1 smart gadget BLE device</title><link>//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html</link><description>&lt;div class="section" id="requirements"&gt;
 &lt;h2&gt;Requirements&lt;/h2&gt;
 &lt;p&gt;First we need to install the bluez bluetooth stack:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pacman -S bluez bluez-utils

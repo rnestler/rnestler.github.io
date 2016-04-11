@@ -17,12 +17,246 @@
                 <nav><ul>
                     <li><a href="//rnestler.github.io/category/2013.html">2013</a></li>
                     <li><a href="//rnestler.github.io/category/2015.html">2015</a></li>
+                    <li><a href="//rnestler.github.io/category/2016.html">2016</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/more-rust-compared-to-c.html">More Rust compared to C++</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/c-list-of-scopeguard.html">C++ List of ScopeGuard</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-03-13T00:00:00+01:00">
+                Published: Son 13 März 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
+</footer><!-- /.post-info --><p>Recently the developer of <a class="reference external" href="https://github.com/LibrePCB/LibrePCB">LibrePCB</a>
+asked me about a C++ pattern to undo parts of an action if an exception gets
+thrown in the middle of it.</p>
+<p>Of course he basically described the main usage of a ScopeGuard. I went ahead
+and <a class="reference external" href="https://github.com/LibrePCB/LibrePCB/pull/57">implemented one</a> based on
+a <a class="reference external" href="https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C">talk of Andrei Alexandrescu</a></p>
+<div class="section" id="basic-use-of-a-scopeguard">
+<h2>Basic Use of a ScopeGuard</h2>
+<p>The ScopeGuard allows to write transactional code that will undo previous parts
+if later code throws an exception.</p>
+<div class="highlight"><pre><span></span><span class="n">myVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">myVector</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span> <span class="p">});</span>
+
+<span class="c1">// Do stuff that may trow</span>
+<span class="n">database</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+
+<span class="c1">// everything worked, so don&#39;t undo</span>
+<span class="n">guard</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+</pre></div>
+<p>Using C++11 and later the implementation is fairly simple:</p>
+<pre class="code cpp literal-block">
+<span class="k">struct</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuardBase</span><span class="p">()</span><span class="o">:</span>
+        <span class="n">mActive</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+    <span class="p">{</span> <span class="p">}</span>
+
+    <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">ScopeGuardBase</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">mActive</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mActive</span><span class="p">)</span>
+    <span class="p">{</span> <span class="n">rhs</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span> <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">dismiss</span><span class="p">()</span> <span class="k">noexcept</span>
+    <span class="p">{</span> <span class="n">mActive</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">protected</span><span class="o">:</span>
+    <span class="o">~</span><span class="n">ScopeGuardBase</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">mActive</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nl">ScopeGuard</span><span class="p">:</span> <span class="k">public</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuard</span><span class="p">()</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="k">const</span> <span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span> <span class="k">noexcept</span><span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(),</span>
+        <span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+        <span class="p">{</span> <span class="p">}</span>
+
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="n">ScopeGuard</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="k">noexcept</span> <span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span>
+        <span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mF</span><span class="p">))</span>
+        <span class="p">{</span> <span class="p">}</span>
+
+    <span class="o">~</span><span class="n">ScopeGuard</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mActive</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="p">{</span> <span class="n">mF</span><span class="p">();</span> <span class="p">}</span> <span class="k">catch</span><span class="p">(...)</span> <span class="p">{}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">ScopeGuard</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">Fun</span> <span class="n">mF</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span> <span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span> <span class="n">scopeGuard</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span>
+<span class="p">}</span>
+</pre>
+</div>
+<div class="section" id="why-a-scopeguardlist">
+<h2>Why a ScopeGuardList?</h2>
+<p>If you have a transaction that consists of a lot of steps that may throw and
+need to be undone it leads to code like the following:</p>
+<div class="highlight"><pre><span></span><span class="n">doThing1</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing1</span><span class="p">();</span> <span class="p">});</span>
+<span class="n">doThing2</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing2</span><span class="p">();</span> <span class="p">});</span>
+<span class="n">doThing3</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing3</span><span class="p">();</span> <span class="p">});</span>
+
+<span class="c1">// Do stuff that may trow</span>
+
+<span class="n">guard1</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+<span class="n">guard2</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+<span class="n">guard3</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+</pre></div>
+<p>Things get even worse when doing something in a loop:</p>
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">doStuff</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="c1">// how do we create a guard for every operation?</span>
+<span class="p">}</span>
+</pre></div>
+<p>To avoid that repetition and the potential error of a missing call to
+<tt class="docutils literal">dismiss()</tt> we came up with a <tt class="docutils literal">ScopeGuardList</tt>.</p>
+</div>
+<div class="section" id="implementation-with-std-function">
+<h2>Implementation With std::function&lt;&gt;</h2>
+<p>A simple implementation just contains a list of <tt class="docutils literal"><span class="pre">std::function&lt;&gt;</span></tt>:</p>
+<pre class="code cpp literal-block">
+<span class="cp">#include</span> <span class="cpf">&quot;scopeguard.h&quot;</span><span class="cp">
+#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp">
+</span>
+<span class="k">struct</span> <span class="nl">ScopeGuardList</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuardList</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+    <span class="n">ScopeGuardList</span><span class="p">(</span><span class="n">ScopeGuardList</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span>
+        <span class="n">mScopeGuards</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mScopeGuards</span><span class="p">))</span>
+    <span class="p">{</span> <span class="p">}</span>
+
+    <span class="o">~</span><span class="n">ScopeGuardList</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mActive</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">scopeGuard</span> <span class="p">:</span> <span class="n">mScopeGuards</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">scopeGuard</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span>
+    <span class="p">{</span> <span class="n">mScopeGuards</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span> <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">mScopeGuards</span><span class="p">;</span>
+<span class="p">};</span>
+</pre>
+<p>This implementation uses the type erasure of <tt class="docutils literal"><span class="pre">std::function</span></tt> to store several
+undo functions. While being fairly simple it performs worse compared to the
+above ScopeGuard implementation.</p>
+<p>A quick benchmark showed that the <tt class="docutils literal">ScopeGuard</tt> performs ~14 times faster than
+<tt class="docutils literal">ScopeGuardList</tt>:</p>
+<pre class="code cpp literal-block">
+<span class="cp">#include</span> <span class="cpf">&lt;chrono&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">&quot;scopeguardlist.h&quot;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">testScopeGuard</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
+    <span class="c1">// make volatile to avoid optimizations
+</span>    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">setByGuard0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">guard0</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">setByGuard0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">elapsed_seconds</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Needed &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">setByGuard0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">testScopeGuardList</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
+    <span class="c1">// make volatile to avoid optimizations
+</span>    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">setByGuard0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">guardList</span> <span class="o">=</span> <span class="n">ScopeGuardList</span><span class="p">();</span>
+        <span class="n">guardList</span><span class="p">.</span><span class="n">add</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">setByGuard0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">elapsed_seconds</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Needed &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">setByGuard0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">testScopeGuard</span><span class="p">();</span>
+    <span class="n">testScopeGuardList</span><span class="p">();</span>
+<span class="p">}</span>
+</pre>
+<table border="1" class="docutils">
+<caption>Benchmark with different optimization levels</caption>
+<colgroup>
+<col width="11%" />
+<col width="41%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">-O$N</th>
+<th class="head">Time[s] ScopeGuard</th>
+<th class="head">Time[s] ScopGuardList</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>0</td>
+<td>0.178144</td>
+<td>2.61144</td>
+</tr>
+<tr><td>1</td>
+<td>0.0180427</td>
+<td>0.286136</td>
+</tr>
+<tr><td>2</td>
+<td>0.0170452</td>
+<td>0.283548</td>
+</tr>
+<tr><td>3</td>
+<td>0.0170423</td>
+<td>0.289958</td>
+</tr>
+</tbody>
+</table>
+<p>Since the <tt class="docutils literal">ScopeGuardList</tt> isn't used in any performance critical part in
+LibrePCB we didn't look further for a better performing way without type
+erasure.</p>
+<p>Do you have any comments, found a bug or an error? Please leave a note on
+<a class="reference external" href="https://reddit.org">Reddit</a></p>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/more-rust-compared-to-c.html" rel="bookmark"
+                           title="Permalink to More Rust compared to C++">More Rust compared to C++</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-02-06T00:00:00+01:00">
                 Published: Fre 06 Februar 2015
@@ -33,232 +267,13 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
-</footer><!-- /.post-info --><p>After <a class="reference external" href="http://rnestler.github.io/learning-rust.html">getting in touch with Rust</a>, the next thing I was looking
-at were pointers and the concept of ownership and borrowing in Rust.</p>
-<div class="section" id="pointers">
-<h2>Pointers</h2>
-<p>Rust has a lot of different pointer types, reminding me of the C++ references,
-raw and smart pointers like <a class="reference external" href="http://en.cppreference.com/w/cpp/memory/unique_ptr">std::unique_ptr</a>, <a class="reference external" href="http://en.cppreference.com/w/cpp/memory/shared_ptr">std::shared_ptr</a>.  For a nice comparison
-see <a class="reference external" href="https://github.com/rust-lang/rust-wiki-backup/blob/master/Rust-for-CXX-programmers.rest">here</a>.</p>
-<div class="section" id="references">
-<h3>References</h3>
-<p>One of the first pointer type you will meet in Rust is the reference type.</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;x = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;x = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+</footer><!-- /.post-info -->                <p class="first last">More about the programming language Rust</p>
 
-<span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>In C++ this would look something like this:</p>
-<div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
-
-<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-    <span class="n">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>What is think is nice in Rust is:</p>
-<blockquote>
-<ul class="simple">
-<li>It's explicit that x will be modified (<tt class="docutils literal">&amp;mut x</tt>)</li>
-<li>It's guaranteed that x is neither dangling nor 0</li>
-</ul>
-</blockquote>
-<p>In C++ references have value syntax. To avoid that I prefer the <a class="reference external" href="https://google-styleguide.googlecode.com/svn/trunk/cppguide.html#Reference_Arguments">style</a>
-of using pointers for mutable and only <tt class="docutils literal">const</tt> reference for immutable data.</p>
-<div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
-
-<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">*</span><span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-    <span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;x = %i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>This way the syntax looks much more like the Rust example, but you can pass 0:</p>
-<div class="highlight"><pre>    <span class="n">add_one</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="o">-&gt;</span> <span class="n">Segmentation</span> <span class="n">fault</span> <span class="p">(</span><span class="n">core</span> <span class="n">dumped</span><span class="p">)</span>
-</pre></div>
-<p>Trying the same with C++ references yields a compile error, because a non
-<tt class="docutils literal">const</tt> reference can't bind to a temporary (rvalue)</p>
-<div class="highlight"><pre>reference.cpp: In function &#39;int main()&#39;:
-reference.cpp:12:11: error: invalid initialization of non-const reference of type &#39;int&amp;&#39; from an rvalue of type &#39;int&#39;
-  add_one(0);
-           ^
-reference.cpp:3:6: note: in passing argument 1 of &#39;void add_one(int&amp;)&#39;
- void add_one(int&amp; num) {
-      ^
-</pre></div>
-<p>Surprising to me, doing the same within Rust works</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;adding one to {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot; -&gt; {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Output: <tt class="docutils literal">adding one to 0 <span class="pre">-&gt;</span> 1</tt>.  Apparently one can bind mutable references
-to temporaries in Rust.</p>
-</div>
-<div class="section" id="heap-pointers">
-<h3>Heap pointers</h3>
-<p>For managing data on the heap Rust has the <tt class="docutils literal">Box&lt;T&gt;</tt> type</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Box</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Output: <tt class="docutils literal">5</tt></p>
-<p>The equivalent in C++ would be</p>
-<div class="highlight"><pre><span class="cp">#include &lt;memory&gt;</span>
-<span class="cp">#include &lt;cstdio&gt;</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>Note that the compiler takes care of freeing the used resources as soon as x
-goes out of scope. In the C++ world this is called <a class="reference external" href="https://en.wikipedia.org/wiki/Resource_Acquisition_Is_Initialization">RAII</a>.</p>
-</div>
-</div>
-<div class="section" id="ownership-borrowing-and-lifetime">
-<h2>Ownership, Borrowing and Lifetime</h2>
-<p>The Box type is an owning type. Meaning that it owns the resources it is
-pointing to. The same is true for <tt class="docutils literal"><span class="pre">std::unique_ptr</span></tt>.</p>
-<p>When passing a Box type to a function the ownership transfers to this function:</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">add_one</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">num</span><span class="o">:</span><span class="w"> </span><span class="n">Box</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Box</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>This will result in a compile error:</p>
-<div class="highlight"><pre>boxed.rs:10:20: 10:22 error: use of moved value: `*x`
-boxed.rs:10     println!(&quot;{}&quot;, * x);
-                               ^~
-note: in expansion of format_args!
-&lt;std macros&gt;:2:43: 2:76 note: expansion site
-&lt;std macros&gt;:1:1: 2:78 note: in expansion of println!
-boxed.rs:10:5: 10:24 note: expansion site
-boxed.rs:9:13: 9:14 note: `x` moved here because it has type `Box&lt;i32&gt;`, which is non-copyable
-boxed.rs:9     add_one(x);
-</pre></div>
-<p>Because a Box owns the resource, x will become invalid.
-If we try same in C++</p>
-<div class="highlight"><pre><span class="cp">#include &lt;memory&gt;</span>
-<span class="cp">#include &lt;cstdio&gt;</span>
-
-<span class="kt">void</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">*</span> <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
-    <span class="n">add_one</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>It will result in a segmentation fault:</p>
-<div class="highlight"><pre>% g++ -Wall -std=c++14 cpp_smart_pointers.cpp  -o cpp_smart_pointers
-% ./cpp_smart_pointers
-5
-[1]    28585 segmentation fault (core dumped)  ./cpp_smart_pointers
-</pre></div>
-<p>Because the unique_pointer moved from x into the function argument x remains
-invalid and dereferencing it will leave it invalid.  Note that <tt class="docutils literal">g++</tt> doesn't
-even issue a warning even when compiling this code with <tt class="docutils literal"><span class="pre">-Wall</span></tt>.</p>
-<p>What I think is nice in the C++ version is the explicit <tt class="docutils literal"><span class="pre">std::move</span></tt> which
-makes it obvious to the reader, that <tt class="docutils literal">x</tt> shouldn't be used afterwards.</p>
-<p>The compile errors Rust gives can be intimidating when learning Rust, since it
-is not obvious from the code that <tt class="docutils literal">x</tt> just moved.</p>
-<p>But Rust's lifetime concept doesn't stop here.  It even tracks down usage of
-invalidated references.  Consider the following C++ code:</p>
-<div class="highlight"><pre><span class="cp">#include&lt;cstdio&gt;</span>
-<span class="cp">#include&lt;vector&gt;</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
-    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-    <span class="kt">int</span><span class="o">&amp;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i, &quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%i</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-<p>Executing this code will output <tt class="docutils literal">5, 0</tt> on my machine.  According to the <a class="reference external" href="http://en.cppreference.com/w/cpp/container/vector#Iterator_invalidation">C++
-standard</a>
-<tt class="docutils literal">push_back</tt> invalidates any reference to elements (iterators).  So accessing
-it triggers undefined behaviour.</p>
-<p>Trying the same in Rust</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[];</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Triggers a compile error:</p>
-<div class="highlight"><pre>rust_dangling.rs:6:5: 6:6 error: cannot borrow `v` as mutable because it is also borrowed as immutable
-rust_dangling.rs:6     v.push(6);
-                       ^
-rust_dangling.rs:4:14: 4:15 note: previous borrow of `v` occurs here; the immutable borrow prevents subsequent moves or mutable borrows of `v` until the borrow ends
-rust_dangling.rs:4     let x = &amp;v[0];
-                                ^
-rust_dangling.rs:8:2: 8:2 note: previous borrow ends here
-rust_dangling.rs:1 fn main() {
-...
-rust_dangling.rs:8 }
-                   ^
-</pre></div>
-<p>Rust tries to tell us, that we can't change the vector, because there is still
-a reference to it in scope, namely <tt class="docutils literal">x</tt>!
-To fix the issue we need to limit the scope of <tt class="docutils literal">x</tt>:</p>
-<div class="highlight"><pre><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[];</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
-<span class="w">        </span><span class="nb">print</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}, &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="nb">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Have comments? Discuss on <a class="reference external" href="https://news.ycombinator.com/item?id=9329506">Hacker News</a>.</p>
-</div>
-                </article>
-<p class="paginator">
-    Page 1 / 1
-</p>
-            </aside><!-- /#featured -->
+                <a class="readmore" href="//rnestler.github.io/more-rust-compared-to-c.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

@@ -17,12 +17,269 @@
                 <nav><ul>
                     <li><a href="//rnestler.github.io/category/2013.html">2013</a></li>
                     <li><a href="//rnestler.github.io/category/2015.html">2015</a></li>
+                    <li><a href="//rnestler.github.io/category/2016.html">2016</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html">Reading the SHTC1 smart gadget BLE device</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/c-list-of-scopeguard.html">C++ List of ScopeGuard</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-03-13T00:00:00+01:00">
+                Published: Son 13 März 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
+</footer><!-- /.post-info --><p>Recently the developer of <a class="reference external" href="https://github.com/LibrePCB/LibrePCB">LibrePCB</a>
+asked me about a C++ pattern to undo parts of an action if an exception gets
+thrown in the middle of it.</p>
+<p>Of course he basically described the main usage of a ScopeGuard. I went ahead
+and <a class="reference external" href="https://github.com/LibrePCB/LibrePCB/pull/57">implemented one</a> based on
+a <a class="reference external" href="https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C">talk of Andrei Alexandrescu</a></p>
+<div class="section" id="basic-use-of-a-scopeguard">
+<h2>Basic Use of a ScopeGuard</h2>
+<p>The ScopeGuard allows to write transactional code that will undo previous parts
+if later code throws an exception.</p>
+<div class="highlight"><pre><span></span><span class="n">myVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">myVector</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span> <span class="p">});</span>
+
+<span class="c1">// Do stuff that may trow</span>
+<span class="n">database</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+
+<span class="c1">// everything worked, so don&#39;t undo</span>
+<span class="n">guard</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+</pre></div>
+<p>Using C++11 and later the implementation is fairly simple:</p>
+<pre class="code cpp literal-block">
+<span class="k">struct</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuardBase</span><span class="p">()</span><span class="o">:</span>
+        <span class="n">mActive</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+    <span class="p">{</span> <span class="p">}</span>
+
+    <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">ScopeGuardBase</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">mActive</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mActive</span><span class="p">)</span>
+    <span class="p">{</span> <span class="n">rhs</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span> <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">dismiss</span><span class="p">()</span> <span class="k">noexcept</span>
+    <span class="p">{</span> <span class="n">mActive</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">protected</span><span class="o">:</span>
+    <span class="o">~</span><span class="n">ScopeGuardBase</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">mActive</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nl">ScopeGuard</span><span class="p">:</span> <span class="k">public</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuard</span><span class="p">()</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="k">const</span> <span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span> <span class="k">noexcept</span><span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(),</span>
+        <span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+        <span class="p">{</span> <span class="p">}</span>
+
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="n">ScopeGuard</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="k">noexcept</span> <span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span>
+        <span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mF</span><span class="p">))</span>
+        <span class="p">{</span> <span class="p">}</span>
+
+    <span class="o">~</span><span class="n">ScopeGuard</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mActive</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="p">{</span> <span class="n">mF</span><span class="p">();</span> <span class="p">}</span> <span class="k">catch</span><span class="p">(...)</span> <span class="p">{}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">ScopeGuard</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">Fun</span> <span class="n">mF</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span> <span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span> <span class="n">scopeGuard</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span>
+<span class="p">}</span>
+</pre>
+</div>
+<div class="section" id="why-a-scopeguardlist">
+<h2>Why a ScopeGuardList?</h2>
+<p>If you have a transaction that consists of a lot of steps that may throw and
+need to be undone it leads to code like the following:</p>
+<div class="highlight"><pre><span></span><span class="n">doThing1</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing1</span><span class="p">();</span> <span class="p">});</span>
+<span class="n">doThing2</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing2</span><span class="p">();</span> <span class="p">});</span>
+<span class="n">doThing3</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing3</span><span class="p">();</span> <span class="p">});</span>
+
+<span class="c1">// Do stuff that may trow</span>
+
+<span class="n">guard1</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+<span class="n">guard2</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+<span class="n">guard3</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+</pre></div>
+<p>Things get even worse when doing something in a loop:</p>
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">doStuff</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="c1">// how do we create a guard for every operation?</span>
+<span class="p">}</span>
+</pre></div>
+<p>To avoid that repetition and the potential error of a missing call to
+<tt class="docutils literal">dismiss()</tt> we came up with a <tt class="docutils literal">ScopeGuardList</tt>.</p>
+</div>
+<div class="section" id="implementation-with-std-function">
+<h2>Implementation With std::function&lt;&gt;</h2>
+<p>A simple implementation just contains a list of <tt class="docutils literal"><span class="pre">std::function&lt;&gt;</span></tt>:</p>
+<pre class="code cpp literal-block">
+<span class="cp">#include</span> <span class="cpf">&quot;scopeguard.h&quot;</span><span class="cp">
+#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp">
+</span>
+<span class="k">struct</span> <span class="nl">ScopeGuardList</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuardList</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+    <span class="n">ScopeGuardList</span><span class="p">(</span><span class="n">ScopeGuardList</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span>
+        <span class="n">mScopeGuards</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mScopeGuards</span><span class="p">))</span>
+    <span class="p">{</span> <span class="p">}</span>
+
+    <span class="o">~</span><span class="n">ScopeGuardList</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mActive</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">scopeGuard</span> <span class="p">:</span> <span class="n">mScopeGuards</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">scopeGuard</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span>
+    <span class="p">{</span> <span class="n">mScopeGuards</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span> <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">mScopeGuards</span><span class="p">;</span>
+<span class="p">};</span>
+</pre>
+<p>This implementation uses the type erasure of <tt class="docutils literal"><span class="pre">std::function</span></tt> to store several
+undo functions. While being fairly simple it performs worse compared to the
+above ScopeGuard implementation.</p>
+<p>A quick benchmark showed that the <tt class="docutils literal">ScopeGuard</tt> performs ~14 times faster than
+<tt class="docutils literal">ScopeGuardList</tt>:</p>
+<pre class="code cpp literal-block">
+<span class="cp">#include</span> <span class="cpf">&lt;chrono&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">&quot;scopeguardlist.h&quot;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">testScopeGuard</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
+    <span class="c1">// make volatile to avoid optimizations
+</span>    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">setByGuard0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">guard0</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">setByGuard0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">elapsed_seconds</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Needed &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">setByGuard0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">testScopeGuardList</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
+    <span class="c1">// make volatile to avoid optimizations
+</span>    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">setByGuard0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">guardList</span> <span class="o">=</span> <span class="n">ScopeGuardList</span><span class="p">();</span>
+        <span class="n">guardList</span><span class="p">.</span><span class="n">add</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">setByGuard0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">elapsed_seconds</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Needed &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">setByGuard0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">testScopeGuard</span><span class="p">();</span>
+    <span class="n">testScopeGuardList</span><span class="p">();</span>
+<span class="p">}</span>
+</pre>
+<table border="1" class="docutils">
+<caption>Benchmark with different optimization levels</caption>
+<colgroup>
+<col width="11%" />
+<col width="41%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">-O$N</th>
+<th class="head">Time[s] ScopeGuard</th>
+<th class="head">Time[s] ScopGuardList</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>0</td>
+<td>0.178144</td>
+<td>2.61144</td>
+</tr>
+<tr><td>1</td>
+<td>0.0180427</td>
+<td>0.286136</td>
+</tr>
+<tr><td>2</td>
+<td>0.0170452</td>
+<td>0.283548</td>
+</tr>
+<tr><td>3</td>
+<td>0.0170423</td>
+<td>0.289958</td>
+</tr>
+</tbody>
+</table>
+<p>Since the <tt class="docutils literal">ScopeGuardList</tt> isn't used in any performance critical part in
+LibrePCB we didn't look further for a better performing way without type
+erasure.</p>
+<p>Do you have any comments, found a bug or an error? Please leave a note on
+<a class="reference external" href="https://reddit.org">Reddit</a></p>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/ci-for-rust-projects-on-windows-with-appveyor.html" rel="bookmark"
+                           title="Permalink to CI for Rust projects on Windows with AppVeyor">CI for Rust projects on Windows with AppVeyor</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-01-04T00:00:00+01:00">
+                Published: Mon 04 Januar 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/appveyor.html">AppVeyor</a> </p>
+</footer><!-- /.post-info -->                <p class="first last">Using AppVeyor to compile Rust projects on Windows</p>
+
+                <a class="readmore" href="//rnestler.github.io/ci-for-rust-projects-on-windows-with-appveyor.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html" rel="bookmark"
+                           title="Permalink to Reading the SHTC1 smart gadget BLE device">Reading the SHTC1 smart gadget BLE device</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-08-16T00:00:00+02:00">
                 Published: Son 16 August 2015
@@ -33,61 +290,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/ble.html">BLE</a> <a href="//rnestler.github.io/tag/bluetooth.html">bluetooth</a> <a href="//rnestler.github.io/tag/bluez.html">bluez</a> <a href="//rnestler.github.io/tag/shtc1.html">SHTC1</a> <a href="//rnestler.github.io/tag/smartgadget.html">SmartGadget</a> </p>
-</footer><!-- /.post-info --><div class="section" id="requirements">
-<h2>Requirements</h2>
-<p>First we need to install the bluez bluetooth stack:</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo pacman -S bluez bluez-utils
-</pre></div>
-<p>To be able to switch the bluetooth on and off I use the bluetooth command from
-tlp:</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo pacman -S tlp
-<span class="nv">$ </span>sudo bluetooth on
-</pre></div>
-<p>Next we activate the bluetooth service:</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo systemctl daemon-reload
-<span class="nv">$ </span>sudo systemctl start bluetooth.service
-</pre></div>
-</div>
-<div class="section" id="connecting">
-<h2>Connecting</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo hcitool dev
-Devices:
-        hci0    F8:16:54:CD:5F:CC
-<span class="nv">$ </span>sudo hcitool lescan
-LE Scan ...
-BC:6A:29:C1:A9:3B SHTC1 smart gadget
+</footer><!-- /.post-info -->                <p class="first last">Connection to a SHTC1 smart gadget and read its sensor values</p>
 
-<span class="nv">$ </span>sudo gatttool -b BC:6A:29:C1:A9:3B -I
-<span class="o">[</span>BC:6A:29:C1:A9:3B<span class="o">][</span>LE<span class="o">]</span>&gt; connect
-Attempting to connect to BC:6A:29:C1:A9:3B
-Connection successful
-</pre></div>
-</div>
-<div class="section" id="reading-the-sensordata">
-<h2>Reading the sensordata</h2>
-<p>According to <a class="reference external" href="https://github.com/Sensirion/SmartGadget-iOS/blob/50dc0f36c0624f825f7637bceeb5a34da7c878f3/Classes/Peripheral/Services/Sensirion/Shtc1/Shtc1RhtService.m">the SmartGadget-iOS code</a>
-The UUID to read the temperature is 0xAA21.
-So we try to read it:</p>
-<div class="highlight"><pre><span class="o">[</span>BC:6A:29:C1:A9:3B<span class="o">][</span>LE<span class="o">]</span>&gt; char-read-uuid 0xAA21
-handle: 0x0025   value: <span class="m">66</span> 0b b9 14
-</pre></div>
-<p>The first 16-bit value is the temperature and the second the humidity. Note
-that the byte order of the values is big endian.</p>
-<p>So to calculate the measured temperature in python we need to:</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">temperature</span> <span class="o">=</span> <span class="mh">0x0b66</span><span class="o">/</span><span class="mf">100.0</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span><span class="o">+</span> <span class="s">&quot;°C&quot;</span><span class="p">)</span>
-<span class="mf">29.18</span><span class="err">°</span><span class="n">C</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">humidity</span> <span class="o">=</span> <span class="mh">0x14b9</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span><span class="o">+</span> <span class="s">&quot;%RH&quot;</span><span class="p">)</span>
-<span class="mf">53.05</span><span class="o">%</span><span class="n">RH</span>
-</pre></div>
-</div>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+                <a class="readmore" href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -227,9 +434,6 @@ that the byte order of the values is big endian.</p>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 1
-</p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">

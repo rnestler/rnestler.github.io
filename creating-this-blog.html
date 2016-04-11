@@ -17,6 +17,7 @@
                 <nav><ul>
                     <li class="active"><a href="//rnestler.github.io/category/2013.html">2013</a></li>
                     <li><a href="//rnestler.github.io/category/2015.html">2015</a></li>
+                    <li><a href="//rnestler.github.io/category/2016.html">2016</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
@@ -46,24 +47,24 @@ create my blog.</p>
 <div class="section" id="setting-up-pelican">
 <h2>Setting up pelican</h2>
 <p>Setting up pelican is quite straight forward. First I created a new developement environment with <a class="reference external" href="http://www.virtualenv.org/">virtualenv</a>.</p>
-<div class="highlight"><pre><span class="nv">$ </span>virtualenv blogenv
-<span class="nv">$ </span><span class="nb">cd </span>blogenv
-<span class="nv">$ </span>. bin/acivate
+<div class="highlight"><pre><span></span>$ virtualenv blogenv
+$ <span class="nb">cd</span> blogenv
+$ . bin/acivate
 </pre></div>
 <p>Then installing pelican</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip install pelican
+<div class="highlight"><pre><span></span>$ pip install pelican
 </pre></div>
 <p>The next step is to create the base structure with the interactive
 pelican-quickstart</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir blog<span class="p">;</span> <span class="nb">cd </span>blog
-<span class="nv">$ </span>pelican-quickstart
-<span class="nv">$ </span>ls
+<div class="highlight"><pre><span></span>$ mkdir blog<span class="p">;</span> <span class="nb">cd</span> blog
+$ pelican-quickstart
+$ ls
 content/            fabfile.py  output/         publishconf.py
 develop_server.sh*  Makefile    pelicanconf.py
 </pre></div>
 <p>Thats it! Your pelican installation is finished! To generate your still empty blog is easy</p>
-<div class="highlight"><pre><span class="nv">$ </span>make html
-<span class="nv">$ </span>make devserver
+<div class="highlight"><pre><span></span>$ make html
+$ make devserver
 </pre></div>
 <p>After that you can preview you blog on <a class="reference external" href="http://localhost:8000">http://localhost:8000</a></p>
 </div>
@@ -79,11 +80,11 @@ develop_server.sh*  Makefile    pelicanconf.py
 </blockquote>
 <p>Pelican supports this approach as seen in <a class="reference external" href="http://docs.getpelican.com/en/3.3.0/tips.html#user-pages">http://docs.getpelican.com/en/3.3.0/tips.html#user-pages</a></p>
 <p>So all you need to do is to install ghp-import</p>
-<div class="highlight"><pre>% pip install ghp-import
+<div class="highlight"><pre><span></span>% pip install ghp-import
 </pre></div>
 <p>Then change SITEURL in publishconf.py to <a class="reference external" href="http://username.github.io">http://username.github.io</a> and edit the
 github target in the Makefile to look like this</p>
-<div class="highlight"><pre><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
+<div class="highlight"><pre><span></span><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
   ghp-import <span class="k">$(</span>OUTPUTDIR<span class="k">)</span>
   git push git@github.com:username.username.io.git gh-pages:master
 </pre></div>
@@ -91,7 +92,7 @@ github target in the Makefile to look like this</p>
 and commit any changes in the output directory to it. Then we push this branch
 to the master branch in our username.github.io repository.</p>
 <p>So if you type</p>
-<div class="highlight"><pre><span class="nv">$ </span>make github
+<div class="highlight"><pre><span></span>$ make github
 </pre></div>
 <p>The blog gets published under <a class="reference external" href="http://username.github.io">http://username.github.io</a></p>
 </div>

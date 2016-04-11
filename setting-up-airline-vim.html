@@ -17,6 +17,7 @@
                 <nav><ul>
                     <li><a href="//rnestler.github.io/category/2013.html">2013</a></li>
                     <li class="active"><a href="//rnestler.github.io/category/2015.html">2015</a></li>
+                    <li><a href="//rnestler.github.io/category/2016.html">2016</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
@@ -46,10 +47,10 @@ package manager for <a class="reference external" href="https://aur4.archlinux.o
 <div class="section" id="installing-vundle">
 <h2>Installing vundle</h2>
 <p>First one needs to get the vundle plug-in via git:</p>
-<div class="highlight"><pre>git clone https://github.com/gmarik/vundle.git /home/roughl/.vim/bundle/vundle
+<div class="highlight"><pre><span></span>git clone https://github.com/gmarik/vundle.git /home/roughl/.vim/bundle/vundle
 </pre></div>
 <p>Then one needs to setup Vim to use it:</p>
-<div class="highlight"><pre><span class="c">&quot; ~/.vimrc</span>
+<div class="highlight"><pre><span></span><span class="c">&quot; ~/.vimrc</span>
 <span class="k">set</span> <span class="nb">nocompatible</span>
 <span class="k">filetype</span> off
 
@@ -66,7 +67,7 @@ right after the vundle plug-in.</p>
 line, <a class="reference external" href="https://github.com/scrooloose/syntastic">syntastic</a> as a syntax checker
 and git support with <a class="reference external" href="https://github.com/tpope/vim-fugitive">fugitive</a> is as
 easy as this:</p>
-<div class="highlight"><pre>Plugin <span class="s1">&#39;scrooloose/syntastic&#39;</span>
+<div class="highlight"><pre><span></span>Plugin <span class="s1">&#39;scrooloose/syntastic&#39;</span>
 Plugin <span class="s1">&#39;tpope/vim-fugitive&#39;</span>
 Plugin <span class="s1">&#39;bling/vim-airline&#39;</span>
 </pre></div>
@@ -82,20 +83,20 @@ g:airline_powerline_fonts = 1</tt> lets one use the <a class="reference external
 <p>Configuring my terminal emulator of choice, urxvt, turned out to be a bit of a
 hassle.</p>
 <p>Installing the fonts was easy:</p>
-<div class="highlight"><pre>git clone https://github.com/powerline/fonts.git
-<span class="nb">cd </span>fonts
+<div class="highlight"><pre><span></span>git clone https://github.com/powerline/fonts.git
+<span class="nb">cd</span> fonts
 ./install.sh
 </pre></div>
 <p>Then in <tt class="docutils literal"><span class="pre">~/.Xresources</span></tt> configure urxvt to use a powerline font:</p>
-<div class="highlight"><pre>URxvt.font: xft:DejaVu Sans Mono <span class="k">for</span> Powerline:size<span class="o">=</span>11
+<div class="highlight"><pre><span></span>URxvt.font: xft:DejaVu Sans Mono <span class="k">for</span> Powerline:size<span class="o">=</span>11
 </pre></div>
 <p>Then reloading the configuration</p>
-<div class="highlight"><pre>xrdb -merge ~/.Xresources
+<div class="highlight"><pre><span></span>xrdb -merge ~/.Xresources
 </pre></div>
 <p>The problem was that urxvt didn't like that at all and displayed the fonts with
 the spacing all messed up. After an hour of googling and trying out different
 stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
-<div class="highlight"><pre>% killall urxvtd
+<div class="highlight"><pre><span></span>% killall urxvtd
 % urxvtd -q -o -f
 </pre></div>
 <p>After that it worked like a charm and the special symbols did show up nicely:</p>

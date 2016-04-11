@@ -208,11 +208,4 @@ erasure.&lt;/p&gt;
 &lt;p&gt;Do you have any comments, found a bug or an error? Please leave a note on
 &lt;a class="reference external" href="https://reddit.org"&gt;Reddit&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="C++"></category></entry><entry><title>CI for Rust projects on Windows with AppVeyor</title><link href="//rnestler.github.io/ci-for-rust-projects-on-windows-with-appveyor.html" rel="alternate"></link><published>2016-01-04T00:00:00+01:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-01-04:ci-for-rust-projects-on-windows-with-appveyor.html</id><summary type="html">&lt;p&gt;I recently tried to add AppVeyor support to my &lt;cite&gt;torrent-search project
-&amp;lt;https://github.com/rnestler/rust-torrent-search&amp;gt;&lt;/cite&gt; to test building under
-Windows.&lt;/p&gt;
-&lt;div class="section" id="appveyor"&gt;
-&lt;h2&gt;AppVeyor&lt;/h2&gt;
-&lt;p&gt;Have comments? Discuss on &lt;a class="reference external" href="https://news.ycombinator.com/"&gt;Hacker News&lt;/a&gt; or &lt;cite&gt;Reddit &amp;lt;https://&amp;gt;&lt;/cite&gt;&lt;/p&gt;
-&lt;/div&gt;
-</summary><category term="programming"></category><category term="Rust"></category><category term="AppVeyor"></category></entry></feed>
+</summary><category term="programming"></category><category term="C++"></category></entry></feed>

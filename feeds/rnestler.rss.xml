@@ -52,7 +52,7 @@ breakpoint we can examine variables using &lt;tt class="docutils literal"&gt;&am
 &lt;p&gt;For me this is quite a decent debugging experience while still being able to
 stay in my favourite text editor!&lt;/p&gt;
 &lt;p&gt;Do you have any comments, found a bug or an error? Please leave a note on
-&lt;a class="reference external" href="https://www.reddit.com/"&gt;Reddit&lt;/a&gt;.&lt;/p&gt;
+&lt;a class="reference external" href="https://www.reddit.com/r/rust/comments/4l226c/debugging_rust_code_with_vim_and_conquegdb/"&gt;Reddit&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Wed, 25 May 2016 00:00:00 +0200</pubDate><guid isPermaLink="false">tag:rnestler.github.io,2016-05-25:debugging-rust-code-with-vim-and-conque-gdb.html</guid><category>programming</category><category>C++</category><category>Rust</category><category>vim</category><category>gdb</category></item><item><title>C++ List of ScopeGuard</title><link>//rnestler.github.io/c-list-of-scopeguard.html</link><description>&lt;p&gt;Recently the developer of &lt;a class="reference external" href="https://github.com/LibrePCB/LibrePCB"&gt;LibrePCB&lt;/a&gt;
 asked me about a C++ pattern to undo parts of an action if an exception gets

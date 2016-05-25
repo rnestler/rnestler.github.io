@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>rnestler.github.io</title><link>//rnestler.github.io/</link><description></description><lastBuildDate>Mon, 11 Apr 2016 00:00:00 +0200</lastBuildDate><item><title>C++ List of ScopeGuard</title><link>//rnestler.github.io/c-list-of-scopeguard.html</link><description>&lt;p&gt;Recently the developer of &lt;a class="reference external" href="https://github.com/LibrePCB/LibrePCB"&gt;LibrePCB&lt;/a&gt;
+<rss version="2.0"><channel><title>rnestler.github.io</title><link>//rnestler.github.io/</link><description></description><lastBuildDate>Wed, 25 May 2016 00:00:00 +0200</lastBuildDate><item><title>Debugging Rust code with vim and Conque-GDB</title><link>//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html</link><description>&lt;p&gt;While I use debuggers quite a lot at work in IDEs such as VisualStudio, PyCharm
+or QtCreator (of course all configured to use vim-like keybindings), I seldom
+use them when working on my side projects.&lt;/p&gt;
+&lt;p&gt;This is maybe due to the fact, that for my side project I mainly use vim
+together with make/cmake, python or Rust and cargo. My &amp;quot;debugging&amp;quot; then
+revolves mostly around printing variables and getting stacktraces with gdb if
+something goes very wrong.&lt;/p&gt;
+&lt;p&gt;Also, when programming in Rust, I never felt the need for a debugger, since one
+hardly gets a segmentation fault.&lt;/p&gt;
+&lt;p&gt;Nevertheless I thought it would be a good idea to try to integrate gdb within
+vim to be able to debug code if necessary. After some sophisticated research
+with &lt;a class="reference external" href="https://duckduckgo.com/?q=vim+gdb&amp;amp;ia=web"&gt;duckduckgo&lt;/a&gt;, I found quite
+some vim plugins for gdb support and &lt;a class="reference external" href="https://stackoverflow.com/questions/6695410/gdb-front-end-to-use-with-vim"&gt;this stackoverflow entry&lt;/a&gt;
+which compares some of them. The one that stood out for me was Conque-GDB
+because it looked very simple yet powerful.&lt;/p&gt;
+&lt;div class="section" id="conque-gdb"&gt;
+&lt;h2&gt;Conque-GDB&lt;/h2&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://github.com/vim-scripts/Conque-GDB"&gt;Conque-GDB&lt;/a&gt; is a very simple vim
+plugin which provides a vim buffer that acts as a terminal emulator and runs
+gdb in it.&lt;/p&gt;
+&lt;p&gt;Further it provides some keybindings to control the gdb instance like
+&lt;tt class="docutils literal"&gt;&amp;lt;Leader&amp;gt;r&lt;/tt&gt; to run the process or &lt;tt class="docutils literal"&gt;&amp;lt;Leader&amp;gt;b&lt;/tt&gt; to set a breakpoint at the
+current line and so on. There is a small &lt;a class="reference external" href="https://www.youtube.com/watch?v=ZcSjaYSoqnc&amp;amp;feature=youtu.be"&gt;demonstration video&lt;/a&gt; available on
+youtube which shows some of the capabilities of the plugin.&lt;/p&gt;
+&lt;p&gt;If you use vundle to manage your vim plugins installing Conque-GDB is as easy
+as adding&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Plugin &lt;span class="s1"&gt;&amp;#39;vim-scripts/Conque-GDB&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;to your &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.vimrc&lt;/span&gt;&lt;/tt&gt;. I found it quite useful since it allows you to do the
+following things:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Set breakpoints from within vim&lt;/li&gt;
+&lt;li&gt;Show the current position of execution in vim&lt;/li&gt;
+&lt;li&gt;Examine the contents of variables from within vim&lt;/li&gt;
+&lt;li&gt;Some more stuff!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="using-it-with-rust"&gt;
+&lt;h2&gt;Using it with Rust&lt;/h2&gt;
+&lt;p&gt;Conque-GDB allows to define your own gdb executable using the &lt;tt class="docutils literal"&gt;:ConqueGdbExe&lt;/tt&gt;
+command.  To debug Rust code one probably wants to use &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;rust-gdb&lt;/span&gt;&lt;/tt&gt; for pretty
+printing support of Rust bindings.&lt;/p&gt;
+&lt;p&gt;To debug Rust code we first set &lt;tt class="docutils literal"&gt;:ConqueGdbExe &lt;span class="pre"&gt;rust-gdb&lt;/span&gt;&lt;/tt&gt;. Then we start an
+instance using &lt;tt class="docutils literal"&gt;:ConqueGdb &lt;span class="pre"&gt;target/debug/$name&lt;/span&gt;&lt;/tt&gt; where &lt;tt class="docutils literal"&gt;$name&lt;/tt&gt; is the name of
+the executable you want do debug. Then we may set some breakpoints using
+&lt;tt class="docutils literal"&gt;&amp;lt;Leader&amp;gt;b&lt;/tt&gt; and finally run our program with &lt;tt class="docutils literal"&gt;&amp;lt;Leader&amp;gt;r&lt;/tt&gt;. When hitting a
+breakpoint we can examine variables using &lt;tt class="docutils literal"&gt;&amp;lt;Leader&amp;gt;p&lt;/tt&gt; to print their content.&lt;/p&gt;
+&lt;img alt="Vim screen shot using ConqueGdb" class="align-center" src="/images/vim_conque_gdb.png" style="width: 100%;" /&gt;
+&lt;p&gt;For me this is quite a decent debugging experience while still being able to
+stay in my favourite text editor!&lt;/p&gt;
+&lt;p&gt;Do you have any comments, found a bug or an error? Please leave a note on
+&lt;a class="reference external" href="https://www.reddit.com/"&gt;Reddit&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Wed, 25 May 2016 00:00:00 +0200</pubDate><guid isPermaLink="false">tag:rnestler.github.io,2016-05-25:debugging-rust-code-with-vim-and-conque-gdb.html</guid><category>programming</category><category>C++</category><category>Rust</category><category>vim</category><category>gdb</category></item><item><title>C++ List of ScopeGuard</title><link>//rnestler.github.io/c-list-of-scopeguard.html</link><description>&lt;p&gt;Recently the developer of &lt;a class="reference external" href="https://github.com/LibrePCB/LibrePCB"&gt;LibrePCB&lt;/a&gt;
 asked me about a C++ pattern to undo parts of an action if an exception gets
 thrown in the middle of it.&lt;/p&gt;
 &lt;p&gt;Of course he basically described the main usage of a ScopeGuard. I went ahead

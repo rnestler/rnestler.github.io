@@ -23,7 +23,86 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/c-list-of-scopeguard.html">C++ List of ScopeGuard</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html">Debugging Rust code with vim and Conque-GDB</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-05-25T00:00:00+02:00">
+                Published: Mit 25 Mai 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/c.html">C++</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/vim.html">vim</a> <a href="//rnestler.github.io/tag/gdb.html">gdb</a> </p>
+</footer><!-- /.post-info --><p>While I use debuggers quite a lot at work in IDEs such as VisualStudio, PyCharm
+or QtCreator (of course all configured to use vim-like keybindings), I seldom
+use them when working on my side projects.</p>
+<p>This is maybe due to the fact, that for my side project I mainly use vim
+together with make/cmake, python or Rust and cargo. My &quot;debugging&quot; then
+revolves mostly around printing variables and getting stacktraces with gdb if
+something goes very wrong.</p>
+<p>Also, when programming in Rust, I never felt the need for a debugger, since one
+hardly gets a segmentation fault.</p>
+<p>Nevertheless I thought it would be a good idea to try to integrate gdb within
+vim to be able to debug code if necessary. After some sophisticated research
+with <a class="reference external" href="https://duckduckgo.com/?q=vim+gdb&amp;ia=web">duckduckgo</a>, I found quite
+some vim plugins for gdb support and <a class="reference external" href="https://stackoverflow.com/questions/6695410/gdb-front-end-to-use-with-vim">this stackoverflow entry</a>
+which compares some of them. The one that stood out for me was Conque-GDB
+because it looked very simple yet powerful.</p>
+<div class="section" id="conque-gdb">
+<h2>Conque-GDB</h2>
+<p><a class="reference external" href="https://github.com/vim-scripts/Conque-GDB">Conque-GDB</a> is a very simple vim
+plugin which provides a vim buffer that acts as a terminal emulator and runs
+gdb in it.</p>
+<p>Further it provides some keybindings to control the gdb instance like
+<tt class="docutils literal">&lt;Leader&gt;r</tt> to run the process or <tt class="docutils literal">&lt;Leader&gt;b</tt> to set a breakpoint at the
+current line and so on. There is a small <a class="reference external" href="https://www.youtube.com/watch?v=ZcSjaYSoqnc&amp;feature=youtu.be">demonstration video</a> available on
+youtube which shows some of the capabilities of the plugin.</p>
+<p>If you use vundle to manage your vim plugins installing Conque-GDB is as easy
+as adding</p>
+<div class="highlight"><pre><span></span>Plugin <span class="s1">&#39;vim-scripts/Conque-GDB&#39;</span>
+</pre></div>
+<p>to your <tt class="docutils literal"><span class="pre">~/.vimrc</span></tt>. I found it quite useful since it allows you to do the
+following things:</p>
+<blockquote>
+<ul class="simple">
+<li>Set breakpoints from within vim</li>
+<li>Show the current position of execution in vim</li>
+<li>Examine the contents of variables from within vim</li>
+<li>Some more stuff!</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="using-it-with-rust">
+<h2>Using it with Rust</h2>
+<p>Conque-GDB allows to define your own gdb executable using the <tt class="docutils literal">:ConqueGdbExe</tt>
+command.  To debug Rust code one probably wants to use <tt class="docutils literal"><span class="pre">rust-gdb</span></tt> for pretty
+printing support of Rust bindings.</p>
+<p>To debug Rust code we first set <tt class="docutils literal">:ConqueGdbExe <span class="pre">rust-gdb</span></tt>. Then we start an
+instance using <tt class="docutils literal">:ConqueGdb <span class="pre">target/debug/$name</span></tt> where <tt class="docutils literal">$name</tt> is the name of
+the executable you want do debug. Then we may set some breakpoints using
+<tt class="docutils literal">&lt;Leader&gt;b</tt> and finally run our program with <tt class="docutils literal">&lt;Leader&gt;r</tt>. When hitting a
+breakpoint we can examine variables using <tt class="docutils literal">&lt;Leader&gt;p</tt> to print their content.</p>
+<img alt="Vim screen shot using ConqueGdb" class="align-center" src="/images/vim_conque_gdb.png" style="width: 100%;" />
+<p>For me this is quite a decent debugging experience while still being able to
+stay in my favourite text editor!</p>
+<p>Do you have any comments, found a bug or an error? Please leave a note on
+<a class="reference external" href="https://www.reddit.com/">Reddit</a>.</p>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/c-list-of-scopeguard.html" rel="bookmark"
+                           title="Permalink to C++ List of ScopeGuard">C++ List of ScopeGuard</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-04-11T00:00:00+02:00">
                 Published: Mon 11 April 2016
@@ -34,224 +113,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
-</footer><!-- /.post-info --><p>Recently the developer of <a class="reference external" href="https://github.com/LibrePCB/LibrePCB">LibrePCB</a>
-asked me about a C++ pattern to undo parts of an action if an exception gets
-thrown in the middle of it.</p>
-<p>Of course he basically described the main usage of a ScopeGuard. I went ahead
-and <a class="reference external" href="https://github.com/LibrePCB/LibrePCB/pull/57">implemented one</a> based on
-a <a class="reference external" href="https://channel9.msdn.com/Shows/Going+Deep/C-and-Beyond-2012-Andrei-Alexandrescu-Systematic-Error-Handling-in-C">talk by Andrei Alexandrescu</a>.</p>
-<div class="section" id="basic-use-of-a-scopeguard">
-<h2>Basic use of a ScopeGuard</h2>
-<p>The ScopeGuard allows to write transactional code that will undo previous parts
-if later code throws an exception.</p>
-<div class="highlight"><pre><span></span><span class="n">myVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
-<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">myVector</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span> <span class="p">});</span>
+</footer><!-- /.post-info -->                <p class="first last">Implementing a easy to use list of ScopeGuard</p>
 
-<span class="c1">// Do stuff that may throw</span>
-<span class="n">database</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
-
-<span class="c1">// everything worked, so don&#39;t undo</span>
-<span class="n">guard</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
-</pre></div>
-<p>So if <tt class="docutils literal">database.add(item)</tt> throws, the item in myVector will be removed. For
-more about the motivation behind ScopeGuard see the talk above or <a class="reference external" href="http://www.drdobbs.com/cpp/generic-change-the-way-you-write-excepti/184403758">this drdobbs
-article</a>.</p>
-<p>Using C++11 and later the implementation is fairly simple:</p>
-<pre class="code cpp literal-block">
-<span class="k">struct</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
-    <span class="n">ScopeGuardBase</span><span class="p">()</span><span class="o">:</span>
-        <span class="n">mActive</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
-    <span class="p">{</span> <span class="p">}</span>
-
-    <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">ScopeGuardBase</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span><span class="o">:</span>
-        <span class="n">mActive</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mActive</span><span class="p">)</span>
-    <span class="p">{</span> <span class="n">rhs</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span> <span class="p">}</span>
-
-    <span class="kt">void</span> <span class="n">dismiss</span><span class="p">()</span> <span class="k">noexcept</span>
-    <span class="p">{</span> <span class="n">mActive</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
-
-<span class="k">protected</span><span class="o">:</span>
-    <span class="o">~</span><span class="n">ScopeGuardBase</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">mActive</span><span class="p">;</span>
-<span class="p">};</span>
-
-<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nl">ScopeGuard</span><span class="p">:</span> <span class="k">public</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
-    <span class="n">ScopeGuard</span><span class="p">()</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
-    <span class="n">ScopeGuard</span><span class="p">(</span><span class="k">const</span> <span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
-
-    <span class="n">ScopeGuard</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span> <span class="k">noexcept</span><span class="o">:</span>
-        <span class="n">ScopeGuardBase</span><span class="p">(),</span>
-        <span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-        <span class="p">{</span> <span class="p">}</span>
-
-    <span class="n">ScopeGuard</span><span class="p">(</span><span class="n">ScopeGuard</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="k">noexcept</span> <span class="o">:</span>
-        <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span>
-        <span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mF</span><span class="p">))</span>
-        <span class="p">{</span> <span class="p">}</span>
-
-    <span class="o">~</span><span class="n">ScopeGuard</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">mActive</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">try</span> <span class="p">{</span> <span class="n">mF</span><span class="p">();</span> <span class="p">}</span> <span class="k">catch</span><span class="p">(...)</span> <span class="p">{}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="n">ScopeGuard</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
-
-<span class="k">private</span><span class="o">:</span>
-    <span class="n">Fun</span> <span class="n">mF</span><span class="p">;</span>
-<span class="p">};</span>
-
-<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span> <span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span> <span class="n">scopeGuard</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span>
-<span class="p">}</span>
-</pre>
-</div>
-<div class="section" id="why-a-scopeguardlist">
-<h2>Why a ScopeGuardList?</h2>
-<p>If you have a transaction that consists of a lot of steps that may throw and
-need to be undone it leads to code like the following:</p>
-<div class="highlight"><pre><span></span><span class="n">doThing1</span><span class="p">();</span>
-<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing1</span><span class="p">();</span> <span class="p">});</span>
-<span class="n">doThing2</span><span class="p">();</span>
-<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing2</span><span class="p">();</span> <span class="p">});</span>
-<span class="n">doThing3</span><span class="p">();</span>
-<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing3</span><span class="p">();</span> <span class="p">});</span>
-
-<span class="c1">// Do stuff that may trow</span>
-
-<span class="n">guard1</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
-<span class="n">guard2</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
-<span class="n">guard3</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
-</pre></div>
-<p>Things get even worse when doing something in a loop:</p>
-<div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">doStuff</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-    <span class="c1">// how do we create a guard for every operation?</span>
-<span class="p">}</span>
-</pre></div>
-<p>To avoid that repetition and the potential error of a missing call to
-<tt class="docutils literal">dismiss()</tt> we came up with a <tt class="docutils literal">ScopeGuardList</tt>.</p>
-</div>
-<div class="section" id="implementation-with-std-function">
-<h2>Implementation with std::function&lt;&gt;</h2>
-<p>A simple implementation just contains a list of <tt class="docutils literal"><span class="pre">std::function&lt;&gt;</span></tt>:</p>
-<pre class="code cpp literal-block">
-<span class="cp">#include</span> <span class="cpf">&quot;scopeguard.h&quot;</span><span class="cp">
-#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp">
-#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp">
-</span>
-<span class="k">struct</span> <span class="nl">ScopeGuardList</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
-    <span class="n">ScopeGuardList</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
-
-    <span class="n">ScopeGuardList</span><span class="p">(</span><span class="n">ScopeGuardList</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span><span class="o">:</span>
-        <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span>
-        <span class="n">mScopeGuards</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mScopeGuards</span><span class="p">))</span>
-    <span class="p">{</span> <span class="p">}</span>
-
-    <span class="o">~</span><span class="n">ScopeGuardList</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">mActive</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">scopeGuard</span> <span class="p">:</span> <span class="n">mScopeGuards</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">scopeGuard</span><span class="p">();</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span>
-    <span class="p">{</span> <span class="n">mScopeGuards</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span> <span class="p">}</span>
-
-<span class="k">private</span><span class="o">:</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">mScopeGuards</span><span class="p">;</span>
-<span class="p">};</span>
-</pre>
-<p>This implementation uses the type erasure of <tt class="docutils literal"><span class="pre">std::function</span></tt> to store several
-undo functions. While being fairly simple it performs worse compared to the
-above ScopeGuard implementation.</p>
-<p>A quick benchmark showed that the <tt class="docutils literal">ScopeGuard</tt> performs ~14 times faster than
-<tt class="docutils literal">ScopeGuardList</tt>:</p>
-<pre class="code cpp literal-block">
-<span class="cp">#include</span> <span class="cpf">&lt;chrono&gt;</span><span class="cp">
-#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span>
-<span class="cp">#include</span> <span class="cpf">&quot;scopeguardlist.h&quot;</span><span class="cp">
-</span>
-<span class="kt">void</span> <span class="nf">testScopeGuard</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
-    <span class="c1">// make volatile to avoid optimizations
-</span>    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">setByGuard0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">auto</span> <span class="n">guard0</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">setByGuard0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">});</span>
-    <span class="p">}</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">elapsed_seconds</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Needed &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">setByGuard0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">testScopeGuardList</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
-    <span class="c1">// make volatile to avoid optimizations
-</span>    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">setByGuard0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">auto</span> <span class="n">guardList</span> <span class="o">=</span> <span class="n">ScopeGuardList</span><span class="p">();</span>
-        <span class="n">guardList</span><span class="p">.</span><span class="n">add</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">setByGuard0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">});</span>
-    <span class="p">}</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">elapsed_seconds</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Needed &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">setByGuard0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">testScopeGuard</span><span class="p">();</span>
-    <span class="n">testScopeGuardList</span><span class="p">();</span>
-<span class="p">}</span>
-</pre>
-<table border="1" class="docutils">
-<caption>Benchmark with different optimization levels</caption>
-<colgroup>
-<col width="11%" />
-<col width="41%" />
-<col width="48%" />
-</colgroup>
-<thead valign="bottom">
-<tr><th class="head">-O$N</th>
-<th class="head">Time[s] ScopeGuard</th>
-<th class="head">Time[s] ScopGuardList</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr><td>0</td>
-<td>0.178144</td>
-<td>2.61144</td>
-</tr>
-<tr><td>1</td>
-<td>0.0180427</td>
-<td>0.286136</td>
-</tr>
-<tr><td>2</td>
-<td>0.0170452</td>
-<td>0.283548</td>
-</tr>
-<tr><td>3</td>
-<td>0.0170423</td>
-<td>0.289958</td>
-</tr>
-</tbody>
-</table>
-<p>Since the <tt class="docutils literal">ScopeGuardList</tt> isn't used in any performance critical part in
-LibrePCB we didn't look further for a better performing way without type
-erasure.</p>
-<p>Do you have any comments, found a bug or an error? Please leave a note on
-<a class="reference external" href="https://www.reddit.com/r/cpp/comments/4ecf5a/c_list_of_scopeguard/">Reddit</a>.</p>
-</div>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+                <a class="readmore" href="//rnestler.github.io/c-list-of-scopeguard.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

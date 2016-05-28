@@ -56,7 +56,7 @@ package manager for &lt;a class="reference external" href="https://aur4.archlinu
 &lt;div class="section" id="installing-vundle"&gt;
 &lt;h2&gt;Installing vundle&lt;/h2&gt;
 &lt;p&gt;First one needs to get the vundle plug-in via git:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/gmarik/vundle.git /home/roughl/.vim/bundle/vundle
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Then one needs to setup Vim to use it:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c"&gt;&amp;quot; ~/.vimrc&lt;/span&gt;

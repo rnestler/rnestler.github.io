@@ -47,7 +47,7 @@ Light Display Manager) to manage logins. After installing awesome with <tt class
 apt install awesome</tt> LightDM will allow you to start an awesome session.  This
 is due to the <tt class="docutils literal">/usr/share/xsessions/awesome.desktop</tt> file contained in the
 awesome package.</p>
-<p>Unfortunately this does just start awesome directly and does not run the
+<p>Unfortunately this starts awesome directly and does not execute the
 <tt class="docutils literal"><span class="pre">~/.xinitrc</span></tt> file.  But it does load the various <tt class="docutils literal">/etc/X11/Xsession.d/</tt>
 files which will then load the <tt class="docutils literal"><span class="pre">~/.xsessionrc</span></tt> file if it exists.  When
 <tt class="docutils literal">.xsessionrc</tt> gets loaded it will pass the session to be started as the first

@@ -23,7 +23,58 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html">Debugging Rust code with vim and Conque-GDB</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Setting up the Awesome Window Manager in Ubuntu 16.04</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-10-19T00:00:00+02:00">
+                Published: Mit 19 Oktober 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/ubuntu.html">Ubuntu</a> <a href="//rnestler.github.io/tag/awesome-window-manager.html">awesome window manager</a> </p>
+</footer><!-- /.post-info --><p>My window manager of choice is the <a class="reference external" href="https://awesomewm.org/">awesome window manager</a>. On my private
+laptop I have it setup together with the display manager <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">SLiM</a> and a custom
+<tt class="docutils literal">.xinitrc</tt> which starts a few helpers like the <a class="reference external" href="https://wiki.gnome.org/Projects/GnomeKeyring">gnome-keyring-daemon</a>.</p>
+<p>On my work laptop I have Ubuntu 16.04 installed.  Ubuntu uses <a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/">LightDM</a> (The
+Light Display Manager) to manage logins. After installing awesome with <tt class="docutils literal">sudo
+apt install awesome</tt> LightDM will allow you to start an awesome session.  This
+is due to the <tt class="docutils literal">/usr/share/xsessions/awesome.desktop</tt> file contained in the
+awesome package.</p>
+<p>Unfortunately this starts awesome directly and does not execute the
+<tt class="docutils literal"><span class="pre">~/.xinitrc</span></tt> file.  But it does load the various <tt class="docutils literal">/etc/X11/Xsession.d/</tt>
+files which will then load the <tt class="docutils literal"><span class="pre">~/.xsessionrc</span></tt> file if it exists.  When
+<tt class="docutils literal">.xsessionrc</tt> gets loaded it will pass the session to be started as the first
+argument (<tt class="docutils literal">$1</tt>). So to start any helpers we create it with the following
+content:</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="c1">#</span>
+<span class="c1"># ~/.xsessionrc</span>
+<span class="c1">#</span>
+
+<span class="k">case</span> <span class="nv">$1</span> in
+awesome<span class="o">)</span>
+    <span class="nb">export</span> <span class="k">$(</span>gnome-keyring-daemon -s -c pkcs11,secrets,ssh,gpg<span class="k">)</span>
+    <span class="p">;;</span>
+<span class="k">esac</span>
+</pre></div>
+<p>This starts the gnome-keyring-daemon and export the <tt class="docutils literal">SSH_AUTH_SOCK</tt> variable,
+but only if we are trying to start an awesome session.</p>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html" rel="bookmark"
+                           title="Permalink to Debugging Rust code with vim and Conque-GDB">Debugging Rust code with vim and Conque-GDB</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-05-25T00:00:00+02:00">
                 Published: Mit 25 Mai 2016
@@ -34,67 +85,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/c.html">C++</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/vim.html">vim</a> <a href="//rnestler.github.io/tag/gdb.html">gdb</a> </p>
-</footer><!-- /.post-info --><p>While I use debuggers quite a lot at work in IDEs such as VisualStudio, PyCharm
-or QtCreator (of course all configured to use vim-like keybindings), I seldom
-use them when working on my side projects.</p>
-<p>This is maybe due to the fact, that for my side project I mainly use vim
-together with make/cmake, python or Rust and cargo. My &quot;debugging&quot; then
-revolves mostly around printing variables and getting stacktraces with gdb if
-something goes very wrong.</p>
-<p>Also, when programming in Rust, I never felt the need for a debugger, since one
-hardly gets a segmentation fault.</p>
-<p>Nevertheless I thought it would be a good idea to try to integrate gdb within
-vim to be able to debug code if necessary. After some sophisticated research
-with <a class="reference external" href="https://duckduckgo.com/?q=vim+gdb&amp;ia=web">duckduckgo</a>, I found quite
-some vim plugins for gdb support and <a class="reference external" href="https://stackoverflow.com/questions/6695410/gdb-front-end-to-use-with-vim">this stackoverflow entry</a>
-which compares some of them. The one that stood out for me was Conque-GDB
-because it looked very simple yet powerful.</p>
-<div class="section" id="conque-gdb">
-<h2>Conque-GDB</h2>
-<p><a class="reference external" href="https://github.com/vim-scripts/Conque-GDB">Conque-GDB</a> is a very simple vim
-plugin which provides a vim buffer that acts as a terminal emulator and runs
-gdb in it.</p>
-<p>Further it provides some keybindings to control the gdb instance like
-<tt class="docutils literal">&lt;Leader&gt;r</tt> to run the process or <tt class="docutils literal">&lt;Leader&gt;b</tt> to set a breakpoint at the
-current line and so on. There is a small <a class="reference external" href="https://www.youtube.com/watch?v=ZcSjaYSoqnc&amp;feature=youtu.be">demonstration video</a> available on
-youtube which shows some of the capabilities of the plugin.</p>
-<p>If you use vundle to manage your vim plugins installing Conque-GDB is as easy
-as adding</p>
-<div class="highlight"><pre><span></span>Plugin <span class="s1">&#39;vim-scripts/Conque-GDB&#39;</span>
-</pre></div>
-<p>to your <tt class="docutils literal"><span class="pre">~/.vimrc</span></tt>. I found it quite useful since it allows you to do the
-following things:</p>
-<blockquote>
-<ul class="simple">
-<li>Set breakpoints from within vim</li>
-<li>Show the current position of execution in vim</li>
-<li>Examine the contents of variables from within vim</li>
-<li>Some more stuff!</li>
-</ul>
-</blockquote>
-</div>
-<div class="section" id="using-it-with-rust">
-<h2>Using it with Rust</h2>
-<p>Conque-GDB allows to define your own gdb executable using the <tt class="docutils literal">:ConqueGdbExe</tt>
-command.  To debug Rust code one probably wants to use <tt class="docutils literal"><span class="pre">rust-gdb</span></tt> for pretty
-printing support of Rust bindings.</p>
-<p>To debug Rust code we first set <tt class="docutils literal">:ConqueGdbExe <span class="pre">rust-gdb</span></tt>. Then we start an
-instance using <tt class="docutils literal">:ConqueGdb <span class="pre">target/debug/$name</span></tt> where <tt class="docutils literal">$name</tt> is the name of
-the executable you want do debug. Then we may set some breakpoints using
-<tt class="docutils literal">&lt;Leader&gt;b</tt> and finally run our program with <tt class="docutils literal">&lt;Leader&gt;r</tt>. When hitting a
-breakpoint we can examine variables using <tt class="docutils literal">&lt;Leader&gt;p</tt> to print their content.</p>
-<img alt="Vim screen shot using ConqueGdb" class="align-center" src="/images/vim_conque_gdb.png" style="width: 100%;" />
-<p>For me this is quite a decent debugging experience while still being able to
-stay in my favourite text editor!</p>
-<p>Do you have any comments, found a bug or an error? Please leave a note on
-<a class="reference external" href="https://www.reddit.com/r/rust/comments/4l226c/debugging_rust_code_with_vim_and_conquegdb/">Reddit</a>.</p>
-</div>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p class="first last">Using vim together with Conque-GDB to debug Rust and C/C++ code.</p>
+
+                <a class="readmore" href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

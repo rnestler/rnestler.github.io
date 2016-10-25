@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2016-05-25T00:00:00+02:00</updated><entry><title>Debugging Rust code with vim and Conque-GDB</title><link href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html" rel="alternate"></link><published>2016-05-25T00:00:00+02:00</published><updated>2016-05-25T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-05-25:debugging-rust-code-with-vim-and-conque-gdb.html</id><summary type="html">&lt;p&gt;While I use debuggers quite a lot at work in IDEs such as VisualStudio, PyCharm
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2016-10-19T00:00:00+02:00</updated><entry><title>Setting up the Awesome Window Manager in Ubuntu 16.04</title><link href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html" rel="alternate"></link><published>2016-10-19T00:00:00+02:00</published><updated>2016-10-19T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-10-19:setting-up-the-awesome-window-manager-in-ubuntu-1604.html</id><summary type="html">&lt;p&gt;My window manager of choice is the &lt;a class="reference external" href="https://awesomewm.org/"&gt;awesome window manager&lt;/a&gt;. On my private
+laptop I have it setup together with the display manager &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM"&gt;SLiM&lt;/a&gt; and a custom
+&lt;tt class="docutils literal"&gt;.xinitrc&lt;/tt&gt; which starts a few helpers like the &lt;a class="reference external" href="https://wiki.gnome.org/Projects/GnomeKeyring"&gt;gnome-keyring-daemon&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;On my work laptop I have Ubuntu 16.04 installed.  Ubuntu uses &lt;a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/"&gt;LightDM&lt;/a&gt; (The
+Light Display Manager) to manage logins. After installing awesome with &lt;tt class="docutils literal"&gt;sudo
+apt install awesome&lt;/tt&gt; LightDM will allow you to start an awesome session.  This
+is due to the &lt;tt class="docutils literal"&gt;/usr/share/xsessions/awesome.desktop&lt;/tt&gt; file contained in the
+awesome package.&lt;/p&gt;
+&lt;p&gt;Unfortunately this starts awesome directly and does not execute the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.xinitrc&lt;/span&gt;&lt;/tt&gt; file.  But it does load the various &lt;tt class="docutils literal"&gt;/etc/X11/Xsession.d/&lt;/tt&gt;
+files which will then load the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.xsessionrc&lt;/span&gt;&lt;/tt&gt; file if it exists.  When
+&lt;tt class="docutils literal"&gt;.xsessionrc&lt;/tt&gt; gets loaded it will pass the session to be started as the first
+argument (&lt;tt class="docutils literal"&gt;$1&lt;/tt&gt;). So to start any helpers we create it with the following
+content:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# ~/.xsessionrc&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt; in
+awesome&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;gnome-keyring-daemon -s -c pkcs11,secrets,ssh,gpg&lt;span class="k"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;;;&lt;/span&gt;
+&lt;span class="k"&gt;esac&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This starts the gnome-keyring-daemon and export the &lt;tt class="docutils literal"&gt;SSH_AUTH_SOCK&lt;/tt&gt; variable,
+but only if we are trying to start an awesome session.&lt;/p&gt;
+</summary><category term="Linux"></category><category term="Ubuntu"></category><category term="awesome window manager"></category></entry><entry><title>Debugging Rust code with vim and Conque-GDB</title><link href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html" rel="alternate"></link><published>2016-05-25T00:00:00+02:00</published><updated>2016-05-25T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-05-25:debugging-rust-code-with-vim-and-conque-gdb.html</id><summary type="html">&lt;p&gt;While I use debuggers quite a lot at work in IDEs such as VisualStudio, PyCharm
 or QtCreator (of course all configured to use vim-like keybindings), I seldom
 use them when working on my side projects.&lt;/p&gt;
 &lt;p&gt;This is maybe due to the fact, that for my side project I mainly use vim

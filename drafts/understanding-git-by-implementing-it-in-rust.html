@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Understanding Git by Implementing it in Rust</title>
+        <link rel="stylesheet" href="//rnestler.github.io/theme/css/main.css" />
+        <link href="//rnestler.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="//rnestler.github.io/">rnestler.github.io </a></h1>
+                <nav><ul>
+                    <li><a href="//rnestler.github.io/category/2013.html">2013</a></li>
+                    <li><a href="//rnestler.github.io/category/2015.html">2015</a></li>
+                    <li class="active"><a href="//rnestler.github.io/category/2016.html">2016</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="//rnestler.github.io/drafts/understanding-git-by-implementing-it-in-rust.html" rel="bookmark"
+           title="Permalink to Understanding Git by Implementing it in Rust">Understanding Git by Implementing it in Rust</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-10-28T00:00:00+02:00">
+                Published: Fre 28 Oktober 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/git.html">git</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> </p>
+</footer><!-- /.post-info -->      <!-- Improve the title. Impmlementing what exactly in Rust? -->
+<p>Recently I read the blog post <a class="reference external" href="https://codewords.recurse.com/issues/two/git-from-the-inside-out">Git from the inside out</a> and discovered that
+the format git uses to store our beloved data is actually quite simple and
+straightforward to understand.</p>
+<p>Previously I somehow expected this to be super complex magic happening, but
+this may be just due to the CLI interface git provides ;)</p>
+<p>How simple and elegant the basics of git are can be seen in the <a class="reference external" href="https://github.com/git/git/blob/e83c5163316f89bfbde7d9ab23ca2e25604af290/README">README of the
+first commit</a>.</p>
+<p>Anyway, to dive deeper into it I started implementing a simple reader for the
+git repository format in Rust.</p>
+<p>First I tried to gather more information about the format. The best source is
+the git repository itself:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/git/git/blob/master/Documentation/technical/index-format.txt">https://github.com/git/git/blob/master/Documentation/technical/index-format.txt</a></li>
+</ul>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="//rnestler.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-61586592-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = 'https://ssl.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

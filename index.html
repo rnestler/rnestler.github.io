@@ -23,7 +23,113 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Setting up the Awesome Window Manager in Ubuntu 16.04</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html">Verify Every Single Commit on a git rebase</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-10-31T00:00:00+01:00">
+                Published: Mon 31 Oktober 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/git.html">git</a> <a href="//rnestler.github.io/tag/rebase.html">rebase</a> </p>
+</footer><!-- /.post-info --><p>Sometimes when one uses <tt class="docutils literal">git rebase <span class="pre">-i</span></tt> to reorder, split or merge commits,
+we screw up the commits in between without noticing, since the final commit
+compiles and passes every unit test.</p>
+<p>For example imagine we have this little Rust code:</p>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>Now we want to show how nicely Rust can print a <tt class="docutils literal"><span class="pre">std::Vec</span></tt> so we create a
+branch: <tt class="docutils literal">git checkout <span class="pre">-b</span> add_vector</tt> and add the following:</p>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>This will compile and give us some wonderful output:</p>
+<div class="highlight"><pre><span></span>$ cargo run
+v: <span class="o">[</span>1, 2, 3<span class="o">]</span>
+Hello, world!
+</pre></div>
+<p>We are satisfied with the changes and commit it:</p>
+<div class="highlight"><pre><span></span>$ git add src/main.rs
+$ git commit -m <span class="s2">&quot;Print vector&quot;</span>
+</pre></div>
+<p>We than add some more code to show the length of our fancy vector:</p>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;v.len(): {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">len</span><span class="p">());</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>This also works just fine so we commit it:</p>
+<div class="highlight"><pre><span></span>$ git add src/main.rs
+$ git commit -m <span class="s2">&quot;Print length of vector&quot;</span>
+</pre></div>
+<p>But of course we are not satisfied with the commit history and want to
+rearrange our two commits. So we do a interactive rebase:</p>
+<div class="highlight"><pre><span></span>$ git rebase -i master
+pick 8fc4573 Print length of vector
+pick 6d22bd9 Print vector
+</pre></div>
+<p>This will succeed without error and we still receive the correct output:</p>
+<div class="highlight"><pre><span></span>$ cargo run
+v: <span class="o">[</span>1, 2, 3<span class="o">]</span>
+Hello, world!
+v.len<span class="o">()</span>: 3
+</pre></div>
+<p>But we introduced a broken commit while rebasing! To detect this we can run the
+following:</p>
+<div class="highlight"><pre><span></span>$ git rebase -i master -x <span class="s2">&quot;cargo build&quot;</span>
+
+Executing: cargo build
+   Compiling git_rebase_x_test v0.1.0 <span class="o">(</span>file:///home/rnestler/proggen/git_rebase_x_test<span class="o">)</span>
+error<span class="o">[</span>E0425<span class="o">]</span>: unresolved name <span class="sb">`</span>v<span class="sb">`</span>
+ --&gt; src/main.rs:4:29
+  <span class="p">|</span>
+<span class="m">4</span> <span class="p">|</span>     println!<span class="o">(</span><span class="s2">&quot;v.len(): {}&quot;</span>, v.len<span class="o">())</span><span class="p">;</span>
+  <span class="p">|</span>                             ^
+&lt;std macros&gt;:2:27: 2:58 note: in this expansion of format_args!
+&lt;std macros&gt;:3:1: 3:54 note: in this expansion of print! <span class="o">(</span>defined in &lt;std macros&gt;<span class="o">)</span>
+src/main.rs:4:5: 4:38 note: in this expansion of println! <span class="o">(</span>defined in &lt;std macros&gt;<span class="o">)</span>
+
+error: aborting due to previous error
+
+error: Could not compile <span class="sb">`</span>git_rebase_x_test<span class="sb">`</span>.
+
+To learn more, run the <span class="nb">command</span> again with --verbose.
+Execution failed: cargo build
+You can fix the problem, and <span class="k">then</span> run
+
+    git rebase --continue
+</pre></div>
+<p>This will execute the command after <tt class="docutils literal"><span class="pre">-x</span></tt> for every commit and stop rebasing
+if the command fails.  We now can go on and fix this commit and continue
+rebasing.</p>
+<p>This little git feature allows us to not only have a nice looking, but also
+<em>working</em> git history after rebasing!</p>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html" rel="bookmark"
+                           title="Permalink to Setting up the Awesome Window Manager in Ubuntu 16.04">Setting up the Awesome Window Manager in Ubuntu 16.04</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-10-19T00:00:00+02:00">
                 Published: Mit 19 Oktober 2016
@@ -34,39 +140,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/ubuntu.html">Ubuntu</a> <a href="//rnestler.github.io/tag/awesome-window-manager.html">awesome window manager</a> </p>
-</footer><!-- /.post-info --><p>My window manager of choice is the <a class="reference external" href="https://awesomewm.org/">awesome window manager</a>. On my private
-laptop I have it setup together with the display manager <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">SLiM</a> and a custom
-<tt class="docutils literal">.xinitrc</tt> which starts a few helpers like the <a class="reference external" href="https://wiki.gnome.org/Projects/GnomeKeyring">gnome-keyring-daemon</a>.</p>
-<p>On my work laptop I have Ubuntu 16.04 installed.  Ubuntu uses <a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/">LightDM</a> (The
-Light Display Manager) to manage logins. After installing awesome with <tt class="docutils literal">sudo
-apt install awesome</tt> LightDM will allow you to start an awesome session.  This
-is due to the <tt class="docutils literal">/usr/share/xsessions/awesome.desktop</tt> file contained in the
-awesome package.</p>
-<p>Unfortunately this starts awesome directly and does not execute the
-<tt class="docutils literal"><span class="pre">~/.xinitrc</span></tt> file.  But it does load the various <tt class="docutils literal">/etc/X11/Xsession.d/</tt>
-files which will then load the <tt class="docutils literal"><span class="pre">~/.xsessionrc</span></tt> file if it exists.  When
-<tt class="docutils literal">.xsessionrc</tt> gets loaded it will pass the session to be started as the first
-argument (<tt class="docutils literal">$1</tt>). So to start any helpers we create it with the following
-content:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="c1">#</span>
-<span class="c1"># ~/.xsessionrc</span>
-<span class="c1">#</span>
+</footer><!-- /.post-info -->                <p class="first last">Setting up the awesome window manager under Ubuntu 16.04</p>
 
-<span class="k">case</span> <span class="nv">$1</span> in
-awesome<span class="o">)</span>
-    <span class="nb">export</span> <span class="k">$(</span>gnome-keyring-daemon -s -c pkcs11,secrets,ssh,gpg<span class="k">)</span>
-    <span class="p">;;</span>
-<span class="k">esac</span>
-</pre></div>
-<p>This starts the gnome-keyring-daemon and export the <tt class="docutils literal">SSH_AUTH_SOCK</tt> variable,
-but only if we are trying to start an awesome session.</p>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+                <a class="readmore" href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -251,30 +329,11 @@ but only if we are trying to start an awesome session.</p>
                 <a class="readmore" href="//rnestler.github.io/run-slock-before-going-to-sleep.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="//rnestler.github.io/creating-this-blog.html" rel="bookmark"
-                           title="Permalink to Creating this Blog">Creating this Blog</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2013-10-23T00:00:00+02:00">
-                Published: Mit 23 Oktober 2013
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="//rnestler.github.io/category/2013.html">2013</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/blog.html">blog</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">How and why I created this blog.</p>
-
-                <a class="readmore" href="//rnestler.github.io/creating-this-blog.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
+<p class="paginator">
+    Page 1 / 2
+        <a href="//rnestler.github.io/index2.html">&raquo;</a>
+</p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">

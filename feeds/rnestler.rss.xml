@@ -1,5 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>rnestler.github.io</title><link>//rnestler.github.io/</link><description></description><lastBuildDate>Mon, 31 Oct 2016 00:00:00 +0100</lastBuildDate><item><title>Verify Every Single Commit on a git rebase</title><link>//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html</link><description>&lt;p&gt;Sometimes when one uses &lt;tt class="docutils literal"&gt;git rebase &lt;span class="pre"&gt;-i&lt;/span&gt;&lt;/tt&gt; to reorder, split or merge commits,
+<rss version="2.0"><channel><title>rnestler.github.io</title><link>//rnestler.github.io/</link><description></description><lastBuildDate>Sat, 26 Nov 2016 00:00:00 +0100</lastBuildDate><item><title>Fixing a Corrupt mandb Database</title><link>//rnestler.github.io/fixing-a-corrupt-mandb-database.html</link><description>&lt;p&gt;Recently, probably due to an unexpected power failure, the &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/Man_page"&gt;man page&lt;/a&gt; cache on
+my machine which is managed by &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; got corrupt. I noticed when
+&lt;tt class="docutils literal"&gt;systemctl&lt;/tt&gt; showed the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;man-db.service&lt;/span&gt;&lt;/tt&gt; as failed:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo systemctl
+...
+● man-db.service                     loaded failed failed    Update man-db cache
+...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;systemctl status&lt;/tt&gt; didn't reveal that much information on the issue:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo systemctl status man-db.service
+● man-db.service - Update man-db cache
+   Loaded: loaded &lt;span class="o"&gt;(&lt;/span&gt;/usr/lib/systemd/system/man-db.service&lt;span class="p"&gt;;&lt;/span&gt; static&lt;span class="p"&gt;;&lt;/span&gt; vendor preset: disabled&lt;span class="o"&gt;)&lt;/span&gt;
+   Active: failed &lt;span class="o"&gt;(&lt;/span&gt;Result: exit-code&lt;span class="o"&gt;)&lt;/span&gt; since Sam 2016-11-26 16:47:53 CET&lt;span class="p"&gt;;&lt;/span&gt; 10min ago
+  Process: &lt;span class="m"&gt;23481&lt;/span&gt; &lt;span class="nv"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/mandb &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited, &lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1/FAILURE&lt;span class="o"&gt;)&lt;/span&gt;
+  Process: &lt;span class="m"&gt;23475&lt;/span&gt; &lt;span class="nv"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/mkdir -p /var/cache/man &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited, &lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0/SUCCESS&lt;span class="o"&gt;)&lt;/span&gt;
+ Main PID: &lt;span class="m"&gt;23481&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited, &lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1/FAILURE&lt;span class="o"&gt;)&lt;/span&gt;
+
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;23481&lt;span class="o"&gt;]&lt;/span&gt;: Handbuchseiten unter /usr/share/man/ru.KOI8-R werden verar
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;23481&lt;span class="o"&gt;]&lt;/span&gt;: Alte Datenbankeinträge in /usr/share/man/tr werden gelösch
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;23481&lt;span class="o"&gt;]&lt;/span&gt;: Handbuchseiten unter /usr/share/man/tr werden verarbeitet
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;23481&lt;span class="o"&gt;]&lt;/span&gt;: Alte Datenbankeinträge in /usr/share/man/fi werden gelösch
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;23481&lt;span class="o"&gt;]&lt;/span&gt;: Handbuchseiten unter /usr/share/man/fi werden verarbeitet
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;23481&lt;span class="o"&gt;]&lt;/span&gt;: Alte Datenbankeinträge in /usr/share/man/zh werden gelösch
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo systemd&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]&lt;/span&gt;: man-db.service: Main process exited, &lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited, &lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1/F
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo systemd&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]&lt;/span&gt;: Failed to start Update man-db cache.
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo systemd&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]&lt;/span&gt;: man-db.service: Unit entered failed state.
+Nov &lt;span class="m"&gt;26&lt;/span&gt; 16:47:53 tuxedo systemd&lt;span class="o"&gt;[&lt;/span&gt;1&lt;span class="o"&gt;]&lt;/span&gt;: man-db.service: Failed with result &lt;span class="s1"&gt;&amp;#39;exit-code&amp;#39;&lt;/span&gt;.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So I ran &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; manually to figure out what was wrong:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo mandb
+Purging old database entries in /usr/share/man...
+Processing manual pages under /usr/share/man...
+Purging old database entries in /usr/share/man/sr@latin...
+Processing manual pages under /usr/share/man/sr@latin...
+...
+Purging old database entries in /usr/share/man/zh...
+gdbm fatal: Unexpected end of file
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So gdbm seemed to have some problem. Since I didn't know what &lt;tt class="docutils literal"&gt;gdbm&lt;/tt&gt; was, I
+asked the all knowingly package manager of ArchLinux:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% pacman -Qi gdbm
+Name            : gdbm
+Version         : 1.12-2
+Description     : GNU database library
+...
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Since it is a database library I assumed that the database must be corrupt.
+Lucky enough &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; provides an option to create the database from scratch:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo mandb -c
+
+Processing manual pages under /usr/share/man...
+Updating index cache &lt;span class="k"&gt;for&lt;/span&gt; path &lt;span class="sb"&gt;`&lt;/span&gt;/usr/share/man/man1&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;. Wait...mandb: warning: /usr/share/man/man1/gdk-pixbuf-csource.1.gz: whatis parse &lt;span class="k"&gt;for&lt;/span&gt; gdk-pixbuf-csource&lt;span class="o"&gt;(&lt;/span&gt;1&lt;span class="o"&gt;)&lt;/span&gt; failed
+mandb: warning: /usr/share/man/man1/gdk-pixbuf-query-loaders.1.gz: whatis parse &lt;span class="k"&gt;for&lt;/span&gt; gdk-pixbuf-query-loaders&lt;span class="o"&gt;(&lt;/span&gt;1&lt;span class="o"&gt;)&lt;/span&gt; failed
+...
+Processing manual pages under /usr/local/man...
+&lt;span class="m"&gt;124&lt;/span&gt; man subdirectories contained newer manual pages.
+&lt;span class="m"&gt;22844&lt;/span&gt; manual pages were added.
+&lt;span class="m"&gt;0&lt;/span&gt; stray cats were added.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It spilled my screen with lots of &lt;a class="reference external" href="https://gist.github.com/rnestler/0ad8fdeb54e732922721bd4ef785a8d9#file-mandb_c_output-txt"&gt;output and warnings&lt;/a&gt;, but seemed to finish
+properly.&lt;/p&gt;
+&lt;p&gt;It didn't help though and &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; still failed. Looking at the output again I
+noticed the line &lt;tt class="docutils literal"&gt;Purging old database entries in &lt;span class="pre"&gt;/usr/share/man/zh...&lt;/span&gt;&lt;/tt&gt;. To
+see which package placed its manpage there I queried pacman again:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% &lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;C pacman -Qo /usr/share/man/zh
+/usr/share/man/zh/ is owned by nmap 7.31-1
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So I tried to uninstall and reinstall nmap:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo pacman -R nmap
+% sudo mandb
+% sudo pacman -S nmap
+% sudo mandb
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And this time it finally worked! I'm still not sure what exactly triggered the
+failure in the first place, but I'm not sure how to further debug it.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">rnestler</dc:creator><pubDate>Sat, 26 Nov 2016 00:00:00 +0100</pubDate><guid isPermaLink="false">tag:rnestler.github.io,2016-11-26:fixing-a-corrupt-mandb-database.html</guid><category>Linux</category><category>ArchLinux</category><category>man-db</category></item><item><title>Verify Every Single Commit on a git rebase</title><link>//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html</link><description>&lt;p&gt;Sometimes when one uses &lt;tt class="docutils literal"&gt;git rebase &lt;span class="pre"&gt;-i&lt;/span&gt;&lt;/tt&gt; to reorder, split or merge commits,
 we screw up the commits in between without noticing, since the final commit
 compiles and passes every unit test.&lt;/p&gt;
 &lt;p&gt;For example imagine we have this little Rust code:&lt;/p&gt;

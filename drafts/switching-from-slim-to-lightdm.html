@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>Switching from SLim to LightDM</title>
+        <title>Switching from SLiM to LightDM</title>
         <link rel="stylesheet" href="//rnestler.github.io/theme/css/main.css" />
         <link href="//rnestler.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
 
@@ -25,7 +25,7 @@
     <header>
       <h1 class="entry-title">
         <a href="//rnestler.github.io/drafts/switching-from-slim-to-lightdm.html" rel="bookmark"
-           title="Permalink to Switching from SLim to LightDM">Switching from SLim to LightDM</a></h1>
+           title="Permalink to Switching from SLiM to LightDM">Switching from SLiM to LightDM</a></h1>
     </header>
 
     <div class="entry-content">
@@ -40,9 +40,9 @@
 <p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/archlinux.html">ArchLinux</a> <a href="//rnestler.github.io/tag/slim.html">SLiM</a> <a href="//rnestler.github.io/tag/lightdm.html">LightDM</a> </p>
 </footer><!-- /.post-info -->      <p>For a long time I have been using <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">SLiM</a> as my display manager on ArchLinux.
-It worked quite well for me, but is unmaintained since at least 3 years.  Also
+It worked quite well for me, but is unmaintained since at least 3 years. Also
 according to the <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">ArchLinux WiKi</a> there are issues regarding to systemd
-compatibility.  Also the Linux desktop is headed towards Wayland so I need a
+compatibility. Also the Linux desktop is headed towards Wayland so I need a
 display manager which can start Wayland sessions.</p>
 <p>So my choice fell on <a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/">LightDM</a>, which should &quot;support different display
 technologies (X, Mir, Wayland, ...)&quot; according to their website.</p>
@@ -60,8 +60,8 @@ sudo systemctl start lightdm.service
 </pre></div>
 <p>After that I could login just to notice that my <cite>~/.xinitrc</cite> wasn't getting
 executed, so my helper tools like nm-applet weren't running. Since I already
-solved that issue under <a class="reference external" href="https://rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Ubuntu</a> I was a bit surprised that I need to solve it
-differently under ArchLinux according to <a class="reference external" href="https://wiki.archlinux.org/index.php/LightDM#Migrating_from_SLiM">the WiKi</a>:</p>
+solved that issue under <a class="reference external" href="https://rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Ubuntu</a>, I was a bit surprised that I need to solve
+it differently under ArchLinux according to <a class="reference external" href="https://wiki.archlinux.org/index.php/LightDM#Migrating_from_SLiM">the WiKi</a>:</p>
 <div class="highlight"><pre><span></span>mv ~/.xinitrc ~/.xprofile
 vim ~/.xprofile <span class="c1"># remove the &quot;exec awesome&quot; line</span>
 </pre></div>

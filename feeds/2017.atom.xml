@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2017</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2017.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-01-22T00:00:00+01:00</updated><entry><title>Switching from SLiM to LightDM</title><link href="//rnestler.github.io/switching-from-slim-to-lightdm.html" rel="alternate"></link><published>2017-01-22T00:00:00+01:00</published><updated>2017-01-22T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-01-22:/switching-from-slim-to-lightdm.html</id><summary type="html">&lt;p class="first last"&gt;Switching from SLiM to LightDM&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;For a long time I have been using &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM"&gt;SLiM&lt;/a&gt; as my display manager on ArchLinux.
+It worked quite well for me, but is unmaintained since at least 3 years. Also
+according to the &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM"&gt;ArchLinux WiKi&lt;/a&gt; there are issues regarding to systemd
+compatibility. Also the Linux desktop is headed towards Wayland so I need a
+display manager which can start Wayland sessions.&lt;/p&gt;
+&lt;p&gt;So my choice fell on &lt;a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/"&gt;LightDM&lt;/a&gt;, which should &amp;quot;support different display
+technologies (X, Mir, Wayland, ...)&amp;quot; according to their website.&lt;/p&gt;
+&lt;p&gt;Installing it on ArchLinux is as easy as:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -S lightdm-gtk-greeter
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then we need to deactivate SLiM and activate LightDM:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo systemctl disable slim.service
+sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; lightdm.service
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To switch without a reboot one needs to logout from the X-session, switch to a
+TTY with Ctrl-Alt-1 and stop SLiM and start LightDM:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo systemctl stop slim.service
+sudo systemctl start lightdm.service
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that I could login just to notice that my &lt;cite&gt;~/.xinitrc&lt;/cite&gt; wasn't getting
+executed, so my helper tools like nm-applet weren't running. Since I already
+solved that issue under &lt;a class="reference external" href="https://rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html"&gt;Ubuntu&lt;/a&gt;, I was a bit surprised that I need to solve
+it differently under ArchLinux according to &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/LightDM#Migrating_from_SLiM"&gt;the WiKi&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mv ~/.xinitrc ~/.xprofile
+vim ~/.xprofile &lt;span class="c1"&gt;# remove the &amp;quot;exec awesome&amp;quot; line&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, I enjoy a working X-Session with the &lt;a class="reference external" href="https://awesomewm.org/"&gt;awesome window manager&lt;/a&gt; again,
+while looking forward to a Wayland based desktop, maybe running the &lt;a class="reference external" href="https://github.com/Immington-Industries/way-cooler"&gt;Way
+Cooler&lt;/a&gt; window manager!&lt;/p&gt;
+</content><category term="Linux"></category><category term="ArchLinux"></category><category term="SLiM"></category><category term="LightDM"></category></entry></feed>

@@ -18,12 +18,66 @@
                     <li><a href="//rnestler.github.io/category/2013.html">2013</a></li>
                     <li><a href="//rnestler.github.io/category/2015.html">2015</a></li>
                     <li><a href="//rnestler.github.io/category/2016.html">2016</a></li>
+                    <li><a href="//rnestler.github.io/category/2017.html">2017</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/fixing-a-corrupt-mandb-database.html">Fixing a Corrupt mandb Database</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/switching-from-slim-to-lightdm.html">Switching from SLiM to LightDM</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-01-22T00:00:00+01:00">
+                Published: Son 22 Januar 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/archlinux.html">ArchLinux</a> <a href="//rnestler.github.io/tag/slim.html">SLiM</a> <a href="//rnestler.github.io/tag/lightdm.html">LightDM</a> </p>
+</footer><!-- /.post-info --><p>For a long time I have been using <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">SLiM</a> as my display manager on ArchLinux.
+It worked quite well for me, but is unmaintained since at least 3 years. Also
+according to the <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">ArchLinux WiKi</a> there are issues regarding to systemd
+compatibility. Also the Linux desktop is headed towards Wayland so I need a
+display manager which can start Wayland sessions.</p>
+<p>So my choice fell on <a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/">LightDM</a>, which should &quot;support different display
+technologies (X, Mir, Wayland, ...)&quot; according to their website.</p>
+<p>Installing it on ArchLinux is as easy as:</p>
+<div class="highlight"><pre><span></span>sudo pacman -S lightdm-gtk-greeter
+</pre></div>
+<p>Then we need to deactivate SLiM and activate LightDM:</p>
+<div class="highlight"><pre><span></span>sudo systemctl disable slim.service
+sudo systemctl <span class="nb">enable</span> lightdm.service
+</pre></div>
+<p>To switch without a reboot one needs to logout from the X-session, switch to a
+TTY with Ctrl-Alt-1 and stop SLiM and start LightDM:</p>
+<div class="highlight"><pre><span></span>sudo systemctl stop slim.service
+sudo systemctl start lightdm.service
+</pre></div>
+<p>After that I could login just to notice that my <cite>~/.xinitrc</cite> wasn't getting
+executed, so my helper tools like nm-applet weren't running. Since I already
+solved that issue under <a class="reference external" href="https://rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Ubuntu</a>, I was a bit surprised that I need to solve
+it differently under ArchLinux according to <a class="reference external" href="https://wiki.archlinux.org/index.php/LightDM#Migrating_from_SLiM">the WiKi</a>:</p>
+<div class="highlight"><pre><span></span>mv ~/.xinitrc ~/.xprofile
+vim ~/.xprofile <span class="c1"># remove the &quot;exec awesome&quot; line</span>
+</pre></div>
+<p>Finally, I enjoy a working X-Session with the <a class="reference external" href="https://awesomewm.org/">awesome window manager</a> again,
+while looking forward to a Wayland based desktop, maybe running the <a class="reference external" href="https://github.com/Immington-Industries/way-cooler">Way
+Cooler</a> window manager!</p>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/fixing-a-corrupt-mandb-database.html" rel="bookmark"
+                           title="Permalink to Fixing a Corrupt mandb Database">Fixing a Corrupt mandb Database</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-11-26T00:00:00+01:00">
                 Published: Sam 26 November 2016
@@ -34,87 +88,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/archlinux.html">ArchLinux</a> <a href="//rnestler.github.io/tag/man-db.html">man-db</a> </p>
-</footer><!-- /.post-info --><p>Recently, probably due to an unexpected power failure, the <a class="reference external" href="https://wiki.archlinux.org/index.php/Man_page">man page</a> cache on
-my machine which is managed by <tt class="docutils literal">mandb</tt> got corrupt. I noticed when
-<tt class="docutils literal">systemctl</tt> showed the <tt class="docutils literal"><span class="pre">man-db.service</span></tt> as failed:</p>
-<div class="highlight"><pre><span></span>% sudo systemctl
-...
-● man-db.service                     loaded failed failed    Update man-db cache
-...
-</pre></div>
-<p><tt class="docutils literal">systemctl status</tt> didn't reveal that much information on the issue:</p>
-<div class="highlight"><pre><span></span>% sudo systemctl status man-db.service
-● man-db.service - Update man-db cache
-   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/man-db.service<span class="p">;</span> static<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
-   Active: failed <span class="o">(</span>Result: exit-code<span class="o">)</span> since Sam 2016-11-26 16:47:53 CET<span class="p">;</span> 10min ago
-  Process: <span class="m">23481</span> <span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/mandb <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>1/FAILURE<span class="o">)</span>
-  Process: <span class="m">23475</span> <span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/mkdir -p /var/cache/man <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>0/SUCCESS<span class="o">)</span>
- Main PID: <span class="m">23481</span> <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>1/FAILURE<span class="o">)</span>
+</footer><!-- /.post-info -->                <p class="first last">Fixing a corrupt mandb database</p>
 
-Nov <span class="m">26</span> 16:47:53 tuxedo mandb<span class="o">[</span>23481<span class="o">]</span>: Handbuchseiten unter /usr/share/man/ru.KOI8-R werden verar
-Nov <span class="m">26</span> 16:47:53 tuxedo mandb<span class="o">[</span>23481<span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/tr werden gelösch
-Nov <span class="m">26</span> 16:47:53 tuxedo mandb<span class="o">[</span>23481<span class="o">]</span>: Handbuchseiten unter /usr/share/man/tr werden verarbeitet
-Nov <span class="m">26</span> 16:47:53 tuxedo mandb<span class="o">[</span>23481<span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/fi werden gelösch
-Nov <span class="m">26</span> 16:47:53 tuxedo mandb<span class="o">[</span>23481<span class="o">]</span>: Handbuchseiten unter /usr/share/man/fi werden verarbeitet
-Nov <span class="m">26</span> 16:47:53 tuxedo mandb<span class="o">[</span>23481<span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/zh werden gelösch
-Nov <span class="m">26</span> 16:47:53 tuxedo systemd<span class="o">[</span>1<span class="o">]</span>: man-db.service: Main process exited, <span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>1/F
-Nov <span class="m">26</span> 16:47:53 tuxedo systemd<span class="o">[</span>1<span class="o">]</span>: Failed to start Update man-db cache.
-Nov <span class="m">26</span> 16:47:53 tuxedo systemd<span class="o">[</span>1<span class="o">]</span>: man-db.service: Unit entered failed state.
-Nov <span class="m">26</span> 16:47:53 tuxedo systemd<span class="o">[</span>1<span class="o">]</span>: man-db.service: Failed with result <span class="s1">&#39;exit-code&#39;</span>.
-</pre></div>
-<p>So I ran <tt class="docutils literal">mandb</tt> manually to figure out what was wrong:</p>
-<div class="highlight"><pre><span></span>% sudo mandb
-Purging old database entries in /usr/share/man...
-Processing manual pages under /usr/share/man...
-Purging old database entries in /usr/share/man/sr@latin...
-Processing manual pages under /usr/share/man/sr@latin...
-...
-Purging old database entries in /usr/share/man/zh...
-gdbm fatal: Unexpected end of file
-</pre></div>
-<p>So gdbm seemed to have some problem. Since I didn't know what <tt class="docutils literal">gdbm</tt> was, I
-asked the all knowingly package manager of ArchLinux:</p>
-<div class="highlight"><pre><span></span>% pacman -Qi gdbm
-Name            : gdbm
-Version         : 1.12-2
-Description     : GNU database library
-...
-</pre></div>
-<p>Since it is a database library I assumed that the database must be corrupt.
-Lucky enough <tt class="docutils literal">mandb</tt> provides an option to create the database from scratch:</p>
-<div class="highlight"><pre><span></span>% sudo mandb -c
-
-Processing manual pages under /usr/share/man...
-Updating index cache <span class="k">for</span> path <span class="sb">`</span>/usr/share/man/man1<span class="err">&#39;</span>. Wait...mandb: warning: /usr/share/man/man1/gdk-pixbuf-csource.1.gz: whatis parse <span class="k">for</span> gdk-pixbuf-csource<span class="o">(</span>1<span class="o">)</span> failed
-mandb: warning: /usr/share/man/man1/gdk-pixbuf-query-loaders.1.gz: whatis parse <span class="k">for</span> gdk-pixbuf-query-loaders<span class="o">(</span>1<span class="o">)</span> failed
-...
-Processing manual pages under /usr/local/man...
-<span class="m">124</span> man subdirectories contained newer manual pages.
-<span class="m">22844</span> manual pages were added.
-<span class="m">0</span> stray cats were added.
-</pre></div>
-<p>It spilled my screen with lots of <a class="reference external" href="https://gist.github.com/rnestler/0ad8fdeb54e732922721bd4ef785a8d9#file-mandb_c_output-txt">output and warnings</a>, but seemed to finish
-properly.</p>
-<p>It didn't help though and <tt class="docutils literal">mandb</tt> still failed. Looking at the output again I
-noticed the line <tt class="docutils literal">Purging old database entries in <span class="pre">/usr/share/man/zh...</span></tt>. To
-see which package placed its manpage there I queried pacman again:</p>
-<div class="highlight"><pre><span></span>% <span class="nv">LANG</span><span class="o">=</span>C pacman -Qo /usr/share/man/zh
-/usr/share/man/zh/ is owned by nmap 7.31-1
-</pre></div>
-<p>So I tried to uninstall and reinstall nmap:</p>
-<div class="highlight"><pre><span></span>% sudo pacman -R nmap
-% sudo mandb
-% sudo pacman -S nmap
-% sudo mandb
-</pre></div>
-<p>And this time it finally worked! I'm still not sure what exactly triggered the
-failure in the first place, but I'm not sure how to further debug it.</p>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+                <a class="readmore" href="//rnestler.github.io/fixing-a-corrupt-mandb-database.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>

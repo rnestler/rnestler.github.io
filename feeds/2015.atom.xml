@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2015.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2015-08-16T00:00:00+02:00</updated><entry><title>Reading the SHTC1 smart gadget BLE device</title><link href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html" rel="alternate"></link><published>2015-08-16T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-08-16:reading-the-shtc1-smart-gadget-ble-device.html</id><summary type="html">&lt;div class="section" id="requirements"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2015</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2015.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2015-08-16T00:00:00+02:00</updated><entry><title>Reading the SHTC1 smart gadget BLE device</title><link href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html" rel="alternate"></link><published>2015-08-16T00:00:00+02:00</published><updated>2015-08-16T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-08-16:/reading-the-shtc1-smart-gadget-ble-device.html</id><summary type="html">&lt;p class="first last"&gt;Connection to a SHTC1 smart gadget and read its sensor values&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="requirements"&gt;
 &lt;h2&gt;Requirements&lt;/h2&gt;
 &lt;p&gt;First we need to install the bluez bluetooth stack:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pacman -S bluez bluez-utils
@@ -48,7 +49,8 @@ that the byte order of the values is big endian.&lt;/p&gt;
 &lt;span class="mf"&gt;53.05&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;RH&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="BLE"></category><category term="bluetooth"></category><category term="bluez"></category><category term="SHTC1"></category><category term="SmartGadget"></category></entry><entry><title>Setting up airline-vim</title><link href="//rnestler.github.io/setting-up-airline-vim.html" rel="alternate"></link><published>2015-07-03T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-07-03:setting-up-airline-vim.html</id><summary type="html">&lt;p&gt;Recently I noticed, that my Vim configuration is getting a bit outdated. The
+</content><category term="BLE"></category><category term="bluetooth"></category><category term="bluez"></category><category term="SHTC1"></category><category term="SmartGadget"></category></entry><entry><title>Setting up airline-vim</title><link href="//rnestler.github.io/setting-up-airline-vim.html" rel="alternate"></link><published>2015-07-03T00:00:00+02:00</published><updated>2015-07-03T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-07-03:/setting-up-airline-vim.html</id><summary type="html">&lt;p class="first last"&gt;Setting up the airline-vim plug-in and configure the powerline fonts&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Recently I noticed, that my Vim configuration is getting a bit outdated. The
 configuration of one of my mate had a fancy status line, showed syntax errors
 when saving a buffer and he used &lt;a class="reference external" href="https://github.com/gmarik/Vundle.vim"&gt;vundle&lt;/a&gt; to manage his Vim plug-ins.  I used to
 manage my Vim plug-ins with &lt;a class="reference external" href="https://github.com/archlinuxfr/yaourt"&gt;yaourt&lt;/a&gt;, a
@@ -111,7 +113,8 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!&lt;/p&
 &lt;p&gt;After that it worked like a charm and the special symbols did show up nicely:&lt;/p&gt;
 &lt;img alt="Vim screen shot with airline and powerline fonts" class="align-center" src="/images/vim-airline1.png" style="width: 100%;" /&gt;
 &lt;/div&gt;
-</summary><category term="Vim"></category><category term="airline"></category><category term="urxvt"></category><category term="ArchLinux"></category></entry><entry><title>Serialization in Rust</title><link href="//rnestler.github.io/serialization-in-rust.html" rel="alternate"></link><published>2015-04-09T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-04-09:serialization-in-rust.html</id><summary type="html">&lt;p&gt;One of my first projects with Rust is the &lt;a class="reference external" href="https://spaceapi.net/"&gt;spaceapi&lt;/a&gt;
+</content><category term="Vim"></category><category term="airline"></category><category term="urxvt"></category><category term="ArchLinux"></category></entry><entry><title>Serialization in Rust</title><link href="//rnestler.github.io/serialization-in-rust.html" rel="alternate"></link><published>2015-04-09T00:00:00+02:00</published><updated>2015-04-09T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-04-09:/serialization-in-rust.html</id><summary type="html">&lt;p class="first last"&gt;Using the Rust JSON serialization to implement the Space API&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;One of my first projects with Rust is the &lt;a class="reference external" href="https://spaceapi.net/"&gt;spaceapi&lt;/a&gt;
 implementation of my local &lt;a class="reference external" href="https://coredump.ch"&gt;hackerspace&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;You can find the source for it on &lt;a class="reference external" href="https://github.com/coredump-ch/spaceapi"&gt;github&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="the-space-api"&gt;
@@ -258,7 +261,8 @@ the following:&lt;/p&gt;
 &lt;p&gt;Have comments? Discuss on &lt;a class="reference external" href="https://news.ycombinator.com/item?id=9470475"&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="Rust"></category><category term="JSON"></category><category term="hackerspace"></category></entry><entry><title>More Rust compared to C++</title><link href="//rnestler.github.io/more-rust-compared-to-c.html" rel="alternate"></link><published>2015-02-06T00:00:00+01:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-06:more-rust-compared-to-c.html</id><summary type="html">&lt;p&gt;After &lt;a class="reference external" href="http://rnestler.github.io/learning-rust.html"&gt;getting in touch with Rust&lt;/a&gt;, the next thing I was looking
+</content><category term="programming"></category><category term="Rust"></category><category term="JSON"></category><category term="hackerspace"></category></entry><entry><title>More Rust compared to C++</title><link href="//rnestler.github.io/more-rust-compared-to-c.html" rel="alternate"></link><published>2015-02-06T00:00:00+01:00</published><updated>2015-02-06T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-06:/more-rust-compared-to-c.html</id><summary type="html">&lt;p class="first last"&gt;More about the programming language Rust&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;After &lt;a class="reference external" href="http://rnestler.github.io/learning-rust.html"&gt;getting in touch with Rust&lt;/a&gt;, the next thing I was looking
 at were pointers and the concept of ownership and borrowing in Rust.&lt;/p&gt;
 &lt;div class="section" id="pointers"&gt;
 &lt;h2&gt;Pointers&lt;/h2&gt;
@@ -479,7 +483,8 @@ To fix the issue we need to limit the scope of &lt;tt class="docutils literal"&g
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Have comments? Discuss on &lt;a class="reference external" href="https://news.ycombinator.com/item?id=9329506"&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="Rust"></category><category term="C++"></category></entry><entry><title>Learning Rust</title><link href="//rnestler.github.io/learning-rust.html" rel="alternate"></link><published>2015-02-04T00:00:00+01:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-04:learning-rust.html</id><summary type="html">&lt;p&gt;Reading the news that Rust reached &lt;a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html"&gt;1.0 Alpha&lt;/a&gt; I decided to take
+</content><category term="programming"></category><category term="Rust"></category><category term="C++"></category></entry><entry><title>Learning Rust</title><link href="//rnestler.github.io/learning-rust.html" rel="alternate"></link><published>2015-02-04T00:00:00+01:00</published><updated>2015-02-04T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-04:/learning-rust.html</id><summary type="html">&lt;p class="first last"&gt;Learning the programming language rust&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Reading the news that Rust reached &lt;a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html"&gt;1.0 Alpha&lt;/a&gt; I decided to take
 a deeper look at &lt;a class="reference external" href="http://www.rust-lang.org/"&gt;it&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="getting-rust"&gt;
 &lt;h2&gt;Getting Rust&lt;/h2&gt;
@@ -528,4 +533,4 @@ error: aborting due to previous error
 &lt;p&gt;Rust will also emit a warning when not using variables or an error when trying
 to use uninitialized variables.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="Rust"></category></entry></feed>
+</content><category term="programming"></category><category term="Rust"></category></entry></feed>

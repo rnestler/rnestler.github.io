@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2016-11-26T00:00:00+01:00</updated><entry><title>Fixing a Corrupt mandb Database</title><link href="//rnestler.github.io/fixing-a-corrupt-mandb-database.html" rel="alternate"></link><published>2016-11-26T00:00:00+01:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-11-26:fixing-a-corrupt-mandb-database.html</id><summary type="html">&lt;p&gt;Recently, probably due to an unexpected power failure, the &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/Man_page"&gt;man page&lt;/a&gt; cache on
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2016-11-26T00:00:00+01:00</updated><entry><title>Fixing a Corrupt mandb Database</title><link href="//rnestler.github.io/fixing-a-corrupt-mandb-database.html" rel="alternate"></link><published>2016-11-26T00:00:00+01:00</published><updated>2016-11-26T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-11-26:/fixing-a-corrupt-mandb-database.html</id><summary type="html">&lt;p class="first last"&gt;Fixing a corrupt mandb database&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Recently, probably due to an unexpected power failure, the &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/Man_page"&gt;man page&lt;/a&gt; cache on
 my machine which is managed by &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; got corrupt. I noticed when
 &lt;tt class="docutils literal"&gt;systemctl&lt;/tt&gt; showed the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;man-db.service&lt;/span&gt;&lt;/tt&gt; as failed:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo systemctl
@@ -74,7 +75,8 @@ see which package placed its manpage there I queried pacman again:&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And this time it finally worked! I'm still not sure what exactly triggered the
 failure in the first place, but I'm not sure how to further debug it.&lt;/p&gt;
-</summary><category term="Linux"></category><category term="ArchLinux"></category><category term="man-db"></category></entry><entry><title>Verify Every Single Commit on a git rebase</title><link href="//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html" rel="alternate"></link><published>2016-10-31T00:00:00+01:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-10-31:verify-every-single-commit-on-a-git-rebase.html</id><summary type="html">&lt;p&gt;Sometimes when one uses &lt;tt class="docutils literal"&gt;git rebase &lt;span class="pre"&gt;-i&lt;/span&gt;&lt;/tt&gt; to reorder, split or merge commits,
+</content><category term="Linux"></category><category term="ArchLinux"></category><category term="man-db"></category></entry><entry><title>Verify Every Single Commit on a git rebase</title><link href="//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html" rel="alternate"></link><published>2016-10-31T00:00:00+01:00</published><updated>2016-10-31T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-10-31:/verify-every-single-commit-on-a-git-rebase.html</id><summary type="html">&lt;p class="first last"&gt;Check every commit when reordering commits with git rebase -i&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Sometimes when one uses &lt;tt class="docutils literal"&gt;git rebase &lt;span class="pre"&gt;-i&lt;/span&gt;&lt;/tt&gt; to reorder, split or merge commits,
 we screw up the commits in between without noticing, since the final commit
 compiles and passes every unit test.&lt;/p&gt;
 &lt;p&gt;For example imagine we have this little Rust code:&lt;/p&gt;
@@ -156,7 +158,8 @@ if the command fails.  We now can go on and fix this commit and continue
 rebasing.&lt;/p&gt;
 &lt;p&gt;This little git feature allows us to not only have a nice looking, but also
 &lt;em&gt;working&lt;/em&gt; git history after rebasing!&lt;/p&gt;
-</summary><category term="git"></category><category term="rebase"></category></entry><entry><title>Setting up the Awesome Window Manager in Ubuntu 16.04</title><link href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html" rel="alternate"></link><published>2016-10-19T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-10-19:setting-up-the-awesome-window-manager-in-ubuntu-1604.html</id><summary type="html">&lt;p&gt;My window manager of choice is the &lt;a class="reference external" href="https://awesomewm.org/"&gt;awesome window manager&lt;/a&gt;. On my private
+</content><category term="git"></category><category term="rebase"></category></entry><entry><title>Setting up the Awesome Window Manager in Ubuntu 16.04</title><link href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html" rel="alternate"></link><published>2016-10-19T00:00:00+02:00</published><updated>2016-10-19T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-10-19:/setting-up-the-awesome-window-manager-in-ubuntu-1604.html</id><summary type="html">&lt;p class="first last"&gt;Setting up the awesome window manager under Ubuntu 16.04&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;My window manager of choice is the &lt;a class="reference external" href="https://awesomewm.org/"&gt;awesome window manager&lt;/a&gt;. On my private
 laptop I have it setup together with the display manager &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM"&gt;SLiM&lt;/a&gt; and a custom
 &lt;tt class="docutils literal"&gt;.xinitrc&lt;/tt&gt; which starts a few helpers like the &lt;a class="reference external" href="https://wiki.gnome.org/Projects/GnomeKeyring"&gt;gnome-keyring-daemon&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;On my work laptop I have Ubuntu 16.04 installed.  Ubuntu uses &lt;a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/"&gt;LightDM&lt;/a&gt; (The
@@ -183,7 +186,8 @@ awesome&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This starts the gnome-keyring-daemon and export the &lt;tt class="docutils literal"&gt;SSH_AUTH_SOCK&lt;/tt&gt; variable,
 but only if we are trying to start an awesome session.&lt;/p&gt;
-</summary><category term="Linux"></category><category term="Ubuntu"></category><category term="awesome window manager"></category></entry><entry><title>Debugging Rust code with vim and Conque-GDB</title><link href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html" rel="alternate"></link><published>2016-05-25T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-05-25:debugging-rust-code-with-vim-and-conque-gdb.html</id><summary type="html">&lt;p&gt;While I use debuggers quite a lot at work in IDEs such as VisualStudio, PyCharm
+</content><category term="Linux"></category><category term="Ubuntu"></category><category term="awesome window manager"></category></entry><entry><title>Debugging Rust code with vim and Conque-GDB</title><link href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html" rel="alternate"></link><published>2016-05-25T00:00:00+02:00</published><updated>2016-05-25T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-05-25:/debugging-rust-code-with-vim-and-conque-gdb.html</id><summary type="html">&lt;p class="first last"&gt;Using vim together with Conque-GDB to debug Rust and C/C++ code.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;While I use debuggers quite a lot at work in IDEs such as VisualStudio, PyCharm
 or QtCreator (of course all configured to use vim-like keybindings), I seldom
 use them when working on my side projects.&lt;/p&gt;
 &lt;p&gt;This is maybe due to the fact, that for my side project I mainly use vim
@@ -238,7 +242,8 @@ stay in my favourite text editor!&lt;/p&gt;
 &lt;p&gt;Do you have any comments, found a bug or an error? Please leave a note on
 &lt;a class="reference external" href="https://www.reddit.com/r/rust/comments/4l226c/debugging_rust_code_with_vim_and_conquegdb/"&gt;Reddit&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="C++"></category><category term="Rust"></category><category term="vim"></category><category term="gdb"></category></entry><entry><title>C++ List of ScopeGuard</title><link href="//rnestler.github.io/c-list-of-scopeguard.html" rel="alternate"></link><published>2016-04-11T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-04-11:c-list-of-scopeguard.html</id><summary type="html">&lt;p&gt;Recently the developer of &lt;a class="reference external" href="https://github.com/LibrePCB/LibrePCB"&gt;LibrePCB&lt;/a&gt;
+</content><category term="programming"></category><category term="C++"></category><category term="Rust"></category><category term="vim"></category><category term="gdb"></category></entry><entry><title>C++ List of ScopeGuard</title><link href="//rnestler.github.io/c-list-of-scopeguard.html" rel="alternate"></link><published>2016-04-11T00:00:00+02:00</published><updated>2016-04-11T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2016-04-11:/c-list-of-scopeguard.html</id><summary type="html">&lt;p class="first last"&gt;Implementing a easy to use list of ScopeGuard&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Recently the developer of &lt;a class="reference external" href="https://github.com/LibrePCB/LibrePCB"&gt;LibrePCB&lt;/a&gt;
 asked me about a C++ pattern to undo parts of an action if an exception gets
 thrown in the middle of it.&lt;/p&gt;
 &lt;p&gt;Of course he basically described the main usage of a ScopeGuard. I went ahead
@@ -450,7 +455,8 @@ erasure.&lt;/p&gt;
 &lt;p&gt;Do you have any comments, found a bug or an error? Please leave a note on
 &lt;a class="reference external" href="https://www.reddit.com/r/cpp/comments/4ecf5a/c_list_of_scopeguard/"&gt;Reddit&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="C++"></category></entry><entry><title>Reading the SHTC1 smart gadget BLE device</title><link href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html" rel="alternate"></link><published>2015-08-16T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-08-16:reading-the-shtc1-smart-gadget-ble-device.html</id><summary type="html">&lt;div class="section" id="requirements"&gt;
+</content><category term="programming"></category><category term="C++"></category></entry><entry><title>Reading the SHTC1 smart gadget BLE device</title><link href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html" rel="alternate"></link><published>2015-08-16T00:00:00+02:00</published><updated>2015-08-16T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-08-16:/reading-the-shtc1-smart-gadget-ble-device.html</id><summary type="html">&lt;p class="first last"&gt;Connection to a SHTC1 smart gadget and read its sensor values&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="requirements"&gt;
 &lt;h2&gt;Requirements&lt;/h2&gt;
 &lt;p&gt;First we need to install the bluez bluetooth stack:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pacman -S bluez bluez-utils
@@ -499,7 +505,8 @@ that the byte order of the values is big endian.&lt;/p&gt;
 &lt;span class="mf"&gt;53.05&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;RH&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="BLE"></category><category term="bluetooth"></category><category term="bluez"></category><category term="SHTC1"></category><category term="SmartGadget"></category></entry><entry><title>Setting up airline-vim</title><link href="//rnestler.github.io/setting-up-airline-vim.html" rel="alternate"></link><published>2015-07-03T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-07-03:setting-up-airline-vim.html</id><summary type="html">&lt;p&gt;Recently I noticed, that my Vim configuration is getting a bit outdated. The
+</content><category term="BLE"></category><category term="bluetooth"></category><category term="bluez"></category><category term="SHTC1"></category><category term="SmartGadget"></category></entry><entry><title>Setting up airline-vim</title><link href="//rnestler.github.io/setting-up-airline-vim.html" rel="alternate"></link><published>2015-07-03T00:00:00+02:00</published><updated>2015-07-03T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-07-03:/setting-up-airline-vim.html</id><summary type="html">&lt;p class="first last"&gt;Setting up the airline-vim plug-in and configure the powerline fonts&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Recently I noticed, that my Vim configuration is getting a bit outdated. The
 configuration of one of my mate had a fancy status line, showed syntax errors
 when saving a buffer and he used &lt;a class="reference external" href="https://github.com/gmarik/Vundle.vim"&gt;vundle&lt;/a&gt; to manage his Vim plug-ins.  I used to
 manage my Vim plug-ins with &lt;a class="reference external" href="https://github.com/archlinuxfr/yaourt"&gt;yaourt&lt;/a&gt;, a
@@ -562,7 +569,8 @@ stuff, it turned out I just needed to kill and restart the urxvtd daemon!&lt;/p&
 &lt;p&gt;After that it worked like a charm and the special symbols did show up nicely:&lt;/p&gt;
 &lt;img alt="Vim screen shot with airline and powerline fonts" class="align-center" src="/images/vim-airline1.png" style="width: 100%;" /&gt;
 &lt;/div&gt;
-</summary><category term="Vim"></category><category term="airline"></category><category term="urxvt"></category><category term="ArchLinux"></category></entry><entry><title>Serialization in Rust</title><link href="//rnestler.github.io/serialization-in-rust.html" rel="alternate"></link><published>2015-04-09T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-04-09:serialization-in-rust.html</id><summary type="html">&lt;p&gt;One of my first projects with Rust is the &lt;a class="reference external" href="https://spaceapi.net/"&gt;spaceapi&lt;/a&gt;
+</content><category term="Vim"></category><category term="airline"></category><category term="urxvt"></category><category term="ArchLinux"></category></entry><entry><title>Serialization in Rust</title><link href="//rnestler.github.io/serialization-in-rust.html" rel="alternate"></link><published>2015-04-09T00:00:00+02:00</published><updated>2015-04-09T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-04-09:/serialization-in-rust.html</id><summary type="html">&lt;p class="first last"&gt;Using the Rust JSON serialization to implement the Space API&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;One of my first projects with Rust is the &lt;a class="reference external" href="https://spaceapi.net/"&gt;spaceapi&lt;/a&gt;
 implementation of my local &lt;a class="reference external" href="https://coredump.ch"&gt;hackerspace&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;You can find the source for it on &lt;a class="reference external" href="https://github.com/coredump-ch/spaceapi"&gt;github&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="the-space-api"&gt;
@@ -709,7 +717,8 @@ the following:&lt;/p&gt;
 &lt;p&gt;Have comments? Discuss on &lt;a class="reference external" href="https://news.ycombinator.com/item?id=9470475"&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="Rust"></category><category term="JSON"></category><category term="hackerspace"></category></entry><entry><title>More Rust compared to C++</title><link href="//rnestler.github.io/more-rust-compared-to-c.html" rel="alternate"></link><published>2015-02-06T00:00:00+01:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-06:more-rust-compared-to-c.html</id><summary type="html">&lt;p&gt;After &lt;a class="reference external" href="http://rnestler.github.io/learning-rust.html"&gt;getting in touch with Rust&lt;/a&gt;, the next thing I was looking
+</content><category term="programming"></category><category term="Rust"></category><category term="JSON"></category><category term="hackerspace"></category></entry><entry><title>More Rust compared to C++</title><link href="//rnestler.github.io/more-rust-compared-to-c.html" rel="alternate"></link><published>2015-02-06T00:00:00+01:00</published><updated>2015-02-06T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-06:/more-rust-compared-to-c.html</id><summary type="html">&lt;p class="first last"&gt;More about the programming language Rust&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;After &lt;a class="reference external" href="http://rnestler.github.io/learning-rust.html"&gt;getting in touch with Rust&lt;/a&gt;, the next thing I was looking
 at were pointers and the concept of ownership and borrowing in Rust.&lt;/p&gt;
 &lt;div class="section" id="pointers"&gt;
 &lt;h2&gt;Pointers&lt;/h2&gt;
@@ -930,7 +939,8 @@ To fix the issue we need to limit the scope of &lt;tt class="docutils literal"&g
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Have comments? Discuss on &lt;a class="reference external" href="https://news.ycombinator.com/item?id=9329506"&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="Rust"></category><category term="C++"></category></entry><entry><title>Learning Rust</title><link href="//rnestler.github.io/learning-rust.html" rel="alternate"></link><published>2015-02-04T00:00:00+01:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-04:learning-rust.html</id><summary type="html">&lt;p&gt;Reading the news that Rust reached &lt;a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html"&gt;1.0 Alpha&lt;/a&gt; I decided to take
+</content><category term="programming"></category><category term="Rust"></category><category term="C++"></category></entry><entry><title>Learning Rust</title><link href="//rnestler.github.io/learning-rust.html" rel="alternate"></link><published>2015-02-04T00:00:00+01:00</published><updated>2015-02-04T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2015-02-04:/learning-rust.html</id><summary type="html">&lt;p class="first last"&gt;Learning the programming language rust&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Reading the news that Rust reached &lt;a class="reference external" href="http://blog.rust-lang.org/2015/01/09/Rust-1.0-alpha.html"&gt;1.0 Alpha&lt;/a&gt; I decided to take
 a deeper look at &lt;a class="reference external" href="http://www.rust-lang.org/"&gt;it&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="section" id="getting-rust"&gt;
 &lt;h2&gt;Getting Rust&lt;/h2&gt;
@@ -979,7 +989,8 @@ error: aborting due to previous error
 &lt;p&gt;Rust will also emit a warning when not using variables or an error when trying
 to use uninitialized variables.&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="programming"></category><category term="Rust"></category></entry><entry><title>Run slock before going to sleep</title><link href="//rnestler.github.io/run-slock-before-going-to-sleep.html" rel="alternate"></link><published>2013-10-25T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2013-10-25:run-slock-before-going-to-sleep.html</id><summary type="html">&lt;p&gt;As noted in my previous post, I configured my system to run slock as soon as
+</content><category term="programming"></category><category term="Rust"></category></entry><entry><title>Run slock before going to sleep</title><link href="//rnestler.github.io/run-slock-before-going-to-sleep.html" rel="alternate"></link><published>2013-10-25T00:00:00+02:00</published><updated>2013-10-25T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2013-10-25:/run-slock-before-going-to-sleep.html</id><summary type="html">&lt;p class="first last"&gt;How to configure systemd to run slock when going to sleep&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;As noted in my previous post, I configured my system to run slock as soon as
 the system enters sleep state.  This is how its done.&lt;/p&gt;
 &lt;p&gt;First we create a new systemd unit in /etc/systemd/system called
 suspend&amp;#64;.service&lt;/p&gt;
@@ -1007,7 +1018,8 @@ X-Server we need to set the DISPLAY variable to :0.&lt;/p&gt;
 when enabling the unit file.  To make it work with multible users one would
 need to create a script which determines which user is running the X-Server
 then change to this user and lock the screen.&lt;/p&gt;
-</summary><category term="systemd"></category><category term="slock"></category><category term="suspend"></category></entry><entry><title>Creating this Blog</title><link href="//rnestler.github.io/creating-this-blog.html" rel="alternate"></link><published>2013-10-23T00:00:00+02:00</published><author><name>rnestler</name></author><id>tag:rnestler.github.io,2013-10-23:creating-this-blog.html</id><summary type="html">&lt;p&gt;Recently a friend of mine asked me how I configured my system so that &lt;a class="reference external" href="http://tools.suckless.org/slock"&gt;slock&lt;/a&gt; locks the screen when I close the lid.&lt;/p&gt;
+</content><category term="systemd"></category><category term="slock"></category><category term="suspend"></category></entry><entry><title>Creating this Blog</title><link href="//rnestler.github.io/creating-this-blog.html" rel="alternate"></link><published>2013-10-23T00:00:00+02:00</published><updated>2013-10-23T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2013-10-23:/creating-this-blog.html</id><summary type="html">&lt;p class="first last"&gt;How and why I created this blog.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Recently a friend of mine asked me how I configured my system so that &lt;a class="reference external" href="http://tools.suckless.org/slock"&gt;slock&lt;/a&gt; locks the screen when I close the lid.&lt;/p&gt;
 &lt;p&gt;Since I couldn't remember how I did it, I thought it's time to create a blog
 where I can write down stuff like this.&lt;/p&gt;
 &lt;p&gt;The same friend recommended me to use &lt;a class="reference external" href="http://getpelican.com/"&gt;pelican&lt;/a&gt; to
@@ -1064,4 +1076,4 @@ to the master branch in our username.github.io repository.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The blog gets published under &lt;a class="reference external" href="http://username.github.io"&gt;http://username.github.io&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="blog"></category></entry></feed>
+</content><category term="blog"></category></entry></feed>

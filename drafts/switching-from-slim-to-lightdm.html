@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>Understanding Git by Implementing it in Rust</title>
+        <title>Switching from SLim to LightDM</title>
         <link rel="stylesheet" href="//rnestler.github.io/theme/css/main.css" />
         <link href="//rnestler.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
 
@@ -17,43 +17,57 @@
                 <nav><ul>
                     <li><a href="//rnestler.github.io/category/2013.html">2013</a></li>
                     <li><a href="//rnestler.github.io/category/2015.html">2015</a></li>
-                    <li class="active"><a href="//rnestler.github.io/category/2016.html">2016</a></li>
+                    <li><a href="//rnestler.github.io/category/2016.html">2016</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="//rnestler.github.io/drafts/understanding-git-by-implementing-it-in-rust.html" rel="bookmark"
-           title="Permalink to Understanding Git by Implementing it in Rust">Understanding Git by Implementing it in Rust</a></h1>
+        <a href="//rnestler.github.io/drafts/switching-from-slim-to-lightdm.html" rel="bookmark"
+           title="Permalink to Switching from SLim to LightDM">Switching from SLim to LightDM</a></h1>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2016-10-28T00:00:00+02:00">
-                Published: Fre 28 Oktober 2016
+        <abbr class="published" title="2017-01-22T00:00:00+01:00">
+                Published: Son 22 Januar 2017
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/git.html">git</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> </p>
-</footer><!-- /.post-info -->      <!-- Improve the title. Impmlementing what exactly in Rust? -->
-<p>Recently I read the blog post <a class="reference external" href="https://codewords.recurse.com/issues/two/git-from-the-inside-out">Git from the inside out</a> and discovered that
-the format git uses to store our beloved data is actually quite simple and
-straightforward to understand.</p>
-<p>Previously I somehow expected this to be super complex magic happening, but
-this may be just due to the CLI interface git provides ;)</p>
-<p>How simple and elegant the basics of git are can be seen in the <a class="reference external" href="https://github.com/git/git/blob/e83c5163316f89bfbde7d9ab23ca2e25604af290/README">README of the
-first commit</a>.</p>
-<p>Anyway, to dive deeper into it I started implementing a simple reader for the
-git repository format in Rust.</p>
-<p>First I tried to gather more information about the format. The best source is
-the git repository itself:</p>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/git/git/blob/master/Documentation/technical/index-format.txt">https://github.com/git/git/blob/master/Documentation/technical/index-format.txt</a></li>
-</ul>
+<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/archlinux.html">ArchLinux</a> <a href="//rnestler.github.io/tag/slim.html">SLiM</a> <a href="//rnestler.github.io/tag/lightdm.html">LightDM</a> </p>
+</footer><!-- /.post-info -->      <p>For a long time I have been using <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">SLiM</a> as my display manager on ArchLinux.
+It worked quite well for me, but is unmaintained since at least 3 years.  Also
+according to the <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">ArchLinux WiKi</a> there are issues regarding to systemd
+compatibility.  Also the Linux desktop is headed towards Wayland so I need a
+display manager which can start Wayland sessions.</p>
+<p>So my choice fell on <a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/">LightDM</a>, which should &quot;support different display
+technologies (X, Mir, Wayland, ...)&quot; according to their website.</p>
+<p>Installing it on ArchLinux is as easy as:</p>
+<div class="highlight"><pre><span></span>sudo pacman -S lightdm-gtk-greeter
+</pre></div>
+<p>Then we need to deactivate SLiM and activate LightDM:</p>
+<div class="highlight"><pre><span></span>sudo systemctl disable slim.service
+sudo systemctl <span class="nb">enable</span> lightdm.service
+</pre></div>
+<p>To switch without a reboot one needs to logout from the X-session, switch to a
+TTY with Ctrl-Alt-1 and stop SLiM and start LightDM:</p>
+<div class="highlight"><pre><span></span>sudo systemctl stop slim.service
+sudo systemctl start lightdm.service
+</pre></div>
+<p>After that I could login just to notice that my <cite>~/.xinitrc</cite> wasn't getting
+executed, so my helper tools like nm-applet weren't running. Since I already
+solved that issue under <a class="reference external" href="https://rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Ubuntu</a> I was a bit surprised that I need to solve it
+differently under ArchLinux according to <a class="reference external" href="https://wiki.archlinux.org/index.php/LightDM#Migrating_from_SLiM">the WiKi</a>:</p>
+<div class="highlight"><pre><span></span>mv ~/.xinitrc ~/.xprofile
+vim ~/.xprofile <span class="c1"># remove the &quot;exec awesome&quot; line</span>
+</pre></div>
+<p>After that I could enjoy a working X-Session with the <a class="reference external" href="https://awesomewm.org/">awesome window manager</a>
+again, while looking forward to a Wayland based desktop, maybe running the <a class="reference external" href="https://github.com/Immington-Industries/way-cooler">Way
+Cooler</a> window manager.</p>
 
     </div><!-- /.entry-content -->
 

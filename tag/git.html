@@ -39,13 +39,13 @@
 we screw up the commits in between without noticing, since the final commit
 compiles and passes every unit test.</p>
 <p>For example imagine we have this little Rust code:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>Now we want to show how nicely Rust can print a <tt class="docutils literal"><span class="pre">std::Vec</span></tt> so we create a
 branch: <tt class="docutils literal">git checkout <span class="pre">-b</span> add_vector</tt> and add the following:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
 <span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
 
@@ -54,7 +54,7 @@ branch: <tt class="docutils literal">git checkout <span class="pre">-b</span> ad
 </pre></div>
 <p>This will compile and give us some wonderful output:</p>
 <div class="highlight"><pre><span></span>$ cargo run
-v: <span class="o">[</span>1, 2, 3<span class="o">]</span>
+v: <span class="o">[</span><span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span><span class="o">]</span>
 Hello, world!
 </pre></div>
 <p>We are satisfied with the changes and commit it:</p>
@@ -62,7 +62,7 @@ Hello, world!
 $ git commit -m <span class="s2">&quot;Print vector&quot;</span>
 </pre></div>
 <p>We than add some more code to show the length of our fancy vector:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
 <span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
 
@@ -83,9 +83,9 @@ pick 6d22bd9 Print vector
 </pre></div>
 <p>This will succeed without error and we still receive the correct output:</p>
 <div class="highlight"><pre><span></span>$ cargo run
-v: <span class="o">[</span>1, 2, 3<span class="o">]</span>
+v: <span class="o">[</span><span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span><span class="o">]</span>
 Hello, world!
-v.len<span class="o">()</span>: 3
+v.len<span class="o">()</span>: <span class="m">3</span>
 </pre></div>
 <p>But we introduced a broken commit while rebasing! To detect this we can run the
 following:</p>
@@ -98,9 +98,9 @@ error<span class="o">[</span>E0425<span class="o">]</span>: unresolved name <spa
   <span class="p">|</span>
 <span class="m">4</span> <span class="p">|</span>     println!<span class="o">(</span><span class="s2">&quot;v.len(): {}&quot;</span>, v.len<span class="o">())</span><span class="p">;</span>
   <span class="p">|</span>                             ^
-&lt;std macros&gt;:2:27: 2:58 note: in this expansion of format_args!
-&lt;std macros&gt;:3:1: 3:54 note: in this expansion of print! <span class="o">(</span>defined in &lt;std macros&gt;<span class="o">)</span>
-src/main.rs:4:5: 4:38 note: in this expansion of println! <span class="o">(</span>defined in &lt;std macros&gt;<span class="o">)</span>
+&lt;std macros&gt;:2:27: <span class="m">2</span>:58 note: in this expansion of format_args!
+&lt;std macros&gt;:3:1: <span class="m">3</span>:54 note: in this expansion of print! <span class="o">(</span>defined in &lt;std macros&gt;<span class="o">)</span>
+src/main.rs:4:5: <span class="m">4</span>:38 note: in this expansion of println! <span class="o">(</span>defined in &lt;std macros&gt;<span class="o">)</span>
 
 error: aborting due to previous error
 
@@ -121,7 +121,7 @@ rebasing.</p>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
-                        <h2>links</h2>
+                        <h2>blogroll</h2>
                         <ul>
                             <li><a href="http://getpelican.com/">Pelican</a></li>
                             <li><a href="http://python.org/">Python.org</a></li>
@@ -149,13 +149,14 @@ rebasing.</p>
         </footer><!-- /#contentinfo -->
 
     <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-61586592-1', 'auto');
-    ga('send', 'pageview');
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-61586592-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = 'https://ssl.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
     </script>
 </body>
 </html>

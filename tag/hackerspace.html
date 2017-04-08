@@ -24,7 +24,51 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/serialization-in-rust.html">Serialization in Rust</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/starting-my-tour-de-hackerspace.html">Starting my &quot;Tour de Hackerspace&quot;</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-04-08T00:00:00+02:00">
+                Published: Sam 08 April 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+</footer><!-- /.post-info --><p>Today I start what I call my &quot;Tour de Hackerspace&quot;! I'll be travelling around
+Europe and visit various <a class="reference external" href="https://wiki.hackerspaces.org/">hackerspaces</a> on the way.  To keep travel costs at a
+reasonable level, I bought an <a class="reference external" href="http://www.interrail.eu/en">InterRail</a> ticket, which allows flexible
+travelling by train.</p>
+<img alt="Map of Europe from https://wiki.hackerspaces.org/Europe" class="align-center" src="/images/tour_de_hackerspace/map_europe.png" style="width: 100%;" />
+<p>Since I'm not the kind of person which is great at planing, this will be more
+or less a spontaneous adventure.  I contacted some hackerspaces upfront and
+received some great and welcoming responses, especially from the Eastern part
+of Europe!</p>
+<p>My first location will be the <a class="reference external" href="https://shack.space/">shackerspace</a> in Stuttgart, Germany.  After that
+I plan to visit a hackerspace in Amsterdam, then travelling a bit in the east
+(Czech Republic, Poland, ...) and probably attend the <a class="reference external" href="http://2017.rustfest.eu/">RustFest 2017</a> in Kyiv,
+Ukraine.</p>
+<p>According to my definitely not definitive plan I will then travel southwards
+visiting Romania, Bulgaria, Croatia, Serbia, Bosnia and Herzegovina, Slovenia,
+... before returning to Switzerland.</p>
+<p>I'm really looking forward to meet lots of amazing people and see how they live
+and hack around Europe!</p>
+<p>I will try to write a blog post about every hackerspace I visit on my journey,
+so stay tuned.</p>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/serialization-in-rust.html" rel="bookmark"
+                           title="Permalink to Serialization in Rust">Serialization in Rust</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-04-09T00:00:00+02:00">
                 Published: Don 09 April 2015
@@ -35,155 +79,13 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/json.html">JSON</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> </p>
-</footer><!-- /.post-info --><p>One of my first projects with Rust is the <a class="reference external" href="https://spaceapi.net/">spaceapi</a>
-implementation of my local <a class="reference external" href="https://coredump.ch">hackerspace</a>.</p>
-<p>You can find the source for it on <a class="reference external" href="https://github.com/coredump-ch/spaceapi">github</a>.</p>
-<div class="section" id="the-space-api">
-<h2>The Space API</h2>
-<p>The Space API is a rather simple JSON API used to expose information about a
-hackerspace.  It consist of some static data like the location or some contact
-information and some dynamic data like the current state of the space.</p>
-<p>Implementing JSON serialization in Rust is easy when using the <a class="reference external" href="https://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/index.html">rustc_serialize</a>
-crate.</p>
-<p>Using the <tt class="docutils literal">#[derive(RustcEncodable)]</tt> attribute on a type, serializing a
-struct is as easy as calling <tt class="docutils literal"><span class="pre">json::encode(&amp;status).unwrap()</span></tt>.</p>
-<div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="k">crate</span><span class="w"> </span><span class="n">rustc_serialize</span><span class="p">;</span><span class="w"></span>
-<span class="kn">use</span><span class="w"> </span><span class="n">rustc_serialize</span><span class="o">::</span><span class="n">json</span><span class="p">;</span><span class="w"></span>
+</footer><!-- /.post-info -->                <p class="first last">Using the Rust JSON serialization to implement the Space API</p>
 
-<span class="cp">#[derive(RustcEncodable)]</span><span class="w"></span>
-<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="n">Status</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">api</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">space</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="k">fn</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">status</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">json</span><span class="o">::</span><span class="n">encode</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Status</span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">api</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;0.13&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"></span>
-<span class="w">        </span><span class="n">space</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;coredump&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"></span>
-<span class="w">        </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="s">&quot;https://www.coredump.ch/&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"></span>
-<span class="w">    </span><span class="p">}).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>This code will output:</p>
-<div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;api&quot;</span><span class="p">:</span><span class="s2">&quot;0.13&quot;</span><span class="p">,</span><span class="nt">&quot;space&quot;</span><span class="p">:</span><span class="s2">&quot;coredump&quot;</span><span class="p">,</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;https://www.coredump.ch/&quot;</span><span class="p">}</span>
-</pre></div>
-<p>As you can see, the field names map directly to keys in the JSON output. That
-way we can model the Space API objects with structs and have a simple typesafe
-solution!</p>
-</div>
-<div class="section" id="the-type-property">
-<h2>The 'type' property</h2>
-<p>Unfortunately <a class="reference external" href="http://spaceapi.net/documentation#documentation-ref-13-root-feeds-blog-type">parts</a>
-of the Space API contain the property <tt class="docutils literal">type</tt> which is a keyword in Rust.
-Of course using it as an identifier for a Struct field yields a compile error:</p>
-<div class="highlight"><pre><span></span><span class="cp">#[derive(RustcEncodable)]</span><span class="w"></span>
-<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">type</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<pre class="literal-block">
-main.rs:7:9: 7:13 error: expected identifier, found keyword `type`
-main.rs:7     pub type: String,
-                  ^~~~
-</pre>
-<p>So we need to rename the field to something like <tt class="docutils literal">_type</tt> and change the
-serialization.</p>
-</div>
-<div class="section" id="implementing-tojson">
-<h2>Implementing ToJson</h2>
-<p>My first idea was to implement the <a class="reference external" href="http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/trait.ToJson.html">ToJson</a>
-trait for Feed.  Implementing <tt class="docutils literal">ToJson</tt> is easy, there is just one method
-<tt class="docutils literal">to_json</tt> which returns the <tt class="docutils literal">Json</tt> object:</p>
-<div class="highlight"><pre><span></span><span class="k">impl</span><span class="w"> </span><span class="n">json</span><span class="o">::</span><span class="n">ToJson</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="n">to_json</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Json</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">feed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BTreeMap</span><span class="o">::</span><span class="n">new</span><span class="p">();</span><span class="w"></span>
-<span class="w">        </span><span class="n">feed</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;type&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">_type</span><span class="p">.</span><span class="n">to_json</span><span class="p">());</span><span class="w"></span>
-<span class="w">        </span><span class="n">feed</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">url</span><span class="p">.</span><span class="n">to_json</span><span class="p">());</span><span class="w"></span>
-<span class="w">        </span><span class="n">Json</span><span class="o">::</span><span class="n">Object</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Sadly this means the <tt class="docutils literal">Feeds</tt> struct can't hold the Feed struct directly
-anymore, but needs it as a <tt class="docutils literal">Json</tt> object:</p>
-<div class="highlight"><pre><span></span><span class="cp">#[derive(RustcEncodable)]</span><span class="w"></span>
-<span class="k">pub</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="n">Feeds</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">blog</span><span class="o">:</span><span class="w"> </span><span class="n">Json</span><span class="p">,</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Otherwise the Encodable trait can't be derived anymore, because it's not
-implemented for the type Feed.  Since this reduces type safety somewhat (we
-could set <tt class="docutils literal">blog</tt> field to any Json string), I discarded this solution.</p>
-</div>
-<div class="section" id="implementing-encodable">
-<h2>Implementing Encodable</h2>
-<p>To regain type safety we need to implement the <a class="reference external" href="https://doc.rust-lang.org/rustc-serialize/rustc_serialize/trait.Encodable.html">Encodable trait</a>
-for Feed.
-The required method for Encodable may be a bit intimidating at the first look:</p>
-<div class="highlight"><pre><span></span><span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">Encodable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="n">encode</span><span class="o">&lt;</span><span class="n">S</span><span class="o">:</span><span class="w"> </span><span class="n">Encoder</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">S</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>Basically it takes a reference to self and an Encoder and returns an <a class="reference external" href="http://doc.rust-lang.org/nightly/core/result/enum.Result.html">Result</a> containing
-either <tt class="docutils literal">OK()</tt> on success or <tt class="docutils literal">Err(S)</tt> on failure.  But how does one use the
-encoder?</p>
-<div class="section" id="using-the-generated-code-as-base">
-<h3>Using the generated code as base</h3>
-<p>After some googleing I found out that one can show the macro expanded source
-code. It's kinda like the pre-processor output when coming from the C/C++
-world.</p>
-<pre class="literal-block">
-rustc -Z unstable-options src/spaceapi.rs --pretty expanded
-</pre>
-<p>The expanded code is pretty readable and it was easy to find the corresponding
-trait implementation generated by the Rust compiler:</p>
-<div class="highlight"><pre><span></span><span class="k">impl</span><span class="w"> </span><span class="o">::</span><span class="n">rustc_serialize</span><span class="o">::</span><span class="n">Encodable</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="n">encode</span><span class="o">&lt;</span><span class="n">__S</span><span class="o">:</span><span class="w"> </span><span class="o">::</span><span class="n">rustc_serialize</span><span class="o">::</span><span class="n">Encoder</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">__arg_0</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">__S</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">result</span><span class="o">::</span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">__S</span><span class="o">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="bp">self</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_type</span><span class="o">:</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">__self_0_0</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">__self_0_1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="n">__arg_0</span><span class="p">.</span><span class="n">emit_struct</span><span class="p">(</span><span class="s">&quot;Feed&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="k">usize</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">_e</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                                </span><span class="k">match</span><span class="w"> </span><span class="n">_e</span><span class="p">.</span><span class="n">emit_struct_field</span><span class="p">(</span><span class="s">&quot;_type&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="k">usize</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                                           </span><span class="o">|</span><span class="n">_e</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                                                           </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">__self_0_0</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="n">_e</span><span class="p">)</span><span class="w"></span>
-<span class="w">                                                       </span><span class="p">})</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                                    </span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">result</span><span class="o">::</span><span class="nb">Result</span><span class="o">::</span><span class="nb">Ok</span><span class="p">(</span><span class="n">__try_var</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
-<span class="w">                                    </span><span class="n">__try_var</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                    </span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">result</span><span class="o">::</span><span class="nb">Result</span><span class="o">::</span><span class="nb">Err</span><span class="p">(</span><span class="n">__try_var</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
-<span class="w">                                    </span><span class="k">return</span><span class="w"> </span><span class="o">::</span><span class="n">std</span><span class="o">::</span><span class="n">result</span><span class="o">::</span><span class="nb">Result</span><span class="o">::</span><span class="nb">Err</span><span class="p">(</span><span class="n">__try_var</span><span class="p">),</span><span class="w"></span>
-<span class="w">                                </span><span class="p">};</span><span class="w"></span>
-<span class="w">                                </span><span class="k">return</span><span class="w"> </span><span class="n">_e</span><span class="p">.</span><span class="n">emit_struct_field</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="k">usize</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                                            </span><span class="o">|</span><span class="n">_e</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                                                            </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">__self_0_1</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="n">_e</span><span class="p">)</span><span class="w"></span>
-<span class="w">                                                        </span><span class="p">});</span><span class="w"> </span><span class="p">}),</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>So from there I tried to make the code a bit more readable which resulted in
-the following:</p>
-<div class="highlight"><pre><span></span><span class="k">impl</span><span class="w"> </span><span class="n">Encodable</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="n">encode</span><span class="o">&lt;</span><span class="n">S</span><span class="o">:</span><span class="w"> </span><span class="n">Encoder</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">encoder</span><span class="o">:</span><span class="w"> </span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">S</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">S</span><span class="o">::</span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="bp">self</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">Feed</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">_type</span><span class="o">:</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">p_type</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="o">:</span><span class="w"> </span><span class="k">ref</span><span class="w"> </span><span class="n">p_url</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"></span>
-<span class="w">                </span><span class="n">encoder</span><span class="p">.</span><span class="n">emit_struct</span><span class="p">(</span><span class="s">&quot;Feed&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="k">usize</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">enc</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                    </span><span class="n">try</span><span class="o">!</span><span class="p">(</span><span class="n">enc</span><span class="p">.</span><span class="n">emit_struct_field</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;type&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="k">usize</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">enc</span><span class="o">|</span><span class="w"> </span><span class="n">p_type</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enc</span><span class="p">)));</span><span class="w"></span>
-<span class="w">                    </span><span class="k">return</span><span class="w"> </span><span class="n">enc</span><span class="p">.</span><span class="n">emit_struct_field</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="k">usize</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">enc</span><span class="o">|</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">p_url</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
-<span class="w">                </span><span class="p">}),</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-<p>The final encoded String looks like this:</p>
-<div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="s2">&quot;https://www.coredump.ch/feed/&quot;</span><span class="p">}</span>
-</pre></div>
-<p>Have comments? Discuss on <a class="reference external" href="https://news.ycombinator.com/item?id=9470475">Hacker News</a>.</p>
-</div>
-</div>
-                </article>
-            </aside><!-- /#featured -->
+                <a class="readmore" href="//rnestler.github.io/serialization-in-rust.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+                </section><!-- /#content -->
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

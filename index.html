@@ -24,7 +24,51 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/switching-from-slim-to-lightdm.html">Switching from SLiM to LightDM</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/starting-my-tour-de-hackerspace.html">Starting my &quot;Tour de Hackerspace&quot;</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-04-08T00:00:00+02:00">
+                Published: Sam 08 April 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+</footer><!-- /.post-info --><p>Today I start what I call my &quot;Tour de Hackerspace&quot;! I'll be travelling around
+Europe and visit various <a class="reference external" href="https://wiki.hackerspaces.org/">hackerspaces</a> on the way.  To keep travel costs at a
+reasonable level, I bought an <a class="reference external" href="http://www.interrail.eu/en">InterRail</a> ticket, which allows flexible
+travelling by train.</p>
+<img alt="Map of Europe from https://wiki.hackerspaces.org/Europe" class="align-center" src="/images/tour_de_hackerspace/map_europe.png" style="width: 100%;" />
+<p>Since I'm not the kind of person which is great at planing, this will be more
+or less a spontaneous adventure.  I contacted some hackerspaces upfront and
+received some great and welcoming responses, especially from the Eastern part
+of Europe!</p>
+<p>My first location will be the <a class="reference external" href="https://shack.space/">shackerspace</a> in Stuttgart, Germany.  After that
+I plan to visit a hackerspace in Amsterdam, then travelling a bit in the east
+(Czech Republic, Poland, ...) and probably attend the <a class="reference external" href="http://2017.rustfest.eu/">RustFest 2017</a> in Kyiv,
+Ukraine.</p>
+<p>According to my definitely not definitive plan I will then travel southwards
+visiting Romania, Bulgaria, Croatia, Serbia, Bosnia and Herzegovina, Slovenia,
+... before returning to Switzerland.</p>
+<p>I'm really looking forward to meet lots of amazing people and see how they live
+and hack around Europe!</p>
+<p>I will try to write a blog post about every hackerspace I visit on my journey,
+so stay tuned.</p>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/switching-from-slim-to-lightdm.html" rel="bookmark"
+                           title="Permalink to Switching from SLiM to LightDM">Switching from SLiM to LightDM</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-22T00:00:00+01:00">
                 Published: Son 22 Januar 2017
@@ -35,41 +79,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/archlinux.html">ArchLinux</a> <a href="//rnestler.github.io/tag/slim.html">SLiM</a> <a href="//rnestler.github.io/tag/lightdm.html">LightDM</a> </p>
-</footer><!-- /.post-info --><p>For a long time I have been using <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">SLiM</a> as my display manager on ArchLinux.
-It worked quite well for me, but is unmaintained since at least 3 years. Also
-according to the <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">ArchLinux WiKi</a> there are issues regarding to systemd
-compatibility. Also the Linux desktop is headed towards Wayland so I need a
-display manager which can start Wayland sessions.</p>
-<p>So my choice fell on <a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/">LightDM</a>, which should &quot;support different display
-technologies (X, Mir, Wayland, ...)&quot; according to their website.</p>
-<p>Installing it on ArchLinux is as easy as:</p>
-<div class="highlight"><pre><span></span>sudo pacman -S lightdm-gtk-greeter
-</pre></div>
-<p>Then we need to deactivate SLiM and activate LightDM:</p>
-<div class="highlight"><pre><span></span>sudo systemctl disable slim.service
-sudo systemctl <span class="nb">enable</span> lightdm.service
-</pre></div>
-<p>To switch without a reboot one needs to logout from the X-session, switch to a
-TTY with Ctrl-Alt-1 and stop SLiM and start LightDM:</p>
-<div class="highlight"><pre><span></span>sudo systemctl stop slim.service
-sudo systemctl start lightdm.service
-</pre></div>
-<p>After that I could login just to notice that my <cite>~/.xinitrc</cite> wasn't getting
-executed, so my helper tools like nm-applet weren't running. Since I already
-solved that issue under <a class="reference external" href="https://rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Ubuntu</a>, I was a bit surprised that I need to solve
-it differently under ArchLinux according to <a class="reference external" href="https://wiki.archlinux.org/index.php/LightDM#Migrating_from_SLiM">the WiKi</a>:</p>
-<div class="highlight"><pre><span></span>mv ~/.xinitrc ~/.xprofile
-vim ~/.xprofile <span class="c1"># remove the &quot;exec awesome&quot; line</span>
-</pre></div>
-<p>Finally, I enjoy a working X-Session with the <a class="reference external" href="https://awesomewm.org/">awesome window manager</a> again,
-while looking forward to a Wayland based desktop, maybe running the <a class="reference external" href="https://github.com/Immington-Industries/way-cooler">Way
-Cooler</a> window manager!</p>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p class="first last">Switching from SLiM to LightDM</p>
+
+                <a class="readmore" href="//rnestler.github.io/switching-from-slim-to-lightdm.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -252,29 +266,6 @@ Cooler</a> window manager!</p>
 </footer><!-- /.post-info -->                <p class="first last">Using the Rust JSON serialization to implement the Space API</p>
 
                 <a class="readmore" href="//rnestler.github.io/serialization-in-rust.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="//rnestler.github.io/more-rust-compared-to-c.html" rel="bookmark"
-                           title="Permalink to More Rust compared to C++">More Rust compared to C++</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-02-06T00:00:00+01:00">
-                Published: Fre 06 Februar 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">More about the programming language Rust</p>
-
-                <a class="readmore" href="//rnestler.github.io/more-rust-compared-to-c.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

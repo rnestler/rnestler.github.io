@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-01-22T00:00:00+01:00</updated><entry><title>Switching from SLiM to LightDM</title><link href="//rnestler.github.io/switching-from-slim-to-lightdm.html" rel="alternate"></link><published>2017-01-22T00:00:00+01:00</published><updated>2017-01-22T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-01-22:/switching-from-slim-to-lightdm.html</id><summary type="html">&lt;p class="first last"&gt;Switching from SLiM to LightDM&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-08T00:00:00+02:00</updated><entry><title>Starting my "Tour de Hackerspace"</title><link href="//rnestler.github.io/starting-my-tour-de-hackerspace.html" rel="alternate"></link><published>2017-04-08T00:00:00+02:00</published><updated>2017-04-08T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-08:/starting-my-tour-de-hackerspace.html</id><summary type="html">&lt;p class="first last"&gt;Starting my &amp;quot;Tour de Hackerspace&amp;quot;&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Today I start what I call my &amp;quot;Tour de Hackerspace&amp;quot;! I'll be travelling around
+Europe and visit various &lt;a class="reference external" href="https://wiki.hackerspaces.org/"&gt;hackerspaces&lt;/a&gt; on the way.  To keep travel costs at a
+reasonable level, I bought an &lt;a class="reference external" href="http://www.interrail.eu/en"&gt;InterRail&lt;/a&gt; ticket, which allows flexible
+travelling by train.&lt;/p&gt;
+&lt;img alt="Map of Europe from https://wiki.hackerspaces.org/Europe" class="align-center" src="/images/tour_de_hackerspace/map_europe.png" style="width: 100%;" /&gt;
+&lt;p&gt;Since I'm not the kind of person which is great at planing, this will be more
+or less a spontaneous adventure.  I contacted some hackerspaces upfront and
+received some great and welcoming responses, especially from the Eastern part
+of Europe!&lt;/p&gt;
+&lt;p&gt;My first location will be the &lt;a class="reference external" href="https://shack.space/"&gt;shackerspace&lt;/a&gt; in Stuttgart, Germany.  After that
+I plan to visit a hackerspace in Amsterdam, then travelling a bit in the east
+(Czech Republic, Poland, ...) and probably attend the &lt;a class="reference external" href="http://2017.rustfest.eu/"&gt;RustFest 2017&lt;/a&gt; in Kyiv,
+Ukraine.&lt;/p&gt;
+&lt;p&gt;According to my definitely not definitive plan I will then travel southwards
+visiting Romania, Bulgaria, Croatia, Serbia, Bosnia and Herzegovina, Slovenia,
+... before returning to Switzerland.&lt;/p&gt;
+&lt;p&gt;I'm really looking forward to meet lots of amazing people and see how they live
+and hack around Europe!&lt;/p&gt;
+&lt;p&gt;I will try to write a blog post about every hackerspace I visit on my journey,
+so stay tuned.&lt;/p&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Switching from SLiM to LightDM</title><link href="//rnestler.github.io/switching-from-slim-to-lightdm.html" rel="alternate"></link><published>2017-01-22T00:00:00+01:00</published><updated>2017-01-22T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-01-22:/switching-from-slim-to-lightdm.html</id><summary type="html">&lt;p class="first last"&gt;Switching from SLiM to LightDM&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;For a long time I have been using &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM"&gt;SLiM&lt;/a&gt; as my display manager on ArchLinux.
 It worked quite well for me, but is unmaintained since at least 3 years. Also
 according to the &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM"&gt;ArchLinux WiKi&lt;/a&gt; there are issues regarding to systemd

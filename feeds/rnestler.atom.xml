@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-11T00:00:00+02:00</updated><entry><title>Visiting the chaosdorf</title><link href="//rnestler.github.io/visiting-the-chaosdorf.html" rel="alternate"></link><published>2017-04-11T00:00:00+02:00</published><updated>2017-04-11T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-11:/visiting-the-chaosdorf.html</id><summary type="html">&lt;p class="first last"&gt;Visiting the chaosdorf&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-13T00:00:00+02:00</updated><entry><title>Visiting Technologia Incognita</title><link href="//rnestler.github.io/visiting-technologia-incognita.html" rel="alternate"></link><published>2017-04-13T00:00:00+02:00</published><updated>2017-04-13T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-13:/visiting-technologia-incognita.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Technologia Incognita&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Getting a place to stay in Amsterdam was harder then I thought due to the fact,
+that a lot of hotels and hostels where fully or almost fully booked!  I still
+got a room after a bit of hassle (Thanks to this booking sites &amp;quot;only two rooms
+left, book them now!&amp;quot;, I accidentally booked &amp;quot;1 bed in the women sleeping
+room&amp;quot;, silly me) in the &amp;quot;WOW Amsterdam&amp;quot; hostel. It's not that close to the
+center, but reachable with either bus or the metro.&lt;/p&gt;
+&lt;p&gt;After the train ride from Düsseldorf and a bus ride to my hostel I took the
+metro to &lt;a class="reference external" href="http://technologia-incognita.nl/"&gt;Technologia Incognita&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Entry to the Technologia Incognita" src="/images/tour_de_hackerspace/techinc/techinc_entry.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Entry to the Technologia Incognita&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The space features the usual stuff with a kitchen, a &lt;a class="reference external" href="/images/tour_de_hackerspace/techinc/techinc_vending_machine_laser_cutter.jpg"&gt;laser-cutter&lt;/a&gt; (if you
+look closely you will see they sell the Diplomatic Passport in their vending
+machine on the left), a work shop and of course some &lt;a class="reference external" href="/images/tour_de_hackerspace/techinc/techinc_LED_ball.jpg"&gt;awesome decoration&lt;/a&gt;!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="animated LED fire place" src="/images/tour_de_hackerspace/techinc/techinc_fire.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Animated LED fire place&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;I had the luck to arrive when they had their visiting day, so lots of people
+where around.  Also sine the next day was the &lt;a class="reference external" href="https://conference.hitb.org/"&gt;Hack in the Box&lt;/a&gt; conference
+some attendees of this conference where there as well.  I even met some guys
+from the &lt;a class="reference external" href="https://www.nycresistor.com/"&gt;NYC Resistor&lt;/a&gt; which invited me to have a look at their hackerspace
+next time I'm in New York (which will be around June).  They told me about a
+project where they create almost impossible to solve &lt;a class="reference external" href="https://trmm.net/Platonic_puzzle"&gt;puzzles&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I also met &lt;a class="reference external" href="http://www.sasj.nl/"&gt;Saskia Freeke&lt;/a&gt; who creates amazing digital art!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Example of Saskias art" src="http://www.sasj.nl/W14/wp-content/uploads/2014/06/160518.gif" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Example of Saskias creative programming / digital art&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;She has a project where she creates similar work every single day since 2015!&lt;/p&gt;
+&lt;p&gt;There was also a cheese, sausage and beer tasting on the same evening which I,
+as a Swiss guy, definitely approve!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="cheese tasting" src="/images/tour_de_hackerspace/techinc/techinc_cheese_tasting.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Cheese and sausage tasting&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The next day I spontaneously attended the &lt;a class="reference external" href="https://conference.hitb.org/"&gt;Hack in the Box&lt;/a&gt; conference where
+hackerspaces from the Netherlands also had booths.  I really enjoyed &lt;a class="reference external" href="http://toool.us/"&gt;Toools&lt;/a&gt;
+lock-picking booth and the talk of Jos Weyers &lt;a class="reference external" href="http://conference.hitb.org/hitbsecconf2017ams/sessions/most-impressive-a-guide-to-key-impressioning-attacks/"&gt;Most Impressive: A Guide to Key
+Impressioning Attacks&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;While I really enjoyed my stay in Amsterdam and with &lt;a class="reference external" href="http://technologia-incognita.nl/"&gt;Technologia Incognita&lt;/a&gt;
+and almost replanned my trip to spend a few more days there, I decided to stick
+with my plan for once and travel to Warsaw via Berlin, with a short stop to
+visit c-base.&lt;/p&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting the chaosdorf</title><link href="//rnestler.github.io/visiting-the-chaosdorf.html" rel="alternate"></link><published>2017-04-11T00:00:00+02:00</published><updated>2017-04-11T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-11:/visiting-the-chaosdorf.html</id><summary type="html">&lt;p class="first last"&gt;Visiting the chaosdorf&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;While my original &amp;quot;plan&amp;quot; involved traveling directly to Amsterdam from
 Stuttgart, the shackspace guys suggested to visit chaosdorf in Düsseldorf,
 since it is halfway to Amsterdam anyway.&lt;/p&gt;

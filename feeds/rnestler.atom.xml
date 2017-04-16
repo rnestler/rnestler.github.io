@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-13T00:00:00+02:00</updated><entry><title>Visiting Technologia Incognita</title><link href="//rnestler.github.io/visiting-technologia-incognita.html" rel="alternate"></link><published>2017-04-13T00:00:00+02:00</published><updated>2017-04-13T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-13:/visiting-technologia-incognita.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Technologia Incognita&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-15T00:00:00+02:00</updated><entry><title>Visiting c-base</title><link href="//rnestler.github.io/visiting-c-base.html" rel="alternate"></link><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-15:/visiting-c-base.html</id><summary type="html">&lt;p class="first last"&gt;Visiting c-base&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;After an exhausting train ride from Amsterdam to Berlin which started at 20.25
+and ended at 5.33 the next day, I discovered that I couldn't get a train the
+same day to Warsaw since they were all fully booked!&lt;/p&gt;
+&lt;p&gt;So my plans changed a bit and I would stay a full day in Berlin which was nice
+in some way because it meant I could visit &lt;a class="reference external" href="https://www.c-base.org/"&gt;c-base&lt;/a&gt; in the evening!&lt;/p&gt;
+&lt;p&gt;Also I discovered by coincidence that a few friends of mine from Switzerland
+were staying in Berlin this weekend and I could hang out with them during the
+day.  I also met with &lt;a class="reference external" href="https://twitter.com/andrewhobden"&gt;&amp;#64;andrewhobden&lt;/a&gt; in Berlin, whom I met at &lt;a class="reference external" href="http://2016.rustfest.eu/"&gt;RustFest
+2016&lt;/a&gt; last year.  This was a very awesome coincidence, since we didn't plan
+any of it and we just ended up meeting in Berlin and having a great time
+together!&lt;/p&gt;
+&lt;p&gt;So after dinner we split again and I headed towards c-base.  c-base is located
+near the &amp;quot;Jannowitzbrücke&amp;quot; and thus very easily reachable with public
+transport.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Entry to the c-base" src="/images/tour_de_hackerspace/cbase/cbase_entry.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Entry to the c-base&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;When entering c-base I was amazed because of all the very nicely done
+decoration they have inside which leads to a great atmosphere!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="The Mate light" src="/images/tour_de_hackerspace/cbase/cbase_mate_light.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;The Mate light inside c-base&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The members in the space were a bit busy because they had their &amp;quot;circle&amp;quot;
+meeting.  So I just started talking to the members not attending the meeting
+and somehow got pretty absorbed giving one of them a rather in depth
+introduction to basic embedded development using amongst other things&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.arduino.cc/"&gt;Arduino&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.nongnu.org/avrdude/"&gt;avrdude&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://openocd.org/"&gt;openocd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.segger.com/jlink-debug-probes.html"&gt;J-Link&lt;/a&gt; debuggers&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://kicad-pcb.org/"&gt;KiCad&lt;/a&gt; / &lt;a class="reference external" href="http://librepcb.org/"&gt;LibrePCB&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://dangerousprototypes.com/docs/Bus_Pirate"&gt;Bus Pirate&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.i2c-bus.org/"&gt;I2C&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(This list serves primarily as a reference for him in case he forgot to
+bookmark them ;)&lt;/p&gt;
+&lt;p&gt;Since I was still very tired from the lack of sleep during the train ride from
+Amsterdam to Berlin I originally planed to stay no longer as midnight.  But
+since I got really busy and was invited to be given a show around the crashed
+space station around 1am, I stayed until 2:30am.&lt;/p&gt;
+&lt;p&gt;The guided tour through the spaceship was pretty awesome, thanks again to my
+guide!  Since I didn't really take any pictures I recommend you to visit
+&lt;a class="reference external" href="https://www.c-base.org/"&gt;c-base&lt;/a&gt; by yourself if you're around Berlin next time!&lt;/p&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting Technologia Incognita</title><link href="//rnestler.github.io/visiting-technologia-incognita.html" rel="alternate"></link><published>2017-04-13T00:00:00+02:00</published><updated>2017-04-13T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-13:/visiting-technologia-incognita.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Technologia Incognita&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;Getting a place to stay in Amsterdam was harder then I thought due to the fact,
 that a lot of hotels and hostels where fully or almost fully booked!  I still
 got a room after a bit of hassle (Thanks to this booking sites &amp;quot;only two rooms

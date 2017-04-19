@@ -1,5 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-15T00:00:00+02:00</updated><entry><title>Visiting c-base</title><link href="//rnestler.github.io/visiting-c-base.html" rel="alternate"></link><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-15:/visiting-c-base.html</id><summary type="html">&lt;p class="first last"&gt;Visiting c-base&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-17T00:00:00+02:00</updated><entry><title>Visiting Warsaw Hackerspace</title><link href="//rnestler.github.io/visiting-warsaw-hackerspace.html" rel="alternate"></link><published>2017-04-17T00:00:00+02:00</published><updated>2017-04-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-17:/visiting-warsaw-hackerspace.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Warsaw Hackerspace&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;I was warned on IRC that the activity would be rather low in the Warsaw
+Hackerspace Due to being Easter.  So when I arrived in Warsaw I just monitored
+their &lt;a class="reference external" href="http://at.hackerspace.pl/"&gt;member tracking site&lt;/a&gt; from time to time until it showed some people
+being present.&lt;/p&gt;
+&lt;p&gt;The entry to the space was a bit hard to find, because it's in the basement.
+But they later told me, that they will move their space to a different location
+next month anyway.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Entry to the Warsaw Hackerspace" src="/images/tour_de_hackerspace/warsaw/warsaw_entry.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Entry to the &lt;a class="reference external" href="https://www.hackerspace.pl/"&gt;Warsaw Hackerspace&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;On arrival they showed me around their hackerspace.  Of course they have a
+laser-cutter &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt; and some 3D printers.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Laser cutter and 3D printers" src="/images/tour_de_hackerspace/warsaw/warsaw_laser_cutter.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Laser cutter and 3D printers&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;I was told, that the &lt;a class="reference external" href="https://www.hackerspace.pl/"&gt;Warsaw Hackerspace&lt;/a&gt; has around 100 members consisting of
+a good mix of computer science, electronic engineering, mechanical engineering
+and other people.&lt;/p&gt;
+&lt;p&gt;What really impressed me was the equipment in their work shop! They have
+amongst other stuff a CNC mill and &lt;a class="reference external" href="/images/tour_de_hackerspace/warsaw/warsaw_work_show_cnc_lathe.jpg"&gt;lathe&lt;/a&gt;,  which they control using
+&lt;a class="reference external" href="http://linuxcnc.org/"&gt;linuxcnc&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="CNC mill" src="/images/tour_de_hackerspace/warsaw/warsaw_work_shop_cnc.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;CNC mill&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;They also have equipment to produce their own PCBs, using a cheap UV nail
+curing lamp.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="PCB manufactoring equipment" src="/images/tour_de_hackerspace/warsaw/warsaw_pcb_manufactoring.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;PCB manufactoring equipment&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Also impressive was their retro computing collection! Amongst other devices
+they own a VT520 terminal which they use to print the messages posted on IRC.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="VT520 terminal" src="/images/tour_de_hackerspace/warsaw/warsaw_vt520.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;VT520 terminal used to print IRC messages&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;When I asked for a beverage, they showed me there vending machine, which is
+broken and can't accept coins anymore.  But stand back, they hacked it to hook
+up with their internal payment system!  It's apparently as simple as hooking up
+a Raspberry Pi to the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Multidrop_bus#MDB_in_Vending_Machines"&gt;Multidrop bus&lt;/a&gt; to control the machine.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Hacked vending machine" src="/images/tour_de_hackerspace/warsaw/warsaw_vending_machine.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Hacked vending machine&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Later in the evening I had an awesome debugging session with one of their
+members who tried to intercept C library calls (This was part of an university
+assignment).  Since I never looked into how dynamic linking works in Linux,
+this was very interesting for me!  Maybe I'll write a separate blog post about
+that if I find time to dig a bit deeper into the topic.&lt;/p&gt;
+&lt;p&gt;I really enjoyed the time I spent with this awesome and very active
+hackerspace! My next stop will be Hackerspace Kraków!&lt;/p&gt;
+&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;We should really get a laser-cutter for coredump. This will be the first thing I will do when I return!&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting c-base</title><link href="//rnestler.github.io/visiting-c-base.html" rel="alternate"></link><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-15:/visiting-c-base.html</id><summary type="html">&lt;p class="first last"&gt;Visiting c-base&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;After an exhausting train ride from Amsterdam to Berlin which started at 20.25
 and ended at 5.33 the next day, I discovered that I couldn't get a train the
 same day to Warsaw since they were all fully booked!&lt;/p&gt;

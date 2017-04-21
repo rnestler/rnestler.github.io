@@ -1,5 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-17T00:00:00+02:00</updated><entry><title>Visiting Warsaw Hackerspace</title><link href="//rnestler.github.io/visiting-warsaw-hackerspace.html" rel="alternate"></link><published>2017-04-17T00:00:00+02:00</published><updated>2017-04-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-17:/visiting-warsaw-hackerspace.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Warsaw Hackerspace&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/all.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-19T00:00:00+02:00</updated><entry><title>Visiting Hackerspace Kraków</title><link href="//rnestler.github.io/visiting-hackerspace-krakow.html" rel="alternate"></link><published>2017-04-19T00:00:00+02:00</published><updated>2017-04-19T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-19:/visiting-hackerspace-krakow.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Hackerspace Kraków&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Since the 3G connection during the train ride was exceptionally bad, I had
+trouble with my credit card and the train didn't have electric plugs, I ran out
+of battery before I could finish booking a hotel.&lt;/p&gt;
+&lt;p&gt;So the first thing I did when arriving in Kraków was looking for the
+&lt;a class="reference external" href="https://hackerspace-krk.pl/"&gt;Hackerspace Kraków&lt;/a&gt;.  Luckily it's very close to the main train station and
+Wiktor, one of the members which talked to me on IRC, was waiting outside to
+show me in!  This made me feel very welcome!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Entry to the Hackerspace Kraków" src="/images/tour_de_hackerspace/krakow/krakow_entry_1.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Entry to the &lt;a class="reference external" href="https://hackerspace-krk.pl/"&gt;Hackerspace Kraków&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;After charging my devices, talking to my credit card company and booking my
+hotel, he showed me around.  They've actually just moved in a few month ago and
+the space isn't yet open for public, so they told me.  They are still thinking
+about ideas on how to decorate the space.  I proposed to make the entry look
+like a submarine since the corridor is very narrow and rounded on the top.  I'm
+looking forward to see what they will do with the space.&lt;/p&gt;
+&lt;p&gt;The space mainly consist of:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;An &lt;a class="reference external" href="/images/tour_de_hackerspace/krakow/krakow_electronic_lab.jpg"&gt;electronic lab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A &lt;a class="reference external" href="/images/tour_de_hackerspace/krakow/krakow_computer_room.jpg"&gt;computer / presentation room&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A &lt;a class="reference external" href="/images/tour_de_hackerspace/krakow/krakow_work_shop.jpg"&gt;workshop room&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the workshop they actually built the ventilation system themself!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Workshop ventilation system" src="/images/tour_de_hackerspace/krakow/krakow_work_shop_ventilation.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Workshop ventilation system&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;And during my visit they actually built a controller board to be able to
+regulate the speed of the ventilation system.  Was awesome to watch them
+getting busy until 1 or 2am.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Workshop ventilation controller" src="/images/tour_de_hackerspace/krakow/krakow_work_shop_ventilation_controlled.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Workshop ventilation with freshly built controller on the bottom right&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;They also told me about some past and present projects.  In the past they
+helped build the lightening system for the Galeria Krakowska, which is a big
+shopping mall close to the main train station.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Galeria Krakowska lightening system" src="/images/tour_de_hackerspace/krakow/krakow_galeria.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Galeria Krakowska lightening system&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The green LED wall on the picture can actually change color and also show
+different animations and effects.&lt;/p&gt;
+&lt;p&gt;Another project they are working on is tracking and collecting &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Radiosonde"&gt;radiosondes&lt;/a&gt;.
+This probes are used for weather related analysis and are started with weather
+balloons by &lt;a class="reference external" href="http://radiosonde.eu/RS00-D/RS02C-D.html"&gt;weather stations&lt;/a&gt; all around Europe.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Captured radiosondes" src="/images/tour_de_hackerspace/krakow/krakow_radio_sonde_0.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Captured radiosondes&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;One of their member created a &lt;a class="reference external" href="https://hub.docker.com/r/teeed/dxlaprs/"&gt;Docker image&lt;/a&gt; which contains various software
+related to tracking the radiosondes.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Setup used to track radiosondes" src="/images/tour_de_hackerspace/krakow/krakow_radio_sonde_tracking.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Setup used to track radiosondes&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Tracking coverage achieved with the setup above" src="/images/tour_de_hackerspace/krakow/krakow_radio_sonde_coverage.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Tracking coverage achieved with the setup above&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Since I took myself quite some time to have a look at the city (Which is
+amazing, I can definitely recommend a visit to the &lt;a class="reference external" href="http://osmand.net/go?lat=50.05451&amp;amp;lon=19.936409&amp;amp;z=17"&gt;Wawel Castle&lt;/a&gt; and the
+&lt;a class="reference external" href="http://osmand.net/go?lat=50.062&amp;amp;lon=19.937761&amp;amp;z=19"&gt;underground museum&lt;/a&gt;), I only showed up at the hackerspace for a quick goodbye
+the other day.  But I really enjoyed my stay their nevertheless!&lt;/p&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting Warsaw Hackerspace</title><link href="//rnestler.github.io/visiting-warsaw-hackerspace.html" rel="alternate"></link><published>2017-04-17T00:00:00+02:00</published><updated>2017-04-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-17:/visiting-warsaw-hackerspace.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Warsaw Hackerspace&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;I was warned on IRC that the activity would be rather low in the Warsaw
 Hackerspace Due to being Easter.  So when I arrived in Warsaw I just monitored
 their &lt;a class="reference external" href="http://at.hackerspace.pl/"&gt;member tracking site&lt;/a&gt; from time to time until it showed some people

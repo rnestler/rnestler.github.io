@@ -21,10 +21,15 @@
                     <li><a href="//rnestler.github.io/category/2017.html">2017</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+            <section id="content" class="body">
+                <ol id="posts-list" class="hfeed" start="9">
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/switching-from-slim-to-lightdm.html" rel="bookmark"
+                       title="Permalink to Switching from SLiM to LightDM">Switching from SLiM to LightDM</a></h1>
+            </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/switching-from-slim-to-lightdm.html">Switching from SLiM to LightDM</a></h1>
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-01-22T00:00:00+01:00">
                 Published: Son 22 Januar 2017
@@ -35,37 +40,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/archlinux.html">ArchLinux</a> <a href="//rnestler.github.io/tag/slim.html">SLiM</a> <a href="//rnestler.github.io/tag/lightdm.html">LightDM</a> </p>
-</footer><!-- /.post-info --><p>For a long time I have been using <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">SLiM</a> as my display manager on ArchLinux.
-It worked quite well for me, but is unmaintained since at least 3 years. Also
-according to the <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">ArchLinux WiKi</a> there are issues regarding to systemd
-compatibility. Also the Linux desktop is headed towards Wayland so I need a
-display manager which can start Wayland sessions.</p>
-<p>So my choice fell on <a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/">LightDM</a>, which should &quot;support different display
-technologies (X, Mir, Wayland, ...)&quot; according to their website.</p>
-<p>Installing it on ArchLinux is as easy as:</p>
-<div class="highlight"><pre><span></span>sudo pacman -S lightdm-gtk-greeter
-</pre></div>
-<p>Then we need to deactivate SLiM and activate LightDM:</p>
-<div class="highlight"><pre><span></span>sudo systemctl disable slim.service
-sudo systemctl <span class="nb">enable</span> lightdm.service
-</pre></div>
-<p>To switch without a reboot one needs to logout from the X-session, switch to a
-TTY with Ctrl-Alt-1 and stop SLiM and start LightDM:</p>
-<div class="highlight"><pre><span></span>sudo systemctl stop slim.service
-sudo systemctl start lightdm.service
-</pre></div>
-<p>After that I could login just to notice that my <cite>~/.xinitrc</cite> wasn't getting
-executed, so my helper tools like nm-applet weren't running. Since I already
-solved that issue under <a class="reference external" href="https://rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Ubuntu</a>, I was a bit surprised that I need to solve
-it differently under ArchLinux according to <a class="reference external" href="https://wiki.archlinux.org/index.php/LightDM#Migrating_from_SLiM">the WiKi</a>:</p>
-<div class="highlight"><pre><span></span>mv ~/.xinitrc ~/.xprofile
-vim ~/.xprofile <span class="c1"># remove the &quot;exec awesome&quot; line</span>
-</pre></div>
-<p>Finally, I enjoy a working X-Session with the <a class="reference external" href="https://awesomewm.org/">awesome window manager</a> again,
-while looking forward to a Wayland based desktop, maybe running the <a class="reference external" href="https://github.com/Immington-Industries/way-cooler">Way
-Cooler</a> window manager!</p>
-                </article>
-            </aside><!-- /#featured -->
+</footer><!-- /.post-info -->            <p class="first last">Switching from SLiM to LightDM</p>
+
+            <a class="readmore" href="//rnestler.github.io/switching-from-slim-to-lightdm.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

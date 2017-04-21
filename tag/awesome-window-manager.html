@@ -21,10 +21,15 @@
                     <li><a href="//rnestler.github.io/category/2017.html">2017</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+            <section id="content" class="body">
+                <ol id="posts-list" class="hfeed" start="9">
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html" rel="bookmark"
+                       title="Permalink to Setting up the Awesome Window Manager in Ubuntu 16.04">Setting up the Awesome Window Manager in Ubuntu 16.04</a></h1>
+            </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">Setting up the Awesome Window Manager in Ubuntu 16.04</a></h1>
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-10-19T00:00:00+02:00">
                 Published: Mit 19 Oktober 2016
@@ -35,35 +40,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/ubuntu.html">Ubuntu</a> <a href="//rnestler.github.io/tag/awesome-window-manager.html">awesome window manager</a> </p>
-</footer><!-- /.post-info --><p>My window manager of choice is the <a class="reference external" href="https://awesomewm.org/">awesome window manager</a>. On my private
-laptop I have it setup together with the display manager <a class="reference external" href="https://wiki.archlinux.org/index.php/SLiM">SLiM</a> and a custom
-<tt class="docutils literal">.xinitrc</tt> which starts a few helpers like the <a class="reference external" href="https://wiki.gnome.org/Projects/GnomeKeyring">gnome-keyring-daemon</a>.</p>
-<p>On my work laptop I have Ubuntu 16.04 installed.  Ubuntu uses <a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/">LightDM</a> (The
-Light Display Manager) to manage logins. After installing awesome with <tt class="docutils literal">sudo
-apt install awesome</tt> LightDM will allow you to start an awesome session.  This
-is due to the <tt class="docutils literal">/usr/share/xsessions/awesome.desktop</tt> file contained in the
-awesome package.</p>
-<p>Unfortunately this starts awesome directly and does not execute the
-<tt class="docutils literal"><span class="pre">~/.xinitrc</span></tt> file.  But it does load the various <tt class="docutils literal">/etc/X11/Xsession.d/</tt>
-files which will then load the <tt class="docutils literal"><span class="pre">~/.xsessionrc</span></tt> file if it exists.  When
-<tt class="docutils literal">.xsessionrc</tt> gets loaded it will pass the session to be started as the first
-argument (<tt class="docutils literal">$1</tt>). So to start any helpers we create it with the following
-content:</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
-<span class="c1">#</span>
-<span class="c1"># ~/.xsessionrc</span>
-<span class="c1">#</span>
+</footer><!-- /.post-info -->            <p class="first last">Setting up the awesome window manager under Ubuntu 16.04</p>
 
-<span class="k">case</span> <span class="nv">$1</span> in
-awesome<span class="o">)</span>
-    <span class="nb">export</span> <span class="k">$(</span>gnome-keyring-daemon -s -c pkcs11,secrets,ssh,gpg<span class="k">)</span>
-    <span class="p">;;</span>
-<span class="k">esac</span>
-</pre></div>
-<p>This starts the gnome-keyring-daemon and export the <tt class="docutils literal">SSH_AUTH_SOCK</tt> variable,
-but only if we are trying to start an awesome session.</p>
-                </article>
-            </aside><!-- /#featured -->
+            <a class="readmore" href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

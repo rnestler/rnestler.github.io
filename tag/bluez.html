@@ -21,10 +21,15 @@
                     <li><a href="//rnestler.github.io/category/2017.html">2017</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+            <section id="content" class="body">
+                <ol id="posts-list" class="hfeed" start="9">
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html" rel="bookmark"
+                       title="Permalink to Reading the SHTC1 smart gadget BLE device">Reading the SHTC1 smart gadget BLE device</a></h1>
+            </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html">Reading the SHTC1 smart gadget BLE device</a></h1>
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2015-08-16T00:00:00+02:00">
                 Published: Son 16 August 2015
@@ -35,57 +40,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2015.html">2015</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/ble.html">BLE</a> <a href="//rnestler.github.io/tag/bluetooth.html">bluetooth</a> <a href="//rnestler.github.io/tag/bluez.html">bluez</a> <a href="//rnestler.github.io/tag/shtc1.html">SHTC1</a> <a href="//rnestler.github.io/tag/smartgadget.html">SmartGadget</a> </p>
-</footer><!-- /.post-info --><div class="section" id="requirements">
-<h2>Requirements</h2>
-<p>First we need to install the bluez bluetooth stack:</p>
-<div class="highlight"><pre><span></span>$ sudo pacman -S bluez bluez-utils
-</pre></div>
-<p>To be able to switch the bluetooth on and off I use the bluetooth command from
-tlp:</p>
-<div class="highlight"><pre><span></span>$ sudo pacman -S tlp
-$ sudo bluetooth on
-</pre></div>
-<p>Next we activate the bluetooth service:</p>
-<div class="highlight"><pre><span></span>$ sudo systemctl daemon-reload
-$ sudo systemctl start bluetooth.service
-</pre></div>
-</div>
-<div class="section" id="connecting">
-<h2>Connecting</h2>
-<div class="highlight"><pre><span></span>$ sudo hcitool dev
-Devices:
-        hci0    F8:16:54:CD:5F:CC
-$ sudo hcitool lescan
-LE Scan ...
-BC:6A:29:C1:A9:3B SHTC1 smart gadget
+</footer><!-- /.post-info -->            <p class="first last">Connection to a SHTC1 smart gadget and read its sensor values</p>
 
-$ sudo gatttool -b BC:6A:29:C1:A9:3B -I
-<span class="o">[</span>BC:6A:29:C1:A9:3B<span class="o">][</span>LE<span class="o">]</span>&gt; connect
-Attempting to connect to BC:6A:29:C1:A9:3B
-Connection successful
-</pre></div>
-</div>
-<div class="section" id="reading-the-sensordata">
-<h2>Reading the sensordata</h2>
-<p>According to <a class="reference external" href="https://github.com/Sensirion/SmartGadget-iOS/blob/50dc0f36c0624f825f7637bceeb5a34da7c878f3/Classes/Peripheral/Services/Sensirion/Shtc1/Shtc1RhtService.m">the SmartGadget-iOS code</a>
-The UUID to read the temperature is 0xAA21.
-So we try to read it:</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>BC:6A:29:C1:A9:3B<span class="o">][</span>LE<span class="o">]</span>&gt; char-read-uuid 0xAA21
-handle: 0x0025   value: <span class="m">66</span> 0b b9 <span class="m">14</span>
-</pre></div>
-<p>The first 16-bit value is the temperature and the second the humidity. Note
-that the byte order of the values is big endian.</p>
-<p>So to calculate the measured temperature in python we need to:</p>
-<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">temperature</span> <span class="o">=</span> <span class="mh">0x0b66</span><span class="o">/</span><span class="mf">100.0</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;°C&quot;</span><span class="p">)</span>
-<span class="mf">29.18</span><span class="err">°</span><span class="n">C</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">humidity</span> <span class="o">=</span> <span class="mh">0x14b9</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;%RH&quot;</span><span class="p">)</span>
-<span class="mf">53.05</span><span class="o">%</span><span class="n">RH</span>
-</pre></div>
-</div>
-                </article>
-            </aside><!-- /#featured -->
+            <a class="readmore" href="//rnestler.github.io/reading-the-shtc1-smart-gadget-ble-device.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

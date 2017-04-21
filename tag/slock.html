@@ -21,10 +21,15 @@
                     <li><a href="//rnestler.github.io/category/2017.html">2017</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+            <section id="content" class="body">
+                <ol id="posts-list" class="hfeed" start="9">
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/run-slock-before-going-to-sleep.html" rel="bookmark"
+                       title="Permalink to Run slock before going to sleep">Run slock before going to sleep</a></h1>
+            </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/run-slock-before-going-to-sleep.html">Run slock before going to sleep</a></h1>
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2013-10-25T00:00:00+02:00">
                 Published: Fre 25 Oktober 2013
@@ -35,36 +40,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2013.html">2013</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/systemd.html">systemd</a> <a href="//rnestler.github.io/tag/slock.html">slock</a> <a href="//rnestler.github.io/tag/suspend.html">suspend</a> </p>
-</footer><!-- /.post-info --><p>As noted in my previous post, I configured my system to run slock as soon as
-the system enters sleep state.  This is how its done.</p>
-<p>First we create a new systemd unit in /etc/systemd/system called
-suspend&#64;.service</p>
-<div class="highlight"><pre><span></span><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">User suspend actions</span>
-<span class="na">Before</span><span class="o">=</span><span class="s">sleep.target</span>
+</footer><!-- /.post-info -->            <p class="first last">How to configure systemd to run slock when going to sleep</p>
 
-<span class="k">[Service]</span>
-<span class="na">User</span><span class="o">=</span><span class="s">%I</span>
-<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-<span class="na">Environment</span><span class="o">=</span><span class="s">DISPLAY=:0</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/slock</span>
-
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">sleep.target</span>
-</pre></div>
-<p>So what did we do? We created a unit that runs before sleep.target is reached.
-This unit will run as a configurable user by enabling <cite>suspend&#64;$USER.service</cite></p>
-<div class="highlight"><pre><span></span><span class="gp">#</span> systemctl <span class="nb">enable</span> suspend@<span class="nv">$USER</span>.service
-</pre></div>
-<p>So the /usr/bin/slock runs as $USER.  To be able to communicate with the
-X-Server we need to set the DISPLAY variable to :0.</p>
-<p>So now when your system is going to sleep systemd should start slock.</p>
-<p>Sadly this works only for a one user system since the username is hardcoded
-when enabling the unit file.  To make it work with multible users one would
-need to create a script which determines which user is running the X-Server
-then change to this user and lock the screen.</p>
-                </article>
-            </aside><!-- /#featured -->
+            <a class="readmore" href="//rnestler.github.io/run-slock-before-going-to-sleep.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

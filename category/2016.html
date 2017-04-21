@@ -21,10 +21,15 @@
                     <li><a href="//rnestler.github.io/category/2017.html">2017</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+            <section id="content" class="body">
+                <ol id="posts-list" class="hfeed" start="9">
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/fixing-a-corrupt-mandb-database.html" rel="bookmark"
+                       title="Permalink to Fixing a Corrupt mandb Database">Fixing a Corrupt mandb Database</a></h1>
+            </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/fixing-a-corrupt-mandb-database.html">Fixing a Corrupt mandb Database</a></h1>
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-11-26T00:00:00+01:00">
                 Published: Sam 26 November 2016
@@ -35,95 +40,18 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/archlinux.html">ArchLinux</a> <a href="//rnestler.github.io/tag/man-db.html">man-db</a> </p>
-</footer><!-- /.post-info --><p>Recently, probably due to an unexpected power failure, the <a class="reference external" href="https://wiki.archlinux.org/index.php/Man_page">man page</a> cache on
-my machine which is managed by <tt class="docutils literal">mandb</tt> got corrupt. I noticed when
-<tt class="docutils literal">systemctl</tt> showed the <tt class="docutils literal"><span class="pre">man-db.service</span></tt> as failed:</p>
-<div class="highlight"><pre><span></span>% sudo systemctl
-...
-● man-db.service                     loaded failed failed    Update man-db cache
-...
-</pre></div>
-<p><tt class="docutils literal">systemctl status</tt> didn't reveal that much information on the issue:</p>
-<div class="highlight"><pre><span></span>% sudo systemctl status man-db.service
-● man-db.service - Update man-db cache
-   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/man-db.service<span class="p">;</span> static<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
-   Active: failed <span class="o">(</span>Result: exit-code<span class="o">)</span> since Sam <span class="m">2016</span>-11-26 <span class="m">16</span>:47:53 CET<span class="p">;</span> 10min ago
-  Process: <span class="m">23481</span> <span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/mandb <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">1</span>/FAILURE<span class="o">)</span>
-  Process: <span class="m">23475</span> <span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/mkdir -p /var/cache/man <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">0</span>/SUCCESS<span class="o">)</span>
- Main PID: <span class="m">23481</span> <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">1</span>/FAILURE<span class="o">)</span>
+</footer><!-- /.post-info -->            <p class="first last">Fixing a corrupt mandb database</p>
 
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/ru.KOI8-R werden verar
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/tr werden gelösch
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/tr werden verarbeitet
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/fi werden gelösch
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/fi werden verarbeitet
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/zh werden gelösch
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: man-db.service: Main process exited, <span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">1</span>/F
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Failed to start Update man-db cache.
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: man-db.service: Unit entered failed state.
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: man-db.service: Failed with result <span class="s1">&#39;exit-code&#39;</span>.
-</pre></div>
-<p>So I ran <tt class="docutils literal">mandb</tt> manually to figure out what was wrong:</p>
-<div class="highlight"><pre><span></span>% sudo mandb
-Purging old database entries in /usr/share/man...
-Processing manual pages under /usr/share/man...
-Purging old database entries in /usr/share/man/sr@latin...
-Processing manual pages under /usr/share/man/sr@latin...
-...
-Purging old database entries in /usr/share/man/zh...
-gdbm fatal: Unexpected end of file
-</pre></div>
-<p>So gdbm seemed to have some problem. Since I didn't know what <tt class="docutils literal">gdbm</tt> was, I
-asked the all knowingly package manager of ArchLinux:</p>
-<div class="highlight"><pre><span></span>% pacman -Qi gdbm
-Name            : gdbm
-Version         : <span class="m">1</span>.12-2
-Description     : GNU database library
-...
-</pre></div>
-<p>Since it is a database library I assumed that the database must be corrupt.
-Lucky enough <tt class="docutils literal">mandb</tt> provides an option to create the database from scratch:</p>
-<div class="highlight"><pre><span></span>% sudo mandb -c
+            <a class="readmore" href="//rnestler.github.io/fixing-a-corrupt-mandb-database.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html" rel="bookmark"
+                       title="Permalink to Verify Every Single Commit on a git rebase">Verify Every Single Commit on a git rebase</a></h1>
+            </header>
 
-Processing manual pages under /usr/share/man...
-Updating index cache <span class="k">for</span> path <span class="sb">`</span>/usr/share/man/man1<span class="err">&#39;</span>. Wait...mandb: warning: /usr/share/man/man1/gdk-pixbuf-csource.1.gz: whatis parse <span class="k">for</span> gdk-pixbuf-csource<span class="o">(</span><span class="m">1</span><span class="o">)</span> failed
-mandb: warning: /usr/share/man/man1/gdk-pixbuf-query-loaders.1.gz: whatis parse <span class="k">for</span> gdk-pixbuf-query-loaders<span class="o">(</span><span class="m">1</span><span class="o">)</span> failed
-...
-Processing manual pages under /usr/local/man...
-<span class="m">124</span> man subdirectories contained newer manual pages.
-<span class="m">22844</span> manual pages were added.
-<span class="m">0</span> stray cats were added.
-</pre></div>
-<p>It spilled my screen with lots of <a class="reference external" href="https://gist.github.com/rnestler/0ad8fdeb54e732922721bd4ef785a8d9#file-mandb_c_output-txt">output and warnings</a>, but seemed to finish
-properly.</p>
-<p>It didn't help though and <tt class="docutils literal">mandb</tt> still failed. Looking at the output again I
-noticed the line <tt class="docutils literal">Purging old database entries in <span class="pre">/usr/share/man/zh...</span></tt>. To
-see which package placed its manpage there I queried pacman again:</p>
-<div class="highlight"><pre><span></span>% <span class="nv">LANG</span><span class="o">=</span>C pacman -Qo /usr/share/man/zh
-/usr/share/man/zh/ is owned by nmap <span class="m">7</span>.31-1
-</pre></div>
-<p>So I tried to uninstall and reinstall nmap:</p>
-<div class="highlight"><pre><span></span>% sudo pacman -R nmap
-% sudo mandb
-% sudo pacman -S nmap
-% sudo mandb
-</pre></div>
-<p>And this time it finally worked! I'm still not sure what exactly triggered the
-failure in the first place, but I'm not sure how to further debug it.</p>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html" rel="bookmark"
-                           title="Permalink to Verify Every Single Commit on a git rebase">Verify Every Single Commit on a git rebase</a></h1>
-                </header>
-
-                <div class="entry-content">
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-10-31T00:00:00+01:00">
                 Published: Mon 31 Oktober 2016
@@ -134,19 +62,18 @@ failure in the first place, but I'm not sure how to further debug it.</p>
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/git.html">git</a> <a href="//rnestler.github.io/tag/rebase.html">rebase</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Check every commit when reordering commits with git rebase -i</p>
+</footer><!-- /.post-info -->            <p class="first last">Check every commit when reordering commits with git rebase -i</p>
 
-                <a class="readmore" href="//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+            <a class="readmore" href="//rnestler.github.io/verify-every-single-commit-on-a-git-rebase.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html" rel="bookmark"
+                       title="Permalink to Setting up the Awesome Window Manager in Ubuntu 16.04">Setting up the Awesome Window Manager in Ubuntu 16.04</a></h1>
+            </header>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html" rel="bookmark"
-                           title="Permalink to Setting up the Awesome Window Manager in Ubuntu 16.04">Setting up the Awesome Window Manager in Ubuntu 16.04</a></h1>
-                </header>
-
-                <div class="entry-content">
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-10-19T00:00:00+02:00">
                 Published: Mit 19 Oktober 2016
@@ -157,19 +84,18 @@ failure in the first place, but I'm not sure how to further debug it.</p>
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/linux.html">Linux</a> <a href="//rnestler.github.io/tag/ubuntu.html">Ubuntu</a> <a href="//rnestler.github.io/tag/awesome-window-manager.html">awesome window manager</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Setting up the awesome window manager under Ubuntu 16.04</p>
+</footer><!-- /.post-info -->            <p class="first last">Setting up the awesome window manager under Ubuntu 16.04</p>
 
-                <a class="readmore" href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+            <a class="readmore" href="//rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html" rel="bookmark"
+                       title="Permalink to Debugging Rust code with vim and Conque-GDB">Debugging Rust code with vim and Conque-GDB</a></h1>
+            </header>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html" rel="bookmark"
-                           title="Permalink to Debugging Rust code with vim and Conque-GDB">Debugging Rust code with vim and Conque-GDB</a></h1>
-                </header>
-
-                <div class="entry-content">
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-05-25T00:00:00+02:00">
                 Published: Mit 25 Mai 2016
@@ -180,19 +106,18 @@ failure in the first place, but I'm not sure how to further debug it.</p>
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/c.html">C++</a> <a href="//rnestler.github.io/tag/rust.html">Rust</a> <a href="//rnestler.github.io/tag/vim.html">vim</a> <a href="//rnestler.github.io/tag/gdb.html">gdb</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Using vim together with Conque-GDB to debug Rust and C/C++ code.</p>
+</footer><!-- /.post-info -->            <p class="first last">Using vim together with Conque-GDB to debug Rust and C/C++ code.</p>
 
-                <a class="readmore" href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+            <a class="readmore" href="//rnestler.github.io/debugging-rust-code-with-vim-and-conque-gdb.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
+        <li><article class="hentry">
+            <header>
+                <h1><a href="//rnestler.github.io/c-list-of-scopeguard.html" rel="bookmark"
+                       title="Permalink to C++ List of ScopeGuard">C++ List of ScopeGuard</a></h1>
+            </header>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="//rnestler.github.io/c-list-of-scopeguard.html" rel="bookmark"
-                           title="Permalink to C++ List of ScopeGuard">C++ List of ScopeGuard</a></h1>
-                </header>
-
-                <div class="entry-content">
+            <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-04-11T00:00:00+02:00">
                 Published: Mon 11 April 2016
@@ -203,11 +128,11 @@ failure in the first place, but I'm not sure how to further debug it.</p>
         </address>
 <p>In <a href="//rnestler.github.io/category/2016.html">2016</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/programming.html">programming</a> <a href="//rnestler.github.io/tag/c.html">C++</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Implementing a easy to use list of ScopeGuard</p>
+</footer><!-- /.post-info -->            <p class="first last">Implementing a easy to use list of ScopeGuard</p>
 
-                <a class="readmore" href="//rnestler.github.io/c-list-of-scopeguard.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+            <a class="readmore" href="//rnestler.github.io/c-list-of-scopeguard.html">read more</a>
+            </div><!-- /.entry-content -->
+        </article></li>
                 </ol><!-- /#posts-list -->
                 </section><!-- /#content -->
         <section id="extras" class="body">

@@ -1,5 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2017</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2017.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-19T00:00:00+02:00</updated><entry><title>Visiting Hackerspace Kraków</title><link href="//rnestler.github.io/visiting-hackerspace-krakow.html" rel="alternate"></link><published>2017-04-19T00:00:00+02:00</published><updated>2017-04-19T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-19:/visiting-hackerspace-krakow.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Hackerspace Kraków&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2017</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2017.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-23T00:00:00+02:00</updated><entry><title>Visiting brmlab</title><link href="//rnestler.github.io/visiting-brmlab.html" rel="alternate"></link><published>2017-04-23T00:00:00+02:00</published><updated>2017-04-23T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-23:/visiting-brmlab.html</id><summary type="html">&lt;p class="first last"&gt;Visiting brmlab&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;After a quite pleasant night train ride I arrived around 7am in Prague.  This
+left me with enough time to book my hotel and get to know the city a bit.&lt;/p&gt;
+&lt;p&gt;I booked the &lt;a class="reference external" href="http://osmand.net/go?lat=50.090122&amp;amp;lon=14.437044&amp;amp;z=18"&gt;A plus Hostel&lt;/a&gt; close to the Florenc metro station which is in
+the intersection of two metro lines, giving me a great starting point to
+explore the city.&lt;/p&gt;
+&lt;p&gt;Since the &lt;a class="reference external" href="https://brmlab.cz/"&gt;brmlab&lt;/a&gt; website showed, that the space is apparently open, I
+decided to take a look at it quite early in the day.  I had some trouble
+actually finding the space, so I advice you to use their &lt;a class="reference external" href="https://brmlab.cz/place"&gt;well written
+description&lt;/a&gt; on how to find their space.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Entry to the brmlab" src="/images/tour_de_hackerspace/brmlab/brmlab_entry.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Entry to the &lt;a class="reference external" href="https://brmlab.cz/"&gt;brmlab&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The space features some of the usual stuff:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;A big main working room&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_main_room.jpg"&gt;&lt;img alt="brmlab main working room" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_main_room.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;A small server room&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_server_room.jpg"&gt;&lt;img alt="brmlab server room" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_server_room.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;A workshop&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_workshop.jpg"&gt;&lt;img alt="brmlab workshop" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_workshop.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But what really sets their hackerspace apart from others is that it features a
+chemistry and a bio lab!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Parts of the bio lab with a microscope" src="/images/tour_de_hackerspace/brmlab/brmlab_micro_scope.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Parts of the bio lab with a microscope&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;We did actually take a look at a small silicon wafer from unknown origin the
+same evening.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Looking at a silicon wafer through the microscope" src="/images/tour_de_hackerspace/brmlab/brmlab_micro_scope_silicon.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Looking at a silicon wafer through the microscope&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Inside the bio lab there is also the relax zone / silent room.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Relax zone with awesome graffiti" src="/images/tour_de_hackerspace/brmlab/brmlab_silent_room.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Relax zone with awesome graffiti!&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Quite stunning is their high voltage lab&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="brmlab high voltage lab" src="/images/tour_de_hackerspace/brmlab/brmlab_high_voltage_lab.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;brmlab high voltage lab&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;It features some quite huge &lt;a class="reference external" href="images/tour_de_hackerspace/brmlab/brmlab_high_voltage_lab_2.jpg"&gt;Tesla coils&lt;/a&gt; and other high voltage equipment such
+as high voltage capacitors, transformers or high voltage measurement systems.&lt;/p&gt;
+&lt;p&gt;Also really impressive is the bitcoin ATM they have!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Bitcoin ATM" src="/images/tour_de_hackerspace/brmlab/brmlab_bitcoin_atm.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Bitcoin ATM&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;I couldn't resist and &lt;a class="reference external" href="/images/tour_de_hackerspace/brmlab/brmlab_bitcoin_transaction.jpg"&gt;bought myself 6 mBTC&lt;/a&gt; immediately.  They told me that
+this is the first prototype of the &lt;a class="reference external" href="https://www.generalbytes.com/first-bitcoin-atm-deployed/"&gt;General Bytes bitcoin ATM&lt;/a&gt;.  It was
+installed in their space so they could test it.  During testing they found and
+reported two security issues, which then could be fixed.&lt;/p&gt;
+&lt;p&gt;Like most hackerspaces they also have some awesome decorations, in this case a
+wall paneled with motherboards.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Wall of motherboards" src="/images/tour_de_hackerspace/brmlab/brmlab_motherboards.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Wall of motherboards&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The also own an &lt;a class="reference external" href="images/tour_de_hackerspace/brmlab/brmlab_ibm.jpg"&gt;IBM AS/400 system&lt;/a&gt; with a fitting hardware terminal which
+gives one some possibilities to discover a mainframe style system.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Terminal connected to the IBM AS/400" src="/images/tour_de_hackerspace/brmlab/brmlab_ibm_terminal.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Terminal connected to the IBM AS/400&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;It was real fun interacting with this machine!  You can find more information
+about it on their &lt;a class="reference external" href="https://brmlab.cz/project/as400/start"&gt;wiki&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;All in all my Prague and brmlab experience was really amazing! The city is very
+beautiful (albeit a bit crowed with tourists) and I enjoyed hanging out with a
+few of the brmlab hackers the other night!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Overview of Prague" src="/images/tour_de_hackerspace/brmlab/brmlab_prague.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Overview of Prague&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting Hackerspace Kraków</title><link href="//rnestler.github.io/visiting-hackerspace-krakow.html" rel="alternate"></link><published>2017-04-19T00:00:00+02:00</published><updated>2017-04-19T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-19:/visiting-hackerspace-krakow.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Hackerspace Kraków&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;Since the 3G connection during the train ride was exceptionally bad, I had
 trouble with my credit card and the train didn't have electric plugs, I ran out
 of battery before I could finish booking a hotel.&lt;/p&gt;

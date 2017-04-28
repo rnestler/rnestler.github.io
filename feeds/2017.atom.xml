@@ -1,5 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2017</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2017.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-23T00:00:00+02:00</updated><entry><title>Visiting brmlab</title><link href="//rnestler.github.io/visiting-brmlab.html" rel="alternate"></link><published>2017-04-23T00:00:00+02:00</published><updated>2017-04-23T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-23:/visiting-brmlab.html</id><summary type="html">&lt;p class="first last"&gt;Visiting brmlab&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2017</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2017.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-04-25T00:00:00+02:00</updated><entry><title>Visiting Progressbar and Metalab</title><link href="//rnestler.github.io/visiting-progressbar-and-metalab.html" rel="alternate"></link><published>2017-04-25T00:00:00+02:00</published><updated>2017-04-25T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-25:/visiting-progressbar-and-metalab.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Progressbar&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Since I hit the bars a bit too hard with some of the guys and gals of brmlab, I
+had a bit of a hard time getting up in the morning.  Anyway, I quite enjoyed
+relaxing a bit in the train while travelling to Bratislava.&lt;/p&gt;
+&lt;div class="section" id="visiting-progressbar"&gt;
+&lt;h2&gt;Visiting Progressbar&lt;/h2&gt;
+&lt;p&gt;A member of the hackerspace, Andrew, described me pretty well on IRC how to get
+to the &lt;a class="reference external" href="https://www.progressbar.sk/"&gt;Progressbar&lt;/a&gt; from the train station, while also getting quite a nice
+look at Bratislava at the same time.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Entry to the Progressbar" src="/images/tour_de_hackerspace/progressbar/progressbar_entry.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Entry to the &lt;a class="reference external" href="https://www.progressbar.sk/"&gt;Progressbar&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;After arriving he gave me a tour around the space and then continued to repair
+his bike.&lt;/p&gt;
+&lt;p&gt;The space consists of a nice big main working / presentation / hang-out room.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Progressbar main room" src="/images/tour_de_hackerspace/progressbar/progressbar_main_room.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;&lt;a class="reference external" href="https://www.progressbar.sk/"&gt;Progressbar&lt;/a&gt; main room&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;There's also a co-working / office room:&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Progressbar co-working room" src="/images/tour_de_hackerspace/progressbar/progressbar_co_working_space_2.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;&lt;a class="reference external" href="https://www.progressbar.sk/"&gt;Progressbar&lt;/a&gt; co-working room&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;And in the next room there's the kitchen:&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Progressbar kitchen" src="/images/tour_de_hackerspace/progressbar/progressbar_kitchen_2.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;&lt;a class="reference external" href="https://www.progressbar.sk/"&gt;Progressbar&lt;/a&gt; kitchen&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;On the opposite site of the space there is also a room with an electronic lab
+and some tooling:&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Progressbar electronic lab" src="/images/tour_de_hackerspace/progressbar/progressbar_electronic_lab.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;&lt;a class="reference external" href="https://www.progressbar.sk/"&gt;Progressbar&lt;/a&gt; electronic lab&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Of course the space also has some awesome decorations:&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Progressbar animated LED bar" src="/images/tour_de_hackerspace/progressbar/progressbar_decoration.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;&lt;a class="reference external" href="https://www.progressbar.sk/"&gt;Progressbar&lt;/a&gt; animated LED bar&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;After the tour Andrew continued fixing his bike.  Afterwards we went to have
+dinner and then he showed me a bit of Bratislava and the local beer culture.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Outside of Progressbar in the old town" src="/images/tour_de_hackerspace/progressbar/progressbar_outside.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Outside of Progressbar in the old town&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The next day I took a look at the city, which is rather small but pretty.  In
+the evening I attended the &lt;a class="reference external" href="https://scuttlebot.io/"&gt;scuttlebutt&lt;/a&gt; workshop in Progressbar.  Scuttlebutt
+is some kind of distributed cryptographically signed message board, where every
+identity has a append only feed.  I shortly tested the &lt;a class="reference external" href="https://github.com/ssbc/patchwork"&gt;patchwork&lt;/a&gt; scuttlebutt
+application.  For me it felt a bit like a distributed Twitter.&lt;/p&gt;
+&lt;p&gt;Since a few of the guys there are also Rustaceans we also talked about that,
+and they told me that their door lock implementation runs with Rust.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Progressbar door lock system" src="/images/tour_de_hackerspace/progressbar/progressbar_door_lock_system.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Progressbar door lock system&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Later that evening we started to watch some 64k demos, of course including the
+two I know of which are written in Rust:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://www.pouet.net/prod.php?which=69658"&gt;Engage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://www.youtube.com/watch?v=rWwNgVwQG1A"&gt;Logicoma&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="64k demo time with animated LED bar on the left" src="/images/tour_de_hackerspace/progressbar/progressbar_demo_time.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;64k demo time with animated LED bar on the left&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;I really enjoyed my time in Progressbar and their hospitality was amazing!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="visiting-metalab-in-vienna"&gt;
+&lt;h2&gt;Visiting Metalab in Vienna&lt;/h2&gt;
+&lt;p&gt;The next day I actually spent in Vienna, which is just a 1h train ride away,
+were I visited &lt;a class="reference external" href="https://metalab.at/"&gt;Metalab&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The space is located centrally close to the &amp;quot;Rathaus&amp;quot;.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Metalab entry" src="/images/tour_de_hackerspace/metalab/metalab_entry.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Metalab entry&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Just on arrival the space was actually empty (but open), because most of the
+members where having dinner on the outside.  Just moments after that, two
+members showed up and I ask theme for a tour.  But one can't get a tour without
+drinking some Mate!  So I buy a Flora Power from them after using their self
+built &amp;quot;Kassomat&amp;quot; to get some coins!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Metalab Kassomat" src="/images/tour_de_hackerspace/metalab/metalab_kassomat.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Metalab Kassomat&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;After that rather impressive start they continued to show me the rest of the
+space:&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Metalab 3D printers" src="/images/tour_de_hackerspace/metalab/metalab_3d_printer.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Metalab 3D printers&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Metalab almost obligatory laser cutter and electronic lab" src="/images/tour_de_hackerspace/metalab/metalab_laser_cutter_el_lab.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Metalab almost obligatory laser cutter and electronic lab&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;What really impressed me was there workshop, containing a decent CNC machine!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Metalab CNC" src="/images/tour_de_hackerspace/metalab/metalab_cnc.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Metalab CNC&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The space actually also includes a big main room, a kitchen, a lounge and some
+storage and server rooms.  Sadly I didn't take any pictures of them.&lt;/p&gt;
+&lt;p&gt;While getting rid of my processed Flora Power after the tour, I noticed the
+rather beautiful decorations they have in their restrooms!&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;img alt="Metalab restroom decoration" src="/images/tour_de_hackerspace/metalab/metalab_toilet_decoration.jpg" style="width: 80%;" /&gt;
+&lt;p class="caption"&gt;Metalab restroom decoration&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;There is even a little screen with a few buttons to play a video game, while
+having a longer session.&lt;/p&gt;
+&lt;p&gt;Since I had only a few hours to spend there, I just briefly attended their
+member meeting, were they discussed some Metalab related issues.  The rest of
+the time I mostly spent talking to some of them.&lt;/p&gt;
+&lt;p&gt;If you're in Vienna I definitely recommend to check out Metalab, since it is a
+quite amazing Hackerspace!  I'd loved to spend more time there, but again the
+next chapter of my &amp;quot;Tour de Hackerspace&amp;quot; was calling!&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting brmlab</title><link href="//rnestler.github.io/visiting-brmlab.html" rel="alternate"></link><published>2017-04-23T00:00:00+02:00</published><updated>2017-04-23T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-04-23:/visiting-brmlab.html</id><summary type="html">&lt;p class="first last"&gt;Visiting brmlab&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;After a quite pleasant night train ride I arrived around 7am in Prague.  This
 left me with enough time to book my hotel and get to know the city a bit.&lt;/p&gt;
 &lt;p&gt;I booked the &lt;a class="reference external" href="http://osmand.net/go?lat=50.090122&amp;amp;lon=14.437044&amp;amp;z=18"&gt;A plus Hostel&lt;/a&gt; close to the Florenc metro station which is in

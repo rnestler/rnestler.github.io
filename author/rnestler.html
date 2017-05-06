@@ -24,7 +24,228 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/visiting-hackerspace-budapest.html">Visiting Hackerspace Budapest</a></h1>
+                    <h1 class="entry-title"><a href="//rnestler.github.io/rustfest-and-visiting-hacklab-kyiv.html">RustFest and Visiting Hacklab Kyiv</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2017-05-01T00:00:00+02:00">
+                Published: Mon 01 Mai 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> <a href="//rnestler.github.io/tag/blockchain.html">blockchain</a> </p>
+</footer><!-- /.post-info --><p>I originally planed to fly to Kiev on Friday to visit <a class="reference external" href="http://hacklab.kiev.ua/en/">Hacklab Kyiv</a> and
+attend the <a class="reference external" href="http://2017.rustfest.eu">RustFest</a> workshops the next day.  But as <a class="reference external" href="https://twitter.com/rnstlr/status/857902876588486658">you may heard about</a>,
+I missed my flight due to my silliness.  So I was busy for most of Friday
+riding trains, trying to learn a bit of Ukrainian <a class="footnote-reference" href="#id2" id="id1">[1]</a>, discuss the validity of
+my ticket with the train crew, buying additional tickets and so on.</p>
+<p>The train ride was quite an adventure and I even got to ride the famous
+&quot;platzkart&quot; class night train.</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_train_ride_3.jpg"><img alt="The famous platzkart" src="/images/tour_de_hackerspace/kiev/kiev_train_ride_3.jpg" style="width: 80%;" /></a>
+<p class="caption">The famous platzkart</p>
+</div>
+<p>I didn't take many pictures during the platzkart train ride, but if you want
+the get a better feeling for it just <a class="reference external" href="https://duckduckgo.com/?q=platzkart&amp;atb=v10&amp;iar=images&amp;iax=1&amp;ia=images">search for pictures</a>.  I arrived in Kiev
+around 11 in the morning (original plan was to arrive at 9) and met with
+<a class="reference external" href="https://github.com/dns2utf8">Dns2utf8</a> at the train station because I arranged to share a hotel room with
+him for the duration of RustFest.</p>
+<div class="section" id="rustfest">
+<h2><a class="reference external" href="http://2017.rustfest.eu">RustFest</a></h2>
+<p>After getting a long overdue shower, we went to the RustFest workshops.  I was
+really happy to meet <a class="reference external" href="https://twitter.com/andrewhobden">&#64;andrewhobden</a> and <a class="reference external" href="https://twitter.com/NGC_3572">thomascovenant (&#64;NGC_3572)</a>, which
+both did an amazing job as part of the <a class="reference external" href="http://2017.rustfest.eu/about/">RustFest team</a>!</p>
+<p>Despite being a few hours to late we could still attend the workshops.  I
+attended the <a class="reference external" href="https://github.com/exonum/workshop">Exonum cryptocurrency workshop</a> instead of the web development I
+originally signed up for.  Since I missed the introduction, I jumped right into
+writing Rust code without having any clue how their blockchain implementation
+even works.  By the end of the workshop we had some kind of crypto currency
+implemented with a little node based web app to create new wallets, add funds
+out of nowhere and transfer funds.</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_rustfest_crypto_3.png"><img alt="Screenshots from the webapp" src="/images/tour_de_hackerspace/kiev/kiev_rustfest_crypto_3.png" style="width: 80%;" /></a>
+<p class="caption">Screenshots from the webapp</p>
+</div>
+<p>I found a bug in the implementation, where if one transferred funds from a
+wallet to itself it would just increase the balance of this wallet!  The fix
+was as simple as adding</p>
+<div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="n">sender</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">receiver</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(())</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+<p>inside a function.  I didn't have time to figure out why the bug happened
+exactly, since all the function does is decrement on the <tt class="docutils literal">sender</tt> and
+increment on the <tt class="docutils literal">receiver</tt>, which should lead to an equal final balance if
+<tt class="docutils literal">sender == receiver</tt>.</p>
+<p>After the workshop we formed a little group of Rustaceans and had a great time
+taking a look at the city!</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg"><img alt="View over parts of Kiev" src="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg" style="width: 80%;" /></a>
+<p class="caption">View over parts of Kiev</p>
+</div>
+<p>Here are some more images:</p>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_1.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_1.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_2.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_2.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_3.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_3.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_4.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_4.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_5.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_5.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_6.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_6.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_8.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_8.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_9.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_9.jpg" style="width: 10%;" /></a>
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_10.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_10.jpg" style="width: 10%;" /></a>
+<p>In the evening we found a wonderful place for dinner and later met with some
+other Rustaceans to spend some time in a bar which <a class="reference external" href="https://twitter.com/steveklabnik">Steve Klabnik</a> suggested.</p>
+<p>The next morning it was time for a quite diverse range of <a class="reference external" href="http://2017.rustfest.eu/talks/">talks</a>.  I
+particularly enjoyed:</p>
+<ul class="simple">
+<li>&quot;'Open' as in 'Welcoming': Facilitating Contributions&quot; by <a class="reference external" href="https://github.com/Manishearth">Manish
+Goregaokar</a> because it basically summarized what RustFest is all about.</li>
+<li>&quot;The Illustrated Adventure Survival Guide for New Rustaceans&quot; by <a class="reference external" href="https://twitter.com/_lbaillie">Liz
+Baillie</a> as it was super entertaining with cute images</li>
+<li>&quot;Making a game in Rust&quot; by <a class="reference external" href="https://github.com/lislis">lislis</a> because I also tried to create a <a class="reference external" href="https://github.com/coredump-ch/rpsrtsrs">game
+with Rust</a> (still not finished)</li>
+</ul>
+<p>During the day I had the pleasure to met the brilliant author of the <a class="reference external" href="http://edunham.net/2016/04/11/plushie_rustacean_pattern.html">Plushie
+Rustacean Pattern</a>, <a class="reference external" href="https://twitter.com/qedunham">E Dunham</a>.  She was impressed, that my girlfriend
+actually managed to create a Plushie Ferris from her description.</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="https://twitter.com/NGC_3572/status/852546171440685056"><img alt="My Plushie Ferris" src="/images/tour_de_hackerspace/kiev/ferris.jpg" style="width: 80%;" /></a>
+<p class="caption">My Plushie Ferris, picture taken by <a class="reference external" href="https://twitter.com/NGC_3572">thomascovenant (&#64;NGC_3572)</a></p>
+</div>
+<p>In the evening we had a great time during the after party.  Getting to know the
+community from this very relaxed and personal side was absolutely awesome!  I
+talked to quite a few people and learned lots of stuff.  I also talked to
+<a class="reference external" href="https://twitter.com/ag_dubs">Ashley Williams</a> about how to best teach kids programming and other stuff,
+since we <a class="reference external" href="https://www.coredump.ch/2014/11/10/ferienpass-im-hackerspace/">do that</a> in <a class="reference external" href="https://www.coredump.ch/2016/11/01/ferienpass-2016/">our hackerspace</a>.</p>
+<p>Just like last year, RustFest was super amazing!  It's so awesome to meet this
+incredible community!  I'm really looking forward to the next RustFest this
+fall in <a class="reference external" href="https://rustfest.ch/">Zurich</a>!</p>
+</div>
+<div class="section" id="visiting-hacklab-kyiv">
+<h2>Visiting Hacklab Kyiv</h2>
+<p>The next day I met with Dmitriy, who I met at RustFest, to get lunch together.
+Since he speaks Russian it was quite easy for him to chat with the locals and
+find us a good place to get some Ukrainian food.</p>
+<p>I arranged with Anastasia from the Hacklab Kyiv that I could couch surf at
+their place.  Since I wanted to meet with Anastasia to drop off my luggage, I
+agreed with Dimitry to split and see each other again in the hackerspace.
+Anastasia and her partner Sasha are some of the most lovely people I've ever
+met!  They showed me around the city, helped me with public transport and it
+was always fun to hang out with them.  So I was happy I brought some Swiss
+chocolate with me which I could give them as a gift.</p>
+<p>After dropping my luggage we went to the hackerspace.</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_entry.jpg"><img alt="Entry to the HackLab  Kyiv" src="/images/tour_de_hackerspace/kiev/kiev_entry.jpg" style="width: 80%;" /></a>
+<p class="caption">Entry to the HackLab  Kyiv</p>
+</div>
+<p>Their hackerspace consist mostly of people which are interested in mechanical
+engineering and electronics.  Due to that they own some awesome equippment such
+as multiple CNC machines, 3D printers, compressors and lots of other tools.</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_cnc.jpg"><img alt="CNC mill" src="/images/tour_de_hackerspace/kiev/kiev_cnc.jpg" style="width: 80%;" /></a>
+<p class="caption">CNC mill</p>
+</div>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_big_cnc.jpg"><img alt="Even bigger CNC mill" src="/images/tour_de_hackerspace/kiev/kiev_big_cnc.jpg" style="width: 80%;" /></a>
+<p class="caption">Even bigger CNC mill</p>
+</div>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_3d_printers.jpg"><img alt="3D printers" src="/images/tour_de_hackerspace/kiev/kiev_3d_printers.jpg" style="width: 80%;" /></a>
+<p class="caption">3D printers</p>
+</div>
+<p>They created quite some awesome stuff with their 3D printer, including molds to
+create metallic stuff!</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_3d_prints.jpg"><img alt="Awesome stuff they created with the 3D printers" src="/images/tour_de_hackerspace/kiev/kiev_3d_prints.jpg" style="width: 80%;" /></a>
+<p class="caption">Awesome stuff they created with the 3D printers</p>
+</div>
+<p>Like most hackerspaces they also feature a big main working room</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_main_room_2.jpg"><img alt="Main room" src="/images/tour_de_hackerspace/kiev/kiev_main_room_2.jpg" style="width: 80%;" /></a>
+<p class="caption">Main room</p>
+</div>
+<p>Additionally to that they feature:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>A workshop</dt>
+<dd><a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg" style="width: 10%;" /></a>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>A storage room</dt>
+<dd><a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg" style="width: 10%;" /></a>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Chemistry lab</dt>
+<dd><a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_chemistry.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/kiev_chemistry.jpg" style="width: 10%;" /></a>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>A soldering place</dt>
+<dd><a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_soldering.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/kiev_soldering.jpg" style="width: 10%;" /></a>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>A Tesla coil</dt>
+<dd><a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_tesla_coil.jpg"><img alt="" src="/images/tour_de_hackerspace/kiev/kiev_tesla_coil.jpg" style="width: 10%;" /></a>
+</dd>
+</dl>
+</li>
+</ul>
+<p>In a room next to the hackerspace there is a studio for people working with
+ceramics.  They told me that they share some tools and generally support each
+other.</p>
+<div class="figure align-center" style="width: 80%">
+<a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_ceramics_2.jpg"><img alt="Ceramics studio" src="/images/tour_de_hackerspace/kiev/kiev_ceramics_2.jpg" style="width: 80%;" /></a>
+<p class="caption">Ceramics studio</p>
+</div>
+<p>After they had shown me around and I talked to most of them for some time, some
+of us went to get dinner together. We spent a considerable amount of time
+discussing various things, amongst others the problem that a lot of spaces
+share: The founders are basically the only ones taking care of everything in
+regard to organizing the space.</p>
+<p>We have this problem as well in our space and tried to solve it, by actively
+splitting responsibilities for various tasks.  An example is: For a long time
+<a class="reference external" href="https://github.com/dbrgn">Danilo Bargen</a>, our formal president, was responsible for every single IT
+infrastructure task at coredump.  So I encouraged him to show me how to manage
+our servers, update services and so on.  This not only to let him have more
+time at hand, but also to remove a single point of failure in our organization.</p>
+<p>The next day I spent some time trying to <a class="reference external" href="https://twitter.com/rnstlr/status/859351392871428097">repair my Fairphone</a>.  At first it
+seemed to work perfectly, but after some time it did again refuse to charge.</p>
+<p>My flight back was on 16:45. This time I actually was able to catch it, but if
+you want to hear a funny story on how I almost missed it again, feel free to DM
+me on Twitter ;)</p>
+<p>I definitely enjoyed my stay in Kiev and my visit to Hacklab Kyiv.  I'd loved
+to stay a few more days, but my travel continued back to Budapest and then
+further on to Szeged.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>It always amazes me how much communication is possible with just <a class="reference external" href="http://www.omniglot.com/language/phrases/ukrainian.php">some sentences</a>, lots of smiling, gestures and some pictures from a mobile phone.</td></tr>
+</tbody>
+</table>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//rnestler.github.io/visiting-hackerspace-budapest.html" rel="bookmark"
+                           title="Permalink to Visiting Hackerspace Budapest">Visiting Hackerspace Budapest</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2017-04-29T00:00:00+02:00">
                 Published: Sam 29 April 2017
@@ -35,104 +256,11 @@
         </address>
 <p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
 <p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info --><p>When arriving in Budapest in the afternoon, I noticed that the <a class="reference external" href="https://hsbp.org/">Hackerspace
-Budapest</a> was still closed, so I used the time to organize my flight to Kiev
-for <a class="reference external" href="http://2017.rustfest.eu">RustFest</a> and book a hotel close to the airport.  As it turned out this
-was a bit unnecessary, but more about that later.</p>
-<p>Since I couldn't figure out where the Hackerspace Budapest had its IRC channel
-(turns out it is <tt class="docutils literal">#hspbp</tt> on IRCnet. One can connect to it using
-<tt class="docutils literal">open.ircnet.net</tt>), I just waited till the state on their website turned to
-&quot;open&quot;.</p>
-<p>Finding their hackerspace was a lot harder then I thought!  They give you the
-street name and number on the <a class="reference external" href="https://wiki.hackerspaces.org/Hackerspace_Budapest">hackerspace wiki</a>, but when I arrived at this
-street I found a three floor building with various flats.  I looked around
-there and asked a plumber which was working there, if he knew about a
-hackerspace.  He couldn't help me, but confirmed that I'm in the correct
-building according to the street name and number.  So I continued to look
-around, which led to some neighbours getting suspicious about me.  I had a
-rather strange conversation with one of them who apparently couldn't speak any
-English.  After trying to help me for a while he showed me out.  When I was
-just walking away I noticed a small door about a meter away from the entry to
-the building:</p>
-<div class="figure align-center" style="width: 80%">
-<img alt="Entry to the Hackerspace Budapest" src="/images/tour_de_hackerspace/budapest/budapest_entry.jpg" style="width: 80%;" />
-<p class="caption">Entry to the <a class="reference external" href="https://hsbp.org/">Hackerspace Budapest</a></p>
-</div>
-<p>Seeing the Club Mate crates, reassured me that this <em>must</em> be the Hackerspace I
-was looking for!  So I entered  and told them my story about searching for
-their hackerspace.  When we finished laughing, they showed me around in their
-space.</p>
-<p>There is the classical main working room:</p>
-<div class="figure align-center" style="width: 80%">
-<img alt="Main working room" src="/images/tour_de_hackerspace/budapest/budapest_main_working_area.jpg" style="width: 80%;" />
-<p class="caption">Main working room</p>
-</div>
-<p>In the main working room there is a small <a class="reference external" href="https://en.wikipedia.org/wiki/Biotope">biotope</a> / <a class="reference external" href="https://en.wikipedia.org/wiki/Green_wall">green wall</a> /
-biological experiment setup.</p>
-<div class="figure align-center" style="width: 80%">
-<img alt="biotope / green wall in the main room" src="/images/tour_de_hackerspace/budapest/budapest_biotope.jpg" style="width: 80%;" />
-<p class="caption">biotope / green wall in the main room</p>
-</div>
-<p>Inside there lives an <a class="reference external" href="https://wikipedia.org/wiki/Axolotl">axolotl</a> (named Haxolotl) which, so they told me, forms
-a stable ecosystem together with the plants.  Apparently the excretion from the
-axolotl produce all the minerals the plants need to grow.  So they simply pump
-the water where the axolotl resides to the top and let it flow down.  The only
-thing they need to do is to feed the axolotl with worms every day.</p>
-<div class="figure align-center" style="width: 80%">
-<img alt="Axolotl" src="/images/tour_de_hackerspace/budapest/budapest_axolotl_0.jpg" style="width: 80%;" />
-<p class="caption">Axolotl</p>
-</div>
-<p>They also have built a mechanism to avoid over feeding the axolotl:  Whenever
-one feeds it, you also press a button which will then change its color from
-green to red.  This will remain like that until the next feeding time were it
-will turn green again.  I found this whole thing quite amazing!</p>
-<p>Next there is their 3D-printer and electronics lab:</p>
-<div class="figure align-center" style="width: 80%">
-<img alt="3D printer and electronics lab" src="/images/tour_de_hackerspace/budapest/budapest_3d_printer.jpg" style="width: 80%;" />
-<p class="caption">3D printer and electronics lab</p>
-</div>
-<p>Being a rather small hackerspace, comparable to coredump, they didn't have a
-laser cutter, since they can't afford it yet.</p>
-<p>The space also features a kitchen and restrooms:</p>
-<div class="figure align-center" style="width: 80%">
-<img alt="Kitchen and door to the restrooms" src="/images/tour_de_hackerspace/budapest/budapest_kitchen.jpg" style="width: 80%;" />
-<p class="caption">Kitchen and door to the restrooms</p>
-</div>
-<p>A special thing I found in their space is the so called &quot;loot area&quot;</p>
-<div class="figure align-center" style="width: 80%">
-<img alt="Loot area" src="/images/tour_de_hackerspace/budapest/budapest_loot_area.jpg" style="width: 80%;" />
-<p class="caption">Loot area</p>
-</div>
-<p>The members just put stuff there either if they have no use for it or as a gift
-for the other members, mostly in the form of food and drinks.  One can loot the
-area by just taking the things for free.</p>
-<p>They also told to me about the <a class="reference external" href="https://hsbp.org/camppp7e1">Camp++</a> they are organizing every year, which
-sounded a bit like a smaller version of the Chaos Communication Camp.</p>
-<p>The next day I spent mostly taking a look at Budapest, which is quite an
-amazing city.</p>
-<p>Since I wanted to travel only with cabin baggage to Kiev, I agreed with the
-space, that I can store my suitcase in their room and pick it up when I return
-from Kiev.  So I arrived in the evening to store my suitcase.  Since I and the
-only hacker present didn't have any dinner yet, we decided to cook.</p>
-<div class="figure align-center" style="width: 80%">
-<img alt="Cooking in the hackerspace" src="/images/tour_de_hackerspace/budapest/budapest_cooking.jpg" style="width: 80%;" />
-<p class="caption">Cooking in the hackerspace</p>
-</div>
-<p>So after eating together and talking for a bit, I decided to go to the Hotel
-early, since I had the flight to Kiev in the morning.</p>
-<p>Sadly I forgot, that I still had my passport in my suitcase in the hackerspace
-which I noticed when I was already at the airport.  I tried to travel to Kiev
-with just my ID card, but when boarding they told me this isn't possible.</p>
-<p>So while writing this post I'm on a 18 hour train ride to Kiev which is still
-faster than taking the next flight which would be on Saturday afternoon.</p>
-<p>I really enjoyed my visit in the Hackerspace Budapest and will visit them
-shortly again when I return from Kiev on Tuesday.</p>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p class="first last">Visiting the Hackerspace Budapest</p>
+
+                <a class="readmore" href="//rnestler.github.io/visiting-hackerspace-budapest.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -315,29 +443,6 @@ shortly again when I return from Kiev on Tuesday.</p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting the shackspace</p>
 
                 <a class="readmore" href="//rnestler.github.io/visiting-the-shackspace.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="//rnestler.github.io/starting-my-tour-de-hackerspace.html" rel="bookmark"
-                           title="Permalink to Starting my "Tour de Hackerspace"">Starting my &quot;Tour de Hackerspace&quot;</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-04-08T00:00:00+02:00">
-                Published: Sam 08 April 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Starting my &quot;Tour de Hackerspace&quot;</p>
-
-                <a class="readmore" href="//rnestler.github.io/starting-my-tour-de-hackerspace.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

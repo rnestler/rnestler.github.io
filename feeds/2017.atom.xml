@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2017</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2017.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-05-01T00:00:00+02:00</updated><entry><title>RustFest and Visiting Hacklab Kyiv</title><link href="//rnestler.github.io/rustfest-and-visiting-hacklab-kyiv.html" rel="alternate"></link><published>2017-05-01T00:00:00+02:00</published><updated>2017-05-01T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-05-01:/rustfest-and-visiting-hacklab-kyiv.html</id><summary type="html">&lt;p class="first last"&gt;Attending RustFest and visiting the Hacklab Kyiv&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2017</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/2017.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-05-06T00:00:00+02:00</updated><entry><title>Visiting Hackerspace Szeged</title><link href="//rnestler.github.io/visiting-hackerspace-szeged.html" rel="alternate"></link><published>2017-05-06T00:00:00+02:00</published><updated>2017-05-06T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-05-06:/visiting-hackerspace-szeged.html</id><summary type="html">&lt;p class="first last"&gt;Visiting the Hackerspace Szeged&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;After returning from RustFest I spent one more day in Budapest to pick up my
+luggage from the Hackerspace Budapest and to recover a bit from the lack of
+sleep during my visit in Kiev.&lt;/p&gt;
+&lt;p&gt;Since I had some trouble contacting the &lt;a class="reference external" href="http://www.hackerspace-szeged.org/"&gt;Hackerspace Szeged&lt;/a&gt; and I didn't
+bother to book a hostel or anything, I just took the train to Szeged and hoped
+for the best.  As it turns out once more, the advantage of not planing anything
+at all is, that one can't get disappointed and is open to positive surprises!&lt;/p&gt;
+&lt;p&gt;This time I had the pleasure to meet Zsuzsa who studies in Budapast and lives
+in Szeged.  Upon hearing about my trip, she spontaneously invited me to stay
+with her and Balint in their apartment.  Sometimes it's hard to grasp for me
+how incredibly lucky I am to meet all these amazing people during my travel!&lt;/p&gt;
+&lt;p&gt;So after sharing some pizza for dinner with them I tried to visit the
+Hackerspace Szeged, since they told me they had a lock picking workshop this
+evening.  Sadly I arrived to late at their space and their workshop was already
+over and they left the space.  I guess this is one of the downsides of not
+planing ;)&lt;/p&gt;
+&lt;p&gt;Anyway, I spent the next day taking a look at the wonderful city of Szeged,
+including a visit to the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Szeged_witch_trials"&gt;&amp;quot;Witch Island&amp;quot; area&lt;/a&gt; and the local zoo.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/city/szeged_city_5.jpg"&gt;&lt;img alt="Szeged Cathedral" src="/images/tour_de_hackerspace/szeged/city/szeged_city_5.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Szeged Cathedral&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;In the evening I finally managed to pay a short visit to the Hackerspace
+Szeged.  They had a follow up of their lock picking workshop of the day before,
+so they explained me how to theoretically pick combination locks.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_lock.jpg"&gt;&lt;img alt="Combination lock for the workshop" src="/images/tour_de_hackerspace/szeged/szeged_lock.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Combination lock for the workshop&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;They are a young and rather small hackerspace, but active nevertheless!  The
+space consist of the classical main room:&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_main_room_1.jpg"&gt;&lt;img alt="Main room of the Hackerspace Szeged" src="/images/tour_de_hackerspace/szeged/szeged_main_room_1.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Main room of the Hackerspace Szeged&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;And a second smaller room which they mostly use as a storage room.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_second_room.jpg"&gt;&lt;img alt="Main room of the Hackerspace Szeged" src="/images/tour_de_hackerspace/szeged/szeged_second_room.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Main room of the Hackerspace Szeged&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Since I already made plans to spend the rest of the evening with Zsuzsa and
+Balint, I spent just about 2 hours in their space.  I'd loved to hear more
+about the projects they are working on, so maybe I'll return in the future to
+visit them again.&lt;/p&gt;
+&lt;p&gt;All in all I had an amazing stay in Szeged!  While I'd loved to stay a few more
+days,  I was really looking forward to visit Timişoara in Romania!&lt;/p&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>RustFest and Visiting Hacklab Kyiv</title><link href="//rnestler.github.io/rustfest-and-visiting-hacklab-kyiv.html" rel="alternate"></link><published>2017-05-01T00:00:00+02:00</published><updated>2017-05-01T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-05-01:/rustfest-and-visiting-hacklab-kyiv.html</id><summary type="html">&lt;p class="first last"&gt;Attending RustFest and visiting the Hacklab Kyiv&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;I originally planed to fly to Kiev on Friday to visit &lt;a class="reference external" href="http://hacklab.kiev.ua/en/"&gt;Hacklab Kyiv&lt;/a&gt; and
 attend the &lt;a class="reference external" href="http://2017.rustfest.eu"&gt;RustFest&lt;/a&gt; workshops the next day.  But as &lt;a class="reference external" href="https://twitter.com/rnstlr/status/857902876588486658"&gt;you may heard about&lt;/a&gt;,
 I missed my flight due to my silliness.  So I was busy for most of Friday

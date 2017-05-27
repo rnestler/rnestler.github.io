@@ -1,5 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-05-14T00:00:00+02:00</updated><entry><title>Visiting Sarajevo</title><link href="//rnestler.github.io/visiting-sarajevo.html" rel="alternate"></link><published>2017-05-14T00:00:00+02:00</published><updated>2017-05-14T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-05-14:/visiting-sarajevo.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Sarajevo&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - rnestler</title><link href="//rnestler.github.io/" rel="alternate"></link><link href="//rnestler.github.io/feeds/rnestler.atom.xml" rel="self"></link><id>//rnestler.github.io/</id><updated>2017-05-17T00:00:00+02:00</updated><entry><title>Visiting hacklab01</title><link href="//rnestler.github.io/visiting-hacklab01.html" rel="alternate"></link><published>2017-05-17T00:00:00+02:00</published><updated>2017-05-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-05-17:/visiting-hacklab01.html</id><summary type="html">&lt;p class="first last"&gt;Visiting &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; in Zagreb&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;After an entertaining BlaBlaCar ride with a mixed group of 7 Croatians who did
+enjoy a weekend of river rafting, I arrived in Zagreb at around 22:00.  I
+agreed with Vedran from &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; to meet in front of the building.&lt;/p&gt;
+&lt;p&gt;During my email conversations with Vedran I kinda realized, that I'm not just
+visiting a hackerspace, but an alternative culture centre called Medika &lt;a class="footnote-reference" href="#id6" id="id1"&gt;[1]&lt;/a&gt;
+which is run by &lt;a class="reference external" href="http://attack.hr/"&gt;AKC Attack&lt;/a&gt;.  So upon arrival I was quite enchanted by the
+charm of the place.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_3.jpg"&gt;&lt;img alt="Entry hall in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_3.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Entry hall in Medika&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_entry.jpg"&gt;&lt;img alt="Entry to hacklab01" src="/images/tour_de_hackerspace/hacklab01/hacklab01_entry.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Entry to hacklab01&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Since Vedran was in the middle of a meeting, I just sat down and started to
+talk to a few members.  One girl brought some cookies made with cricket flour.
+Since we did a similar things with a few of the coredump members some months
+ago &lt;a class="footnote-reference" href="#id7" id="id2"&gt;[2]&lt;/a&gt;, this immediately sparked an interesting discussion about meat
+production, insect growing and that strangely no company shares &lt;em&gt;how&lt;/em&gt; to grow
+insects by yourself.  Also quite a few members were interested in Rust, so we
+decided that I will give a short introduction to Rust on Tuesday.&lt;/p&gt;
+&lt;p&gt;When Vedran had finished his meeting he gave me a quick show around.  The
+hackerspace itself consists of a single room, containing an electronics
+workspace, some tables for laptop work, couches and a bunch of other stuff.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_room.jpg"&gt;&lt;img alt="The hacklab01 room" src="/images/tour_de_hackerspace/hacklab01/hacklab01_room.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;The hacklab01 room&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;But since there are various other NGOs and artist in the same complex, there
+was plenty of stuff to see! &lt;a class="footnote-reference" href="#id8" id="id3"&gt;[3]&lt;/a&gt;&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg"&gt;&lt;img alt="Hallway in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Hallway in Medika&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The rooms for residents of Medika, including showers and toilets, are separated
+from the rest of the building.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_1.jpg"&gt;&lt;img alt="Door to the living part of Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_1.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Door to the living part of Medika&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Sadly I didn't take pictures of every room.  In the &amp;quot;headquarter&amp;quot; of the
+building I had the pleasure to meet Dina.  She took up the challenge to manage
+this quite chaotic space two weeks ago.  The government announced them a week
+ago, that they will need to move out &lt;a class="footnote-reference" href="#id9" id="id4"&gt;[4]&lt;/a&gt;.  Due to this the week was rather
+stressful for her and most of the people living or working in Medika.  On the
+bright side this also forced them to closely work together, which strengthened
+their the Medika community as a whole.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_2.jpg"&gt;&lt;img alt="&amp;quot;headquarters&amp;quot; of Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;&amp;quot;headquarters&amp;quot; of Medika&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;They told me that similar stuff happened before and that the situation as a
+whole is kind of strange.  On one hand the government supports some of the
+projects running in Medika financially, on the other hand there is a plan to
+build some kind of congress center in this area.&lt;/p&gt;
+&lt;p&gt;I agreed with Vedran to spend my night in the hacklab, so he handed me the keys
+&lt;a class="footnote-reference" href="#id10" id="id5"&gt;[5]&lt;/a&gt; and showed me where toilet, shower are located.  They even would have
+provided me with a sleeping bag, shampoo and everything else, since I forgot to
+tell them that I have all that stuff with me!  I found this level of
+hospitality quite amazing and welcoming!&lt;/p&gt;
+&lt;p&gt;The next day Vedran showed my around the old town of the city in the afternoon.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_city_6.jpg"&gt;&lt;img alt="The national theatre" src="/images/tour_de_hackerspace/hacklab01/hacklab01_city_6.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;The national theatre&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;When we got a coffee, we started to talk about the problems they have with the
+government.  He told me it is probably related to the elections which will be
+soon and the major just needs to get some attention.  He also told me that the
+major is charged with &lt;a class="reference external" href="http://www.croatiaweek.com/zagreb-mayor-arrested-for-corruption/"&gt;corruption&lt;/a&gt;.  I was kind of shocked, that a major can
+be charged because of corruption, but doesn't need to resign because of that.
+According to an &lt;a class="reference external" href="https://www.unodc.org/documents/data-and-analysis/statistics/corruption/Croatia_corruption_report_web_version.pdf"&gt;UN report&lt;/a&gt; corruption and bribery is very common in Croatia,
+so maybe the population just got used to it.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_city_2.jpg"&gt;&lt;img alt="View over the old town" src="/images/tour_de_hackerspace/hacklab01/hacklab01_city_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;View over the old town&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The rest of the afternoon I spent in the hackerspace itself, writing my blog
+posts, preparing for the Rust workshop and talking to the members which were
+present.  Later in the evening I went to get some beers with Vedran in a nice
+bar close to Medika.  I met quite an interesting guy there, who explained me
+the history of Croatia, its cultural inheritance and how lots of it got
+destroyed during the time of the Austrian Hungarian empire and the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Ottoman_wars_in_Europe"&gt;Ottoman
+wars&lt;/a&gt;.  We also talked about the difficult economic situation in Croatia
+including the recent &lt;a class="reference external" href="http://www.dw.com/en/croatias-agrokor-business-empire-too-big-to-fail/a-38757333"&gt;collapse of Agrokor&lt;/a&gt;, Croatias biggest business empire,
+which has the potential to bring the whole country down.&lt;/p&gt;
+&lt;p&gt;Tuesday May 16th.  This day marked the deadline which the government has given
+Medika to move out of the space.  But in the meantime they met with some of the
+government's representatives for this matter and got assured that the could
+stay.  Apparently the whole thing about them needing to move out was triggered
+because the building doesn't fit the fire safety requirements anymore, so the
+government would need to fix it.  But they try to find a way without them
+needing to move out completely and later move back in.&lt;/p&gt;
+&lt;p&gt;Also, probably because of all the media attention, a girl on Facebook
+independently organized a party in Medika to show support for the place.  So
+when I got up people where already preparing stuff for the party.&lt;/p&gt;
+&lt;p&gt;Since it was very nice weather I decided to take a look at the Botanics garden
+in Zagreb.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_botanic_garden_4.jpg"&gt;&lt;img alt="Botanics garden" src="/images/tour_de_hackerspace/hacklab01/hacklab01_botanic_garden_4.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Botanics garden&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;After that I wandered around the city and got some coffee (and somehow got
+member of a &lt;a class="reference external" href="https://www.facebook.com/pages/Booksa/101023279982162"&gt;book club&lt;/a&gt;).  This lead to me almost missing the introduction to
+Rust workshop I agreed to give in hacklab01!  So I rushed back to the space and
+shortly after had an awesome time helping people getting started with Rust.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_rust_intro.jpg"&gt;&lt;img alt="Introduction to Rust" src="/images/tour_de_hackerspace/hacklab01/hacklab01_rust_intro.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Introduction to Rust&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;After the workshop we joined the party&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_party.jpg"&gt;&lt;img alt="Party time!" src="/images/tour_de_hackerspace/hacklab01/hacklab01_party.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Party time!&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Vedran suggested that I also visit another hackerspace in Zagreb, namely
+RADIONA.  One member of them offered to pick up by car at Medika and drive us
+to the space.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_1.jpg"&gt;&lt;img alt="Electronic lab and 3D printers in RADIONA" src="/images/tour_de_hackerspace/radiona/radiona_1.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Electronic lab and 3D printers in RADIONA&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_2.jpg"&gt;&lt;img alt="Famous Nikola Tesla in RADIONA" src="/images/tour_de_hackerspace/radiona/radiona_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;Famous Nikola Tesla in RADIONA&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;It is a rather small space, even smaller than coredump, but the community is
+very alive.  One of the members built his own electric skateboard and we had
+lots of fun talking about the design of it and testing it.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 80%"&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_skate_board.mp4"&gt;&lt;img alt="DIY electric skateboard" src="/images/tour_de_hackerspace/radiona/radiona_skate_board_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;DIY electric skateboard&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;After our short visit, we returned back to Medika, enjoying the party for the
+rest of the evening.&lt;/p&gt;
+&lt;p&gt;The next day it was already time to leave. I met with Vedran to have some
+breakfast and we talked about the various projects they run.  Medika itself
+hosts many artists and arts projects, amongst others&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;A &lt;a class="reference external" href="http://attack.hr/foto-filmski-studio-medika/?lang=en"&gt;photo film studio&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A &lt;a class="reference external" href="http://attack.hr/galerija-siva/?lang=en"&gt;gallery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A &lt;a class="reference external" href="http://attack.hr/klub-attack/?lang=en"&gt;club&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A &lt;a class="reference external" href="http://attack.hr/faki-19/?lang=en"&gt;theatre group&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Vedran and Dina are especially involved in the glitch art community.  They
+organize a festival called &lt;a class="reference external" href="http://fubar.space/"&gt;fu:bar&lt;/a&gt; and developed a gallery management
+software called &lt;a class="reference external" href="http://pivilion.net/"&gt;pivilion&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The time I spent at hacklab01 / Medika was truly amazing!  I've seen so many
+things and met so many interesting people!  If you want to visit them as well
+you may apply for their &lt;a class="reference external" href="https://hacklab01.org/hackn3t"&gt;hackn3t&lt;/a&gt; program, a hackers residency program.  I
+basically means, they will try to cover for your travel costs if you visit them
+and present some project or idea or whatever.&lt;/p&gt;
+&lt;p&gt;But as much as I enjoyed my time in Zagreb, I was also looking forward to my
+next destination Ljubljana, Slovenia!&lt;/p&gt;
+&lt;table class="docutils footnote" frame="void" id="id6" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Medika is actually the name of a company which was located there some time ago&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id7" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;We ordered stuff from &lt;a class="reference external" href="https://insekten-shop.ch/"&gt;https://insekten-shop.ch/&lt;/a&gt; and tried out different recipies&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id8" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;You can get an overview of organisations / projects here: &lt;a class="reference external" href="http://attack.hr/projekti/?lang=en"&gt;http://attack.hr/projekti/?lang=en&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id9" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://attack.hr/medika-ostaje/?lang=en"&gt;http://attack.hr/medika-ostaje/?lang=en&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="id10" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;I was again impressed by the level of trust!&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting Sarajevo</title><link href="//rnestler.github.io/visiting-sarajevo.html" rel="alternate"></link><published>2017-05-14T00:00:00+02:00</published><updated>2017-05-14T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:rnestler.github.io,2017-05-14:/visiting-sarajevo.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Sarajevo&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;My BlaBlaCar ride &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt; to Sarajevo was a very pleasant experience.  My driver
 was really nice, we talked a lot, and he explained my the different places
 while we were passing by.  I loved the experience of entering Bosnia when

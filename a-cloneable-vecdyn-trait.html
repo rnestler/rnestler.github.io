@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>Run slock before going to sleep</title>
+        <title>A Cloneable Vec<dyn Trait></title>
         <link rel="stylesheet" href="//blog.rnstlr.ch/theme/css/main.css" />
         <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
 
@@ -15,60 +15,56 @@
         <header id="banner" class="body">
                 <h1><a href="//blog.rnstlr.ch/">rnestler.github.io </a></h1>
                 <nav><ul>
-                    <li class="active"><a href="//blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2013.html">2013</a></li>
                     <li><a href="//blog.rnstlr.ch/category/2015.html">2015</a></li>
                     <li><a href="//blog.rnstlr.ch/category/2016.html">2016</a></li>
                     <li><a href="//blog.rnstlr.ch/category/2017.html">2017</a></li>
-                    <li><a href="//blog.rnstlr.ch/category/2019.html">2019</a></li>
+                    <li class="active"><a href="//blog.rnstlr.ch/category/2019.html">2019</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="//blog.rnstlr.ch/run-slock-before-going-to-sleep.html" rel="bookmark"
-           title="Permalink to Run slock before going to sleep">Run slock before going to sleep</a></h1>
+        <a href="//blog.rnstlr.ch/a-cloneable-vecdyn-trait.html" rel="bookmark"
+           title="Permalink to A Cloneable Vec<dyn Trait>">A Cloneable <tt class="docutils literal">Vec&lt;dyn Trait&gt;</tt></a></h1>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2013-10-25T00:00:00+02:00">
-                Published: Fr 25 Oktober 2013
+        <abbr class="published" title="2019-02-25T00:00:00+01:00">
+                Published: Mo 25 Februar 2019
         </abbr>
 
         <address class="vcard author">
                 By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//blog.rnstlr.ch/category/2013.html">2013</a>.</p>
-<p>tags: <a href="//blog.rnstlr.ch/tag/systemd.html">systemd</a> <a href="//blog.rnstlr.ch/tag/slock.html">slock</a> <a href="//blog.rnstlr.ch/tag/suspend.html">suspend</a> </p>
-</footer><!-- /.post-info -->      <p>As noted in my previous post, I configured my system to run slock as soon as
-the system enters sleep state.  This is how its done.</p>
-<p>First we create a new systemd unit in /etc/systemd/system called
-suspend&#64;.service</p>
-<div class="highlight"><pre><span></span><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">User suspend actions</span>
-<span class="na">Before</span><span class="o">=</span><span class="s">sleep.target</span>
-
-<span class="k">[Service]</span>
-<span class="na">User</span><span class="o">=</span><span class="s">%I</span>
-<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-<span class="na">Environment</span><span class="o">=</span><span class="s">DISPLAY=:0</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/slock</span>
-
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">sleep.target</span>
+<p>In <a href="//blog.rnstlr.ch/category/2019.html">2019</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/programming.html">programming</a> <a href="//blog.rnstlr.ch/tag/rust.html">Rust</a> <a href="//blog.rnstlr.ch/tag/c.html">C++</a> </p>
+</footer><!-- /.post-info -->      <p>Recently I stumbled upon a problem where I tried to create a vector of Trait
+objects and wanted to clone them.  I was surprised that it was rather hard to
+achieve in Rust.</p>
+<div class="section" id="trait-objects">
+<h2>Trait Objects</h2>
+<p>Trait objects are Rusts way to achieve dynamic / runtime polymorphism.</p>
+</div>
+<div class="section" id="object-safety">
+<h2>Object Safety</h2>
+<p>Not every Trait can be made into a trait object. To be able to dynamically
+dispatch a trait it needs to</p>
+<div class="highlight"><pre><span></span><span class="p">...</span><span class="w"></span>
 </pre></div>
-<p>So what did we do? We created a unit that runs before sleep.target is reached.
-This unit will run as a configurable user by enabling <cite>suspend&#64;$USER.service</cite></p>
-<div class="highlight"><pre><span></span><span class="gp">#</span> systemctl <span class="nb">enable</span> suspend@<span class="nv">$USER</span>.service
-</pre></div>
-<p>So the /usr/bin/slock runs as $USER.  To be able to communicate with the
-X-Server we need to set the DISPLAY variable to :0.</p>
-<p>So now when your system is going to sleep systemd should start slock.</p>
-<p>Sadly this works only for a one user system since the username is hardcoded
-when enabling the unit file.  To make it work with multible users one would
-need to create a script which determines which user is running the X-Server
-then change to this user and lock the screen.</p>
+</div>
+<div class="section" id="the-problem">
+<h2>The Problem</h2>
+</div>
+<div class="section" id="a-solution-in-c">
+<h2>A Solution in C++</h2>
+</div>
+<div class="section" id="solutions-in-rust">
+<h2>Solutions in Rust</h2>
+<p>Have comments? Discuss on <a class="reference external" href="https://reddit.com/r/rust/xx">Reddit</a>.</p>
+</div>
 
     </div><!-- /.entry-content -->
 

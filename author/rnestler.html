@@ -3,8 +3,8 @@
 <head>
         <meta charset="utf-8" />
         <title>rnestler.github.io - rnestler</title>
-        <link rel="stylesheet" href="//rnestler.github.io/theme/css/main.css" />
-        <link href="//rnestler.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
+        <link rel="stylesheet" href="//blog.rnstlr.ch/theme/css/main.css" />
+        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
 
         <!--[if IE]>
             <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -13,212 +13,53 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="//rnestler.github.io/">rnestler.github.io </a></h1>
+                <h1><a href="//blog.rnstlr.ch/">rnestler.github.io </a></h1>
                 <nav><ul>
-                    <li><a href="//rnestler.github.io/category/2013.html">2013</a></li>
-                    <li><a href="//rnestler.github.io/category/2015.html">2015</a></li>
-                    <li><a href="//rnestler.github.io/category/2016.html">2016</a></li>
-                    <li><a href="//rnestler.github.io/category/2017.html">2017</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2019.html">2019</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="//rnestler.github.io/visiting-hacklab01.html">Visiting hacklab01</a></h1>
+                    <h1 class="entry-title"><a href="//blog.rnstlr.ch/a-cloneable-vecdyn-trait.html">A Cloneable <tt class="docutils literal">Vec&lt;dyn Trait&gt;</tt></a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2017-05-17T00:00:00+02:00">
-                Published: Mi 17 Mai 2017
+        <abbr class="published" title="2019-02-25T00:00:00+01:00">
+                Published: Mo 25 Februar 2019
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info --><p>After an entertaining BlaBlaCar ride with a mixed group of 7 Croatians who did
-enjoy a weekend of river rafting, I arrived in Zagreb at around 22:00.  I
-agreed with Vedran from <a class="reference external" href="https://hacklab01.org/">hacklab01</a> to meet in front of the building.</p>
-<p>During my email conversations with Vedran I kinda realized, that I'm not just
-visiting a hackerspace, but an alternative culture centre called Medika <a class="footnote-reference" href="#id6" id="id1">[1]</a>
-which is run by <a class="reference external" href="http://attack.hr/">AKC Attack</a>.  So upon arrival I was quite enchanted by the
-charm of the place.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_3.jpg"><img alt="Entry hall in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_3.jpg" style="width: 80%;" /></a>
-<p class="caption">Entry hall in Medika</p>
+<p>In <a href="//blog.rnstlr.ch/category/2019.html">2019</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/programming.html">programming</a> <a href="//blog.rnstlr.ch/tag/rust.html">Rust</a> <a href="//blog.rnstlr.ch/tag/c.html">C++</a> </p>
+</footer><!-- /.post-info --><p>Recently I stumbled upon a problem where I tried to create a vector of Trait
+objects and wanted to clone them.  I was surprised that it was rather hard to
+achieve in Rust.</p>
+<div class="section" id="trait-objects">
+<h2>Trait Objects</h2>
+<p>Trait objects are Rusts way to achieve dynamic / runtime polymorphism.</p>
 </div>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_entry.jpg"><img alt="Entry to hacklab01" src="/images/tour_de_hackerspace/hacklab01/hacklab01_entry.jpg" style="width: 80%;" /></a>
-<p class="caption">Entry to hacklab01</p>
+<div class="section" id="object-safety">
+<h2>Object Safety</h2>
+<p>Not every Trait can be made into a trait object. To be able to dynamically
+dispatch a trait it needs to</p>
+<div class="highlight"><pre><span></span><span class="p">...</span><span class="w"></span>
+</pre></div>
 </div>
-<p>Since Vedran was in the middle of a meeting, I just sat down and started to
-talk to a few members.  One girl brought some cookies made with cricket flour.
-Since we did a similar things with a few of the coredump members some months
-ago <a class="footnote-reference" href="#id7" id="id2">[2]</a>, this immediately sparked an interesting discussion about meat
-production, insect growing and that strangely no company shares <em>how</em> to grow
-insects by yourself.  Also quite a few members were interested in Rust, so we
-decided that I will give a short introduction to Rust on Tuesday.</p>
-<p>When Vedran had finished his meeting he gave me a quick show around.  The
-hackerspace itself consists of a single room, containing an electronics
-workspace, some tables for laptop work, couches and a bunch of other stuff.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_room.jpg"><img alt="The hacklab01 room" src="/images/tour_de_hackerspace/hacklab01/hacklab01_room.jpg" style="width: 80%;" /></a>
-<p class="caption">The hacklab01 room</p>
+<div class="section" id="the-problem">
+<h2>The Problem</h2>
 </div>
-<p>But since there are various other NGOs and artist in the same complex, there
-was plenty of stuff to see! <a class="footnote-reference" href="#id8" id="id3">[3]</a></p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg"><img alt="Hallway in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg" style="width: 80%;" /></a>
-<p class="caption">Hallway in Medika</p>
+<div class="section" id="a-solution-in-c">
+<h2>A Solution in C++</h2>
 </div>
-<p>The rooms for residents of Medika, including showers and toilets, are separated
-from the rest of the building.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_1.jpg"><img alt="Door to the living part of Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_1.jpg" style="width: 80%;" /></a>
-<p class="caption">Door to the living part of Medika</p>
+<div class="section" id="solutions-in-rust">
+<h2>Solutions in Rust</h2>
+<p>Have comments? Discuss on <a class="reference external" href="https://reddit.com/r/rust/xx">Reddit</a>.</p>
 </div>
-<p>Sadly I didn't take pictures of every room.  In the &quot;headquarter&quot; of the
-building I had the pleasure to meet Dina.  She took up the challenge to manage
-this quite chaotic space two weeks ago.  The government announced them a week
-ago, that they will need to move out <a class="footnote-reference" href="#id9" id="id4">[4]</a>.  Due to this the week was rather
-stressful for her and most of the people living or working in Medika.  On the
-bright side this also forced them to closely work together, which strengthened
-their the Medika community as a whole.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_2.jpg"><img alt="&quot;headquarters&quot; of Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_2.jpg" style="width: 80%;" /></a>
-<p class="caption">&quot;headquarters&quot; of Medika</p>
-</div>
-<p>They told me that similar stuff happened before and that the situation as a
-whole is kind of strange.  On one hand the government supports some of the
-projects running in Medika financially, on the other hand there is a plan to
-build some kind of congress center in this area.</p>
-<p>I agreed with Vedran to spend my night in the hacklab, so he handed me the keys
-<a class="footnote-reference" href="#id10" id="id5">[5]</a> and showed me where toilet, shower are located.  They even would have
-provided me with a sleeping bag, shampoo and everything else, since I forgot to
-tell them that I have all that stuff with me!  I found this level of
-hospitality quite amazing and welcoming!</p>
-<p>The next day Vedran showed my around the old town of the city in the afternoon.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_city_6.jpg"><img alt="The national theatre" src="/images/tour_de_hackerspace/hacklab01/hacklab01_city_6.jpg" style="width: 80%;" /></a>
-<p class="caption">The national theatre</p>
-</div>
-<p>When we got a coffee, we started to talk about the problems they have with the
-government.  He told me it is probably related to the elections which will be
-soon and the major just needs to get some attention.  He also told me that the
-major is charged with <a class="reference external" href="http://www.croatiaweek.com/zagreb-mayor-arrested-for-corruption/">corruption</a>.  I was kind of shocked, that a major can
-be charged because of corruption, but doesn't need to resign because of that.
-According to an <a class="reference external" href="https://www.unodc.org/documents/data-and-analysis/statistics/corruption/Croatia_corruption_report_web_version.pdf">UN report</a> corruption and bribery is very common in Croatia,
-so maybe the population just got used to it.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_city_2.jpg"><img alt="View over the old town" src="/images/tour_de_hackerspace/hacklab01/hacklab01_city_2.jpg" style="width: 80%;" /></a>
-<p class="caption">View over the old town</p>
-</div>
-<p>The rest of the afternoon I spent in the hackerspace itself, writing my blog
-posts, preparing for the Rust workshop and talking to the members which were
-present.  Later in the evening I went to get some beers with Vedran in a nice
-bar close to Medika.  I met quite an interesting guy there, who explained me
-the history of Croatia, its cultural inheritance and how lots of it got
-destroyed during the time of the Austrian Hungarian empire and the <a class="reference external" href="https://en.wikipedia.org/wiki/Ottoman_wars_in_Europe">Ottoman
-wars</a>.  We also talked about the difficult economic situation in Croatia
-including the recent <a class="reference external" href="http://www.dw.com/en/croatias-agrokor-business-empire-too-big-to-fail/a-38757333">collapse of Agrokor</a>, Croatias biggest business empire,
-which has the potential to bring the whole country down.</p>
-<p>Tuesday May 16th.  This day marked the deadline which the government has given
-Medika to move out of the space.  But in the meantime they met with some of the
-government's representatives for this matter and got assured that the could
-stay.  Apparently the whole thing about them needing to move out was triggered
-because the building doesn't fit the fire safety requirements anymore, so the
-government would need to fix it.  But they try to find a way without them
-needing to move out completely and later move back in.</p>
-<p>Also, probably because of all the media attention, a girl on Facebook
-independently organized a party in Medika to show support for the place.  So
-when I got up people where already preparing stuff for the party.</p>
-<p>Since it was very nice weather I decided to take a look at the Botanics garden
-in Zagreb.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_botanic_garden_4.jpg"><img alt="Botanics garden" src="/images/tour_de_hackerspace/hacklab01/hacklab01_botanic_garden_4.jpg" style="width: 80%;" /></a>
-<p class="caption">Botanics garden</p>
-</div>
-<p>After that I wandered around the city and got some coffee (and somehow got
-member of a <a class="reference external" href="https://www.facebook.com/pages/Booksa/101023279982162">book club</a>).  This lead to me almost missing the introduction to
-Rust workshop I agreed to give in hacklab01!  So I rushed back to the space and
-shortly after had an awesome time helping people getting started with Rust.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_rust_intro.jpg"><img alt="Introduction to Rust" src="/images/tour_de_hackerspace/hacklab01/hacklab01_rust_intro.jpg" style="width: 80%;" /></a>
-<p class="caption">Introduction to Rust</p>
-</div>
-<p>After the workshop we joined the party</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_party.jpg"><img alt="Party time!" src="/images/tour_de_hackerspace/hacklab01/hacklab01_party.jpg" style="width: 80%;" /></a>
-<p class="caption">Party time!</p>
-</div>
-<p>Vedran suggested that I also visit another hackerspace in Zagreb, namely
-RADIONA.  One member of them offered to pick up by car at Medika and drive us
-to the space.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_1.jpg"><img alt="Electronic lab and 3D printers in RADIONA" src="/images/tour_de_hackerspace/radiona/radiona_1.jpg" style="width: 80%;" /></a>
-<p class="caption">Electronic lab and 3D printers in RADIONA</p>
-</div>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_2.jpg"><img alt="Famous Nikola Tesla in RADIONA" src="/images/tour_de_hackerspace/radiona/radiona_2.jpg" style="width: 80%;" /></a>
-<p class="caption">Famous Nikola Tesla in RADIONA</p>
-</div>
-<p>It is a rather small space, even smaller than coredump, but the community is
-very alive.  One of the members built his own electric skateboard and we had
-lots of fun talking about the design of it and testing it.</p>
-<div class="figure align-center" style="width: 80%">
-<a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_skate_board.mp4"><img alt="DIY electric skateboard" src="/images/tour_de_hackerspace/radiona/radiona_skate_board_2.jpg" style="width: 80%;" /></a>
-<p class="caption">DIY electric skateboard</p>
-</div>
-<p>After our short visit, we returned back to Medika, enjoying the party for the
-rest of the evening.</p>
-<p>The next day it was already time to leave. I met with Vedran to have some
-breakfast and we talked about the various projects they run.  Medika itself
-hosts many artists and arts projects, amongst others</p>
-<ul class="simple">
-<li>A <a class="reference external" href="http://attack.hr/foto-filmski-studio-medika/?lang=en">photo film studio</a></li>
-<li>A <a class="reference external" href="http://attack.hr/galerija-siva/?lang=en">gallery</a></li>
-<li>A <a class="reference external" href="http://attack.hr/klub-attack/?lang=en">club</a></li>
-<li>A <a class="reference external" href="http://attack.hr/faki-19/?lang=en">theatre group</a></li>
-</ul>
-<p>Vedran and Dina are especially involved in the glitch art community.  They
-organize a festival called <a class="reference external" href="http://fubar.space/">fu:bar</a> and developed a gallery management
-software called <a class="reference external" href="http://pivilion.net/">pivilion</a>.</p>
-<p>The time I spent at hacklab01 / Medika was truly amazing!  I've seen so many
-things and met so many interesting people!  If you want to visit them as well
-you may apply for their <a class="reference external" href="https://hacklab01.org/hackn3t">hackn3t</a> program, a hackers residency program.  I
-basically means, they will try to cover for your travel costs if you visit them
-and present some project or idea or whatever.</p>
-<p>But as much as I enjoyed my time in Zagreb, I was also looking forward to my
-next destination Ljubljana, Slovenia!</p>
-<table class="docutils footnote" frame="void" id="id6" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Medika is actually the name of a company which was located there some time ago</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id7" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>We ordered stuff from <a class="reference external" href="https://insekten-shop.ch/">https://insekten-shop.ch/</a> and tried out different recipies</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>You can get an overview of organisations / projects here: <a class="reference external" href="http://attack.hr/projekti/?lang=en">http://attack.hr/projekti/?lang=en</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id9" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="http://attack.hr/medika-ostaje/?lang=en">http://attack.hr/medika-ostaje/?lang=en</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="id10" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>I was again impressed by the level of trust!</td></tr>
-</tbody>
-</table>
                 </article>
             </aside><!-- /#featured -->
                 <section id="content" class="body">
@@ -228,7 +69,30 @@ next destination Ljubljana, Slovenia!</p>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="//rnestler.github.io/visiting-sarajevo.html" rel="bookmark"
+                    <h1><a href="//blog.rnstlr.ch/visiting-hacklab01.html" rel="bookmark"
+                           title="Permalink to Visiting hacklab01">Visiting hacklab01</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2017-05-17T00:00:00+02:00">
+                Published: Mi 17 Mai 2017
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
+</footer><!-- /.post-info -->                <p class="first last">Visiting <a class="reference external" href="https://hacklab01.org/">hacklab01</a> in Zagreb</p>
+
+                <a class="readmore" href="//blog.rnstlr.ch/visiting-hacklab01.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="//blog.rnstlr.ch/visiting-sarajevo.html" rel="bookmark"
                            title="Permalink to Visiting Sarajevo">Visiting Sarajevo</a></h1>
                 </header>
 
@@ -239,19 +103,19 @@ next destination Ljubljana, Slovenia!</p>
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting Sarajevo</p>
 
-                <a class="readmore" href="//rnestler.github.io/visiting-sarajevo.html">read more</a>
+                <a class="readmore" href="//blog.rnstlr.ch/visiting-sarajevo.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="//rnestler.github.io/visiting-hacklab-belgrade.html" rel="bookmark"
+                    <h1><a href="//blog.rnstlr.ch/visiting-hacklab-belgrade.html" rel="bookmark"
                            title="Permalink to Visiting Hacklab Belgrade">Visiting Hacklab Belgrade</a></h1>
                 </header>
 
@@ -262,19 +126,19 @@ next destination Ljubljana, Slovenia!</p>
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting the <a class="reference external" href="http://oosm.org/">Hacklab Belgrade</a>.</p>
 
-                <a class="readmore" href="//rnestler.github.io/visiting-hacklab-belgrade.html">read more</a>
+                <a class="readmore" href="//blog.rnstlr.ch/visiting-hacklab-belgrade.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="//rnestler.github.io/visiting-plan-zero.html" rel="bookmark"
+                    <h1><a href="//blog.rnstlr.ch/visiting-plan-zero.html" rel="bookmark"
                            title="Permalink to Visiting Plan Zero">Visiting Plan Zero</a></h1>
                 </header>
 
@@ -285,19 +149,19 @@ next destination Ljubljana, Slovenia!</p>
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting the <a class="reference external" href="http://planzero.ro">Plan Zero</a> hackerspace</p>
 
-                <a class="readmore" href="//rnestler.github.io/visiting-plan-zero.html">read more</a>
+                <a class="readmore" href="//blog.rnstlr.ch/visiting-plan-zero.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="//rnestler.github.io/visiting-hackerspace-szeged.html" rel="bookmark"
+                    <h1><a href="//blog.rnstlr.ch/visiting-hackerspace-szeged.html" rel="bookmark"
                            title="Permalink to Visiting Hackerspace Szeged">Visiting Hackerspace Szeged</a></h1>
                 </header>
 
@@ -308,19 +172,19 @@ next destination Ljubljana, Slovenia!</p>
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting the Hackerspace Szeged</p>
 
-                <a class="readmore" href="//rnestler.github.io/visiting-hackerspace-szeged.html">read more</a>
+                <a class="readmore" href="//blog.rnstlr.ch/visiting-hackerspace-szeged.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="//rnestler.github.io/rustfest-and-visiting-hacklab-kyiv.html" rel="bookmark"
+                    <h1><a href="//blog.rnstlr.ch/rustfest-and-visiting-hacklab-kyiv.html" rel="bookmark"
                            title="Permalink to RustFest and Visiting Hacklab Kyiv">RustFest and Visiting Hacklab Kyiv</a></h1>
                 </header>
 
@@ -331,19 +195,19 @@ next destination Ljubljana, Slovenia!</p>
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> <a href="//rnestler.github.io/tag/blockchain.html">blockchain</a> </p>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> <a href="//blog.rnstlr.ch/tag/blockchain.html">blockchain</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Attending RustFest and visiting the Hacklab Kyiv</p>
 
-                <a class="readmore" href="//rnestler.github.io/rustfest-and-visiting-hacklab-kyiv.html">read more</a>
+                <a class="readmore" href="//blog.rnstlr.ch/rustfest-and-visiting-hacklab-kyiv.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="//rnestler.github.io/visiting-hackerspace-budapest.html" rel="bookmark"
+                    <h1><a href="//blog.rnstlr.ch/visiting-hackerspace-budapest.html" rel="bookmark"
                            title="Permalink to Visiting Hackerspace Budapest">Visiting Hackerspace Budapest</a></h1>
                 </header>
 
@@ -354,19 +218,19 @@ next destination Ljubljana, Slovenia!</p>
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting the Hackerspace Budapest</p>
 
-                <a class="readmore" href="//rnestler.github.io/visiting-hackerspace-budapest.html">read more</a>
+                <a class="readmore" href="//blog.rnstlr.ch/visiting-hackerspace-budapest.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="//rnestler.github.io/visiting-progressbar-and-metalab.html" rel="bookmark"
+                    <h1><a href="//blog.rnstlr.ch/visiting-progressbar-and-metalab.html" rel="bookmark"
                            title="Permalink to Visiting Progressbar and Metalab">Visiting Progressbar and Metalab</a></h1>
                 </header>
 
@@ -377,19 +241,19 @@ next destination Ljubljana, Slovenia!</p>
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting Progressbar</p>
 
-                <a class="readmore" href="//rnestler.github.io/visiting-progressbar-and-metalab.html">read more</a>
+                <a class="readmore" href="//blog.rnstlr.ch/visiting-progressbar-and-metalab.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
 
             <li><article class="hentry">
                 <header>
-                    <h1><a href="//rnestler.github.io/visiting-brmlab.html" rel="bookmark"
+                    <h1><a href="//blog.rnstlr.ch/visiting-brmlab.html" rel="bookmark"
                            title="Permalink to Visiting brmlab">Visiting brmlab</a></h1>
                 </header>
 
@@ -400,42 +264,19 @@ next destination Ljubljana, Slovenia!</p>
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
+<p>In <a href="//blog.rnstlr.ch/category/2017.html">2017</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="//blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting brmlab</p>
 
-                <a class="readmore" href="//rnestler.github.io/visiting-brmlab.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="//rnestler.github.io/visiting-hackerspace-krakow.html" rel="bookmark"
-                           title="Permalink to Visiting Hackerspace Kraków">Visiting Hackerspace Kraków</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-04-19T00:00:00+02:00">
-                Published: Mi 19 April 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="//rnestler.github.io/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="//rnestler.github.io/category/2017.html">2017</a>.</p>
-<p>tags: <a href="//rnestler.github.io/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="//rnestler.github.io/tag/hackerspace.html">hackerspace</a> <a href="//rnestler.github.io/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting Hackerspace Kraków</p>
-
-                <a class="readmore" href="//rnestler.github.io/visiting-hackerspace-krakow.html">read more</a>
+                <a class="readmore" href="//blog.rnstlr.ch/visiting-brmlab.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
     Page 1 / 3
-        <a href="//rnestler.github.io/author/rnestler2.html">&raquo;</a>
+        <a href="//blog.rnstlr.ch/author/rnestler2.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->
         <section id="extras" class="body">
@@ -451,7 +292,7 @@ next destination Ljubljana, Slovenia!</p>
                 <div class="social">
                         <h2>social</h2>
                         <ul>
-                            <li><a href="//rnestler.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+                            <li><a href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
                             <li><a href="https://twitter.com/rnstlr">twitter</a></li>
                             <li><a href="https://github.com/rnestler">github</a></li>

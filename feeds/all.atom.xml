@@ -1,30 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//blog.rnstlr.ch/" rel="alternate"></link><link href="//blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>//blog.rnstlr.ch/</id><updated>2019-02-25T00:00:00+01:00</updated><entry><title>A Cloneable Vec&lt;dyn Trait&gt;</title><link href="//blog.rnstlr.ch/a-cloneable-vecdyn-trait.html" rel="alternate"></link><published>2019-02-25T00:00:00+01:00</published><updated>2019-02-25T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2019-02-25:/a-cloneable-vecdyn-trait.html</id><summary type="html">&lt;p class="first last"&gt;How to create a cloneable Vec of trait objects in Rust&lt;/p&gt;
-</summary><content type="html">&lt;p&gt;Recently I stumbled upon a problem where I tried to create a vector of Trait
-objects and wanted to clone them.  I was surprised that it was rather hard to
-achieve in Rust.&lt;/p&gt;
-&lt;div class="section" id="trait-objects"&gt;
-&lt;h2&gt;Trait Objects&lt;/h2&gt;
-&lt;p&gt;Trait objects are Rusts way to achieve dynamic / runtime polymorphism.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="section" id="object-safety"&gt;
-&lt;h2&gt;Object Safety&lt;/h2&gt;
-&lt;p&gt;Not every Trait can be made into a trait object. To be able to dynamically
-dispatch a trait it needs to&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="section" id="the-problem"&gt;
-&lt;h2&gt;The Problem&lt;/h2&gt;
-&lt;/div&gt;
-&lt;div class="section" id="a-solution-in-c"&gt;
-&lt;h2&gt;A Solution in C++&lt;/h2&gt;
-&lt;/div&gt;
-&lt;div class="section" id="solutions-in-rust"&gt;
-&lt;h2&gt;Solutions in Rust&lt;/h2&gt;
-&lt;p&gt;Have comments? Discuss on &lt;a class="reference external" href="https://reddit.com/r/rust/xx"&gt;Reddit&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-</content><category term="programming"></category><category term="Rust"></category><category term="C++"></category></entry><entry><title>Visiting hacklab01</title><link href="//blog.rnstlr.ch/visiting-hacklab01.html" rel="alternate"></link><published>2017-05-17T00:00:00+02:00</published><updated>2017-05-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-05-17:/visiting-hacklab01.html</id><summary type="html">&lt;p class="first last"&gt;Visiting &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; in Zagreb&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io</title><link href="//blog.rnstlr.ch/" rel="alternate"></link><link href="//blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>//blog.rnstlr.ch/</id><updated>2017-05-17T00:00:00+02:00</updated><entry><title>Visiting hacklab01</title><link href="//blog.rnstlr.ch/visiting-hacklab01.html" rel="alternate"></link><published>2017-05-17T00:00:00+02:00</published><updated>2017-05-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-05-17:/visiting-hacklab01.html</id><summary type="html">&lt;p class="first last"&gt;Visiting &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; in Zagreb&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;After an entertaining BlaBlaCar ride with a mixed group of 7 Croatians who did
 enjoy a weekend of river rafting, I arrived in Zagreb at around 22:00.  I
 agreed with Vedran from &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; to meet in front of the building.&lt;/p&gt;

@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <title>Run slock before going to sleep</title>
         <link rel="stylesheet" href="//blog.rnstlr.ch/theme/css/main.css" />
-        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
+        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
 
         <!--[if IE]>
             <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -13,7 +13,7 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="//blog.rnstlr.ch/">rnestler.github.io </a></h1>
+                <h1><a href="//blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
                 <nav><ul>
                     <li class="active"><a href="//blog.rnstlr.ch/category/2013.html">2013</a></li>
                     <li><a href="//blog.rnstlr.ch/category/2015.html">2015</a></li>
@@ -44,22 +44,22 @@
 the system enters sleep state.  This is how its done.</p>
 <p>First we create a new systemd unit in /etc/systemd/system called
 suspend&#64;.service</p>
-<div class="highlight"><pre><span></span><span class="k">[Unit]</span>
-<span class="na">Description</span><span class="o">=</span><span class="s">User suspend actions</span>
-<span class="na">Before</span><span class="o">=</span><span class="s">sleep.target</span>
+<div class="highlight"><pre><span></span><span class="k">[Unit]</span><span class="w"></span>
+<span class="na">Description</span><span class="o">=</span><span class="s">User suspend actions</span><span class="w"></span>
+<span class="na">Before</span><span class="o">=</span><span class="s">sleep.target</span><span class="w"></span>
 
-<span class="k">[Service]</span>
-<span class="na">User</span><span class="o">=</span><span class="s">%I</span>
-<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
-<span class="na">Environment</span><span class="o">=</span><span class="s">DISPLAY=:0</span>
-<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/slock</span>
+<span class="k">[Service]</span><span class="w"></span>
+<span class="na">User</span><span class="o">=</span><span class="s">%I</span><span class="w"></span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span><span class="w"></span>
+<span class="na">Environment</span><span class="o">=</span><span class="s">DISPLAY=:0</span><span class="w"></span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/slock</span><span class="w"></span>
 
-<span class="k">[Install]</span>
-<span class="na">WantedBy</span><span class="o">=</span><span class="s">sleep.target</span>
+<span class="k">[Install]</span><span class="w"></span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">sleep.target</span><span class="w"></span>
 </pre></div>
 <p>So what did we do? We created a unit that runs before sleep.target is reached.
 This unit will run as a configurable user by enabling <cite>suspend&#64;$USER.service</cite></p>
-<div class="highlight"><pre><span></span><span class="gp">#</span> systemctl <span class="nb">enable</span> suspend@<span class="nv">$USER</span>.service
+<div class="highlight"><pre><span></span><span class="gp"># </span>systemctl <span class="nb">enable</span> suspend@<span class="nv">$USER</span>.service
 </pre></div>
 <p>So the /usr/bin/slock runs as $USER.  To be able to communicate with the
 X-Server we need to set the DISPLAY variable to :0.</p>

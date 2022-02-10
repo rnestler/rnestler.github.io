@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <title>Learning Rust</title>
         <link rel="stylesheet" href="//blog.rnstlr.ch/theme/css/main.css" />
-        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
+        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
 
         <!--[if IE]>
             <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -13,7 +13,7 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="//blog.rnstlr.ch/">rnestler.github.io </a></h1>
+                <h1><a href="//blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
                 <nav><ul>
                     <li><a href="//blog.rnstlr.ch/category/2013.html">2013</a></li>
                     <li class="active"><a href="//blog.rnstlr.ch/category/2015.html">2015</a></li>
@@ -55,7 +55,7 @@ latest and greatest version you could also try <a class="reference external" hre
 <h2>Hello World!</h2>
 <p>Here comes the obligatory &quot;Hello World!&quot; code in Rust</p>
 <div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
@@ -66,7 +66,7 @@ really liked that by default all variable bindings are immutable.</p>
 <div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="n">x</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>The example above will give you a compile error:</p>
@@ -82,7 +82,7 @@ error: aborting due to previous error
 <div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="n">x</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>So the code will print &quot;2&quot;</p>

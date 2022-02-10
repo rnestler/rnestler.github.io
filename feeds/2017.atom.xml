@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>rnestler.github.io - 2017</title><link href="//blog.rnstlr.ch/" rel="alternate"></link><link href="//blog.rnstlr.ch/feeds/2017.atom.xml" rel="self"></link><id>//blog.rnstlr.ch/</id><updated>2017-05-17T00:00:00+02:00</updated><entry><title>Visiting hacklab01</title><link href="//blog.rnstlr.ch/visiting-hacklab01.html" rel="alternate"></link><published>2017-05-17T00:00:00+02:00</published><updated>2017-05-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-05-17:/visiting-hacklab01.html</id><summary type="html">&lt;p class="first last"&gt;Visiting &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; in Zagreb&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2017</title><link href="//blog.rnstlr.ch/" rel="alternate"></link><link href="//blog.rnstlr.ch/feeds/2017.atom.xml" rel="self"></link><id>//blog.rnstlr.ch/</id><updated>2017-05-17T00:00:00+02:00</updated><entry><title>Visiting hacklab01</title><link href="//blog.rnstlr.ch/visiting-hacklab01.html" rel="alternate"></link><published>2017-05-17T00:00:00+02:00</published><updated>2017-05-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-05-17:/visiting-hacklab01.html</id><summary type="html">&lt;p class="first last"&gt;Visiting &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; in Zagreb&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;After an entertaining BlaBlaCar ride with a mixed group of 7 Croatians who did
 enjoy a weekend of river rafting, I arrived in Zagreb at around 22:00.  I
 agreed with Vedran from &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; to meet in front of the building.&lt;/p&gt;
 &lt;p&gt;During my email conversations with Vedran I kinda realized, that I'm not just
-visiting a hackerspace, but an alternative culture centre called Medika &lt;a class="footnote-reference" href="#id6" id="id1"&gt;[1]&lt;/a&gt;
+visiting a hackerspace, but an alternative culture centre called Medika &lt;a class="footnote-reference" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt;
 which is run by &lt;a class="reference external" href="http://attack.hr/"&gt;AKC Attack&lt;/a&gt;.  So upon arrival I was quite enchanted by the
 charm of the place.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
@@ -18,7 +18,7 @@ charm of the place.&lt;/p&gt;
 &lt;p&gt;Since Vedran was in the middle of a meeting, I just sat down and started to
 talk to a few members.  One girl brought some cookies made with cricket flour.
 Since we did a similar things with a few of the coredump members some months
-ago &lt;a class="footnote-reference" href="#id7" id="id2"&gt;[2]&lt;/a&gt;, this immediately sparked an interesting discussion about meat
+ago &lt;a class="footnote-reference" href="#footnote-2" id="footnote-reference-2"&gt;[2]&lt;/a&gt;, this immediately sparked an interesting discussion about meat
 production, insect growing and that strangely no company shares &lt;em&gt;how&lt;/em&gt; to grow
 insects by yourself.  Also quite a few members were interested in Rust, so we
 decided that I will give a short introduction to Rust on Tuesday.&lt;/p&gt;
@@ -30,7 +30,7 @@ workspace, some tables for laptop work, couches and a bunch of other stuff.&lt;/
 &lt;p class="caption"&gt;The hacklab01 room&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;But since there are various other NGOs and artist in the same complex, there
-was plenty of stuff to see! &lt;a class="footnote-reference" href="#id8" id="id3"&gt;[3]&lt;/a&gt;&lt;/p&gt;
+was plenty of stuff to see! &lt;a class="footnote-reference" href="#footnote-3" id="footnote-reference-3"&gt;[3]&lt;/a&gt;&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
 &lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg"&gt;&lt;img alt="Hallway in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
 &lt;p class="caption"&gt;Hallway in Medika&lt;/p&gt;
@@ -44,7 +44,7 @@ from the rest of the building.&lt;/p&gt;
 &lt;p&gt;Sadly I didn't take pictures of every room.  In the &amp;quot;headquarter&amp;quot; of the
 building I had the pleasure to meet Dina.  She took up the challenge to manage
 this quite chaotic space two weeks ago.  The government announced them a week
-ago, that they will need to move out &lt;a class="footnote-reference" href="#id9" id="id4"&gt;[4]&lt;/a&gt;.  Due to this the week was rather
+ago, that they will need to move out &lt;a class="footnote-reference" href="#footnote-4" id="footnote-reference-4"&gt;[4]&lt;/a&gt;.  Due to this the week was rather
 stressful for her and most of the people living or working in Medika.  On the
 bright side this also forced them to closely work together, which strengthened
 their the Medika community as a whole.&lt;/p&gt;
@@ -57,7 +57,7 @@ whole is kind of strange.  On one hand the government supports some of the
 projects running in Medika financially, on the other hand there is a plan to
 build some kind of congress center in this area.&lt;/p&gt;
 &lt;p&gt;I agreed with Vedran to spend my night in the hacklab, so he handed me the keys
-&lt;a class="footnote-reference" href="#id10" id="id5"&gt;[5]&lt;/a&gt; and showed me where toilet, shower are located.  They even would have
+&lt;a class="footnote-reference" href="#footnote-5" id="footnote-reference-5"&gt;[5]&lt;/a&gt; and showed me where toilet, shower are located.  They even would have
 provided me with a sleeping bag, shampoo and everything else, since I forgot to
 tell them that I have all that stuff with me!  I found this level of
 hospitality quite amazing and welcoming!&lt;/p&gt;
@@ -154,38 +154,38 @@ basically means, they will try to cover for your travel costs if you visit them
 and present some project or idea or whatever.&lt;/p&gt;
 &lt;p&gt;But as much as I enjoyed my time in Zagreb, I was also looking forward to my
 next destination Ljubljana, Slovenia!&lt;/p&gt;
-&lt;table class="docutils footnote" frame="void" id="id6" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-1" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Medika is actually the name of a company which was located there some time ago&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Medika is actually the name of a company which was located there some time ago&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;table class="docutils footnote" frame="void" id="id7" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-2" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;We ordered stuff from &lt;a class="reference external" href="https://insekten-shop.ch/"&gt;https://insekten-shop.ch/&lt;/a&gt; and tried out different recipies&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;We ordered stuff from &lt;a class="reference external" href="https://insekten-shop.ch/"&gt;https://insekten-shop.ch/&lt;/a&gt; and tried out different recipies&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;table class="docutils footnote" frame="void" id="id8" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-3" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;You can get an overview of organisations / projects here: &lt;a class="reference external" href="http://attack.hr/projekti/?lang=en"&gt;http://attack.hr/projekti/?lang=en&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;You can get an overview of organisations / projects here: &lt;a class="reference external" href="http://attack.hr/projekti/?lang=en"&gt;http://attack.hr/projekti/?lang=en&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;table class="docutils footnote" frame="void" id="id9" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-4" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://attack.hr/medika-ostaje/?lang=en"&gt;http://attack.hr/medika-ostaje/?lang=en&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-4"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;a class="reference external" href="http://attack.hr/medika-ostaje/?lang=en"&gt;http://attack.hr/medika-ostaje/?lang=en&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;table class="docutils footnote" frame="void" id="id10" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-5" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;I was again impressed by the level of trust!&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;I was again impressed by the level of trust!&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 </content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting Sarajevo</title><link href="//blog.rnstlr.ch/visiting-sarajevo.html" rel="alternate"></link><published>2017-05-14T00:00:00+02:00</published><updated>2017-05-14T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-05-14:/visiting-sarajevo.html</id><summary type="html">&lt;p class="first last"&gt;Visiting Sarajevo&lt;/p&gt;
-</summary><content type="html">&lt;p&gt;My BlaBlaCar ride &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt; to Sarajevo was a very pleasant experience.  My driver
+</summary><content type="html">&lt;p&gt;My BlaBlaCar ride &lt;a class="footnote-reference" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt; to Sarajevo was a very pleasant experience.  My driver
 was really nice, we talked a lot, and he explained my the different places
 while we were passing by.  I loved the experience of entering Bosnia when
 suddenly the whole landscape looks different, with lots of hills and forests.&lt;/p&gt;
@@ -293,10 +293,10 @@ down.&lt;/p&gt;
 &lt;p&gt;I really loved my stay in Sarajevo.  czesiek is an awesome host and I can
 highly recommend to stay with him if you are in Sarajevo ;)&lt;/p&gt;
 &lt;p&gt;However, next stop: Zagreb, Croatia!&lt;/p&gt;
-&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-1" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;This was my first BlaBlaCar ride. I can really recommend to travel with it!&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;This was my first BlaBlaCar ride. I can really recommend to travel with it!&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 </content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting Hacklab Belgrade</title><link href="//blog.rnstlr.ch/visiting-hacklab-belgrade.html" rel="alternate"></link><published>2017-05-10T00:00:00+02:00</published><updated>2017-05-10T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-05-10:/visiting-hacklab-belgrade.html</id><summary type="html">&lt;p class="first last"&gt;Visiting the &lt;a class="reference external" href="http://oosm.org/"&gt;Hacklab Belgrade&lt;/a&gt;.&lt;/p&gt;
@@ -486,7 +486,7 @@ days,  I was really looking forward to visit Timişoara in Romania!&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;I originally planed to fly to Kiev on Friday to visit &lt;a class="reference external" href="http://hacklab.kiev.ua/en/"&gt;Hacklab Kyiv&lt;/a&gt; and
 attend the &lt;a class="reference external" href="http://2017.rustfest.eu"&gt;RustFest&lt;/a&gt; workshops the next day.  But as &lt;a class="reference external" href="https://twitter.com/rnstlr/status/857902876588486658"&gt;you may heard about&lt;/a&gt;,
 I missed my flight due to my silliness.  So I was busy for most of Friday
-riding trains, trying to learn a bit of Ukrainian &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt;, discuss the validity of
+riding trains, trying to learn a bit of Ukrainian &lt;a class="footnote-reference" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt;, discuss the validity of
 my ticket with the train crew, buying additional tickets and so on.&lt;/p&gt;
 &lt;p&gt;The train ride was quite an adventure and I even got to ride the famous
 &amp;quot;platzkart&amp;quot; class night train.&lt;/p&gt;
@@ -677,10 +677,10 @@ me on Twitter ;)&lt;/p&gt;
 &lt;p&gt;I definitely enjoyed my stay in Kiev and my visit to Hacklab Kyiv.  I'd loved
 to stay a few more days, but my travel continued back to Budapest and then
 further on to Szeged.&lt;/p&gt;
-&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-1" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;It always amazes me how much communication is possible with just &lt;a class="reference external" href="http://www.omniglot.com/language/phrases/ukrainian.php"&gt;some sentences&lt;/a&gt;, lots of smiling, gestures and some pictures from a mobile phone.&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;It always amazes me how much communication is possible with just &lt;a class="reference external" href="http://www.omniglot.com/language/phrases/ukrainian.php"&gt;some sentences&lt;/a&gt;, lots of smiling, gestures and some pictures from a mobile phone.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
@@ -1062,7 +1062,7 @@ next month anyway.&lt;/p&gt;
 &lt;p class="caption"&gt;Entry to the &lt;a class="reference external" href="https://www.hackerspace.pl/"&gt;Warsaw Hackerspace&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;On arrival they showed me around their hackerspace.  Of course they have a
-laser-cutter &lt;a class="footnote-reference" href="#id2" id="id1"&gt;[1]&lt;/a&gt; and some 3D printers.&lt;/p&gt;
+laser-cutter &lt;a class="footnote-reference" href="#footnote-1" id="footnote-reference-1"&gt;[1]&lt;/a&gt; and some 3D printers.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
 &lt;img alt="Laser cutter and 3D printers" src="/images/tour_de_hackerspace/warsaw/warsaw_laser_cutter.jpg" style="width: 80%;" /&gt;
 &lt;p class="caption"&gt;Laser cutter and 3D printers&lt;/p&gt;
@@ -1104,10 +1104,10 @@ this was very interesting for me!  Maybe I'll write a separate blog post about
 that if I find time to dig a bit deeper into the topic.&lt;/p&gt;
 &lt;p&gt;I really enjoyed the time I spent with this awesome and very active
 hackerspace! My next stop will be Hackerspace Kraków!&lt;/p&gt;
-&lt;table class="docutils footnote" frame="void" id="id2" rules="none"&gt;
+&lt;table class="docutils footnote" frame="void" id="footnote-1" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;We should really get a laser-cutter for coredump. This will be the first thing I will do when I return!&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#footnote-reference-1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;We should really get a laser-cutter for coredump. This will be the first thing I will do when I return!&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 </content><category term="tour de hackerspace"></category><category term="hackerspace"></category><category term="travelling"></category></entry><entry><title>Visiting c-base</title><link href="//blog.rnstlr.ch/visiting-c-base.html" rel="alternate"></link><published>2017-04-15T00:00:00+02:00</published><updated>2017-04-15T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-04-15:/visiting-c-base.html</id><summary type="html">&lt;p class="first last"&gt;Visiting c-base&lt;/p&gt;

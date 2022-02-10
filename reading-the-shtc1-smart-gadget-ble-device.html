@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <title>Reading the SHTC1 smart gadget BLE device</title>
         <link rel="stylesheet" href="//blog.rnstlr.ch/theme/css/main.css" />
-        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="rnestler.github.io Atom Feed" />
+        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
 
         <!--[if IE]>
             <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -13,7 +13,7 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="//blog.rnstlr.ch/">rnestler.github.io </a></h1>
+                <h1><a href="//blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
                 <nav><ul>
                     <li><a href="//blog.rnstlr.ch/category/2013.html">2013</a></li>
                     <li class="active"><a href="//blog.rnstlr.ch/category/2015.html">2015</a></li>
@@ -82,10 +82,10 @@ handle: 0x0025   value: <span class="m">66</span> 0b b9 <span class="m">14</span
 that the byte order of the values is big endian.</p>
 <p>So to calculate the measured temperature in python we need to:</p>
 <div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="n">temperature</span> <span class="o">=</span> <span class="mh">0x0b66</span><span class="o">/</span><span class="mf">100.0</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;°C&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temperature</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;°C&quot;</span><span class="p">)</span>
 <span class="mf">29.18</span><span class="err">°</span><span class="n">C</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">humidity</span> <span class="o">=</span> <span class="mh">0x14b9</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;%RH&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;%RH&quot;</span><span class="p">)</span>
 <span class="mf">53.05</span><span class="o">%</span><span class="n">RH</span>
 </pre></div>
 </div>

@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="//blog.rnstlr.ch/" rel="alternate"></link><link href="//blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>//blog.rnstlr.ch/</id><updated>2017-05-17T00:00:00+02:00</updated><entry><title>Visiting hacklab01</title><link href="//blog.rnstlr.ch/visiting-hacklab01.html" rel="alternate"></link><published>2017-05-17T00:00:00+02:00</published><updated>2017-05-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-05-17:/visiting-hacklab01.html</id><summary type="html">&lt;p class="first last"&gt;Visiting &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; in Zagreb&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="//blog.rnstlr.ch/" rel="alternate"></link><link href="//blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>//blog.rnstlr.ch/</id><updated>2022-02-10T00:00:00+01:00</updated><entry><title>Starting to blog again</title><link href="//blog.rnstlr.ch/starting-to-blog-again.html" rel="alternate"></link><published>2022-02-10T00:00:00+01:00</published><updated>2022-02-10T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-02-10:/starting-to-blog-again.html</id><summary type="html">&lt;p class="first last"&gt;Why I want to start blogging again&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;My &lt;a class="reference external" href="https://blog.rnstlr.ch/visiting-hacklab01.html"&gt;last post&lt;/a&gt; on this blog is from 2017 when I was traveling around Europe to
+visit different hackerspaces. I have fond memories of that time and still
+regret not finishing the post about visiting &lt;a class="reference external" href="https://wiki.ljudmila.org/Main_Page"&gt;LJUDMILA&lt;/a&gt; in Sarajevo. I also
+regret that I immediately stopped writing blog posts after that and never wrote
+a summary of my &amp;quot;Tour de Hackerspace&amp;quot;.&lt;/p&gt;
+&lt;p&gt;The &lt;a class="reference external" href="https://github.com/rnestler/rnestler.github.io/blob/main/content/articles/2017/2017-05-20_visiting_ljudmila.rst"&gt;drafts&lt;/a&gt; of these &lt;a class="reference external" href="https://github.com/rnestler/rnestler.github.io/blob/main/content/articles/2017/2017-05-20_tour_de_hackerspace_wrap_up.rst"&gt;posts&lt;/a&gt; lingering around in the git repository serve as a
+reminder of this tragedy 😉.&lt;/p&gt;
+&lt;div class="section" id="a-new-beginning"&gt;
+&lt;h2&gt;A new beginning&lt;/h2&gt;
+&lt;p&gt;Anyway: A lot has changed since then and beginning this year I started a new
+job at &lt;a class="reference external" href="https://www.renuo.ch/"&gt;Renuo&lt;/a&gt;. Previously I was working at &lt;a class="reference external" href="https://www.sensirion.com/"&gt;Sensirion&lt;/a&gt; for 8 years, where I
+was doing various kind of software development, ranging from embedded C++,
+developing a sensor evaluation desktop software in Python, creating a
+demonstrator prototype in Rust for an automotive PM2.5 sensor to developing
+infrastructure on Azure to power remote running long term studies of various
+sensors.&lt;/p&gt;
+&lt;p&gt;So switching to a software agency that almost exclusively does Web development
+with Ruby on Rails is quite a big change for me. Especially since I never
+really worked with Ruby or Rails before.&lt;/p&gt;
+&lt;p&gt;Since I find my expedition into this new terrain quite exciting, I want to
+share my experience of learning Ruby on this blog!&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="meta"></category><category term="blog"></category></entry><entry><title>Visiting hacklab01</title><link href="//blog.rnstlr.ch/visiting-hacklab01.html" rel="alternate"></link><published>2017-05-17T00:00:00+02:00</published><updated>2017-05-17T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2017-05-17:/visiting-hacklab01.html</id><summary type="html">&lt;p class="first last"&gt;Visiting &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; in Zagreb&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;After an entertaining BlaBlaCar ride with a mixed group of 7 Croatians who did
 enjoy a weekend of river rafting, I arrived in Zagreb at around 22:00.  I
 agreed with Vedran from &lt;a class="reference external" href="https://hacklab01.org/"&gt;hacklab01&lt;/a&gt; to meet in front of the building.&lt;/p&gt;

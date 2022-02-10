@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Learning Ruby part 1</title>
+        <link rel="stylesheet" href="//blog.rnstlr.ch/theme/css/main.css" />
+        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="//blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="//blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li class="active"><a href="//blog.rnstlr.ch/category/2022.html">2022</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="//blog.rnstlr.ch/drafts/learning-ruby-part-1.html" rel="bookmark"
+           title="Permalink to Learning Ruby part 1">Learning Ruby part 1</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2022-02-10T00:00:00+01:00">
+                Published: Do 10 Februar 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//blog.rnstlr.ch/category/2022.html">2022</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/learning.html">learning</a> <a href="//blog.rnstlr.ch/tag/ruby.html">ruby</a> </p>
+</footer><!-- /.post-info -->      <dl class="docutils">
+<dt>Notes:</dt>
+<dd><ul class="first last simple">
+<li>Dependency update: weird bundler update --minor behaviour -&gt; known bug.</li>
+<li>100% test coverage is very nice -&gt; Can deploy changes with a lot of confidence</li>
+<li>Having flaky tests is <em>very</em> annoying.</li>
+<li>Reproducability: Libyaml from</li>
+</ul>
+</dd>
+</dl>
+<p>One of my first exercises was to investigate a case</p>
+<p>Already knowing a few programming languages and package</p>
+<p>My <a class="reference external" href="https://blog.rnstlr.ch/visiting-hacklab01.html">last post</a> on this blog is from 2017 when I was traveling around Europe to
+visit different hackerspaces. I have fond memories of that time and still
+regret not finishing the post about visiting <a class="reference external" href="https://wiki.ljudmila.org/Main_Page">LJUDMILA</a> in Sarajevo. I also
+regret that I immediately stopped writing blog posts after that and never wrote
+a summary of my &quot;Tour de Hackerspace&quot;.</p>
+<p>The <a class="reference external" href="https://github.com/rnestler/rnestler.github.io/blob/main/content/articles/2017/2017-05-20_visiting_ljudmila.rst">drafts</a> of these <a class="reference external" href="https://github.com/rnestler/rnestler.github.io/blob/main/content/articles/2017/2017-05-20_tour_de_hackerspace_wrap_up.rst">posts</a> lingering around in the git repository serve as a
+reminder of this tragedy 😉.</p>
+<div class="section" id="a-new-beginning">
+<h2>A new beginning</h2>
+<p>Anyway: A lot has changed since then and beginning this year I started a new
+job at <a class="reference external" href="https://www.renuo.ch/">Renuo</a>. Previously I was working at <a class="reference external" href="https://www.sensirion.com/">Sensirion</a> for 8 years, where I
+was doing various kind of software development, ranging from embedded C++,
+developing a sensor evaluation desktop software in Python, creating a
+demonstrator prototype in Rust for an automotive PM2.5 sensor to developing
+infrastructure on Azure to power remote running long term studies of various
+sensors.</p>
+<p>So switching to a software agency that almost exclusively does Web development
+with Ruby on Rails is quite a big change for me. Especially since I never
+really worked with Ruby or Rails before.</p>
+<p>Since I find my expedition into this new terrain quite exciting, I want to
+share my experience of learning Ruby on this blog!</p>
+</div>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

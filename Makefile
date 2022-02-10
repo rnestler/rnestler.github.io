@@ -106,8 +106,7 @@ output/CNAME:
 
 github: publish output/CNAME
 	ghp-import $(OUTPUTDIR)
-	git push git@github.com:rnestler/rnestler.github.io.git gh-pages:master
-	git push git@github.com:rnestler/rnestler.github.io-source.git gh-pages:gh-pages
+	git push git@github.com:rnestler/rnestler.github.io.git gh-pages:gh-pages
 	git fetch --all
 
 .PHONY: html help clean regenerate serve devserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github

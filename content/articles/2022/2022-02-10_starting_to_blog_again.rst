@@ -3,7 +3,6 @@ Starting to blog again
 
 :tags: meta, blog
 :language: en
-:status: draft
 :summary: Why I want to start blogging again
 
 My `last post`_ on this blog is from 2017 when I was traveling around Europe to

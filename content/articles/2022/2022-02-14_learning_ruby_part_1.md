@@ -55,7 +55,7 @@ Nothing! It just didn't update anything!
 
 Confused I started reading up documentation, version specifiers, tried to
 update individual packages with `bundle update --minor $package` (which worked)
-and finally found https://github.com/rubygems/rubygems/issues/3360. Apparently
+and finally found <https://github.com/rubygems/rubygems/issues/3360>. Apparently
 it's a known issue since 2018 that bundle update just fails to do the `--patch`
 and `--minor` updates.
 

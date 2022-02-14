@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Learning Ruby Like it's 2009 — Part 1</title>
+        <link rel="stylesheet" href="//blog.rnstlr.ch/theme/css/main.css" />
+        <link href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="//blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="//blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="//blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li class="active"><a href="//blog.rnstlr.ch/category/2022.html">2022</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="//blog.rnstlr.ch/drafts/learning-ruby-like-its-2009-part-1.html" rel="bookmark"
+           title="Permalink to Learning Ruby Like it's 2009 — Part 1">Learning Ruby Like it's 2009 — Part 1</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2022-02-14T00:00:00+01:00">
+                Published: Mo 14 Februar 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="//blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="//blog.rnstlr.ch/category/2022.html">2022</a>.</p>
+<p>tags: <a href="//blog.rnstlr.ch/tag/learning.html">learning</a> <a href="//blog.rnstlr.ch/tag/ruby.html">ruby</a> <a href="//blog.rnstlr.ch/tag/learning-ruby-like-its-2009.html">learning-ruby-like-its-2009</a> </p>
+</footer><!-- /.post-info -->      <p>As announced in my previous post I will document my journey of learning Ruby
+and especially Ruby on Rails. Or how a friend of mine put it after hearing
+about my idea:</p>
+<blockquote>
+<p>Blogging about rails like it's 2009 😄.</p>
+<p><a href="https://blog.dbrgn.ch/about/">@dbrgn</a> February, 2022</p>
+</blockquote>
+<h2>Learning Ruby like it's 2009</h2>
+<p>One of my first exercises was to investigate a case where an automatic update
+done by the <a href="https://depfu.com/">depfu</a>-bot failed the tests and as such
+couldn't be merged. It looked similar to
+<a href="https://github.com/renuo/pingen-client/pull/15">this</a> but failed the tests and
+had a lot more updates including some major ones.</p>
+<p>Already knowing a few programming languages and package managers my first idea
+was: «Easy: Let's just first do all the minor and patch upgrades and see if
+this breaks anything». Assuming the gems follow semantic versioning this should
+just work.</p>
+<h2>Bundler and version specifier</h2>
+<p>First thing I noticed is that Bundler, while recommending semantic versioning,
+doesn't directly support semantic version specifiers like for example
+<a href="https://doc.rust-lang.org/cargo/reference/semver.html">cargo</a> does. It does
+support defining your own ranges like <code>'&gt;= 2.2.0', '&lt; 3.0'</code> or <code>'~&gt; 2.2'</code> which
+means the same. For cargo one would just specify <code>2.2.0</code> with the same result
+and in npm <code>^2.2.0</code>.</p>
+<p>The code base I was working on didn't have a lot of version specifiers and I
+was told that Renuo generally tries to use the latest versions of all
+dependencies for applications and only if it causes problems restricts the
+versions. To still have reproducible environments the Gemfile.lock file is of
+course checked into source control.</p>
+<p>So just running <code>bundle update</code> would update to the latest major version of
+almost all dependencies, which was exactly the thing I didn't want to do.</p>
+<p>Luckily bundler has the
+<a href="https://bundler.io/v2.3/man/bundle-update.1.html"><code>--minor</code></a> option which one
+can pass to the <code>update</code> command which should <em>Prefer updating only to next
+minor version.</em></p>
+<h2>A minor inconvenience</h2>
+<p>So here we go executing <code>bundler update --minor</code>! And the result was...
+Nothing! It just didn't update anything!</p>
+<p>Confused I started reading up documentation, version specifiers, tried to
+update individual packages with <code>bundle update --minor $package</code> (which worked)
+and finally found https://github.com/rubygems/rubygems/issues/3360. Apparently
+it's a known issue since 2018 that bundle update just fails to do the <code>--patch</code>
+and <code>--minor</code> updates.</p>
+<p>From the same GitHub issue I copied the handy shell one-liner <code>bundle update
+$(bundle list | awk '$1 ~ /^\*/ {print $2}' | grep -v bundler) --minor</code> which
+did the job!</p>
+<p>Doing just the semver compatible updates worked, all the tests did pass and we
+could deploy it. My shattered trust in the Ruby ecosystem from the <code>bunlder</code>
+failure was restored!</p>
+<p>All in all bundler is a decent package manager and I love that the Ruby
+ecosystem seems to embrace semantic versioning and one can do fearless upgrades
+to get bug- and security fixes of the dependencies.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="//blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

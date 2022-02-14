@@ -1,5 +1,5 @@
 Title: Learning Ruby Like it's 2009 — Part 1
-Tags: learning, ruby, learning-ruby-like-its-2009
+Tags: learning, ruby, bundler, learning-ruby-like-its-2009
 Language: en
 Status: draft
 Summary: First part of my journey to learn ruby and rails. Focusing on bundler and version management.

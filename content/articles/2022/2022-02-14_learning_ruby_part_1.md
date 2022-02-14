@@ -8,7 +8,7 @@ As announced in my previous post I will document my journey of learning Ruby
 and especially Ruby on Rails. Or how a friend of mine put it after hearing
 about my idea:
 
-> Blogging about rails like it's 2009 😄.
+> Blogging about Rails like it's 2009 😄.
 >
 > [@dbrgn](https://blog.dbrgn.ch/about/) February, 2022
 

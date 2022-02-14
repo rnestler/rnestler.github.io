@@ -30,9 +30,30 @@ just work.
 First thing I noticed is that Bundler, while recommending semantic versioning,
 doesn't directly support semantic version specifiers like for example
 [cargo](https://doc.rust-lang.org/cargo/reference/semver.html) does. It does
-support defining your own ranges like `'>= 2.2.0', '< 3.0'` or `'~> 2.2'` which
-means the same. For cargo one would just specify `2.2.0` with the same result
-and in npm `^2.2.0`.
+support defining your own ranges like the following:
+```ruby
+gem 'foo', '>= 2.2.0', '< 3.0'`
+```
+or using the `~>` operator which achives the same thing:
+```ruby
+gem 'foo', '~> 2.2'
+```
+
+For
+[cargo](https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility)
+one would just specify
+```toml
+foo = "2.2.0"
+```
+with the same result and in
+[npm](https://docs.npmjs.com/about-semantic-versioning) we can use the `^`
+operator:
+```json
+"foo": "^2.2.0"
+```
+For bundler there is an [issue on
+GitHub](https://github.com/rubygems/rubygems/issues/1919) to add a SemVer
+operator since 2017.
 
 The code base I was working on didn't have a lot of version specifiers and I
 was told that Renuo generally tries to use the latest versions of all

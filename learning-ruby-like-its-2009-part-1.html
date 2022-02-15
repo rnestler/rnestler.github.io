@@ -63,28 +63,24 @@ just work.</p>
 doesn't directly support semantic version specifiers like for example
 <a href="https://doc.rust-lang.org/cargo/reference/semver.html">cargo</a> does. It does
 support defining your own ranges like the following:</p>
-<div class="highlight"><pre><span></span><span class="n">gem</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;= 2.2.0&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt; 3.0&#39;</span><span class="sb">`</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">gem</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;= 2.2.0&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt; 3.0&#39;</span><span class="sb">`</span>
+</code></pre></div>
 
 <p>or using the <code>~&gt;</code> operator which achives the same thing:</p>
-<div class="highlight"><pre><span></span><span class="n">gem</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.2&#39;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">gem</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.2&#39;</span>
+</code></pre></div>
 
 <p>For
 <a href="https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility">cargo</a>
 one would just specify</p>
-<div class="highlight"><pre><span></span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;2.2.0&quot;</span><span class="w"></span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;2.2.0&quot;</span><span class="w"></span>
+</code></pre></div>
 
 <p>with the same result and in
 <a href="https://docs.npmjs.com/about-semantic-versioning">npm</a> we can use the <code>^</code>
 operator:</p>
-<div class="highlight"><pre><span></span><span class="nt">&quot;foo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^2.2.0&quot;</span><span class="w"></span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nt">&quot;foo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^2.2.0&quot;</span><span class="w"></span>
+</code></pre></div>
 
 <p>For bundler there is an <a href="https://github.com/rubygems/rubygems/issues/1919">issue on
 GitHub</a> to add a SemVer

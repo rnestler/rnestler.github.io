@@ -59,11 +59,11 @@ my machine which is managed by <tt class="docutils literal">mandb</tt> got corru
  Main PID: <span class="m">23481</span> <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">1</span>/FAILURE<span class="o">)</span>
 
 Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/ru.KOI8-R werden verar
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge <span class="k">in</span> /usr/share/man/tr werden gelösch
+Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/tr werden gelösch
 Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/tr werden verarbeitet
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge <span class="k">in</span> /usr/share/man/fi werden gelösch
+Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/fi werden gelösch
 Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/fi werden verarbeitet
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge <span class="k">in</span> /usr/share/man/zh werden gelösch
+Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge in /usr/share/man/zh werden gelösch
 Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: man-db.service: Main process exited, <span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">1</span>/F
 Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Failed to start Update man-db cache.
 Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: man-db.service: Unit entered failed state.
@@ -71,12 +71,12 @@ Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<spa
 </pre></div>
 <p>So I ran <tt class="docutils literal">mandb</tt> manually to figure out what was wrong:</p>
 <div class="highlight"><pre><span></span>% sudo mandb
-Purging old database entries <span class="k">in</span> /usr/share/man...
+Purging old database entries in /usr/share/man...
 Processing manual pages under /usr/share/man...
-Purging old database entries <span class="k">in</span> /usr/share/man/sr@latin...
+Purging old database entries in /usr/share/man/sr@latin...
 Processing manual pages under /usr/share/man/sr@latin...
 ...
-Purging old database entries <span class="k">in</span> /usr/share/man/zh...
+Purging old database entries in /usr/share/man/zh...
 gdbm fatal: Unexpected end of file
 </pre></div>
 <p>So gdbm seemed to have some problem. Since I didn't know what <tt class="docutils literal">gdbm</tt> was, I

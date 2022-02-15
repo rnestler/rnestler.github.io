@@ -73,13 +73,13 @@ support defining your own ranges like the following:</p>
 <p>For
 <a href="https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility">cargo</a>
 one would just specify</p>
-<div class="highlight"><pre><span></span><code><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;2.2.0&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;2.2.0&quot;</span>
 </code></pre></div>
 
 <p>with the same result and in
 <a href="https://docs.npmjs.com/about-semantic-versioning">npm</a> we can use the <code>^</code>
 operator:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&quot;foo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^2.2.0&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="s2">&quot;foo&quot;</span><span class="err">:</span> <span class="s2">&quot;^2.2.0&quot;</span>
 </code></pre></div>
 
 <p>For bundler there is an <a href="https://github.com/rubygems/rubygems/issues/1919">issue on

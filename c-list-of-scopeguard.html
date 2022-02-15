@@ -51,91 +51,91 @@ a <a class="reference external" href="https://channel9.msdn.com/Shows/Going+Deep
 <h2>Basic use of a ScopeGuard</h2>
 <p>The ScopeGuard allows to write transactional code that will undo previous parts
 if later code throws an exception.</p>
-<div class="highlight"><pre><span></span><span class="n">myVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w"></span>
-<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">myVector</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="n">myVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">myVector</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span> <span class="p">});</span>
 
 <span class="c1">// Do stuff that may throw</span>
-<span class="n">database</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w"></span>
+<span class="n">database</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
 
 <span class="c1">// everything worked, so don&#39;t undo</span>
-<span class="n">guard</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"></span>
+<span class="n">guard</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
 </pre></div>
 <p>So if <tt class="docutils literal">database.add(item)</tt> throws, the item in myVector will be removed. For
 more about the motivation behind ScopeGuard see the talk above or <a class="reference external" href="http://www.drdobbs.com/cpp/generic-change-the-way-you-write-excepti/184403758">this drdobbs
 article</a>.</p>
 <p>Using C++11 and later the implementation is fairly simple:</p>
 <pre class="code cpp literal-block">
-<span class="k">struct</span><span class="w"> </span><span class="nc">ScopeGuardBase</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">ScopeGuardBase</span><span class="p">()</span><span class="o">:</span><span class="w">
-        </span><span class="n">mActive</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+<span class="k">struct</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuardBase</span><span class="p">()</span><span class="o">:</span>
+        <span class="n">mActive</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+    <span class="p">{</span> <span class="p">}</span>
 
-    </span><span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">ScopeGuardBase</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="o">:</span><span class="w">
-        </span><span class="n">mActive</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mActive</span><span class="p">)</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="n">rhs</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w">
+    <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">ScopeGuardBase</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">mActive</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mActive</span><span class="p">)</span>
+    <span class="p">{</span> <span class="n">rhs</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span> <span class="p">}</span>
 
-    </span><span class="kt">void</span><span class="w"> </span><span class="n">dismiss</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="n">mActive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">
+    <span class="kt">void</span> <span class="n">dismiss</span><span class="p">()</span> <span class="k">noexcept</span>
+    <span class="p">{</span> <span class="n">mActive</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
 
-</span><span class="k">protected</span><span class="o">:</span><span class="w">
-    </span><span class="o">~</span><span class="n">ScopeGuardBase</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w">
-    </span><span class="kt">bool</span><span class="w"> </span><span class="n">mActive</span><span class="p">;</span><span class="w">
-</span><span class="p">};</span><span class="w">
+<span class="k">protected</span><span class="o">:</span>
+    <span class="o">~</span><span class="n">ScopeGuardBase</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">mActive</span><span class="p">;</span>
+<span class="p">};</span>
 
-</span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Fun</span><span class="o">&gt;</span><span class="w">
-</span><span class="k">struct</span><span class="w"> </span><span class="nc">ScopeGuard</span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ScopeGuardBase</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">ScopeGuard</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span><span class="w">
-    </span><span class="n">ScopeGuard</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span><span class="w">
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nl">ScopeGuard</span><span class="p">:</span> <span class="k">public</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuard</span><span class="p">()</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="k">const</span> <span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
 
-    </span><span class="n">ScopeGuard</span><span class="p">(</span><span class="n">Fun</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="o">:</span><span class="w">
-        </span><span class="n">ScopeGuardBase</span><span class="p">(),</span><span class="w">
-        </span><span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span><span class="w">
-        </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span> <span class="k">noexcept</span><span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(),</span>
+        <span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+        <span class="p">{</span> <span class="p">}</span>
 
-    </span><span class="n">ScopeGuard</span><span class="p">(</span><span class="n">ScopeGuard</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="o">:</span><span class="w">
-        </span><span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span><span class="w">
-        </span><span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mF</span><span class="p">))</span><span class="w">
-        </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+    <span class="n">ScopeGuard</span><span class="p">(</span><span class="n">ScopeGuard</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="k">noexcept</span> <span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span>
+        <span class="n">mF</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mF</span><span class="p">))</span>
+        <span class="p">{</span> <span class="p">}</span>
 
-    </span><span class="o">~</span><span class="n">ScopeGuard</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mActive</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">mF</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(...)</span><span class="w"> </span><span class="p">{}</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    <span class="o">~</span><span class="n">ScopeGuard</span><span class="p">()</span> <span class="k">noexcept</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mActive</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="p">{</span> <span class="n">mF</span><span class="p">();</span> <span class="p">}</span> <span class="k">catch</span><span class="p">(...)</span> <span class="p">{}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    </span><span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="w"> </span><span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">delete</span><span class="p">;</span><span class="w">
+    <span class="n">ScopeGuard</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">ScopeGuard</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
 
-</span><span class="k">private</span><span class="o">:</span><span class="w">
-    </span><span class="n">Fun</span><span class="w"> </span><span class="n">mF</span><span class="p">;</span><span class="w">
-</span><span class="p">};</span><span class="w">
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">Fun</span> <span class="n">mF</span><span class="p">;</span>
+<span class="p">};</span>
 
-</span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Fun</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span><span class="w"> </span><span class="n">scopeGuard</span><span class="p">(</span><span class="n">Fun</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="k">return</span><span class="w"> </span><span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span><span class="w">
-</span><span class="p">}</span>
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span> <span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span> <span class="n">scopeGuard</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">ScopeGuard</span><span class="o">&lt;</span><span class="n">Fun</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span>
+<span class="p">}</span>
 </pre>
 </div>
 <div class="section" id="why-a-scopeguardlist">
 <h2>Why a ScopeGuardList?</h2>
 <p>If you have a transaction that consists of a lot of steps that may throw and
 need to be undone it leads to code like the following:</p>
-<div class="highlight"><pre><span></span><span class="n">doThing1</span><span class="p">();</span><span class="w"></span>
-<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing1</span><span class="p">();</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
-<span class="n">doThing2</span><span class="p">();</span><span class="w"></span>
-<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing2</span><span class="p">();</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
-<span class="n">doThing3</span><span class="p">();</span><span class="w"></span>
-<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing3</span><span class="p">();</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="n">doThing1</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing1</span><span class="p">();</span> <span class="p">});</span>
+<span class="n">doThing2</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing2</span><span class="p">();</span> <span class="p">});</span>
+<span class="n">doThing3</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">guard</span> <span class="o">=</span> <span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span> <span class="p">{</span> <span class="n">undoThing3</span><span class="p">();</span> <span class="p">});</span>
 
 <span class="c1">// Do stuff that may trow</span>
 
-<span class="n">guard1</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"></span>
-<span class="n">guard2</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"></span>
-<span class="n">guard3</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"></span>
+<span class="n">guard1</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+<span class="n">guard2</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+<span class="n">guard3</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
 </pre></div>
 <p>Things get even worse when doing something in a loop:</p>
-<div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">doStuff</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// how do we create a guard for every operation?</span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">doStuff</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="c1">// how do we create a guard for every operation?</span>
+<span class="p">}</span>
 </pre></div>
 <p>To avoid that repetition and the potential error of a missing call to
 <tt class="docutils literal">dismiss()</tt> we came up with a <tt class="docutils literal">ScopeGuardList</tt>.</p>
@@ -144,33 +144,33 @@ need to be undone it leads to code like the following:</p>
 <h2>Implementation with std::function&lt;&gt;</h2>
 <p>A simple implementation just contains a list of <tt class="docutils literal"><span class="pre">std::function&lt;&gt;</span></tt>:</p>
 <pre class="code cpp literal-block">
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scopeguard.h&quot;</span><span class="cp">
-#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp">
-#include</span><span class="w"> </span><span class="cpf">&lt;utility&gt;</span><span class="cp">
-#include</span><span class="w"> </span><span class="cpf">&lt;functional&gt;</span><span class="cp">
-</span><span class="w">
-</span><span class="k">struct</span><span class="w"> </span><span class="nc">ScopeGuardList</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ScopeGuardBase</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">ScopeGuardList</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">default</span><span class="p">;</span><span class="w">
+<span class="cp">#include</span> <span class="cpf">&quot;scopeguard.h&quot;</span><span class="cp">
+#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp">
+</span>
+<span class="k">struct</span> <span class="nl">ScopeGuardList</span> <span class="p">:</span> <span class="k">public</span> <span class="n">ScopeGuardBase</span> <span class="p">{</span>
+    <span class="n">ScopeGuardList</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 
-    </span><span class="n">ScopeGuardList</span><span class="p">(</span><span class="n">ScopeGuardList</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rhs</span><span class="p">)</span><span class="o">:</span><span class="w">
-        </span><span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span><span class="w">
-        </span><span class="n">mScopeGuards</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mScopeGuards</span><span class="p">))</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+    <span class="n">ScopeGuardList</span><span class="p">(</span><span class="n">ScopeGuardList</span><span class="o">&amp;&amp;</span> <span class="n">rhs</span><span class="p">)</span><span class="o">:</span>
+        <span class="n">ScopeGuardBase</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">)),</span>
+        <span class="n">mScopeGuards</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">rhs</span><span class="p">.</span><span class="n">mScopeGuards</span><span class="p">))</span>
+    <span class="p">{</span> <span class="p">}</span>
 
-    </span><span class="o">~</span><span class="n">ScopeGuardList</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mActive</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span><span class="w"> </span><span class="n">scopeGuard</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">mScopeGuards</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="n">scopeGuard</span><span class="p">();</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+    <span class="o">~</span><span class="n">ScopeGuardList</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mActive</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">scopeGuard</span> <span class="p">:</span> <span class="n">mScopeGuards</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">scopeGuard</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Fun</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">add</span><span class="p">(</span><span class="n">Fun</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="n">mScopeGuards</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span><span class="w"> </span><span class="p">}</span><span class="w">
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Fun</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">Fun</span> <span class="n">f</span><span class="p">)</span>
+    <span class="p">{</span> <span class="n">mScopeGuards</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="p">));</span> <span class="p">}</span>
 
-</span><span class="k">private</span><span class="o">:</span><span class="w">
-    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">mScopeGuards</span><span class="p">;</span><span class="w">
-</span><span class="p">};</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">mScopeGuards</span><span class="p">;</span>
+<span class="p">};</span>
 </pre>
 <p>This implementation uses the type erasure of <tt class="docutils literal"><span class="pre">std::function</span></tt> to store several
 undo functions. While being fairly simple it performs worse compared to the
@@ -178,42 +178,42 @@ above ScopeGuard implementation.</p>
 <p>A quick benchmark showed that the <tt class="docutils literal">ScopeGuard</tt> performs ~14 times faster than
 <tt class="docutils literal">ScopeGuardList</tt>:</p>
 <pre class="code cpp literal-block">
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;chrono&gt;</span><span class="cp">
-#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span><span class="w">
-</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;scopeguardlist.h&quot;</span><span class="cp">
-</span><span class="w">
-</span><span class="kt">void</span><span class="w"> </span><span class="nf">testScopeGuard</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w">
-    </span><span class="c1">// make volatile to avoid optimizations
-</span><span class="w">    </span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">setByGuard0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">
-    </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span><span class="w">
-    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="k">auto</span><span class="w"> </span><span class="n">guard0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span><span class="w"> </span><span class="n">setByGuard0</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">});</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span><span class="w">
-    </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">elapsed_seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span><span class="w">
-    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Needed &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;s for &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">setByGuard0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<span class="cp">#include</span> <span class="cpf">&lt;chrono&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="cp">#include</span> <span class="cpf">&quot;scopeguardlist.h&quot;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">testScopeGuard</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
+    <span class="c1">// make volatile to avoid optimizations
+</span>    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">setByGuard0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">guard0</span> <span class="o">=</span> <span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">setByGuard0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">elapsed_seconds</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Needed &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">setByGuard0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 
-</span><span class="kt">void</span><span class="w"> </span><span class="nf">testScopeGuardList</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w">
-    </span><span class="c1">// make volatile to avoid optimizations
-</span><span class="w">    </span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">setByGuard0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">
-    </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span><span class="w">
-    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="k">auto</span><span class="w"> </span><span class="n">guardList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ScopeGuardList</span><span class="p">();</span><span class="w">
-        </span><span class="n">guardList</span><span class="p">.</span><span class="n">add</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span><span class="w"> </span><span class="n">setByGuard0</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">});</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span><span class="w">
-    </span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">elapsed_seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span><span class="w">
-    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Needed &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;s for &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">setByGuard0</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<span class="kt">void</span> <span class="nf">testScopeGuardList</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">;</span>
+    <span class="c1">// make volatile to avoid optimizations
+</span>    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">setByGuard0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">10000000</span><span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">guardList</span> <span class="o">=</span> <span class="n">ScopeGuardList</span><span class="p">();</span>
+        <span class="n">guardList</span><span class="p">.</span><span class="n">add</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]{</span> <span class="n">setByGuard0</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">elapsed_seconds</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Needed &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">elapsed_seconds</span><span class="p">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;s for &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">setByGuard0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; loops</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 
-</span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">testScopeGuard</span><span class="p">();</span><span class="w">
-    </span><span class="n">testScopeGuardList</span><span class="p">();</span><span class="w">
-</span><span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">testScopeGuard</span><span class="p">();</span>
+    <span class="n">testScopeGuardList</span><span class="p">();</span>
+<span class="p">}</span>
 </pre>
 <table border="1" class="docutils">
 <caption>Benchmark with different optimization levels</caption>

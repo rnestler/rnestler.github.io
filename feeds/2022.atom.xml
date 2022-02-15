@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2022</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2022.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2022-02-15T00:00:00+01:00</updated><subtitle></subtitle><entry><title>Learning Ruby Like it's 2009 — Part 1</title><link href="https://blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html" rel="alternate"></link><published>2022-02-15T00:00:00+01:00</published><updated>2022-02-15T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-02-15:/learning-ruby-like-its-2009-part-1.html</id><summary type="html">&lt;p&gt;First part of my journey to learn ruby and rails. Focusing on bundler and version management.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As announced in my previous post I will document my journey of learning Ruby
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2022</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2022.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2022-02-15T00:00:00+01:00</updated><entry><title>Learning Ruby Like it's 2009 — Part 1</title><link href="https://blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html" rel="alternate"></link><published>2022-02-15T00:00:00+01:00</published><updated>2022-02-15T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-02-15:/learning-ruby-like-its-2009-part-1.html</id><summary type="html">&lt;p&gt;First part of my journey to learn ruby and rails. Focusing on bundler and version management.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As announced in my previous post I will document my journey of learning Ruby
 and especially Ruby on Rails. Or how a friend of mine put it after hearing
 about my idea:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -31,13 +31,13 @@ support defining your own ranges like the following:&lt;/p&gt;
 &lt;p&gt;For
 &lt;a href="https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility"&gt;cargo&lt;/a&gt;
 one would just specify&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;2.2.0&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;2.2.0&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;with the same result and in
 &lt;a href="https://docs.npmjs.com/about-semantic-versioning"&gt;npm&lt;/a&gt; we can use the &lt;code&gt;^&lt;/code&gt;
 operator:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="s2"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;^2.2.0&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;^2.2.0&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;For bundler there is an &lt;a href="https://github.com/rubygems/rubygems/issues/1919"&gt;issue on

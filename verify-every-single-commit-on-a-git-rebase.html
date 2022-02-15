@@ -46,16 +46,16 @@ we screw up the commits in between without noticing, since the final commit
 compiles and passes every unit test.</p>
 <p>For example imagine we have this little Rust code:</p>
 <div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>Now we want to show how nicely Rust can print a <tt class="docutils literal"><span class="pre">std::Vec</span></tt> so we create a
 branch: <tt class="docutils literal">git checkout <span class="pre">-b</span> add_vector</tt> and add the following:</p>
 <div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>This will compile and give us some wonderful output:</p>
@@ -69,12 +69,12 @@ $ git commit -m <span class="s2">&quot;Print vector&quot;</span>
 </pre></div>
 <p>We than add some more code to show the length of our fancy vector:</p>
 <div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec</span><span class="o">!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;v.len(): {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">len</span><span class="p">());</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v.len(): {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">len</span><span class="p">());</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>This also works just fine so we commit it:</p>
@@ -104,9 +104,9 @@ error<span class="o">[</span>E0425<span class="o">]</span>: unresolved name <spa
   <span class="p">|</span>
 <span class="m">4</span> <span class="p">|</span>     println!<span class="o">(</span><span class="s2">&quot;v.len(): {}&quot;</span>, v.len<span class="o">())</span><span class="p">;</span>
   <span class="p">|</span>                             ^
-&lt;std macros&gt;:2:27: <span class="m">2</span>:58 note: in this expansion of format_args!
-&lt;std macros&gt;:3:1: <span class="m">3</span>:54 note: in this expansion of print! <span class="o">(</span>defined in &lt;std macros&gt;<span class="o">)</span>
-src/main.rs:4:5: <span class="m">4</span>:38 note: in this expansion of println! <span class="o">(</span>defined in &lt;std macros&gt;<span class="o">)</span>
+&lt;std macros&gt;:2:27: <span class="m">2</span>:58 note: <span class="k">in</span> this expansion of format_args!
+&lt;std macros&gt;:3:1: <span class="m">3</span>:54 note: <span class="k">in</span> this expansion of print! <span class="o">(</span>defined <span class="k">in</span> &lt;std macros&gt;<span class="o">)</span>
+src/main.rs:4:5: <span class="m">4</span>:38 note: <span class="k">in</span> this expansion of println! <span class="o">(</span>defined <span class="k">in</span> &lt;std macros&gt;<span class="o">)</span>
 
 error: aborting due to previous error
 

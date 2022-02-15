@@ -6,6 +6,8 @@ AUTHOR = 'rnestler'
 SITENAME = 'blog.rnstlr.ch'
 SITEURL = ''
 
+PATH = 'content'
+
 TIMEZONE = 'Europe/Zurich'
 
 DEFAULT_LANG = 'en'
@@ -14,12 +16,14 @@ DEFAULT_LANG = 'en'
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
+AUTHOR_FEED_ATOM = None
+AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS =  (('Pelican', 'http://getpelican.com/'),
-          ('Python.org', 'http://python.org/'),
-          ('Jinja2', 'http://jinja.pocoo.org/'),
-          ('coredump', 'http://www.coredump.ch/'))
+LINKS = (('Pelican', 'http://getpelican.com/'),
+         ('Python.org', 'http://python.org/'),
+         ('Jinja2', 'http://jinja.pocoo.org/'),
+         ('coredump', 'http://www.coredump.ch/'))
 
 # Social widget
 SOCIAL = (('twitter', 'https://twitter.com/rnstlr'),

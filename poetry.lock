@@ -8,7 +8,7 @@ python-versions = "*"
 
 [[package]]
 name = "docutils"
-version = "0.18.1"
+version = "0.16"
 description = "Docutils -- Python Documentation Utilities"
 category = "main"
 optional = false
@@ -16,14 +16,15 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "feedgenerator"
-version = "2.0.0"
+version = "1.9.2"
 description = "Standalone version of django.utils.feedgenerator"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = "*"
 
 [package.dependencies]
 pytz = ">=0a"
+six = "*"
 
 [[package]]
 name = "ghp-import"
@@ -58,17 +59,17 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 
 [[package]]
 name = "jinja2"
-version = "3.0.3"
+version = "2.11.3"
 description = "A very fast and expressive template engine."
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [package.dependencies]
-MarkupSafe = ">=2.0"
+MarkupSafe = ">=0.23"
 
 [package.extras]
-i18n = ["Babel (>=2.7)"]
+i18n = ["Babel (>=0.8)"]
 
 [[package]]
 name = "markdown"
@@ -94,29 +95,28 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "pelican"
-version = "4.2.0"
-description = "Static site generator supporting reStructuredText and Markdown source content."
+version = "4.5.4"
+description = "Static site generator supporting Markdown and reStructuredText"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6,<4.0"
 
 [package.dependencies]
-blinker = "*"
-docutils = "*"
-feedgenerator = ">=1.9"
-jinja2 = ">=2.7"
-pygments = "*"
-python-dateutil = "*"
-pytz = ">=0a"
-six = ">=1.4"
-unidecode = "*"
+blinker = ">=1.4,<2.0"
+docutils = ">=0.16,<0.17"
+feedgenerator = ">=1.9,<2.0"
+jinja2 = ">=2.11,<2.12"
+pygments = ">=2.6.1,<2.7.0"
+python-dateutil = ">=2.8,<3.0"
+pytz = ">=2020.1,<2021.0"
+unidecode = ">=1.1,<2.0"
 
 [package.extras]
-markdown = ["markdown (>=3.1.1,<3.2.0)"]
+markdown = ["markdown (>=3.2.2,<3.3.0)"]
 
 [[package]]
 name = "pygments"
-version = "2.11.2"
+version = "2.6.1"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "main"
 optional = false
@@ -135,7 +135,7 @@ six = ">=1.5"
 
 [[package]]
 name = "pytz"
-version = "2021.3"
+version = "2020.5"
 description = "World timezone definitions, modern and historical"
 category = "main"
 optional = false
@@ -180,19 +180,19 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "3.7.12"
-content-hash = "5325906bd4f3f6c69cc08cba925b88ad25612a71ed0761b1a193af922486f9e1"
+content-hash = "7413512e2dd9c8b9517ee00d8cd3c8b196be64f4155a7f72bf18aa0231199aa9"
 
 [metadata.files]
 blinker = [
     {file = "blinker-1.4.tar.gz", hash = "sha256:471aee25f3992bd325afa3772f1063dbdbbca947a041b8b89466dc00d606f8b6"},
 ]
 docutils = [
-    {file = "docutils-0.18.1-py2.py3-none-any.whl", hash = "sha256:23010f129180089fbcd3bc08cfefccb3b890b0050e1ca00c867036e9d161b98c"},
-    {file = "docutils-0.18.1.tar.gz", hash = "sha256:679987caf361a7539d76e584cbeddc311e3aee937877c87346f31debc63e9d06"},
+    {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
+    {file = "docutils-0.16.tar.gz", hash = "sha256:c2de3a60e9e7d07be26b7f2b00ca0309c207e06c100f9cc2a94931fc75a478fc"},
 ]
 feedgenerator = [
-    {file = "feedgenerator-2.0.0-py3-none-any.whl", hash = "sha256:fc4a1e557f56b072d4f9a1b062cc98ea3691133bbd966d85707a7d5629b2e32e"},
-    {file = "feedgenerator-2.0.0.tar.gz", hash = "sha256:6836d456b8b0edbc5b6d3a42d1be852cebd43d2f28af4ff51789eb295f1860e2"},
+    {file = "feedgenerator-1.9.2-py3-none-any.whl", hash = "sha256:950541cd3ef43ca2a72802308f7fc393ab9e3e3957471907751cd9791009e76a"},
+    {file = "feedgenerator-1.9.2.tar.gz", hash = "sha256:b06d6941e8fd6a2c9e71791079e86cbe7a3788c72244acc06f0593b49cda379b"},
 ]
 ghp-import = [
     {file = "ghp-import-2.0.2.tar.gz", hash = "sha256:947b3771f11be850c852c64b561c600fdddf794bab363060854c1ee7ad05e071"},
@@ -203,8 +203,8 @@ importlib-metadata = [
     {file = "importlib_metadata-4.11.1.tar.gz", hash = "sha256:175f4ee440a0317f6e8d81b7f8d4869f93316170a65ad2b007d2929186c8052c"},
 ]
 jinja2 = [
-    {file = "Jinja2-3.0.3-py3-none-any.whl", hash = "sha256:077ce6014f7b40d03b47d1f1ca4b0fc8328a692bd284016f806ed0eaca390ad8"},
-    {file = "Jinja2-3.0.3.tar.gz", hash = "sha256:611bb273cd68f3b993fabdc4064fc858c5b47a973cb5aa7999ec1ba405c87cd7"},
+    {file = "Jinja2-2.11.3-py2.py3-none-any.whl", hash = "sha256:03e47ad063331dd6a3f04a43eddca8a966a26ba0c5b7207a9a9e4e08f1b29419"},
+    {file = "Jinja2-2.11.3.tar.gz", hash = "sha256:a6d58433de0ae800347cab1fa3043cebbabe8baa9d29e668f1c768cb87a333c6"},
 ]
 markdown = [
     {file = "Markdown-3.3.6-py3-none-any.whl", hash = "sha256:9923332318f843411e9932237530df53162e29dc7a4e2b91e35764583c46c9a3"},
@@ -282,20 +282,20 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1.tar.gz", hash = "sha256:594c67807fb16238b30c44bdf74f36c02cdf22d1c8cda91ef8a0ed8dabf5620a"},
 ]
 pelican = [
-    {file = "pelican-4.2.0-py2.py3-none-any.whl", hash = "sha256:656d8ff9f778951f4e317c9e6530e92b02698c5961ebf019c583775a30f857f6"},
-    {file = "pelican-4.2.0.tar.gz", hash = "sha256:be7ea9a09311374322b5579c88975ae003409e40c833e761780a0d0dbd84e756"},
+    {file = "pelican-4.5.4-py3-none-any.whl", hash = "sha256:945f3ad61a31c55260d5f762783c7ac2708f331c685c617468f4655bb04abde1"},
+    {file = "pelican-4.5.4.tar.gz", hash = "sha256:0e9de7f4c7a2a21784f8aed9c7df6003cebfb39a36d0adbafd303d66649dc3ad"},
 ]
 pygments = [
-    {file = "Pygments-2.11.2-py3-none-any.whl", hash = "sha256:44238f1b60a76d78fc8ca0528ee429702aae011c265fe6a8dd8b63049ae41c65"},
-    {file = "Pygments-2.11.2.tar.gz", hash = "sha256:4e426f72023d88d03b2fa258de560726ce890ff3b630f88c21cbb8b2503b8c6a"},
+    {file = "Pygments-2.6.1-py3-none-any.whl", hash = "sha256:ff7a40b4860b727ab48fad6360eb351cc1b33cbf9b15a0f689ca5353e9463324"},
+    {file = "Pygments-2.6.1.tar.gz", hash = "sha256:647344a061c249a3b74e230c739f434d7ea4d8b1d5f3721bc0f3558049b38f44"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},
     {file = "python_dateutil-2.8.2-py2.py3-none-any.whl", hash = "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"},
 ]
 pytz = [
-    {file = "pytz-2021.3-py2.py3-none-any.whl", hash = "sha256:3672058bc3453457b622aab7a1c3bfd5ab0bdae451512f6cf25f64ed37f5b87c"},
-    {file = "pytz-2021.3.tar.gz", hash = "sha256:acad2d8b20a1af07d4e4c9d2e9285c5ed9104354062f275f3fcd88dcef4f1326"},
+    {file = "pytz-2020.5-py2.py3-none-any.whl", hash = "sha256:16962c5fb8db4a8f63a26646d8886e9d769b6c511543557bc84e9569fb9a9cb4"},
+    {file = "pytz-2020.5.tar.gz", hash = "sha256:180befebb1927b16f6b57101720075a984c019ac16b1b7575673bea42c6c3da5"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},

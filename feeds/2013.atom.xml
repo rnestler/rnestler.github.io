@@ -28,7 +28,7 @@ X-Server we need to set the DISPLAY variable to :0.&lt;/p&gt;
 when enabling the unit file.  To make it work with multible users one would
 need to create a script which determines which user is running the X-Server
 then change to this user and lock the screen.&lt;/p&gt;
-</content><category term="systemd"></category><category term="slock"></category><category term="suspend"></category></entry><entry><title>Creating this Blog</title><link href="https://blog.rnstlr.ch/creating-this-blog.html" rel="alternate"></link><published>2013-10-23T00:00:00+02:00</published><updated>2013-10-23T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2013-10-23:/creating-this-blog.html</id><summary type="html">&lt;p class="first last"&gt;How and why I created this blog.&lt;/p&gt;
+</content><category term="2013"></category><category term="systemd"></category><category term="slock"></category><category term="suspend"></category></entry><entry><title>Creating this Blog</title><link href="https://blog.rnstlr.ch/creating-this-blog.html" rel="alternate"></link><published>2013-10-23T00:00:00+02:00</published><updated>2013-10-23T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2013-10-23:/creating-this-blog.html</id><summary type="html">&lt;p class="first last"&gt;How and why I created this blog.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;Recently a friend of mine asked me how I configured my system so that &lt;a class="reference external" href="http://tools.suckless.org/slock"&gt;slock&lt;/a&gt; locks the screen when I close the lid.&lt;/p&gt;
 &lt;p&gt;Since I couldn't remember how I did it, I thought it's time to create a blog
 where I can write down stuff like this.&lt;/p&gt;
@@ -86,4 +86,4 @@ to the master branch in our username.github.io repository.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The blog gets published under &lt;a class="reference external" href="http://username.github.io"&gt;http://username.github.io&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="blog"></category></entry></feed>
+</content><category term="2013"></category><category term="blog"></category></entry></feed>

@@ -74,7 +74,7 @@ could deploy it. My shattered trust in the Ruby ecosystem from the &lt;code&gt;b
 failure was restored!&lt;/p&gt;
 &lt;p&gt;All in all bundler is a decent package manager and I love that the Ruby
 ecosystem seems to embrace semantic versioning and one can do fearless upgrades
-to get bug- and security fixes of the dependencies.&lt;/p&gt;</content><category term="learning"></category><category term="ruby"></category><category term="bundler"></category><category term="learning-ruby-like-its-2009"></category></entry><entry><title>Starting to blog again</title><link href="https://blog.rnstlr.ch/starting-to-blog-again.html" rel="alternate"></link><published>2022-02-10T00:00:00+01:00</published><updated>2022-02-10T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-02-10:/starting-to-blog-again.html</id><summary type="html">&lt;p class="first last"&gt;Why I want to start blogging again&lt;/p&gt;
+to get bug- and security fixes of the dependencies.&lt;/p&gt;</content><category term="2022"></category><category term="learning"></category><category term="ruby"></category><category term="bundler"></category><category term="learning-ruby-like-its-2009"></category></entry><entry><title>Starting to blog again</title><link href="https://blog.rnstlr.ch/starting-to-blog-again.html" rel="alternate"></link><published>2022-02-10T00:00:00+01:00</published><updated>2022-02-10T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-02-10:/starting-to-blog-again.html</id><summary type="html">&lt;p class="first last"&gt;Why I want to start blogging again&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;My &lt;a class="reference external" href="https://blog.rnstlr.ch/visiting-hacklab01.html"&gt;last post&lt;/a&gt; on this blog is from 2017 when I was traveling around Europe to
 visit different hackerspaces. I have fond memories of that time and still
 regret not finishing the post about visiting &lt;a class="reference external" href="https://wiki.ljudmila.org/Main_Page"&gt;LJUDMILA&lt;/a&gt; in Sarajevo. I also
@@ -97,4 +97,4 @@ really worked with Ruby or Rails before.&lt;/p&gt;
 &lt;p&gt;Since I find my expedition into this new terrain quite exciting, I want to
 share my experience of learning Ruby on this blog!&lt;/p&gt;
 &lt;/div&gt;
-</content><category term="meta"></category><category term="blog"></category></entry></feed>
+</content><category term="2022"></category><category term="meta"></category><category term="blog"></category></entry></feed>

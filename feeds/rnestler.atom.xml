@@ -1,5 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - rnestler</title><link href="//blog.rnstlr.ch/" rel="alternate"></link><link href="//blog.rnstlr.ch/feeds/rnestler.atom.xml" rel="self"></link><id>//blog.rnstlr.ch/</id><updated>2022-02-10T00:00:00+01:00</updated><entry><title>Starting to blog again</title><link href="//blog.rnstlr.ch/starting-to-blog-again.html" rel="alternate"></link><published>2022-02-10T00:00:00+01:00</published><updated>2022-02-10T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-02-10:/starting-to-blog-again.html</id><summary type="html">&lt;p class="first last"&gt;Why I want to start blogging again&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - rnestler</title><link href="//blog.rnstlr.ch/" rel="alternate"></link><link href="//blog.rnstlr.ch/feeds/rnestler.atom.xml" rel="self"></link><id>//blog.rnstlr.ch/</id><updated>2022-02-15T00:00:00+01:00</updated><entry><title>Learning Ruby Like it's 2009 — Part 1</title><link href="//blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html" rel="alternate"></link><published>2022-02-15T00:00:00+01:00</published><updated>2022-02-15T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-02-15:/learning-ruby-like-its-2009-part-1.html</id><summary type="html">&lt;p&gt;First part of my journey to learn ruby and rails. Focusing on bundler and version management.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As announced in my previous post I will document my journey of learning Ruby
+and especially Ruby on Rails. Or how a friend of mine put it after hearing
+about my idea:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Blogging about Rails like it's 2009 😄.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://blog.dbrgn.ch/about/"&gt;@dbrgn&lt;/a&gt; February, 2022&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Learning Ruby like it's 2009&lt;/h2&gt;
+&lt;p&gt;One of my first exercises was to investigate a case where an automatic update
+done by the &lt;a href="https://depfu.com/"&gt;depfu&lt;/a&gt;-bot failed the tests and as such
+couldn't be merged. It looked similar to
+&lt;a href="https://github.com/renuo/pingen-client/pull/15"&gt;this&lt;/a&gt; but failed the tests and
+had a lot more updates including some major ones.&lt;/p&gt;
+&lt;p&gt;Already knowing a few programming languages and package managers my first idea
+was: «Easy: Let's just first do all the minor and patch upgrades and see if
+this breaks anything». Assuming the gems follow semantic versioning this should
+just work.&lt;/p&gt;
+&lt;h2&gt;Bundler and version specifier&lt;/h2&gt;
+&lt;p&gt;First thing I noticed is that Bundler, while recommending semantic versioning,
+doesn't directly support semantic version specifiers like for example
+&lt;a href="https://doc.rust-lang.org/cargo/reference/semver.html"&gt;cargo&lt;/a&gt; does. It does
+support defining your own ranges like the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;gt;= 2.2.0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt; 3.0&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;or using the &lt;code&gt;~&amp;gt;&lt;/code&gt; operator which achives the same thing:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;foo&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;~&amp;gt; 2.2&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For
+&lt;a href="https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility"&gt;cargo&lt;/a&gt;
+one would just specify&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;2.2.0&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;with the same result and in
+&lt;a href="https://docs.npmjs.com/about-semantic-versioning"&gt;npm&lt;/a&gt; we can use the &lt;code&gt;^&lt;/code&gt;
+operator:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;^2.2.0&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For bundler there is an &lt;a href="https://github.com/rubygems/rubygems/issues/1919"&gt;issue on
+GitHub&lt;/a&gt; to add a SemVer
+operator since 2017.&lt;/p&gt;
+&lt;p&gt;The code base I was working on didn't have a lot of version specifiers. The
+reason is that Renuo generally tries to use the latest versions of all Ruby
+dependencies for applications. This is possible since we have extensive test
+suites which we trust and it enables an open and fast upgrade path for
+customers if they need new features in the future.&lt;/p&gt;
+&lt;p&gt;Exceptions are made if a gem update causes problems or if it is a very central
+gem like rails. To still have reproducible environments for applications the
+&lt;code&gt;Gemfile.lock&lt;/code&gt; file is of course checked into source control as it is &lt;a href="https://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/"&gt;best
+practice&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So just running &lt;code&gt;bundle update&lt;/code&gt; would update to the latest major version of
+almost all dependencies, which was exactly the thing I didn't want to do.&lt;/p&gt;
+&lt;p&gt;Luckily bundler has the
+&lt;a href="https://bundler.io/v2.3/man/bundle-update.1.html"&gt;&lt;code&gt;--minor&lt;/code&gt;&lt;/a&gt; option which one
+can pass to the &lt;code&gt;update&lt;/code&gt; command which should &lt;em&gt;Prefer updating only to next
+minor version.&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;A minor inconvenience&lt;/h2&gt;
+&lt;p&gt;So here we go executing &lt;code&gt;bundler update --minor&lt;/code&gt;! And the result was...
+Nothing! It just didn't update anything!&lt;/p&gt;
+&lt;p&gt;Confused I started reading up documentation, version specifiers, tried to
+update individual packages with &lt;code&gt;bundle update --minor $package&lt;/code&gt; (which worked)
+and finally found &lt;a href="https://github.com/rubygems/rubygems/issues/3360"&gt;https://github.com/rubygems/rubygems/issues/3360&lt;/a&gt;. Apparently
+it's a known issue since 2018 that bundle update just fails to do the &lt;code&gt;--patch&lt;/code&gt;
+and &lt;code&gt;--minor&lt;/code&gt; updates.&lt;/p&gt;
+&lt;p&gt;From the same GitHub issue I copied the handy shell one-liner &lt;code&gt;bundle update
+$(bundle list | awk '$1 ~ /^\*/ {print $2}' | grep -v bundler) --minor&lt;/code&gt; which
+did the job!&lt;/p&gt;
+&lt;p&gt;Doing just the semver compatible updates worked, all the tests did pass and we
+could deploy it. My shattered trust in the Ruby ecosystem from the &lt;code&gt;bunlder&lt;/code&gt;
+failure was restored!&lt;/p&gt;
+&lt;p&gt;All in all bundler is a decent package manager and I love that the Ruby
+ecosystem seems to embrace semantic versioning and one can do fearless upgrades
+to get bug- and security fixes of the dependencies.&lt;/p&gt;</content><category term="learning"></category><category term="ruby"></category><category term="bundler"></category><category term="learning-ruby-like-its-2009"></category></entry><entry><title>Starting to blog again</title><link href="//blog.rnstlr.ch/starting-to-blog-again.html" rel="alternate"></link><published>2022-02-10T00:00:00+01:00</published><updated>2022-02-10T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-02-10:/starting-to-blog-again.html</id><summary type="html">&lt;p class="first last"&gt;Why I want to start blogging again&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;My &lt;a class="reference external" href="https://blog.rnstlr.ch/visiting-hacklab01.html"&gt;last post&lt;/a&gt; on this blog is from 2017 when I was traveling around Europe to
 visit different hackerspaces. I have fond memories of that time and still
 regret not finishing the post about visiting &lt;a class="reference external" href="https://wiki.ljudmila.org/Main_Page"&gt;LJUDMILA&lt;/a&gt; in Sarajevo. I also

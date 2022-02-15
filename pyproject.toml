@@ -6,7 +6,7 @@ authors = ["Raphael Nestler <raphael.nestler@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "3.7.12"
-pelican = "~=4.0.1"
+pelican = "~=4.2.0"
 ghp-import = "^2.0.2"
 Markdown = "^3.3.6"
 

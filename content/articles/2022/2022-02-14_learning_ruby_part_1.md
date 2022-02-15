@@ -55,11 +55,16 @@ For bundler there is an [issue on
 GitHub](https://github.com/rubygems/rubygems/issues/1919) to add a SemVer
 operator since 2017.
 
-The code base I was working on didn't have a lot of version specifiers and I
-was told that Renuo generally tries to use the latest versions of all
-dependencies for applications and only if it causes problems restricts the
-versions. To still have reproducible environments the Gemfile.lock file is of
-course checked into source control.
+The code base I was working on didn't have a lot of version specifiers. The
+reason is that Renuo generally tries to use the latest versions of all Ruby
+dependencies for applications. This is possible since we have extensive test
+suites which we trust and it enables an open and fast upgrade path for
+customers if they need new features in the future.
+
+Exceptions are made if a gem update causes problems or if it is a very central
+gem like rails. To still have reproducible environments for applications the
+`Gemfile.lock` file is of course checked into source control as it is [best
+practice](https://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/).
 
 So just running `bundle update` would update to the latest major version of
 almost all dependencies, which was exactly the thing I didn't want to do.

@@ -56,7 +56,7 @@ python-versions = "*"
 python-dateutil = ">=2.8.1"
 
 [package.extras]
-dev = ["twine", "markdown", "flake8", "wheel"]
+dev = ["flake8", "markdown", "twine", "wheel"]
 
 [[package]]
 name = "jinja2"
@@ -174,8 +174,8 @@ python-versions = ">=3.5"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "3.10.2"
-content-hash = "5bff5edab07475aa6c2f388dcf96eb8f28addd0f63ad955a25e241e93aaf6853"
+python-versions = "~3.10.2"
+content-hash = "6ab71294a7cf15ab7fad085c171a5081dc02849561bb8881942055344f7edb80"
 
 [metadata.files]
 blinker = [

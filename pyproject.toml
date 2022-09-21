@@ -5,7 +5,7 @@ description = "The pelican project for my blog"
 authors = ["Raphael Nestler <raphael.nestler@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "3.10.2"
+python = "~3.10.2"
 pelican = "^4.7.0"
 ghp-import = "^2.0.2"
 Markdown = "^3.3.6"

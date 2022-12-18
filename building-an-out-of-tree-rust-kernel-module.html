@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>blog.rnstlr.ch - rnestler</title>
+        <title>Building an out-of-tree Rust Kernel Module</title>
         <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
         <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
 
@@ -19,13 +19,18 @@
                     <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
-                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html" rel="bookmark"
+           title="Permalink to Building an out-of-tree Rust Kernel Module">Building an out-of-tree Rust Kernel Module</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html">Building an out-of-tree Rust Kernel Module</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-12-18T00:00:00+01:00">
                 Published: So 18 Dezember 2022
@@ -36,7 +41,7 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> </p>
-</footer><!-- /.post-info --><p>With the release of <a href="https://lwn.net/Articles/917504/">Linux 6.1</a> minimal Rust
+</footer><!-- /.post-info -->      <p>With the release of <a href="https://lwn.net/Articles/917504/">Linux 6.1</a> minimal Rust
 support landed and it should be possible to <del>easily</del> build a hello
 world kernel module in Rust.</p>
 <h2>Installing Linux 6.1</h2>
@@ -373,225 +378,11 @@ conflict with <code>CONFIG_HAVE_RUST=y</code> are enabled:</p>
 </code></pre></div>
 
 <p>At this point I'd probably need to compile and run a custom kernel which
-actually has Rust support enabled.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+actually has Rust support enabled.</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html" rel="bookmark"
-                           title="Permalink to Learning Ruby Like it's 2009 — Part 1">Learning Ruby Like it's 2009 — Part 1</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-02-15T00:00:00+01:00">
-                Published: Di 15 Februar 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/learning.html">learning</a> <a href="https://blog.rnstlr.ch/tag/ruby.html">ruby</a> <a href="https://blog.rnstlr.ch/tag/bundler.html">bundler</a> <a href="https://blog.rnstlr.ch/tag/learning-ruby-like-its-2009.html">learning-ruby-like-its-2009</a> </p>
-</footer><!-- /.post-info -->                <p>First part of my journey to learn ruby and rails. Focusing on bundler and version management.</p>
-                <a class="readmore" href="https://blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/starting-to-blog-again.html" rel="bookmark"
-                           title="Permalink to Starting to blog again">Starting to blog again</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-02-10T00:00:00+01:00">
-                Published: Do 10 Februar 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/meta.html">meta</a> <a href="https://blog.rnstlr.ch/tag/blog.html">blog</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Why I want to start blogging again</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/starting-to-blog-again.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-hacklab01.html" rel="bookmark"
-                           title="Permalink to Visiting hacklab01">Visiting hacklab01</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-17T00:00:00+02:00">
-                Published: Mi 17 Mai 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting <a class="reference external" href="https://hacklab01.org/">hacklab01</a> in Zagreb</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-hacklab01.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-sarajevo.html" rel="bookmark"
-                           title="Permalink to Visiting Sarajevo">Visiting Sarajevo</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-14T00:00:00+02:00">
-                Published: So 14 Mai 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting Sarajevo</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-sarajevo.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-hacklab-belgrade.html" rel="bookmark"
-                           title="Permalink to Visiting Hacklab Belgrade">Visiting Hacklab Belgrade</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-10T00:00:00+02:00">
-                Published: Mi 10 Mai 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting the <a class="reference external" href="http://oosm.org/">Hacklab Belgrade</a>.</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-hacklab-belgrade.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-plan-zero.html" rel="bookmark"
-                           title="Permalink to Visiting Plan Zero">Visiting Plan Zero</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-08T00:00:00+02:00">
-                Published: Mo 08 Mai 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting the <a class="reference external" href="http://planzero.ro">Plan Zero</a> hackerspace</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-plan-zero.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-hackerspace-szeged.html" rel="bookmark"
-                           title="Permalink to Visiting Hackerspace Szeged">Visiting Hackerspace Szeged</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-06T00:00:00+02:00">
-                Published: Sa 06 Mai 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting the Hackerspace Szeged</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-hackerspace-szeged.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/rustfest-and-visiting-hacklab-kyiv.html" rel="bookmark"
-                           title="Permalink to RustFest and Visiting Hacklab Kyiv">RustFest and Visiting Hacklab Kyiv</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-01T00:00:00+02:00">
-                Published: Mo 01 Mai 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> <a href="https://blog.rnstlr.ch/tag/blockchain.html">blockchain</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Attending RustFest and visiting the Hacklab Kyiv</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/rustfest-and-visiting-hacklab-kyiv.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-hackerspace-budapest.html" rel="bookmark"
-                           title="Permalink to Visiting Hackerspace Budapest">Visiting Hackerspace Budapest</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-04-29T00:00:00+02:00">
-                Published: Sa 29 April 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting the Hackerspace Budapest</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-hackerspace-budapest.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-<p class="paginator">
-    Page 1 / 4
-        <a href="https://blog.rnstlr.ch/author/rnestler2.html">&raquo;</a>
-        <a href="https://blog.rnstlr.ch/author/rnestler4.html">&#8649;</a>
-</p>
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>

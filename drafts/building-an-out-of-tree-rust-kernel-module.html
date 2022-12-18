@@ -87,7 +87,7 @@ enabled the testing repositories:</p>
 <h2>A first start</h2>
 <p>Since I just want to play around I decided to build an out-of-tree Rust module.
 Luckily there is an example module available for that already:
-https://github.com/Rust-for-Linux/rust-out-of-tree-module.</p>
+<a href="https://github.com/Rust-for-Linux/rust-out-of-tree-module">https://github.com/Rust-for-Linux/rust-out-of-tree-module</a>.</p>
 <p>So I went ahead, cloned the repo and tried to just execute make:</p>
 <div class="highlight"><pre><span></span><code>rust-out-of-tree-module (git)-[main] % make
 make -C /lib/modules/`uname -r`/build M=$PWD
@@ -102,8 +102,7 @@ make: *** [Makefile:6: default] Error 2
 </code></pre></div>
 
 <p>Well...</p>
-<p>Reading through
-https://www.kernel.org/doc/html/latest/rust/quick-start.html
+<p>Reading through <a href="https://www.kernel.org/doc/html/latest/rust/quick-start.html">https://www.kernel.org/doc/html/latest/rust/quick-start.html</a>
 it seemed that I have everything I need to get started.</p>
 <p>The README mentions the following though:</p>
 <blockquote>
@@ -115,7 +114,7 @@ not updated to take into account Rust support yet).</p>
 </blockquote>
 <h2>Trying an in-kernel build</h2>
 <p>To check if it is just a tooling issue I cloned the
-https://github.com/Rust-for-Linux/linux repo and executed the check according
+<a href="https://github.com/Rust-for-Linux/linux">https://github.com/Rust-for-Linux/linux</a> repo and executed the check according
 to the documentation:</p>
 <div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[rust] % make LLVM=1 rustavailable
 ***
@@ -286,7 +285,7 @@ insmod: ERROR: could not insert module rust_out_of_tree.ko: Invalid module forma
 
 <p>Of course we aren't setting the version the same as the ArchLinux kernel. I
 copied a few steps from
-https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD
+<a href="https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD">https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD</a>
 to set the same version (we could also just copy the config from there, but
 lets see what happens first)</p>
 <div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[tags/v6.1-arch1] % echo &quot;-1&quot; &gt; localversion.10-pkgrel

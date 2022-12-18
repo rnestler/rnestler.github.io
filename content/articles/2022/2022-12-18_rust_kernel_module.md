@@ -56,7 +56,7 @@ enabled the testing repositories:
 
 Since I just want to play around I decided to build an out-of-tree Rust module.
 Luckily there is an example module available for that already:
-https://github.com/Rust-for-Linux/rust-out-of-tree-module.
+<https://github.com/Rust-for-Linux/rust-out-of-tree-module>.
 
 So I went ahead, cloned the repo and tried to just execute make:
 ```text
@@ -74,8 +74,7 @@ make: *** [Makefile:6: default] Error 2
 
 Well...
 
-Reading through
-https://www.kernel.org/doc/html/latest/rust/quick-start.html
+Reading through <https://www.kernel.org/doc/html/latest/rust/quick-start.html>
 it seemed that I have everything I need to get started.
 
 The README mentions the following though:
@@ -89,7 +88,7 @@ The README mentions the following though:
 ## Trying an in-kernel build
 
 To check if it is just a tooling issue I cloned the
-https://github.com/Rust-for-Linux/linux repo and executed the check according
+<https://github.com/Rust-for-Linux/linux> repo and executed the check according
 to the documentation:
 
 ```text
@@ -275,7 +274,7 @@ We see this in the `dmesg` output as well:
 
 Of course we aren't setting the version the same as the ArchLinux kernel. I
 copied a few steps from
-https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD
+<https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD>
 to set the same version (we could also just copy the config from there, but
 lets see what happens first)
 ```text

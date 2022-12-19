@@ -12,4 +12,6 @@ asdf install
 poetry env use $(asdf which python)
 poetry install
 poetry shell
+# or alternatively
+source $(poetry env info --path)/bin/activate
 ```

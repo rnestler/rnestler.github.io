@@ -40,7 +40,7 @@
                 By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> </p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
 </footer><!-- /.post-info -->      <p>With the release of <a href="https://lwn.net/Articles/917504/">Linux 6.1</a> minimal Rust
 support landed and it should be possible to <del>easily</del> build a hello
 world kernel module in Rust.</p>
@@ -130,7 +130,7 @@ to the documentation:</p>
 Rust is available!
 </code></pre></div>
 
-<p>Since my toolchain seems to new I installed the older versions with</p>
+<p>Since my toolchain seems to be too new I installed the older versions with</p>
 <div class="highlight"><pre><span></span><code>rustup override <span class="nb">set</span> <span class="k">$(</span>scripts/min-tool-version.sh rustc<span class="k">)</span>
 rustup component add rust-src
 cargo install --locked --version <span class="k">$(</span>scripts/min-tool-version.sh bindgen<span class="k">)</span> bindgen
@@ -365,9 +365,9 @@ diff -u config .config
 <span class="nv">make</span>: <span class="o">***</span> [<span class="nv">Makefile</span>:<span class="mi">6</span>: <span class="nv">default</span>] <span class="nv">Error</span> <span class="mi">2</span>
 </code></pre></div>
 
-<p>This are now the compile time errors of the runtime errors we got before!</p>
-<p>Apparently the ArchLinux kernel <em>doesn't</em> have Rust support, despite it beeing
-set in the config. Executing  <code>make menuconfig</code> also reveals that options which
+<p>These are now the compile time equivalent of the runtime errors we got before!</p>
+<p>Apparently the ArchLinux kernel <em>doesn't</em> have Rust support, despite it being
+set in the config. Executing <code>make menuconfig</code> reveals that options which
 conflict with <code>CONFIG_HAVE_RUST=y</code> are enabled:</p>
 <div class="highlight"><pre><span></span><code>│ Symbol: RUST [=n]                                                                                                                                  │
 │ Type  : bool                                                                                                                                       │
@@ -376,8 +376,14 @@ conflict with <code>CONFIG_HAVE_RUST=y</code> are enabled:</p>
 │   Depends on: HAVE_RUST [=y] &amp;&amp; RUST_IS_AVAILABLE [=y] &amp;&amp; !MODVERSIONS [=n] &amp;&amp; !GCC_PLUGINS [=y] &amp;&amp; !RANDSTRUCT [=n] &amp;&amp; !DEBUG_INFO_BTF [=y]       │
 </code></pre></div>
 
+<h2>Giving up for now</h2>
 <p>At this point I'd probably need to compile and run a custom kernel which
 actually has Rust support enabled.</p>
+<p>I'll probably try this at a later point, but for now I'll give it a bit more
+time to settle.</p>
+<p>I'm also considering reporting this to the ArchLinux developers, but I'm not
+sure how much priority Rust kernel modules should have, given the early stage.
+I'll probably wait until Linux 6.2 is released before investigating further.</p>
     </div><!-- /.entry-content -->
 
   </article>

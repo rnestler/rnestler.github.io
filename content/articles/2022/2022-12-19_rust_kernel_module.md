@@ -1,5 +1,5 @@
 Title: Building an out-of-tree Rust Kernel Module
-Tags: rust, kernel
+Tags: rust, kernel, Linux, ArchLinux
 Language: en
 Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1
 Status: draft

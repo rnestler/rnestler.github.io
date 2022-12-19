@@ -189,8 +189,8 @@ make[1]: Leaving directory &amp;#39;/home/roughl/projects/github/Rust-for-Linux/
 make: *** [Makefile:6: default] Error 2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Looking into the compile errors it seemed that some the &lt;code&gt;fn init&lt;/code&gt; signature
-changed and that the &lt;code&gt;module!&lt;/code&gt; marco expects byte strings.&lt;/p&gt;
+&lt;p&gt;Looking into the compile errors it seemed that the &lt;code&gt;fn init&lt;/code&gt; signature changed
+and that the &lt;code&gt;module!&lt;/code&gt; marco expects byte strings.&lt;/p&gt;
 &lt;p&gt;Changing that:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;diff --git a/rust_out_of_tree.rs b/rust_out_of_tree.rs&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;span class="gh"&gt;index e280409..58cc9ba 100644&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;

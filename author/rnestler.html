@@ -226,8 +226,8 @@ make[1]: Leaving directory &#39;/home/roughl/projects/github/Rust-for-Linux/linu
 make: *** [Makefile:6: default] Error 2
 </code></pre></div>
 
-<p>Looking into the compile errors it seemed that some the <code>fn init</code> signature
-changed and that the <code>module!</code> marco expects byte strings.</p>
+<p>Looking into the compile errors it seemed that the <code>fn init</code> signature changed
+and that the <code>module!</code> marco expects byte strings.</p>
 <p>Changing that:</p>
 <div class="highlight"><pre><span></span><code><span class="gh">diff --git a/rust_out_of_tree.rs b/rust_out_of_tree.rs</span><span class="w"></span>
 <span class="gh">index e280409..58cc9ba 100644</span><span class="w"></span>

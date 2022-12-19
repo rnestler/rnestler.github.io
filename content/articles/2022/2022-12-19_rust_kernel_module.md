@@ -373,5 +373,14 @@ conflict with `CONFIG_HAVE_RUST=y` are enabled:
 │   Depends on: HAVE_RUST [=y] && RUST_IS_AVAILABLE [=y] && !MODVERSIONS [=n] && !GCC_PLUGINS [=y] && !RANDSTRUCT [=n] && !DEBUG_INFO_BTF [=y]       │
 ```
 
+## Giving up for now
+
 At this point I'd probably need to compile and run a custom kernel which
 actually has Rust support enabled.
+
+I'll probably try this at a later point, but for now I'll give it a bit more
+time to settle.
+
+I'm also considering reporting this to the ArchLinux developers, but I'm not
+sure how much priority Rust kernel modules should have, given the early stage.
+I'll probably wait until Linux 6.2 is released before investigating further.

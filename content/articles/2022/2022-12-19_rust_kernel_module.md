@@ -215,8 +215,8 @@ make[1]: Leaving directory '/home/roughl/projects/github/Rust-for-Linux/linux'
 make: *** [Makefile:6: default] Error 2
 ```
 
-Looking into the compile errors it seemed that some the `fn init` signature
-changed and that the `module!` marco expects byte strings.
+Looking into the compile errors it seemed that the `fn init` signature changed
+and that the `module!` marco expects byte strings.
 
 Changing that:
 ```diff

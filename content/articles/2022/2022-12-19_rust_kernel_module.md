@@ -2,7 +2,6 @@ Title: Building an out-of-tree Rust Kernel Module
 Tags: rust, kernel, Linux, ArchLinux
 Language: en
 Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1
-Status: draft
 
 With the release of [Linux 6.1](https://lwn.net/Articles/917504/) minimal Rust
 support landed and it should be possible to <del>easily</del> build a hello

@@ -25,7 +25,373 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html">Learning Ruby Like it's 2009 — Part 1</a></h1>
+                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html">Building an out-of-tree Rust Kernel Module</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2022-12-19T00:00:00+01:00">
+                Published: Mo 19 Dezember 2022
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
+</footer><!-- /.post-info --><p>With the release of <a href="https://lwn.net/Articles/917504/">Linux 6.1</a> minimal Rust
+support landed and it should be possible to <del>easily</del> build a hello
+world kernel module in Rust.</p>
+<h2>Installing Linux 6.1</h2>
+<p>At the time of writing Linux 6.1 was still in testing on ArchLinux, so I
+enabled the testing repositories:</p>
+<div class="highlight"><pre><span></span><code><span class="gd">--- pacman.conf 2022-12-18 15:25:10.742819293 +0100</span><span class="w"></span>
+<span class="gi">+++ /etc/pacman.conf    2022-12-18 00:32:56.404801925 +0100</span><span class="w"></span>
+<span class="gu">@@ -69,8 +69,8 @@</span><span class="w"></span>
+<span class="w"> </span># repo name header and Include lines. You can add preferred servers immediately<span class="w"></span>
+<span class="w"> </span># after the header, and they will be used before the default mirrors.<span class="w"></span>
+
+<span class="gd">-#[testing]</span><span class="w"></span>
+<span class="gd">-#Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
+<span class="gi">+[testing]</span><span class="w"></span>
+<span class="gi">+Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
+
+<span class="w"> </span>[core]<span class="w"></span>
+<span class="w"> </span>Include = /etc/pacman.d/mirrorlist<span class="w"></span>
+<span class="gu">@@ -78,8 +78,8 @@</span><span class="w"></span>
+<span class="w"> </span>[extra]<span class="w"></span>
+<span class="w"> </span>Include = /etc/pacman.d/mirrorlist<span class="w"></span>
+
+<span class="gd">-#[community-testing]</span><span class="w"></span>
+<span class="gd">-#Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
+<span class="gi">+[community-testing]</span><span class="w"></span>
+<span class="gi">+Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
+
+<span class="w"> </span>[community]<span class="w"></span>
+<span class="w"> </span>Include = /etc/pacman.d/mirrorlist<span class="w"></span>
+<span class="gu">@@ -87,8 +87,8 @@</span><span class="w"></span>
+<span class="w"> </span># If you want to run 32 bit applications on your x86_64 system,<span class="w"></span>
+<span class="w"> </span># enable the multilib repositories as required here.<span class="w"></span>
+
+<span class="gd">-#[multilib-testing]</span><span class="w"></span>
+<span class="gd">-#Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
+<span class="gi">+[multilib-testing]</span><span class="w"></span>
+<span class="gi">+Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
+
+<span class="w"> </span>[multilib]<span class="w"></span>
+<span class="w"> </span>Include = /etc/pacman.d/mirrorlist<span class="w"></span>
+</code></pre></div>
+
+<h2>A first start</h2>
+<p>Since I just want to play around I decided to build an out-of-tree Rust module.
+Luckily there is an example module available for that already:
+<a href="https://github.com/Rust-for-Linux/rust-out-of-tree-module">https://github.com/Rust-for-Linux/rust-out-of-tree-module</a>.</p>
+<p>So I went ahead, cloned the repo and tried to just execute make:</p>
+<div class="highlight"><pre><span></span><code>rust-out-of-tree-module (git)-[main] % make
+make -C /lib/modules/`uname -r`/build M=$PWD
+make[1]: Entering directory &#39;/usr/lib/modules/6.1.0-arch1-1/build&#39;
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+error: target file &quot;./rust/target.json&quot; does not exist
+
+make[2]: *** [scripts/Makefile.build:307: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o] Error 1
+make[1]: *** [Makefile:1992: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module] Error 2
+make[1]: Leaving directory &#39;/usr/lib/modules/6.1.0-arch1-1/build&#39;
+make: *** [Makefile:6: default] Error 2
+</code></pre></div>
+
+<p>Well...</p>
+<p>Reading through <a href="https://www.kernel.org/doc/html/latest/rust/quick-start.html">https://www.kernel.org/doc/html/latest/rust/quick-start.html</a>
+it seemed that I have everything I need to get started.</p>
+<p>The README mentions the following though:</p>
+<blockquote>
+<p>The kernel tree (KDIR) requires the Rust metadata to be available. These are
+generated during the kernel build, but may not be available for
+installed/distributed kernels (the scripts that install/distribute kernel
+headers etc. for the different package systems and Linux distributions are
+not updated to take into account Rust support yet).</p>
+</blockquote>
+<h2>Trying an in-kernel build</h2>
+<p>To check if it is just a tooling issue I cloned the
+<a href="https://github.com/Rust-for-Linux/linux">https://github.com/Rust-for-Linux/linux</a> repo and executed the check according
+to the documentation:</p>
+<div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[rust] % make LLVM=1 rustavailable
+***
+*** Rust compiler &#39;rustc&#39; is too new. This may or may not work.
+***   Your version:     1.66.0
+***   Expected version: 1.62.0
+***
+***
+*** Rust bindings generator &#39;bindgen&#39; is too new. This may or may not work.
+***   Your version:     0.63.0
+***   Expected version: 0.56.0
+***
+Rust is available!
+</code></pre></div>
+
+<p>Since my toolchain seems to be too new I installed the older versions with</p>
+<div class="highlight"><pre><span></span><code>rustup override <span class="nb">set</span> <span class="k">$(</span>scripts/min-tool-version.sh rustc<span class="k">)</span>
+rustup component add rust-src
+cargo install --locked --version <span class="k">$(</span>scripts/min-tool-version.sh bindgen<span class="k">)</span> bindgen
+</code></pre></div>
+
+<p>Then I enabled Rust support with <code>make menuconfig</code> in the <em>General setup</em> menu.
+The option is only shown if the toolchain is installed and in my case I also
+had to disable the <code>GCC_PLUGINS</code> option.</p>
+<p>I then just compiled the whole kernel to test it:</p>
+<div class="highlight"><pre><span></span><code>make LLVM=1
+</code></pre></div>
+
+<p>This went smoothly, so I continued to build the actual ArchLinux kernel which matches my running kernel:</p>
+<div class="highlight"><pre><span></span><code>git remote add archlinux git@github.com:archlinux/linux.git
+git fetch archlinux v6.1-arch1
+git checkout v6.1-arch1
+</code></pre></div>
+
+<p>To be sure I ran <code>make menuconfig</code> again and applied the same changes again.</p>
+<p>A few minutes later I had my kernel ready:</p>
+<div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[rust] % make -j8 LLVM=1
+...
+Kernel: arch/x86/boot/bzImage is ready  (#2)
+make -j8 LLVM=1  1557.69s user 133.21s system 745% cpu 3:46.77 total
+</code></pre></div>
+
+<h2>Back to the out-of-tree module</h2>
+<p>Having successfully built the whole kernel with Rust support I went back to the
+<code>rust-out-of-tree-module</code> repository and tried to build it:</p>
+<div class="highlight"><pre><span></span><code>Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make KDIR=../linux LLVM=1
+make -C ../linux M=$PWD
+make[1]: Entering directory &#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+error: proc macro panicked
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:7:1
+   |
+7  | / module! {
+8  | |     type: RustOutOfTree,
+9  | |     name: &quot;rust_out_of_tree&quot;,
+10 | |     author: &quot;Rust for Linux Contributors&quot;,
+11 | |     description: &quot;Rust out-of-tree sample&quot;,
+12 | |     license: &quot;GPL&quot;,
+13 | | }
+   | |_^
+   |
+   = help: message: Expected byte string
+
+error[E0412]: cannot find type `CStr` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:29
+   |
+20 |     fn init(_name: &amp;&#39;static CStr, _module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
+   |                             ^^^^ not found in this scope
+   |
+help: consider importing this struct
+   |
+5  | use core::ffi::CStr;
+   |
+
+error[E0425]: cannot find value `__LOG_PREFIX` in the crate root
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:21:9
+   |
+21 |         pr_info!(&quot;Rust out-of-tree sample (init)\n&quot;);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in the crate root
+   |
+   = note: this error originates in the macro `$crate::print_macro` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0425]: cannot find value `__LOG_PREFIX` in the crate root
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:34:9
+   |
+34 |         pr_info!(&quot;My numbers are {:?}\n&quot;, self.numbers);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in the crate root
+   |
+   = note: this error originates in the macro `$crate::print_macro` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0425]: cannot find value `__LOG_PREFIX` in the crate root
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:35:9
+   |
+35 |         pr_info!(&quot;Rust out-of-tree sample (exit)\n&quot;);
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in the crate root
+   |
+   = note: this error originates in the macro `$crate::print_macro` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0050]: method `init` has 2 parameters but the declaration in trait `init` has 1
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:20
+   |
+20 |     fn init(_name: &amp;&#39;static CStr, _module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
+   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected 1 parameter, found 2
+   |
+   = note: `init` from trait: `fn(&amp;&#39;static kernel::ThisModule) -&gt; core::result::Result&lt;Self, kernel::error::Error&gt;`
+
+error: aborting due to 6 previous errors
+
+Some errors have detailed explanations: E0050, E0412, E0425.
+For more information about an error, try `rustc --explain E0050`.
+make[2]: *** [scripts/Makefile.build:307: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o] Error 1
+make[1]: *** [Makefile:1992: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module] Error 2
+make[1]: Leaving directory &#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;
+make: *** [Makefile:6: default] Error 2
+</code></pre></div>
+
+<p>Looking into the compile errors it seemed that some the <code>fn init</code> signature
+changed and that the <code>module!</code> marco expects byte strings.</p>
+<p>Changing that:</p>
+<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/rust_out_of_tree.rs b/rust_out_of_tree.rs</span><span class="w"></span>
+<span class="gh">index e280409..58cc9ba 100644</span><span class="w"></span>
+<span class="gd">--- a/rust_out_of_tree.rs</span><span class="w"></span>
+<span class="gi">+++ b/rust_out_of_tree.rs</span><span class="w"></span>
+<span class="gu">@@ -6,10 +6,10 @@ use kernel::prelude::*;</span><span class="w"></span>
+
+<span class="w"> </span>module! {<span class="w"></span>
+<span class="w"> </span>    type: RustOutOfTree,<span class="w"></span>
+<span class="gd">-    name: &quot;rust_out_of_tree&quot;,</span><span class="w"></span>
+<span class="gd">-    author: &quot;Rust for Linux Contributors&quot;,</span><span class="w"></span>
+<span class="gd">-    description: &quot;Rust out-of-tree sample&quot;,</span><span class="w"></span>
+<span class="gd">-    license: &quot;GPL&quot;,</span><span class="w"></span>
+<span class="gi">+    name: b&quot;rust_out_of_tree&quot;,</span><span class="w"></span>
+<span class="gi">+    author: b&quot;Rust for Linux Contributors&quot;,</span><span class="w"></span>
+<span class="gi">+    description: b&quot;Rust out-of-tree sample&quot;,</span><span class="w"></span>
+<span class="gi">+    license: b&quot;GPL&quot;,</span><span class="w"></span>
+<span class="w"> </span>}<span class="w"></span>
+
+<span class="w"> </span>struct RustOutOfTree {<span class="w"></span>
+<span class="gu">@@ -17,7 +17,7 @@ struct RustOutOfTree {</span><span class="w"></span>
+<span class="w"> </span>}<span class="w"></span>
+
+<span class="w"> </span>impl kernel::Module for RustOutOfTree {<span class="w"></span>
+<span class="gd">-    fn init(_name: &amp;&#39;static CStr, _module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {</span><span class="w"></span>
+<span class="gi">+    fn init(_module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {</span><span class="w"></span>
+<span class="w"> </span>        pr_info!(&quot;Rust out-of-tree sample (init)\n&quot;);<span class="w"></span>
+
+<span class="w"> </span>        let mut numbers = Vec::new();<span class="w"></span>
+</code></pre></div>
+
+<p>We get a successful build!</p>
+<div class="highlight"><pre><span></span><code>Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make KDIR=../linux LLVM=1
+make -C ../linux M=$PWD
+make[1]: Entering directory &#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+  MODPOST /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/Module.symvers
+  LD [M]  /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.ko
+make[1]: Leaving directory &#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;
+</code></pre></div>
+
+<p>But trying to load the resulting module fails:</p>
+<div class="highlight"><pre><span></span><code>sudo insmod rust_out_of_tree.ko
+insmod: ERROR: could not insert module rust_out_of_tree.ko: Invalid module format
+</code></pre></div>
+
+<p>We see this in the <code>dmesg</code> output as well:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="mf">24593.691184</span><span class="p">]</span><span class="w"> </span><span class="n">rust_out_of_tree</span><span class="p">:</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="n">magic</span><span class="w"> </span><span class="s1">&#39;6.1.0-arch1 SMP preempt mod_unload &#39;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="s1">&#39;6.1.0-arch1-1 SMP preempt mod_unload &#39;</span><span class="w"></span>
+</code></pre></div>
+
+<p>Of course we aren't setting the version the same as the ArchLinux kernel. I
+copied a few steps from
+<a href="https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD">https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD</a>
+to set the same version (we could also just copy the config from there, but
+lets see what happens first)</p>
+<div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[tags/v6.1-arch1] % echo &quot;-1&quot; &gt; localversion.10-pkgrel
+Rust-for-Linux/linux (git)-[tags/v6.1-arch1] % make -s kernelrelease &gt; version
+Rust-for-Linux/linux (git)-[tags/v6.1-arch1] % cat version
+6.1.0-arch1-1
+</code></pre></div>
+
+<p>It didn't work again:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span> <span class="ss">(</span><span class="nv">git</span><span class="ss">)</span><span class="o">-</span>[<span class="nv">fix</span><span class="o">-</span><span class="nv">build</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">linux</span><span class="o">-</span><span class="mi">6</span>.<span class="mi">1</span>] <span class="o">%</span> <span class="nv">sudo</span> <span class="nv">insmod</span> <span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>
+<span class="nv">insmod</span>: <span class="nv">ERROR</span>: <span class="nv">could</span> <span class="nv">not</span> <span class="nv">insert</span> <span class="nv">module</span> <span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>: <span class="nv">Unknown</span> <span class="nv">symbol</span> <span class="nv">in</span> <span class="nv">module</span>
+</code></pre></div>
+
+<p>The <code>dmesg</code> output shows:</p>
+<div class="highlight"><pre><span></span><code>[25300.463334] rust_out_of_tree: Unknown symbol _RNvNtNtCsfATHBUcknU9_6kernel5print14format_strings4INFO (err -2)
+[25300.463353] rust_out_of_tree: Unknown symbol _RNvNtCsfATHBUcknU9_6kernel5print11call_printk (err -2)
+[25300.463371] rust_out_of_tree: Unknown symbol __rust_dealloc (err -2)
+[25300.463386] rust_out_of_tree: Unknown symbol __rust_realloc (err -2)
+[25300.463400] rust_out_of_tree: Unknown symbol __rust_alloc (err -2)
+[25300.463414] rust_out_of_tree: Unknown symbol _RNvNtCs3yuwAp0waWO_4core9panicking5panic (err -2)
+[25300.463428] rust_out_of_tree: Unknown symbol _RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter15debug_lower_hex (err -2)
+[25300.463442] rust_out_of_tree: Unknown symbol _RNvXsS_NtNtCs3yuwAp0waWO_4core3fmt3numlNtB7_8LowerHex3fmt (err -2)
+[25300.463456] rust_out_of_tree: Unknown symbol _RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter15debug_upper_hex (err -2)
+[25300.463469] rust_out_of_tree: Unknown symbol _RNvXsT_NtNtCs3yuwAp0waWO_4core3fmt3numlNtB7_8UpperHex3fmt (err -2)
+[25300.463483] rust_out_of_tree: Unknown symbol _RNvXs2_NtNtNtCs3yuwAp0waWO_4core3fmt3num3implNtB9_7Display3fmt (err -2)
+[25300.463497] rust_out_of_tree: Unknown symbol _RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter10debug_list (err -2)
+[25300.463510] rust_out_of_tree: Unknown symbol _RNvMs5_NtNtCs3yuwAp0waWO_4core3fmt8buildersNtB5_9DebugList5entry (err -2)
+[25300.463524] rust_out_of_tree: Unknown symbol _RNvMs5_NtNtCs3yuwAp0waWO_4core3fmt8buildersNtB5_9DebugList6finish (err -2)
+[25300.463538] rust_out_of_tree: Unknown symbol _RNvXs_NtCsfATHBUcknU9_6kernel5errorNtB4_5ErrorINtNtCs3yuwAp0waWO_4core7convert4FromNtNtCsdvv6pRyacSq_5alloc11collections15TryReserveErrorE4from (err -2)
+[25300.463552] rust_out_of_tree: Unknown symbol _RNvMNtCsfATHBUcknU9_6kernel5errorNtB2_5Error15to_kernel_errno (err -2)
+</code></pre></div>
+
+<p>So lets try with the ArchLinux config:</p>
+<div class="highlight"><pre><span></span><code>wget https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/linux/trunk/config
+make olddefconfig
+diff -u config .config
+</code></pre></div>
+
+<p>The configuration difference isn't big</p>
+<div class="highlight"><pre><span></span><code><span class="gd">--- config  2022-12-18 20:51:38.269359290 +0100</span><span class="w"></span>
+<span class="gi">+++ .config 2022-12-18 20:53:48.896025137 +0100</span><span class="w"></span>
+<span class="gu">@@ -11,6 +11,7 @@</span><span class="w"></span>
+<span class="w"> </span>CONFIG_LD_IS_BFD=y<span class="w"></span>
+<span class="w"> </span>CONFIG_LD_VERSION=23900<span class="w"></span>
+<span class="w"> </span>CONFIG_LLD_VERSION=0<span class="w"></span>
+<span class="gi">+CONFIG_RUST_IS_AVAILABLE=y</span><span class="w"></span>
+<span class="w"> </span>CONFIG_CC_CAN_LINK=y<span class="w"></span>
+<span class="w"> </span>CONFIG_CC_CAN_LINK_STATIC=y<span class="w"></span>
+<span class="w"> </span>CONFIG_CC_HAS_ASM_GOTO_OUTPUT=y<span class="w"></span>
+</code></pre></div>
+
+<p>A bit strange that <code>CONFIG_RUST_IS_AVAILABLE=y</code> isn't set, but
+<code>CONFIG_HAVE_RUST=y</code> is enabled so all should be good.</p>
+<p>Quite some time later we built the ArchLinux kernel as well:</p>
+<div class="highlight"><pre><span></span><code>make -j8 LLVM=1  15202.68s user 1464.06s system 800% cpu 34:42.57 total
+</code></pre></div>
+
+<p>But this lead to build failures in the kernel module!</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span> <span class="ss">(</span><span class="nv">git</span><span class="ss">)</span><span class="o">-</span>[<span class="nv">fix</span><span class="o">-</span><span class="nv">build</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">linux</span><span class="o">-</span><span class="mi">6</span>.<span class="mi">1</span>] <span class="o">%</span> <span class="nv">make</span> <span class="nv">KDIR</span><span class="o">=</span>..<span class="o">/</span><span class="nv">linux</span> <span class="nv">LLVM</span><span class="o">=</span><span class="mi">1</span>
+<span class="nv">make</span> <span class="o">-</span><span class="nv">C</span> ..<span class="o">/</span><span class="nv">linux</span> <span class="nv">M</span><span class="o">=</span>$<span class="nv">PWD</span>
+<span class="nv">make</span>[<span class="mi">1</span>]: <span class="nv">Entering</span> <span class="nv">directory</span> <span class="s1">&#39;</span><span class="s">/home/roughl/projects/github/Rust-for-Linux/linux</span><span class="s1">&#39;</span>
+  <span class="nv">MODPOST</span> <span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">Module</span>.<span class="nv">symvers</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">_RNvNtNtCsfATHBUcknU9_6kernel5print14format_strings4INFO</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">_RNvNtCsfATHBUcknU9_6kernel5print11call_printk</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">__rust_dealloc</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">__rust_realloc</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">__rust_alloc</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">_RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter15debug_lower_hex</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">_RNvXsS_NtNtCs3yuwAp0waWO_4core3fmt3numlNtB7_8LowerHex3fmt</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">_RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter15debug_upper_hex</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">_RNvXsT_NtNtCs3yuwAp0waWO_4core3fmt3numlNtB7_8UpperHex3fmt</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">ERROR</span>: <span class="nv">modpost</span>: <span class="s2">&quot;</span><span class="s">_RNvXs2_NtNtNtCs3yuwAp0waWO_4core3fmt3num3implNtB9_7Display3fmt</span><span class="s2">&quot;</span> [<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>] <span class="nv">undefined</span><span class="o">!</span>
+<span class="nv">WARNING</span>: <span class="nv">modpost</span>: <span class="nv">suppressed</span> <span class="mi">5</span> <span class="nv">unresolved</span> <span class="nv">symbol</span> <span class="nv">warnings</span> <span class="nv">because</span> <span class="nv">there</span> <span class="nv">were</span> <span class="nv">too</span> <span class="nv">many</span><span class="ss">)</span>
+<span class="nv">make</span>[<span class="mi">2</span>]: <span class="o">***</span> [<span class="nv">scripts</span><span class="o">/</span><span class="nv">Makefile</span>.<span class="nv">modpost</span>:<span class="mi">126</span>: <span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">Module</span>.<span class="nv">symvers</span>] <span class="nv">Error</span> <span class="mi">1</span>
+<span class="nv">make</span>[<span class="mi">1</span>]: <span class="o">***</span> [<span class="nv">Makefile</span>:<span class="mi">1944</span>: <span class="nv">modpost</span>] <span class="nv">Error</span> <span class="mi">2</span>
+<span class="nv">make</span>[<span class="mi">1</span>]: <span class="nv">Leaving</span> <span class="nv">directory</span> <span class="s1">&#39;</span><span class="s">/home/roughl/projects/github/Rust-for-Linux/linux</span><span class="s1">&#39;</span>
+<span class="nv">make</span>: <span class="o">***</span> [<span class="nv">Makefile</span>:<span class="mi">6</span>: <span class="nv">default</span>] <span class="nv">Error</span> <span class="mi">2</span>
+</code></pre></div>
+
+<p>These are now the compile time equivalent of the runtime errors we got before!</p>
+<p>Apparently the ArchLinux kernel <em>doesn't</em> have Rust support, despite it being
+set in the config. Executing <code>make menuconfig</code> reveals that options which
+conflict with <code>CONFIG_HAVE_RUST=y</code> are enabled:</p>
+<div class="highlight"><pre><span></span><code>│ Symbol: RUST [=n]                                                                                                                                  │
+│ Type  : bool                                                                                                                                       │
+│ Defined at init/Kconfig:1925                                                                                                                       │
+│   Prompt: Rust support                                                                                                                             │
+│   Depends on: HAVE_RUST [=y] &amp;&amp; RUST_IS_AVAILABLE [=y] &amp;&amp; !MODVERSIONS [=n] &amp;&amp; !GCC_PLUGINS [=y] &amp;&amp; !RANDSTRUCT [=n] &amp;&amp; !DEBUG_INFO_BTF [=y]       │
+</code></pre></div>
+
+<h2>Giving up for now</h2>
+<p>At this point I'd probably need to compile and run a custom kernel which
+actually has Rust support enabled.</p>
+<p>I'll probably try this at a later point, but for now I'll give it a bit more
+time to settle.</p>
+<p>I'm also considering reporting this to the ArchLinux developers, but I'm not
+sure how much priority Rust kernel modules should have, given the early stage.
+I'll probably wait until Linux 6.2 is released before investigating further.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html" rel="bookmark"
+                           title="Permalink to Learning Ruby Like it's 2009 — Part 1">Learning Ruby Like it's 2009 — Part 1</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-02-15T00:00:00+01:00">
                 Published: Di 15 Februar 2022
@@ -36,87 +402,10 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/learning.html">learning</a> <a href="https://blog.rnstlr.ch/tag/ruby.html">ruby</a> <a href="https://blog.rnstlr.ch/tag/bundler.html">bundler</a> <a href="https://blog.rnstlr.ch/tag/learning-ruby-like-its-2009.html">learning-ruby-like-its-2009</a> </p>
-</footer><!-- /.post-info --><p>As announced in my previous post I will document my journey of learning Ruby
-and especially Ruby on Rails. Or how a friend of mine put it after hearing
-about my idea:</p>
-<blockquote>
-<p>Blogging about Rails like it's 2009 😄.</p>
-<p><a href="https://blog.dbrgn.ch/about/">@dbrgn</a> February, 2022</p>
-</blockquote>
-<h2>Learning Ruby like it's 2009</h2>
-<p>One of my first exercises was to investigate a case where an automatic update
-done by the <a href="https://depfu.com/">depfu</a>-bot failed the tests and as such
-couldn't be merged. It looked similar to
-<a href="https://github.com/renuo/pingen-client/pull/15">this</a> but failed the tests and
-had a lot more updates including some major ones.</p>
-<p>Already knowing a few programming languages and package managers my first idea
-was: «Easy: Let's just first do all the minor and patch upgrades and see if
-this breaks anything». Assuming the gems follow semantic versioning this should
-just work.</p>
-<h2>Bundler and version specifier</h2>
-<p>First thing I noticed is that Bundler, while recommending semantic versioning,
-doesn't directly support semantic version specifiers like for example
-<a href="https://doc.rust-lang.org/cargo/reference/semver.html">cargo</a> does. It does
-support defining your own ranges like the following:</p>
-<div class="highlight"><pre><span></span><code><span class="n">gem</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;= 2.2.0&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt; 3.0&#39;</span><span class="sb">`</span>
-</code></pre></div>
-
-<p>or using the <code>~&gt;</code> operator which achives the same thing:</p>
-<div class="highlight"><pre><span></span><code><span class="n">gem</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.2&#39;</span>
-</code></pre></div>
-
-<p>For
-<a href="https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility">cargo</a>
-one would just specify</p>
-<div class="highlight"><pre><span></span><code><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;2.2.0&quot;</span><span class="w"></span>
-</code></pre></div>
-
-<p>with the same result and in
-<a href="https://docs.npmjs.com/about-semantic-versioning">npm</a> we can use the <code>^</code>
-operator:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&quot;foo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^2.2.0&quot;</span><span class="w"></span>
-</code></pre></div>
-
-<p>For bundler there is an <a href="https://github.com/rubygems/rubygems/issues/1919">issue on
-GitHub</a> to add a SemVer
-operator since 2017.</p>
-<p>The code base I was working on didn't have a lot of version specifiers. The
-reason is that Renuo generally tries to use the latest versions of all Ruby
-dependencies for applications. This is possible since we have extensive test
-suites which we trust and it enables an open and fast upgrade path for
-customers if they need new features in the future.</p>
-<p>Exceptions are made if a gem update causes problems or if it is a very central
-gem like rails. To still have reproducible environments for applications the
-<code>Gemfile.lock</code> file is of course checked into source control as it is <a href="https://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/">best
-practice</a>.</p>
-<p>So just running <code>bundle update</code> would update to the latest major version of
-almost all dependencies, which was exactly the thing I didn't want to do.</p>
-<p>Luckily bundler has the
-<a href="https://bundler.io/v2.3/man/bundle-update.1.html"><code>--minor</code></a> option which one
-can pass to the <code>update</code> command which should <em>Prefer updating only to next
-minor version.</em></p>
-<h2>A minor inconvenience</h2>
-<p>So here we go executing <code>bundler update --minor</code>! And the result was...
-Nothing! It just didn't update anything!</p>
-<p>Confused I started reading up documentation, version specifiers, tried to
-update individual packages with <code>bundle update --minor $package</code> (which worked)
-and finally found <a href="https://github.com/rubygems/rubygems/issues/3360">https://github.com/rubygems/rubygems/issues/3360</a>. Apparently
-it's a known issue since 2018 that bundle update just fails to do the <code>--patch</code>
-and <code>--minor</code> updates.</p>
-<p>From the same GitHub issue I copied the handy shell one-liner <code>bundle update
-$(bundle list | awk '$1 ~ /^\*/ {print $2}' | grep -v bundler) --minor</code> which
-did the job!</p>
-<p>Doing just the semver compatible updates worked, all the tests did pass and we
-could deploy it. My shattered trust in the Ruby ecosystem from the <code>bunlder</code>
-failure was restored!</p>
-<p>All in all bundler is a decent package manager and I love that the Ruby
-ecosystem seems to embrace semantic versioning and one can do fearless upgrades
-to get bug- and security fixes of the dependencies.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>First part of my journey to learn ruby and rails. Focusing on bundler and version management.</p>
+                <a class="readmore" href="https://blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -299,29 +588,6 @@ to get bug- and security fixes of the dependencies.</p>                </article
 </footer><!-- /.post-info -->                <p class="first last">Visiting the Hackerspace Budapest</p>
 
                 <a class="readmore" href="https://blog.rnstlr.ch/visiting-hackerspace-budapest.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-progressbar-and-metalab.html" rel="bookmark"
-                           title="Permalink to Visiting Progressbar and Metalab">Visiting Progressbar and Metalab</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-04-25T00:00:00+02:00">
-                Published: Di 25 April 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting Progressbar</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-progressbar-and-metalab.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

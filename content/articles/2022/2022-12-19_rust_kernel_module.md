@@ -1,7 +1,7 @@
 Title: Building an out-of-tree Rust Kernel Module
 Tags: rust, kernel
 Language: en
-Summary: Building a hello world out-of-tree Rust kernel module for Linux 6.1
+Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1
 Status: draft
 
 With the release of [Linux 6.1](https://lwn.net/Articles/917504/) minimal Rust
@@ -106,7 +106,7 @@ Rust-for-Linux/linux (git)-[rust] % make LLVM=1 rustavailable
 Rust is available!
 ```
 
-Since my toolchain seems to new I installed the older versions with
+Since my toolchain seems to be too new I installed the older versions with
 ```bash
 rustup override set $(scripts/min-tool-version.sh rustc)
 rustup component add rust-src
@@ -360,10 +360,10 @@ make[1]: Leaving directory '/home/roughl/projects/github/Rust-for-Linux/linux'
 make: *** [Makefile:6: default] Error 2
 ```
 
-This are now the compile time errors of the runtime errors we got before!
+These are now the compile time equivalent of the runtime errors we got before!
 
-Apparently the ArchLinux kernel *doesn't* have Rust support, despite it beeing
-set in the config. Executing  `make menuconfig` also reveals that options which
+Apparently the ArchLinux kernel *doesn't* have Rust support, despite it being
+set in the config. Executing `make menuconfig` reveals that options which
 conflict with `CONFIG_HAVE_RUST=y` are enabled:
 ```
 │ Symbol: RUST [=n]                                                                                                                                  │

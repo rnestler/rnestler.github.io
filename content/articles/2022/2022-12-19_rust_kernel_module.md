@@ -3,7 +3,7 @@ Tags: rust, kernel, Linux, ArchLinux
 Language: en
 Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1
 
-With the release of [Linux 6.1](https://lwn.net/Articles/917504/) minimal Rust
+With the release of [Linux 6.1](https://lwn.net/Articles/917504/), minimal Rust
 support landed and it should be possible to <del>easily</del> build a hello
 world kernel module in Rust.
 
@@ -53,8 +53,8 @@ enabled the testing repositories:
 
 ## A first start
 
-Since I just want to play around I decided to build an out-of-tree Rust module.
-Luckily there is an example module available for that already:
+Since I just want to play around, I decided to build an out-of-tree Rust module.
+Luckily, there is an example module available for that already:
 <https://github.com/Rust-for-Linux/rust-out-of-tree-module>.
 
 So I went ahead, cloned the repo and tried to just execute make:
@@ -73,7 +73,7 @@ make: *** [Makefile:6: default] Error 2
 
 Well...
 
-Reading through <https://www.kernel.org/doc/html/latest/rust/quick-start.html>
+Reading through <https://www.kernel.org/doc/html/latest/rust/quick-start.html>,
 it seemed that I have everything I need to get started.
 
 The README mentions the following though:
@@ -86,7 +86,7 @@ The README mentions the following though:
 
 ## Trying an in-kernel build
 
-To check if it is just a tooling issue I cloned the
+To check if it is just a tooling issue, I cloned the
 <https://github.com/Rust-for-Linux/linux> repo and executed the check according
 to the documentation:
 
@@ -105,7 +105,7 @@ Rust-for-Linux/linux (git)-[rust] % make LLVM=1 rustavailable
 Rust is available!
 ```
 
-Since my toolchain seems to be too new I installed the older versions with
+Since my toolchain seems to be too new, I installed the older versions with
 ```bash
 rustup override set $(scripts/min-tool-version.sh rustc)
 rustup component add rust-src
@@ -113,7 +113,7 @@ cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen
 ```
 
 Then I enabled Rust support with `make menuconfig` in the *General setup* menu.
-The option is only shown if the toolchain is installed and in my case I also
+The option is only shown if the toolchain is installed, and in my case I also
 had to disable the `GCC_PLUGINS` option.
 
 I then just compiled the whole kernel to test it:
@@ -128,9 +128,9 @@ git fetch archlinux v6.1-arch1
 git checkout v6.1-arch1
 ```
 
-To be sure I ran `make menuconfig` again and applied the same changes again.
+To be sure, I ran `make menuconfig` again and applied the same changes again.
 
-A few minutes later I had my kernel ready:
+A few minutes later, I had my kernel ready:
 ```text
 Rust-for-Linux/linux (git)-[rust] % make -j8 LLVM=1
 ...
@@ -140,7 +140,7 @@ make -j8 LLVM=1  1557.69s user 133.21s system 745% cpu 3:46.77 total
 
 ## Back to the out-of-tree module
 
-Having successfully built the whole kernel with Rust support I went back to the
+Having successfully built the whole kernel with Rust support, I went back to the
 `rust-out-of-tree-module` repository and tried to build it:
 
 ```text
@@ -215,7 +215,7 @@ make[1]: Leaving directory '/home/roughl/projects/github/Rust-for-Linux/linux'
 make: *** [Makefile:6: default] Error 2
 ```
 
-Looking into the compile errors it seemed that the `fn init` signature changed
+Looking into the compile errors, it seemed that the `fn init` signature changed
 and that the `module!` marco expects byte strings.
 
 Changing that:
@@ -329,9 +329,9 @@ The configuration difference isn't big
 ```
 
 A bit strange that `CONFIG_RUST_IS_AVAILABLE=y` isn't set, but
-`CONFIG_HAVE_RUST=y` is enabled so all should be good.
+`CONFIG_HAVE_RUST=y` is enabled, so all should be good.
 
-Quite some time later we built the ArchLinux kernel as well:
+Quite some time later, we built the ArchLinux kernel as well:
 ```
 make -j8 LLVM=1  15202.68s user 1464.06s system 800% cpu 34:42.57 total
 ```
@@ -361,8 +361,8 @@ make: *** [Makefile:6: default] Error 2
 
 These are now the compile time equivalent of the runtime errors we got before!
 
-Apparently the ArchLinux kernel *doesn't* have Rust support, despite it being
-set in the config. Executing `make menuconfig` reveals that options which
+Apparently, the ArchLinux kernel *doesn't* have Rust support, despite it being
+set in the config. Executing `make menuconfig` reveals, that options which
 conflict with `CONFIG_HAVE_RUST=y` are enabled:
 ```
 │ Symbol: RUST [=n]                                                                                                                                  │

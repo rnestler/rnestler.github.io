@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2022</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2022.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2022-12-19T00:00:00+01:00</updated><entry><title>Building an out-of-tree Rust Kernel Module</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html" rel="alternate"></link><published>2022-12-19T00:00:00+01:00</published><updated>2022-12-19T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-12-19:/building-an-out-of-tree-rust-kernel-module.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1&lt;/p&gt;</summary><content type="html">&lt;p&gt;With the release of &lt;a href="https://lwn.net/Articles/917504/"&gt;Linux 6.1&lt;/a&gt; minimal Rust
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2022</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2022.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2022-12-19T00:00:00+01:00</updated><entry><title>Building an out-of-tree Rust Kernel Module</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html" rel="alternate"></link><published>2022-12-19T00:00:00+01:00</published><updated>2022-12-19T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2022-12-19:/building-an-out-of-tree-rust-kernel-module.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1&lt;/p&gt;</summary><content type="html">&lt;p&gt;With the release of &lt;a href="https://lwn.net/Articles/917504/"&gt;Linux 6.1&lt;/a&gt;, minimal Rust
 support landed and it should be possible to &lt;del&gt;easily&lt;/del&gt; build a hello
 world kernel module in Rust.&lt;/p&gt;
 &lt;h2&gt;Installing Linux 6.1&lt;/h2&gt;
@@ -43,8 +43,8 @@ enabled the testing repositories:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;A first start&lt;/h2&gt;
-&lt;p&gt;Since I just want to play around I decided to build an out-of-tree Rust module.
-Luckily there is an example module available for that already:
+&lt;p&gt;Since I just want to play around, I decided to build an out-of-tree Rust module.
+Luckily, there is an example module available for that already:
 &lt;a href="https://github.com/Rust-for-Linux/rust-out-of-tree-module"&gt;https://github.com/Rust-for-Linux/rust-out-of-tree-module&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;So I went ahead, cloned the repo and tried to just execute make:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;rust-out-of-tree-module (git)-[main] % make
@@ -60,7 +60,7 @@ make: *** [Makefile:6: default] Error 2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Well...&lt;/p&gt;
-&lt;p&gt;Reading through &lt;a href="https://www.kernel.org/doc/html/latest/rust/quick-start.html"&gt;https://www.kernel.org/doc/html/latest/rust/quick-start.html&lt;/a&gt;
+&lt;p&gt;Reading through &lt;a href="https://www.kernel.org/doc/html/latest/rust/quick-start.html"&gt;https://www.kernel.org/doc/html/latest/rust/quick-start.html&lt;/a&gt;,
 it seemed that I have everything I need to get started.&lt;/p&gt;
 &lt;p&gt;The README mentions the following though:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -71,7 +71,7 @@ headers etc. for the different package systems and Linux distributions are
 not updated to take into account Rust support yet).&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2&gt;Trying an in-kernel build&lt;/h2&gt;
-&lt;p&gt;To check if it is just a tooling issue I cloned the
+&lt;p&gt;To check if it is just a tooling issue, I cloned the
 &lt;a href="https://github.com/Rust-for-Linux/linux"&gt;https://github.com/Rust-for-Linux/linux&lt;/a&gt; repo and executed the check according
 to the documentation:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Rust-for-Linux/linux (git)-[rust] % make LLVM=1 rustavailable
@@ -88,14 +88,14 @@ to the documentation:&lt;/p&gt;
 Rust is available!
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Since my toolchain seems to be too new I installed the older versions with&lt;/p&gt;
+&lt;p&gt;Since my toolchain seems to be too new, I installed the older versions with&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;rustup override &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;scripts/min-tool-version.sh rustc&lt;span class="k"&gt;)&lt;/span&gt;
 rustup component add rust-src
 cargo install --locked --version &lt;span class="k"&gt;$(&lt;/span&gt;scripts/min-tool-version.sh bindgen&lt;span class="k"&gt;)&lt;/span&gt; bindgen
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then I enabled Rust support with &lt;code&gt;make menuconfig&lt;/code&gt; in the &lt;em&gt;General setup&lt;/em&gt; menu.
-The option is only shown if the toolchain is installed and in my case I also
+The option is only shown if the toolchain is installed, and in my case I also
 had to disable the &lt;code&gt;GCC_PLUGINS&lt;/code&gt; option.&lt;/p&gt;
 &lt;p&gt;I then just compiled the whole kernel to test it:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make LLVM=1
@@ -107,8 +107,8 @@ git fetch archlinux v6.1-arch1
 git checkout v6.1-arch1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;To be sure I ran &lt;code&gt;make menuconfig&lt;/code&gt; again and applied the same changes again.&lt;/p&gt;
-&lt;p&gt;A few minutes later I had my kernel ready:&lt;/p&gt;
+&lt;p&gt;To be sure, I ran &lt;code&gt;make menuconfig&lt;/code&gt; again and applied the same changes again.&lt;/p&gt;
+&lt;p&gt;A few minutes later, I had my kernel ready:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Rust-for-Linux/linux (git)-[rust] % make -j8 LLVM=1
 ...
 Kernel: arch/x86/boot/bzImage is ready  (#2)
@@ -116,7 +116,7 @@ make -j8 LLVM=1  1557.69s user 133.21s system 745% cpu 3:46.77 total
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;Back to the out-of-tree module&lt;/h2&gt;
-&lt;p&gt;Having successfully built the whole kernel with Rust support I went back to the
+&lt;p&gt;Having successfully built the whole kernel with Rust support, I went back to the
 &lt;code&gt;rust-out-of-tree-module&lt;/code&gt; repository and tried to build it:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make KDIR=../linux LLVM=1
 make -C ../linux M=$PWD
@@ -189,7 +189,7 @@ make[1]: Leaving directory &amp;#39;/home/roughl/projects/github/Rust-for-Linux/
 make: *** [Makefile:6: default] Error 2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Looking into the compile errors it seemed that the &lt;code&gt;fn init&lt;/code&gt; signature changed
+&lt;p&gt;Looking into the compile errors, it seemed that the &lt;code&gt;fn init&lt;/code&gt; signature changed
 and that the &lt;code&gt;module!&lt;/code&gt; marco expects byte strings.&lt;/p&gt;
 &lt;p&gt;Changing that:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;diff --git a/rust_out_of_tree.rs b/rust_out_of_tree.rs&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
@@ -296,8 +296,8 @@ diff -u config .config
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;A bit strange that &lt;code&gt;CONFIG_RUST_IS_AVAILABLE=y&lt;/code&gt; isn't set, but
-&lt;code&gt;CONFIG_HAVE_RUST=y&lt;/code&gt; is enabled so all should be good.&lt;/p&gt;
-&lt;p&gt;Quite some time later we built the ArchLinux kernel as well:&lt;/p&gt;
+&lt;code&gt;CONFIG_HAVE_RUST=y&lt;/code&gt; is enabled, so all should be good.&lt;/p&gt;
+&lt;p&gt;Quite some time later, we built the ArchLinux kernel as well:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;make -j8 LLVM=1  15202.68s user 1464.06s system 800% cpu 34:42.57 total
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -324,8 +324,8 @@ diff -u config .config
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;These are now the compile time equivalent of the runtime errors we got before!&lt;/p&gt;
-&lt;p&gt;Apparently the ArchLinux kernel &lt;em&gt;doesn't&lt;/em&gt; have Rust support, despite it being
-set in the config. Executing &lt;code&gt;make menuconfig&lt;/code&gt; reveals that options which
+&lt;p&gt;Apparently, the ArchLinux kernel &lt;em&gt;doesn't&lt;/em&gt; have Rust support, despite it being
+set in the config. Executing &lt;code&gt;make menuconfig&lt;/code&gt; reveals, that options which
 conflict with &lt;code&gt;CONFIG_HAVE_RUST=y&lt;/code&gt; are enabled:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;│ Symbol: RUST [=n]                                                                                                                                  │
 │ Type  : bool                                                                                                                                       │

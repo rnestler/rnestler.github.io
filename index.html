@@ -36,7 +36,7 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
-</footer><!-- /.post-info --><p>With the release of <a href="https://lwn.net/Articles/917504/">Linux 6.1</a> minimal Rust
+</footer><!-- /.post-info --><p>With the release of <a href="https://lwn.net/Articles/917504/">Linux 6.1</a>, minimal Rust
 support landed and it should be possible to <del>easily</del> build a hello
 world kernel module in Rust.</p>
 <h2>Installing Linux 6.1</h2>
@@ -80,8 +80,8 @@ enabled the testing repositories:</p>
 </code></pre></div>
 
 <h2>A first start</h2>
-<p>Since I just want to play around I decided to build an out-of-tree Rust module.
-Luckily there is an example module available for that already:
+<p>Since I just want to play around, I decided to build an out-of-tree Rust module.
+Luckily, there is an example module available for that already:
 <a href="https://github.com/Rust-for-Linux/rust-out-of-tree-module">https://github.com/Rust-for-Linux/rust-out-of-tree-module</a>.</p>
 <p>So I went ahead, cloned the repo and tried to just execute make:</p>
 <div class="highlight"><pre><span></span><code>rust-out-of-tree-module (git)-[main] % make
@@ -97,7 +97,7 @@ make: *** [Makefile:6: default] Error 2
 </code></pre></div>
 
 <p>Well...</p>
-<p>Reading through <a href="https://www.kernel.org/doc/html/latest/rust/quick-start.html">https://www.kernel.org/doc/html/latest/rust/quick-start.html</a>
+<p>Reading through <a href="https://www.kernel.org/doc/html/latest/rust/quick-start.html">https://www.kernel.org/doc/html/latest/rust/quick-start.html</a>,
 it seemed that I have everything I need to get started.</p>
 <p>The README mentions the following though:</p>
 <blockquote>
@@ -108,7 +108,7 @@ headers etc. for the different package systems and Linux distributions are
 not updated to take into account Rust support yet).</p>
 </blockquote>
 <h2>Trying an in-kernel build</h2>
-<p>To check if it is just a tooling issue I cloned the
+<p>To check if it is just a tooling issue, I cloned the
 <a href="https://github.com/Rust-for-Linux/linux">https://github.com/Rust-for-Linux/linux</a> repo and executed the check according
 to the documentation:</p>
 <div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[rust] % make LLVM=1 rustavailable
@@ -125,14 +125,14 @@ to the documentation:</p>
 Rust is available!
 </code></pre></div>
 
-<p>Since my toolchain seems to be too new I installed the older versions with</p>
+<p>Since my toolchain seems to be too new, I installed the older versions with</p>
 <div class="highlight"><pre><span></span><code>rustup override <span class="nb">set</span> <span class="k">$(</span>scripts/min-tool-version.sh rustc<span class="k">)</span>
 rustup component add rust-src
 cargo install --locked --version <span class="k">$(</span>scripts/min-tool-version.sh bindgen<span class="k">)</span> bindgen
 </code></pre></div>
 
 <p>Then I enabled Rust support with <code>make menuconfig</code> in the <em>General setup</em> menu.
-The option is only shown if the toolchain is installed and in my case I also
+The option is only shown if the toolchain is installed, and in my case I also
 had to disable the <code>GCC_PLUGINS</code> option.</p>
 <p>I then just compiled the whole kernel to test it:</p>
 <div class="highlight"><pre><span></span><code>make LLVM=1
@@ -144,8 +144,8 @@ git fetch archlinux v6.1-arch1
 git checkout v6.1-arch1
 </code></pre></div>
 
-<p>To be sure I ran <code>make menuconfig</code> again and applied the same changes again.</p>
-<p>A few minutes later I had my kernel ready:</p>
+<p>To be sure, I ran <code>make menuconfig</code> again and applied the same changes again.</p>
+<p>A few minutes later, I had my kernel ready:</p>
 <div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[rust] % make -j8 LLVM=1
 ...
 Kernel: arch/x86/boot/bzImage is ready  (#2)
@@ -153,7 +153,7 @@ make -j8 LLVM=1  1557.69s user 133.21s system 745% cpu 3:46.77 total
 </code></pre></div>
 
 <h2>Back to the out-of-tree module</h2>
-<p>Having successfully built the whole kernel with Rust support I went back to the
+<p>Having successfully built the whole kernel with Rust support, I went back to the
 <code>rust-out-of-tree-module</code> repository and tried to build it:</p>
 <div class="highlight"><pre><span></span><code>Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make KDIR=../linux LLVM=1
 make -C ../linux M=$PWD
@@ -226,7 +226,7 @@ make[1]: Leaving directory &#39;/home/roughl/projects/github/Rust-for-Linux/linu
 make: *** [Makefile:6: default] Error 2
 </code></pre></div>
 
-<p>Looking into the compile errors it seemed that the <code>fn init</code> signature changed
+<p>Looking into the compile errors, it seemed that the <code>fn init</code> signature changed
 and that the <code>module!</code> marco expects byte strings.</p>
 <p>Changing that:</p>
 <div class="highlight"><pre><span></span><code><span class="gh">diff --git a/rust_out_of_tree.rs b/rust_out_of_tree.rs</span><span class="w"></span>
@@ -333,8 +333,8 @@ diff -u config .config
 </code></pre></div>
 
 <p>A bit strange that <code>CONFIG_RUST_IS_AVAILABLE=y</code> isn't set, but
-<code>CONFIG_HAVE_RUST=y</code> is enabled so all should be good.</p>
-<p>Quite some time later we built the ArchLinux kernel as well:</p>
+<code>CONFIG_HAVE_RUST=y</code> is enabled, so all should be good.</p>
+<p>Quite some time later, we built the ArchLinux kernel as well:</p>
 <div class="highlight"><pre><span></span><code>make -j8 LLVM=1  15202.68s user 1464.06s system 800% cpu 34:42.57 total
 </code></pre></div>
 
@@ -361,8 +361,8 @@ diff -u config .config
 </code></pre></div>
 
 <p>These are now the compile time equivalent of the runtime errors we got before!</p>
-<p>Apparently the ArchLinux kernel <em>doesn't</em> have Rust support, despite it being
-set in the config. Executing <code>make menuconfig</code> reveals that options which
+<p>Apparently, the ArchLinux kernel <em>doesn't</em> have Rust support, despite it being
+set in the config. Executing <code>make menuconfig</code> reveals, that options which
 conflict with <code>CONFIG_HAVE_RUST=y</code> are enabled:</p>
 <div class="highlight"><pre><span></span><code>│ Symbol: RUST [=n]                                                                                                                                  │
 │ Type  : bool                                                                                                                                       │

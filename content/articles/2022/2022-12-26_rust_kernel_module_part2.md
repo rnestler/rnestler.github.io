@@ -20,8 +20,11 @@ So I went ahead and started to build my own kernel with a custom config:
 I based it of the official ArchLinux kernel package, disabled the conflicting
 options, ran `make menuconfig` and enabled Rust support. 
 
-A few iterations on the configuration and PKGBUILD later I had a successfully
+A few iterations on the configuration and `PKGBUILD` later I had a successfully
 building kernel with Rust support enabled!
+
+After installing the custom kernel and booting into it we should finally be
+ready!
 
 ## Building the out-of-tree module
 
@@ -32,7 +35,7 @@ make KDIR=~/projects/archpkg/linux-rust/src/archlinux-linux LLVM=1
 sudo insmod rust_out_of_tree.ko
 ```
 
-And we see in the `dmesg` output that the module successfully loaded!
+And we see in the `dmesg` output that the module successfully loaded! 🎉
 ```
 [  451.297415] rust_out_of_tree: loading out-of-tree module taints kernel.
 [  451.297460] rust_out_of_tree: module verification failed: signature and/or required key missing - tainting kernel

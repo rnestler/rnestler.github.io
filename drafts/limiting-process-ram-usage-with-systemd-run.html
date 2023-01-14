@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Limiting process RAM usage with systemd-run</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/limiting-process-ram-usage-with-systemd-run.html" rel="bookmark"
+           title="Permalink to Limiting process RAM usage with systemd-run">Limiting process RAM usage with systemd-run</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2023-01-15T00:00:00+01:00">
+                Published: So 15 Januar 2023
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/systemd.html">systemd</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> </p>
+</footer><!-- /.post-info -->      <p>While building the Linux kernel with Rust support for ArchLinux I run into an
+issue, that building the HTML documentation sphinx-build starts to use
+excessive amounts of RAM.</p>
+<p>This resulted in the system being un-responsive before the OOM killer decided
+to just kill my user session.</p>
+<div class="figure align-center" style="width: 100%">
+<a class="reference external image-reference" href="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png"><img alt="htop output shortly before killing the build process" src="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png" style="width: 80%;" /></a>
+<p class="caption">htop output shortly before killing the build process</p>
+</div>
+<p>Searching for a way to not have the OOM killer kill my session, but kill the
+build process before it uses all my available RAM I found
+<a class="reference external" href="https://unix.stackexchange.com/a/536046">https://unix.stackexchange.com/a/536046</a>.</p>
+<p>So spawning the build with the following command will kill the build process
+once it uses more than 20GB of RAM:</p>
+<div class="highlight"><pre><span></span><span class="go">systemd-run --scope -p MemoryMax=20G --user makepkg</span>
+</pre></div>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

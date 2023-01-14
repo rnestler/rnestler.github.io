@@ -41,3 +41,15 @@ And we see in the `dmesg` output that the module successfully loaded! 🎉
 [  451.297460] rust_out_of_tree: module verification failed: signature and/or required key missing - tainting kernel
 [  451.297724] rust_out_of_tree: Rust out-of-tree sample (init)
 ```
+
+## Packing the correct metadata
+
+You may have noticed, that we passed
+`KDIR=~/projects/archpkg/linux-rust/src/archlinux-linux` to the make call. This
+is because the build requires the Rust metadata which is generated during the
+kernel build. To make it easier for other people installing the `linux-rust`
+kernel, we should package it in `linux-rust-headers` ([^1]).
+
+[^1]: The name of the package may be a bit misleading, since the package not
+  only bundles the headers but also build scripts and other metadata required
+  to build modules.

@@ -20,12 +20,455 @@
                     <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html">Building an out-of-tree Rust Kernel Module</a></h1>
+                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-two.html">Building an out-of-tree Rust Kernel Module Part Two</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2023-01-15T00:00:00+01:00">
+                Published: So 15 Januar 2023
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
+</footer><!-- /.post-info --><p>In my last <a href="//building-an-out-of-tree-rust-kernel-module.html">blog posts</a> I
+tried to build an out-of-tree kernel module in Rust for the 6.1 stock kernel
+for ArchLinux.</p>
+<p>During this process I noticed, that while <code>CONFIG_HAVE_RUST=y</code> is set in the
+<a href="https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config">ArchLinux kernel config</a>
+, Rust support get's silently disabled, since conflicting options are set.</p>
+<h2>Building our own ArchLinux kernel</h2>
+<p>So I went ahead and started to build my own kernel with a custom config:
+<a href="https://aur.archlinux.org/packages/linux-rust">https://aur.archlinux.org/packages/linux-rust</a>.</p>
+<p>I based it of the official ArchLinux kernel package, disabled the conflicting
+options, ran <code>make menuconfig</code> and enabled Rust support.</p>
+<p>A few iterations on the configuration and <code>PKGBUILD</code> later I had a successfully
+building kernel with Rust support enabled!</p>
+<p>After installing the custom kernel and booting into it we should finally be
+ready!</p>
+<h2>Building the out-of-tree module</h2>
+<p>So back to the
+<a href="https://github.com/rnestler/rust-out-of-tree-module/tree/fix-build-for-linux-6.1">Rust-for-Linux/rust-out-of-tree-module</a>:</p>
+<div class="highlight"><pre><span></span><code>make <span class="nv">KDIR</span><span class="o">=</span>~/projects/archpkg/linux-rust/src/archlinux-linux <span class="nv">LLVM</span><span class="o">=</span><span class="m">1</span>
+sudo insmod rust_out_of_tree.ko
+</code></pre></div>
+
+<p>And we see in the <code>dmesg</code> output that the module successfully loaded! 🎉</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="w">  </span><span class="mf">451.297415</span><span class="p">]</span><span class="w"> </span><span class="n">rust_out_of_tree</span><span class="p">:</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">out</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">tree</span><span class="w"> </span><span class="n">module</span><span class="w"> </span><span class="n">taints</span><span class="w"> </span><span class="n">kernel</span><span class="o">.</span><span class="w"></span>
+<span class="p">[</span><span class="w">  </span><span class="mf">451.297460</span><span class="p">]</span><span class="w"> </span><span class="n">rust_out_of_tree</span><span class="p">:</span><span class="w"> </span><span class="n">module</span><span class="w"> </span><span class="n">verification</span><span class="w"> </span><span class="n">failed</span><span class="p">:</span><span class="w"> </span><span class="n">signature</span><span class="w"> </span><span class="ow">and</span><span class="o">/</span><span class="ow">or</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">tainting</span><span class="w"> </span><span class="n">kernel</span><span class="w"></span>
+<span class="p">[</span><span class="w">  </span><span class="mf">451.297724</span><span class="p">]</span><span class="w"> </span><span class="n">rust_out_of_tree</span><span class="p">:</span><span class="w"> </span><span class="n">Rust</span><span class="w"> </span><span class="n">out</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">tree</span><span class="w"> </span><span class="n">sample</span><span class="w"> </span><span class="p">(</span><span class="n">init</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<p>If we unload it with <code>sudo rmmod rust_out_of_tree.ko</code> we get the following in
+<code>dmesg</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[  461.206748] rust_out_of_tree: My numbers are [72, 108, 200]</span><span class="w"></span>
+<span class="na">[  461.206753] rust_out_of_tree: Rust out-of-tree sample (exit)</span><span class="w"></span>
+</code></pre></div>
+
+<h2>Packing the correct metadata</h2>
+<p>You may have noticed, that we passed
+<code>KDIR=~/projects/archpkg/linux-rust/src/archlinux-linux</code> to the make call. This
+is because the build requires the Rust metadata which is generated during the
+kernel build. To make it easier for other people installing the <code>linux-rust</code>
+kernel, we should package it in <code>linux-rust-headers</code> (<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>).</p>
+<p>If we don't pass the <code>KDIR</code> option we get the following build error:</p>
+<div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1
+make -C /lib/modules/`uname -r`/build M=$PWD
+make[1]: Entering directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+error: target file &quot;./rust/target.json&quot; does not exist
+
+make[2]: *** [scripts/Makefile.build:307: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o] Error 1
+make[1]: *** [Makefile:1992: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module] Error 2
+make[1]: Leaving directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
+make: *** [Makefile:6: default] Error 2
+</code></pre></div>
+
+<p>So let's add the this file to the package and try to rebuild:</p>
+<div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1
+make -C /lib/modules/`uname -r`/build M=$PWD
+make[1]: Entering directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+error[E0463]: can&#39;t find crate for `core`
+  |
+  = note: the `target` target may not be installed
+  = help: consider downloading the target with `rustup target add target`
+  = help: consider building the standard library from source with `cargo build -Zbuild-std`
+</code></pre></div>
+
+<details>
+<summary>Rest of the terminal output...</summary>
+
+<div class="highlight"><pre><span></span><code>error[E0463]: can&#39;t find crate for `compiler_builtins`
+
+error[E0463]: can&#39;t find crate for `kernel`
+ --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:5:5
+  |
+5 | use kernel::prelude::*;
+  |     ^^^^^^ can&#39;t find crate
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:35:9
+   |
+35 |         pr_info!(&quot;Rust out-of-tree sample (exit)\n&quot;);
+   |         ^^^^^^^
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:34:9
+   |
+34 |         pr_info!(&quot;My numbers are {:?}\n&quot;, self.numbers);
+   |         ^^^^^^^
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:21:9
+   |
+21 |         pr_info!(&quot;Rust out-of-tree sample (init)\n&quot;);
+   |         ^^^^^^^
+
+error: cannot find macro `module` in this scope
+ --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:7:1
+  |
+7 | module! {
+  | ^^^^^^
+
+error[E0463]: can&#39;t find crate for `kernel`
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:19:6
+   |
+19 | impl kernel::Module for RustOutOfTree {
+   |      ^^^^^^ can&#39;t find crate
+
+error[E0433]: failed to resolve: use of undeclared type `Vec`
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:23:27
+   |
+23 |         let mut numbers = Vec::new();
+   |                           ^^^ use of undeclared type `Vec`
+
+error[E0412]: cannot find type `Vec` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:16:14
+   |
+16 |     numbers: Vec&lt;i32&gt;,
+   |              ^^^ not found in this scope
+
+error[E0412]: cannot find type `ThisModule` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:31
+   |
+20 |     fn init(_module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
+   |                               ^^^^^^^^^^ not found in this scope
+
+error[E0412]: cannot find type `Result` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:46
+   |
+20 |     fn init(_module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
+   |                                              ^^^^^^ not found in this scope
+
+error[E0405]: cannot find trait `Drop` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:32:6
+   |
+32 | impl Drop for RustOutOfTree {
+   |      ^^^^ not found in this scope
+
+error[E0635]: unknown feature `core_ffi_c`
+ --&gt; &lt;crate attribute&gt;:1:9
+  |
+1 | feature(core_ffi_c)
+  |         ^^^^^^^^^^
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Ok` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:28:9
+   |
+28 |         Ok(RustOutOfTree { numbers })
+   |         ^^ not found in this scope
+
+error: aborting due to 15 previous errors
+
+Some errors have detailed explanations: E0405, E0412, E0425, E0433, E0463, E0635.
+For more information about an error, try `rustc --explain E0405`.
+make[2]: *** [scripts/Makefile.build:307: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o] Error 1
+make[1]: *** [Makefile:1992: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module] Error 2
+make[1]: Leaving directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
+make: *** [Makefile:6: default] Error 2
+</code></pre></div>
+
+
+</details>
+
+<p>Ok, so the build system is unable to find all the required crates that got
+built as part of the kernel.</p>
+<p>So to keep it simple we just add everything form the <code>rust/</code> folder into the
+package.</p>
+<div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1
+make -C /lib/modules/`uname -r`/build M=$PWD
+make[1]: Entering directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+error[E0514]: found crate `core` compiled by an incompatible version of rustc
+  |
+  = note: the following crate versions were found:
+          crate `core` compiled by rustc 1.62.0 (a8314ef7d 2022-06-27): /usr/lib/modules/6.1.5-arch2-1-rust/build/rust/libcore.rmeta
+  = help: please recompile that crate using this compiler (rustc 1.66.0 (69f9c33d7 2022-12-12)) (consider running `cargo clean` first)
+</code></pre></div>
+
+<details>
+<summary>Rest of the terminal output...</summary>
+
+<div class="highlight"><pre><span></span><code>error[E0514]: found crate `kernel` compiled by an incompatible version of rustc
+ --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:5:5
+  |
+5 | use kernel::prelude::*;
+  |     ^^^^^^
+  |
+  = note: the following crate versions were found:
+          crate `kernel` compiled by rustc 1.62.0 (a8314ef7d 2022-06-27): /usr/lib/modules/6.1.5-arch2-1-rust/build/rust/libkernel.rmeta
+  = help: please recompile that crate using this compiler (rustc 1.66.0 (69f9c33d7 2022-12-12)) (consider running `cargo clean` first)
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:35:9
+   |
+35 |         pr_info!(&quot;Rust out-of-tree sample (exit)\n&quot;);
+   |         ^^^^^^^
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:34:9
+   |
+34 |         pr_info!(&quot;My numbers are {:?}\n&quot;, self.numbers);
+   |         ^^^^^^^
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:21:9
+   |
+21 |         pr_info!(&quot;Rust out-of-tree sample (init)\n&quot;);
+   |         ^^^^^^^
+
+error: cannot find macro `module` in this scope
+ --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:7:1
+  |
+7 | module! {
+  | ^^^^^^
+
+error[E0514]: found crate `kernel` compiled by an incompatible version of rustc
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:19:6
+   |
+19 | impl kernel::Module for RustOutOfTree {
+   |      ^^^^^^
+   |
+   = note: the following crate versions were found:
+           crate `kernel` compiled by rustc 1.62.0 (a8314ef7d 2022-06-27): /usr/lib/modules/6.1.5-arch2-1-rust/build/rust/libkernel.rmeta
+   = help: please recompile that crate using this compiler (rustc 1.66.0 (69f9c33d7 2022-12-12)) (consider running `cargo clean` first)
+
+error[E0433]: failed to resolve: use of undeclared type `Vec`
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:23:27
+   |
+23 |         let mut numbers = Vec::new();
+   |                           ^^^ use of undeclared type `Vec`
+
+error[E0412]: cannot find type `Vec` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:16:14
+   |
+16 |     numbers: Vec&lt;i32&gt;,
+   |              ^^^ not found in this scope
+
+error[E0412]: cannot find type `ThisModule` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:31
+   |
+20 |     fn init(_module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
+   |                               ^^^^^^^^^^ not found in this scope
+
+error[E0412]: cannot find type `Result` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:46
+   |
+20 |     fn init(_module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
+   |                                              ^^^^^^ not found in this scope
+
+error[E0405]: cannot find trait `Drop` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:32:6
+   |
+32 | impl Drop for RustOutOfTree {
+   |      ^^^^ not found in this scope
+
+error[E0635]: unknown feature `core_ffi_c`
+ --&gt; &lt;crate attribute&gt;:1:9
+  |
+1 | feature(core_ffi_c)
+  |         ^^^^^^^^^^
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Ok` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:28:9
+   |
+28 |         Ok(RustOutOfTree { numbers })
+   |         ^^ not found in this scope
+
+error: aborting due to 14 previous errors
+
+Some errors have detailed explanations: E0405, E0412, E0425, E0433, E0635.
+For more information about an error, try `rustc --explain E0405`.
+make[2]: *** [scripts/Makefile.build:307: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o] Error 1
+make[1]: *** [Makefile:1992: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module] Error 2
+make[1]: Leaving directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
+make: *** [Makefile:6: default] Error 2
+</code></pre></div>
+
+
+</details>
+
+<p>Alright, so it finds the crates, but the <code>rustc</code> versions do not match.
+Apparently the build is executed in
+<code>/usr/lib/modules/6.1.5-arch2-1-rust/build</code>, so we need to tell <code>rustup</code> that we
+want the 1.62.0 toolchain for that folder.</p>
+<p>For that we just add the <code>rust-toolchain</code> to the package as well.</p>
+<div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make  LLVM=1
+make -C /lib/modules/`uname -r`/build M=$PWD
+make[1]: Entering directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+error[E0461]: couldn&#39;t find crate `core` with expected target triple target-12809083303779448358
+  |
+  = note: the following crate versions were found:
+          crate `core`, target triple target-3911737072772191946: /usr/lib/modules/6.1.5-arch2-1-rust/build/rust/libcore.rmeta
+</code></pre></div>
+
+<details>
+<summary>Rest of the terminal output...</summary>
+
+<div class="highlight"><pre><span></span><code>error[E0461]: couldn&#39;t find crate `compiler_builtins` with expected target triple target-12809083303779448358
+  |
+  = note: the following crate versions were found:
+          crate `compiler_builtins`, target triple target-3911737072772191946: /usr/lib/modules/6.1.5-arch2-1-rust/build/rust/libcompiler_builtins.rmeta
+
+error[E0461]: couldn&#39;t find crate `kernel` with expected target triple target-12809083303779448358
+ --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:5:5
+  |
+5 | use kernel::prelude::*;
+  |     ^^^^^^
+  |
+  = note: the following crate versions were found:
+          crate `kernel`, target triple target-3911737072772191946: /usr/lib/modules/6.1.5-arch2-1-rust/build/rust/libkernel.rmeta
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:35:9
+   |
+35 |         pr_info!(&quot;Rust out-of-tree sample (exit)\n&quot;);
+   |         ^^^^^^^
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:34:9
+   |
+34 |         pr_info!(&quot;My numbers are {:?}\n&quot;, self.numbers);
+   |         ^^^^^^^
+
+error: cannot find macro `pr_info` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:21:9
+   |
+21 |         pr_info!(&quot;Rust out-of-tree sample (init)\n&quot;);
+   |         ^^^^^^^
+
+error: cannot find macro `module` in this scope
+ --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:7:1
+  |
+7 | module! {
+  | ^^^^^^
+
+error[E0461]: couldn&#39;t find crate `kernel` with expected target triple target-12809083303779448358
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:19:6
+   |
+19 | impl kernel::Module for RustOutOfTree {
+   |      ^^^^^^
+   |
+   = note: the following crate versions were found:
+           crate `kernel`, target triple target-3911737072772191946: /usr/lib/modules/6.1.5-arch2-1-rust/build/rust/libkernel.rmeta
+
+error[E0433]: failed to resolve: use of undeclared type `Vec`
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:23:27
+   |
+23 |         let mut numbers = Vec::new();
+   |                           ^^^ use of undeclared type `Vec`
+
+error[E0412]: cannot find type `Vec` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:16:14
+   |
+16 |     numbers: Vec&lt;i32&gt;,
+   |              ^^^ not found in this scope
+
+error[E0412]: cannot find type `ThisModule` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:31
+   |
+20 |     fn init(_module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
+   |                               ^^^^^^^^^^ not found in this scope
+
+error[E0412]: cannot find type `Result` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:46
+   |
+20 |     fn init(_module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
+   |                                              ^^^^^^ not found in this scope
+
+error[E0425]: cannot find function, tuple struct or tuple variant `Ok` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:28:9
+   |
+28 |         Ok(RustOutOfTree { numbers })
+   |         ^^ not found in this scope
+
+error[E0405]: cannot find trait `Drop` in this scope
+  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:32:6
+   |
+32 | impl Drop for RustOutOfTree {
+   |      ^^^^ not found in this scope
+
+error[E0635]: unknown feature `core_ffi_c`
+ --&gt; &lt;crate attribute&gt;:1:9
+  |
+1 | feature(core_ffi_c)
+  |         ^^^^^^^^^^
+
+error: aborting due to 15 previous errors
+
+Some errors have detailed explanations: E0405, E0412, E0425, E0433, E0635.
+For more information about an error, try `rustc --explain E0405`.
+make[2]: *** [scripts/Makefile.build:307: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o] Error 1
+make[1]: *** [Makefile:1992: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module] Error 2
+make[1]: Leaving directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
+make: *** [Makefile:6: default] Error 2
+</code></pre></div>
+
+
+</details>
+
+<p>I didn't really understand what the strange target triple meant. Usually a
+target triple looks something like <code>x86_64-unknown-linux-gnu</code> (<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>). But in
+our case we are using a <code>target.json</code> to define the target, so I've no clue
+where the difference comes from, since we are using the same JSON file.</p>
+<h2>Giving up for now</h2>
+<p>While we managed to compile and run our out-of-tree kernel module in Rust, we
+couldn't get the build meta data packaged in a way to do it without a local
+build of the kernel.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>The name of the package may be a bit misleading, since the package not
+  only bundles the headers but also build scripts and other metadata required
+  to build modules.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>See also <a href="https://doc.rust-lang.org/rustc/targets/index.html">https://doc.rust-lang.org/rustc/targets/index.html</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html" rel="bookmark"
+                           title="Permalink to Building an out-of-tree Rust Kernel Module">Building an out-of-tree Rust Kernel Module</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2022-12-19T00:00:00+01:00">
                 Published: Mo 19 Dezember 2022
@@ -36,354 +479,10 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
-</footer><!-- /.post-info --><p>With the release of <a href="https://lwn.net/Articles/917504/">Linux 6.1</a>, minimal Rust
-support landed and it should be possible to <del>easily</del> build a hello
-world kernel module in Rust.</p>
-<h2>Installing Linux 6.1</h2>
-<p>At the time of writing Linux 6.1 was still in testing on ArchLinux, so I
-enabled the testing repositories:</p>
-<div class="highlight"><pre><span></span><code><span class="gd">--- pacman.conf 2022-12-18 15:25:10.742819293 +0100</span><span class="w"></span>
-<span class="gi">+++ /etc/pacman.conf    2022-12-18 00:32:56.404801925 +0100</span><span class="w"></span>
-<span class="gu">@@ -69,8 +69,8 @@</span><span class="w"></span>
-<span class="w"> </span># repo name header and Include lines. You can add preferred servers immediately<span class="w"></span>
-<span class="w"> </span># after the header, and they will be used before the default mirrors.<span class="w"></span>
-
-<span class="gd">-#[testing]</span><span class="w"></span>
-<span class="gd">-#Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
-<span class="gi">+[testing]</span><span class="w"></span>
-<span class="gi">+Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
-
-<span class="w"> </span>[core]<span class="w"></span>
-<span class="w"> </span>Include = /etc/pacman.d/mirrorlist<span class="w"></span>
-<span class="gu">@@ -78,8 +78,8 @@</span><span class="w"></span>
-<span class="w"> </span>[extra]<span class="w"></span>
-<span class="w"> </span>Include = /etc/pacman.d/mirrorlist<span class="w"></span>
-
-<span class="gd">-#[community-testing]</span><span class="w"></span>
-<span class="gd">-#Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
-<span class="gi">+[community-testing]</span><span class="w"></span>
-<span class="gi">+Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
-
-<span class="w"> </span>[community]<span class="w"></span>
-<span class="w"> </span>Include = /etc/pacman.d/mirrorlist<span class="w"></span>
-<span class="gu">@@ -87,8 +87,8 @@</span><span class="w"></span>
-<span class="w"> </span># If you want to run 32 bit applications on your x86_64 system,<span class="w"></span>
-<span class="w"> </span># enable the multilib repositories as required here.<span class="w"></span>
-
-<span class="gd">-#[multilib-testing]</span><span class="w"></span>
-<span class="gd">-#Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
-<span class="gi">+[multilib-testing]</span><span class="w"></span>
-<span class="gi">+Include = /etc/pacman.d/mirrorlist</span><span class="w"></span>
-
-<span class="w"> </span>[multilib]<span class="w"></span>
-<span class="w"> </span>Include = /etc/pacman.d/mirrorlist<span class="w"></span>
-</code></pre></div>
-
-<h2>A first start</h2>
-<p>Since I just want to play around, I decided to build an out-of-tree Rust module.
-Luckily, there is an example module available for that already:
-<a href="https://github.com/Rust-for-Linux/rust-out-of-tree-module">https://github.com/Rust-for-Linux/rust-out-of-tree-module</a>.</p>
-<p>So I went ahead, cloned the repo and tried to just execute make:</p>
-<div class="highlight"><pre><span></span><code>rust-out-of-tree-module (git)-[main] % make
-make -C /lib/modules/`uname -r`/build M=$PWD
-make[1]: Entering directory &#39;/usr/lib/modules/6.1.0-arch1-1/build&#39;
-  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
-error: target file &quot;./rust/target.json&quot; does not exist
-
-make[2]: *** [scripts/Makefile.build:307: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o] Error 1
-make[1]: *** [Makefile:1992: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module] Error 2
-make[1]: Leaving directory &#39;/usr/lib/modules/6.1.0-arch1-1/build&#39;
-make: *** [Makefile:6: default] Error 2
-</code></pre></div>
-
-<p>Well...</p>
-<p>Reading through <a href="https://www.kernel.org/doc/html/latest/rust/quick-start.html">https://www.kernel.org/doc/html/latest/rust/quick-start.html</a>,
-it seemed that I have everything I need to get started.</p>
-<p>The README mentions the following though:</p>
-<blockquote>
-<p>The kernel tree (KDIR) requires the Rust metadata to be available. These are
-generated during the kernel build, but may not be available for
-installed/distributed kernels (the scripts that install/distribute kernel
-headers etc. for the different package systems and Linux distributions are
-not updated to take into account Rust support yet).</p>
-</blockquote>
-<h2>Trying an in-kernel build</h2>
-<p>To check if it is just a tooling issue, I cloned the
-<a href="https://github.com/Rust-for-Linux/linux">https://github.com/Rust-for-Linux/linux</a> repo and executed the check according
-to the documentation:</p>
-<div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[rust] % make LLVM=1 rustavailable
-***
-*** Rust compiler &#39;rustc&#39; is too new. This may or may not work.
-***   Your version:     1.66.0
-***   Expected version: 1.62.0
-***
-***
-*** Rust bindings generator &#39;bindgen&#39; is too new. This may or may not work.
-***   Your version:     0.63.0
-***   Expected version: 0.56.0
-***
-Rust is available!
-</code></pre></div>
-
-<p>Since my toolchain seems to be too new, I installed the older versions with</p>
-<div class="highlight"><pre><span></span><code>rustup override <span class="nb">set</span> <span class="k">$(</span>scripts/min-tool-version.sh rustc<span class="k">)</span>
-rustup component add rust-src
-cargo install --locked --version <span class="k">$(</span>scripts/min-tool-version.sh bindgen<span class="k">)</span> bindgen
-</code></pre></div>
-
-<p>Then I enabled Rust support with <code>make menuconfig</code> in the <em>General setup</em> menu.
-The option is only shown if the toolchain is installed, and in my case I also
-had to disable the <code>GCC_PLUGINS</code> option.</p>
-<p>I then just compiled the whole kernel to test it:</p>
-<div class="highlight"><pre><span></span><code>make LLVM=1
-</code></pre></div>
-
-<p>This went smoothly, so I continued to build the actual ArchLinux kernel which matches my running kernel:</p>
-<div class="highlight"><pre><span></span><code>git remote add archlinux git@github.com:archlinux/linux.git
-git fetch archlinux v6.1-arch1
-git checkout v6.1-arch1
-</code></pre></div>
-
-<p>To be sure, I ran <code>make menuconfig</code> again and applied the same changes again.</p>
-<p>A few minutes later, I had my kernel ready:</p>
-<div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[rust] % make -j8 LLVM=1
-...
-Kernel: arch/x86/boot/bzImage is ready  (#2)
-make -j8 LLVM=1  1557.69s user 133.21s system 745% cpu 3:46.77 total
-</code></pre></div>
-
-<h2>Back to the out-of-tree module</h2>
-<p>Having successfully built the whole kernel with Rust support, I went back to the
-<code>rust-out-of-tree-module</code> repository and tried to build it:</p>
-<div class="highlight"><pre><span></span><code>Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make KDIR=../linux LLVM=1
-make -C ../linux M=$PWD
-make[1]: Entering directory &#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;
-  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
-error: proc macro panicked
-  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:7:1
-   |
-7  | / module! {
-8  | |     type: RustOutOfTree,
-9  | |     name: &quot;rust_out_of_tree&quot;,
-10 | |     author: &quot;Rust for Linux Contributors&quot;,
-11 | |     description: &quot;Rust out-of-tree sample&quot;,
-12 | |     license: &quot;GPL&quot;,
-13 | | }
-   | |_^
-   |
-   = help: message: Expected byte string
-
-error[E0412]: cannot find type `CStr` in this scope
-  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:29
-   |
-20 |     fn init(_name: &amp;&#39;static CStr, _module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
-   |                             ^^^^ not found in this scope
-   |
-help: consider importing this struct
-   |
-5  | use core::ffi::CStr;
-   |
-
-error[E0425]: cannot find value `__LOG_PREFIX` in the crate root
-  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:21:9
-   |
-21 |         pr_info!(&quot;Rust out-of-tree sample (init)\n&quot;);
-   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in the crate root
-   |
-   = note: this error originates in the macro `$crate::print_macro` (in Nightly builds, run with -Z macro-backtrace for more info)
-
-error[E0425]: cannot find value `__LOG_PREFIX` in the crate root
-  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:34:9
-   |
-34 |         pr_info!(&quot;My numbers are {:?}\n&quot;, self.numbers);
-   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in the crate root
-   |
-   = note: this error originates in the macro `$crate::print_macro` (in Nightly builds, run with -Z macro-backtrace for more info)
-
-error[E0425]: cannot find value `__LOG_PREFIX` in the crate root
-  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:35:9
-   |
-35 |         pr_info!(&quot;Rust out-of-tree sample (exit)\n&quot;);
-   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in the crate root
-   |
-   = note: this error originates in the macro `$crate::print_macro` (in Nightly builds, run with -Z macro-backtrace for more info)
-
-error[E0050]: method `init` has 2 parameters but the declaration in trait `init` has 1
-  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:20:20
-   |
-20 |     fn init(_name: &amp;&#39;static CStr, _module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {
-   |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected 1 parameter, found 2
-   |
-   = note: `init` from trait: `fn(&amp;&#39;static kernel::ThisModule) -&gt; core::result::Result&lt;Self, kernel::error::Error&gt;`
-
-error: aborting due to 6 previous errors
-
-Some errors have detailed explanations: E0050, E0412, E0425.
-For more information about an error, try `rustc --explain E0050`.
-make[2]: *** [scripts/Makefile.build:307: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o] Error 1
-make[1]: *** [Makefile:1992: /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module] Error 2
-make[1]: Leaving directory &#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;
-make: *** [Makefile:6: default] Error 2
-</code></pre></div>
-
-<p>Looking into the compile errors, it seemed that the <code>fn init</code> signature changed
-and that the <code>module!</code> marco expects byte strings.</p>
-<p>Changing that:</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/rust_out_of_tree.rs b/rust_out_of_tree.rs</span><span class="w"></span>
-<span class="gh">index e280409..58cc9ba 100644</span><span class="w"></span>
-<span class="gd">--- a/rust_out_of_tree.rs</span><span class="w"></span>
-<span class="gi">+++ b/rust_out_of_tree.rs</span><span class="w"></span>
-<span class="gu">@@ -6,10 +6,10 @@ use kernel::prelude::*;</span><span class="w"></span>
-
-<span class="w"> </span>module! {<span class="w"></span>
-<span class="w"> </span>    type: RustOutOfTree,<span class="w"></span>
-<span class="gd">-    name: &quot;rust_out_of_tree&quot;,</span><span class="w"></span>
-<span class="gd">-    author: &quot;Rust for Linux Contributors&quot;,</span><span class="w"></span>
-<span class="gd">-    description: &quot;Rust out-of-tree sample&quot;,</span><span class="w"></span>
-<span class="gd">-    license: &quot;GPL&quot;,</span><span class="w"></span>
-<span class="gi">+    name: b&quot;rust_out_of_tree&quot;,</span><span class="w"></span>
-<span class="gi">+    author: b&quot;Rust for Linux Contributors&quot;,</span><span class="w"></span>
-<span class="gi">+    description: b&quot;Rust out-of-tree sample&quot;,</span><span class="w"></span>
-<span class="gi">+    license: b&quot;GPL&quot;,</span><span class="w"></span>
-<span class="w"> </span>}<span class="w"></span>
-
-<span class="w"> </span>struct RustOutOfTree {<span class="w"></span>
-<span class="gu">@@ -17,7 +17,7 @@ struct RustOutOfTree {</span><span class="w"></span>
-<span class="w"> </span>}<span class="w"></span>
-
-<span class="w"> </span>impl kernel::Module for RustOutOfTree {<span class="w"></span>
-<span class="gd">-    fn init(_name: &amp;&#39;static CStr, _module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {</span><span class="w"></span>
-<span class="gi">+    fn init(_module: &amp;&#39;static ThisModule) -&gt; Result&lt;Self&gt; {</span><span class="w"></span>
-<span class="w"> </span>        pr_info!(&quot;Rust out-of-tree sample (init)\n&quot;);<span class="w"></span>
-
-<span class="w"> </span>        let mut numbers = Vec::new();<span class="w"></span>
-</code></pre></div>
-
-<p>We get a successful build!</p>
-<div class="highlight"><pre><span></span><code>Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make KDIR=../linux LLVM=1
-make -C ../linux M=$PWD
-make[1]: Entering directory &#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;
-  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
-  MODPOST /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/Module.symvers
-  LD [M]  /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.ko
-make[1]: Leaving directory &#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;
-</code></pre></div>
-
-<p>But trying to load the resulting module fails:</p>
-<div class="highlight"><pre><span></span><code>sudo insmod rust_out_of_tree.ko
-insmod: ERROR: could not insert module rust_out_of_tree.ko: Invalid module format
-</code></pre></div>
-
-<p>We see this in the <code>dmesg</code> output as well:</p>
-<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="mf">24593.691184</span><span class="p">]</span><span class="w"> </span><span class="n">rust_out_of_tree</span><span class="p">:</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="n">magic</span><span class="w"> </span><span class="s1">&#39;6.1.0-arch1 SMP preempt mod_unload &#39;</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="s1">&#39;6.1.0-arch1-1 SMP preempt mod_unload &#39;</span><span class="w"></span>
-</code></pre></div>
-
-<p>Of course we aren't setting the version the same as the ArchLinux kernel. I
-copied a few steps from
-<a href="https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD">https://github.com/archlinux/svntogit-packages/blob/packages/linux/trunk/PKGBUILD</a>
-to set the same version (we could also just copy the config from there, but
-lets see what happens first)</p>
-<div class="highlight"><pre><span></span><code>Rust-for-Linux/linux (git)-[tags/v6.1-arch1] % echo &quot;-1&quot; &gt; localversion.10-pkgrel
-Rust-for-Linux/linux (git)-[tags/v6.1-arch1] % make -s kernelrelease &gt; version
-Rust-for-Linux/linux (git)-[tags/v6.1-arch1] % cat version
-6.1.0-arch1-1
-</code></pre></div>
-
-<p>It didn't work again:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="w"> </span><span class="ss">(</span><span class="nv">git</span><span class="ss">)</span><span class="o">-</span>[<span class="nv">fix</span><span class="o">-</span><span class="nv">build</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">linux</span><span class="o">-</span><span class="mi">6</span>.<span class="mi">1</span>]<span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nv">sudo</span><span class="w"> </span><span class="nv">insmod</span><span class="w"> </span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span><span class="w"></span>
-<span class="nv">insmod</span>:<span class="w"> </span><span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">could</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">insert</span><span class="w"> </span><span class="nv">module</span><span class="w"> </span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>:<span class="w"> </span><span class="nv">Unknown</span><span class="w"> </span><span class="nv">symbol</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">module</span><span class="w"></span>
-</code></pre></div>
-
-<p>The <code>dmesg</code> output shows:</p>
-<div class="highlight"><pre><span></span><code>[25300.463334] rust_out_of_tree: Unknown symbol _RNvNtNtCsfATHBUcknU9_6kernel5print14format_strings4INFO (err -2)
-[25300.463353] rust_out_of_tree: Unknown symbol _RNvNtCsfATHBUcknU9_6kernel5print11call_printk (err -2)
-[25300.463371] rust_out_of_tree: Unknown symbol __rust_dealloc (err -2)
-[25300.463386] rust_out_of_tree: Unknown symbol __rust_realloc (err -2)
-[25300.463400] rust_out_of_tree: Unknown symbol __rust_alloc (err -2)
-[25300.463414] rust_out_of_tree: Unknown symbol _RNvNtCs3yuwAp0waWO_4core9panicking5panic (err -2)
-[25300.463428] rust_out_of_tree: Unknown symbol _RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter15debug_lower_hex (err -2)
-[25300.463442] rust_out_of_tree: Unknown symbol _RNvXsS_NtNtCs3yuwAp0waWO_4core3fmt3numlNtB7_8LowerHex3fmt (err -2)
-[25300.463456] rust_out_of_tree: Unknown symbol _RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter15debug_upper_hex (err -2)
-[25300.463469] rust_out_of_tree: Unknown symbol _RNvXsT_NtNtCs3yuwAp0waWO_4core3fmt3numlNtB7_8UpperHex3fmt (err -2)
-[25300.463483] rust_out_of_tree: Unknown symbol _RNvXs2_NtNtNtCs3yuwAp0waWO_4core3fmt3num3implNtB9_7Display3fmt (err -2)
-[25300.463497] rust_out_of_tree: Unknown symbol _RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter10debug_list (err -2)
-[25300.463510] rust_out_of_tree: Unknown symbol _RNvMs5_NtNtCs3yuwAp0waWO_4core3fmt8buildersNtB5_9DebugList5entry (err -2)
-[25300.463524] rust_out_of_tree: Unknown symbol _RNvMs5_NtNtCs3yuwAp0waWO_4core3fmt8buildersNtB5_9DebugList6finish (err -2)
-[25300.463538] rust_out_of_tree: Unknown symbol _RNvXs_NtCsfATHBUcknU9_6kernel5errorNtB4_5ErrorINtNtCs3yuwAp0waWO_4core7convert4FromNtNtCsdvv6pRyacSq_5alloc11collections15TryReserveErrorE4from (err -2)
-[25300.463552] rust_out_of_tree: Unknown symbol _RNvMNtCsfATHBUcknU9_6kernel5errorNtB2_5Error15to_kernel_errno (err -2)
-</code></pre></div>
-
-<p>So lets try with the ArchLinux config:</p>
-<div class="highlight"><pre><span></span><code>wget https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/linux/trunk/config
-make olddefconfig
-diff -u config .config
-</code></pre></div>
-
-<p>The configuration difference isn't big</p>
-<div class="highlight"><pre><span></span><code><span class="gd">--- config  2022-12-18 20:51:38.269359290 +0100</span><span class="w"></span>
-<span class="gi">+++ .config 2022-12-18 20:53:48.896025137 +0100</span><span class="w"></span>
-<span class="gu">@@ -11,6 +11,7 @@</span><span class="w"></span>
-<span class="w"> </span>CONFIG_LD_IS_BFD=y<span class="w"></span>
-<span class="w"> </span>CONFIG_LD_VERSION=23900<span class="w"></span>
-<span class="w"> </span>CONFIG_LLD_VERSION=0<span class="w"></span>
-<span class="gi">+CONFIG_RUST_IS_AVAILABLE=y</span><span class="w"></span>
-<span class="w"> </span>CONFIG_CC_CAN_LINK=y<span class="w"></span>
-<span class="w"> </span>CONFIG_CC_CAN_LINK_STATIC=y<span class="w"></span>
-<span class="w"> </span>CONFIG_CC_HAS_ASM_GOTO_OUTPUT=y<span class="w"></span>
-</code></pre></div>
-
-<p>A bit strange that <code>CONFIG_RUST_IS_AVAILABLE=y</code> isn't set, but
-<code>CONFIG_HAVE_RUST=y</code> is enabled, so all should be good.</p>
-<p>Quite some time later, we built the ArchLinux kernel as well:</p>
-<div class="highlight"><pre><span></span><code>make -j8 LLVM=1  15202.68s user 1464.06s system 800% cpu 34:42.57 total
-</code></pre></div>
-
-<p>But this lead to build failures in the kernel module!</p>
-<div class="highlight"><pre><span></span><code><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="w"> </span><span class="ss">(</span><span class="nv">git</span><span class="ss">)</span><span class="o">-</span>[<span class="nv">fix</span><span class="o">-</span><span class="nv">build</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">linux</span><span class="o">-</span><span class="mi">6</span>.<span class="mi">1</span>]<span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nv">make</span><span class="w"> </span><span class="nv">KDIR</span><span class="o">=</span>..<span class="o">/</span><span class="nv">linux</span><span class="w"> </span><span class="nv">LLVM</span><span class="o">=</span><span class="mi">1</span><span class="w"></span>
-<span class="nv">make</span><span class="w"> </span><span class="o">-</span><span class="nv">C</span><span class="w"> </span>..<span class="o">/</span><span class="nv">linux</span><span class="w"> </span><span class="nv">M</span><span class="o">=</span>$<span class="nv">PWD</span><span class="w"></span>
-<span class="nv">make</span>[<span class="mi">1</span>]:<span class="w"> </span><span class="nv">Entering</span><span class="w"> </span><span class="nv">directory</span><span class="w"> </span><span class="s1">&#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;</span><span class="w"></span>
-<span class="w">  </span><span class="nv">MODPOST</span><span class="w"> </span><span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">Module</span>.<span class="nv">symvers</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;_RNvNtNtCsfATHBUcknU9_6kernel5print14format_strings4INFO&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;_RNvNtCsfATHBUcknU9_6kernel5print11call_printk&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;__rust_dealloc&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;__rust_realloc&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;__rust_alloc&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;_RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter15debug_lower_hex&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;_RNvXsS_NtNtCs3yuwAp0waWO_4core3fmt3numlNtB7_8LowerHex3fmt&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;_RNvMs7_NtCs3yuwAp0waWO_4core3fmtNtB5_9Formatter15debug_upper_hex&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;_RNvXsT_NtNtCs3yuwAp0waWO_4core3fmt3numlNtB7_8UpperHex3fmt&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">ERROR</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="s2">&quot;_RNvXs2_NtNtNtCs3yuwAp0waWO_4core3fmt3num3implNtB9_7Display3fmt&quot;</span><span class="w"> </span>[<span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">rust_out_of_tree</span>.<span class="nv">ko</span>]<span class="w"> </span><span class="nv">undefined</span><span class="o">!</span><span class="w"></span>
-<span class="nv">WARNING</span>:<span class="w"> </span><span class="nv">modpost</span>:<span class="w"> </span><span class="nv">suppressed</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="nv">unresolved</span><span class="w"> </span><span class="nv">symbol</span><span class="w"> </span><span class="nv">warnings</span><span class="w"> </span><span class="nv">because</span><span class="w"> </span><span class="nv">there</span><span class="w"> </span><span class="nv">were</span><span class="w"> </span><span class="nv">too</span><span class="w"> </span><span class="nv">many</span><span class="ss">)</span><span class="w"></span>
-<span class="nv">make</span>[<span class="mi">2</span>]:<span class="w"> </span><span class="o">***</span><span class="w"> </span>[<span class="nv">scripts</span><span class="o">/</span><span class="nv">Makefile</span>.<span class="nv">modpost</span>:<span class="mi">126</span>:<span class="w"> </span><span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">roughl</span><span class="o">/</span><span class="nv">projects</span><span class="o">/</span><span class="nv">github</span><span class="o">/</span><span class="nv">Rust</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">Linux</span><span class="o">/</span><span class="nv">rust</span><span class="o">-</span><span class="nv">out</span><span class="o">-</span><span class="nv">of</span><span class="o">-</span><span class="nv">tree</span><span class="o">-</span><span class="nv">module</span><span class="o">/</span><span class="nv">Module</span>.<span class="nv">symvers</span>]<span class="w"> </span><span class="nv">Error</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="nv">make</span>[<span class="mi">1</span>]:<span class="w"> </span><span class="o">***</span><span class="w"> </span>[<span class="nv">Makefile</span>:<span class="mi">1944</span>:<span class="w"> </span><span class="nv">modpost</span>]<span class="w"> </span><span class="nv">Error</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="nv">make</span>[<span class="mi">1</span>]:<span class="w"> </span><span class="nv">Leaving</span><span class="w"> </span><span class="nv">directory</span><span class="w"> </span><span class="s1">&#39;/home/roughl/projects/github/Rust-for-Linux/linux&#39;</span><span class="w"></span>
-<span class="nv">make</span>:<span class="w"> </span><span class="o">***</span><span class="w"> </span>[<span class="nv">Makefile</span>:<span class="mi">6</span>:<span class="w"> </span><span class="nv">default</span>]<span class="w"> </span><span class="nv">Error</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-</code></pre></div>
-
-<p>These are now the compile time equivalent of the runtime errors we got before!</p>
-<p>Apparently, the ArchLinux kernel <em>doesn't</em> have Rust support, despite it being
-set in the config. Executing <code>make menuconfig</code> reveals, that options which
-conflict with <code>CONFIG_HAVE_RUST=y</code> are enabled:</p>
-<div class="highlight"><pre><span></span><code>│ Symbol: RUST [=n]                                                                                                                                  │
-│ Type  : bool                                                                                                                                       │
-│ Defined at init/Kconfig:1925                                                                                                                       │
-│   Prompt: Rust support                                                                                                                             │
-│   Depends on: HAVE_RUST [=y] &amp;&amp; RUST_IS_AVAILABLE [=y] &amp;&amp; !MODVERSIONS [=n] &amp;&amp; !GCC_PLUGINS [=y] &amp;&amp; !RANDSTRUCT [=n] &amp;&amp; !DEBUG_INFO_BTF [=y]       │
-</code></pre></div>
-
-<h2>Giving up for now</h2>
-<p>At this point I'd probably need to compile and run a custom kernel which
-actually has Rust support enabled.</p>
-<p>I'll probably try this at a later point, but for now I'll give it a bit more
-time to settle.</p>
-<p>I'm also considering reporting this to the ArchLinux developers, but I'm not
-sure how much priority Rust kernel modules should have, given the early stage.
-I'll probably wait until Linux 6.2 is released before investigating further.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1</p>
+                <a class="readmore" href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -565,29 +664,6 @@ I'll probably wait until Linux 6.2 is released before investigating further.</p>
 </footer><!-- /.post-info -->                <p class="first last">Attending RustFest and visiting the Hacklab Kyiv</p>
 
                 <a class="readmore" href="https://blog.rnstlr.ch/rustfest-and-visiting-hacklab-kyiv.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-hackerspace-budapest.html" rel="bookmark"
-                           title="Permalink to Visiting Hackerspace Budapest">Visiting Hackerspace Budapest</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-04-29T00:00:00+02:00">
-                Published: Sa 29 April 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting the Hackerspace Budapest</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-hackerspace-budapest.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

@@ -20,13 +20,14 @@
                     <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="https://blog.rnstlr.ch/drafts/building-an-out-of-tree-rust-kernel-module-part-two.html" rel="bookmark"
+        <a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-two.html" rel="bookmark"
            title="Permalink to Building an out-of-tree Rust Kernel Module Part Two">Building an out-of-tree Rust Kernel Module Part Two</a></h1>
     </header>
 
@@ -319,9 +320,9 @@ make: *** [Makefile:6: default] Error 2
 
 </details>
 
-<p>Alright, so it findes the crates, but the rustc versions do not match.
+<p>Alright, so it finds the crates, but the <code>rustc</code> versions do not match.
 Apparently the build is executed in
-<code>/usr/lib/modules/6.1.5-arch2-1-rust/build</code>, so we need to tell rustup that we
+<code>/usr/lib/modules/6.1.5-arch2-1-rust/build</code>, so we need to tell <code>rustup</code> that we
 want the 1.62.0 toolchain for that folder.</p>
 <p>For that we just add the <code>rust-toolchain</code> to the package as well.</p>
 <div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make  LLVM=1

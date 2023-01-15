@@ -444,10 +444,13 @@ make: *** [Makefile:6: default] Error 2
 target triple looks something like <code>x86_64-unknown-linux-gnu</code> (<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>). But in
 our case we are using a <code>target.json</code> to define the target, so I've no clue
 where the difference comes from, since we are using the same JSON file.</p>
-<h2>Giving up for now</h2>
+<h2>Summing it up</h2>
 <p>While we managed to compile and run our out-of-tree kernel module in Rust, we
 couldn't get the build meta data packaged in a way to do it without a local
 build of the kernel.</p>
+<p>Well let's see if anything changes with the 6.2 Linux kernel which should get
+released in February. In the meantime this kernel provides an easy way to start
+playing with Rust kernel modules on ArchLinux.</p>
 <div class="footnote">
 <hr>
 <ol>

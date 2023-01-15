@@ -2,7 +2,6 @@ Title: Building an out-of-tree Rust Kernel Module Part Two
 Tags: rust, kernel, Linux, ArchLinux
 Language: en
 Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.
-Status: draft
 
 In my last [blog posts](//building-an-out-of-tree-rust-kernel-module.html) I
 tried to build an out-of-tree kernel module in Rust for the 6.1 stock kernel
@@ -297,9 +296,9 @@ make: *** [Makefile:6: default] Error 2
 ```
 </details>
 
-Alright, so it findes the crates, but the rustc versions do not match.
+Alright, so it finds the crates, but the `rustc` versions do not match.
 Apparently the build is executed in
-`/usr/lib/modules/6.1.5-arch2-1-rust/build`, so we need to tell rustup that we
+`/usr/lib/modules/6.1.5-arch2-1-rust/build`, so we need to tell `rustup` that we
 want the 1.62.0 toolchain for that folder.
 
 For that we just add the `rust-toolchain` to the package as well.

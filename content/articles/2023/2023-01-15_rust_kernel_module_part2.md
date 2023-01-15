@@ -3,7 +3,7 @@ Tags: rust, kernel, Linux, ArchLinux
 Language: en
 Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.
 
-In my last [blog posts](//building-an-out-of-tree-rust-kernel-module.html) I
+In my last [blog posts](/building-an-out-of-tree-rust-kernel-module.html) I
 tried to build an out-of-tree kernel module in Rust for the 6.1 stock kernel
 for ArchLinux.
 

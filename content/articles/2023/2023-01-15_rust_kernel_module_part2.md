@@ -421,11 +421,15 @@ target triple looks something like `x86_64-unknown-linux-gnu` ([^2]). But in
 our case we are using a `target.json` to define the target, so I've no clue
 where the difference comes from, since we are using the same JSON file.
 
-## Giving up for now
+## Summing it up
 
 While we managed to compile and run our out-of-tree kernel module in Rust, we
 couldn't get the build meta data packaged in a way to do it without a local
 build of the kernel.
+
+Well let's see if anything changes with the 6.2 Linux kernel which should get
+released in February. In the meantime this kernel provides an easy way to start
+playing with Rust kernel modules on ArchLinux.
 
 [^1]: The name of the package may be a bit misleading, since the package not
   only bundles the headers but also build scripts and other metadata required

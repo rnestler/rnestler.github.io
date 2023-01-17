@@ -3,13 +3,12 @@ Tags: rust, kernel, Linux, ArchLinux
 Language: en
 Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.
 
-In my last [blog posts](/building-an-out-of-tree-rust-kernel-module.html), I
-tried to build an out-of-tree kernel module in Rust for the 6.1 stock kernel
-for ArchLinux.
+In my last [blog post](/building-an-out-of-tree-rust-kernel-module.html), I
+tried to build an out-of-tree kernel module in Rust for the 6.1 stock ArchLinux kernel.
 
-During this process, I noticed that while `CONFIG_HAVE_RUST=y` is set in the
+During this process I noticed that while `CONFIG_HAVE_RUST=y` is set in the
 [ArchLinux kernel config](https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config),
-Rust support get's silently disabled, since conflicting options are set.
+Rust support get's silently disabled since conflicting options are set.
 
 ## Building our own ArchLinux kernel
 
@@ -41,7 +40,7 @@ And we see in the `dmesg` output that the module successfully loaded! 🎉
 [  451.297724] rust_out_of_tree: Rust out-of-tree sample (init)
 ```
 
-If we unload it with `sudo rmmod rust_out_of_tree.ko`, we get the following in
+If we unload it with `sudo rmmod rust_out_of_tree.ko` we get the following in
 `dmesg`:
 
 ```

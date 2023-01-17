@@ -4,7 +4,6 @@ Limiting process RAM usage with systemd-run
 :tags: Linux, ArchLinux, systemd, kernel
 :language: en
 :summary: Limiting RAM usage of a build process with systemd-run
-:status: draft
 
 While building the Linux kernel with `Rust support for ArchLinux
 </building-an-out-of-tree-rust-kernel-module-part-two.html>`_, I ran into a

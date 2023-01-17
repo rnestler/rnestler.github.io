@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-01-15T00:00:00+01:00</updated><entry><title>Building an out-of-tree Rust Kernel Module Part Two</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-two.html" rel="alternate"></link><published>2023-01-15T00:00:00+01:00</published><updated>2023-01-15T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-01-15:/building-an-out-of-tree-rust-kernel-module-part-two.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my last &lt;a href="/building-an-out-of-tree-rust-kernel-module.html"&gt;blog posts&lt;/a&gt; I
-tried to build an out-of-tree kernel module in Rust for the 6.1 stock kernel
-for ArchLinux.&lt;/p&gt;
-&lt;p&gt;During this process I noticed, that while &lt;code&gt;CONFIG_HAVE_RUST=y&lt;/code&gt; is set in the
-&lt;a href="https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config"&gt;ArchLinux kernel config&lt;/a&gt;
-, Rust support get's silently disabled, since conflicting options are set.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-01-15T00:00:00+01:00</updated><entry><title>Building an out-of-tree Rust Kernel Module Part Two</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-two.html" rel="alternate"></link><published>2023-01-15T00:00:00+01:00</published><updated>2023-01-15T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-01-15:/building-an-out-of-tree-rust-kernel-module-part-two.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my last &lt;a href="/building-an-out-of-tree-rust-kernel-module.html"&gt;blog post&lt;/a&gt;, I
+tried to build an out-of-tree kernel module in Rust for the 6.1 stock ArchLinux kernel.&lt;/p&gt;
+&lt;p&gt;During this process I noticed that while &lt;code&gt;CONFIG_HAVE_RUST=y&lt;/code&gt; is set in the
+&lt;a href="https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config"&gt;ArchLinux kernel config&lt;/a&gt;,
+Rust support get's silently disabled since conflicting options are set.&lt;/p&gt;
 &lt;h2&gt;Building our own ArchLinux kernel&lt;/h2&gt;
 &lt;p&gt;So I went ahead and started to build my own kernel with a custom config:
 &lt;a href="https://aur.archlinux.org/packages/linux-rust"&gt;https://aur.archlinux.org/packages/linux-rust&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I based it of the official ArchLinux kernel package, disabled the conflicting
+&lt;p&gt;I based it off the official ArchLinux kernel package, disabled the conflicting
 options, ran &lt;code&gt;make menuconfig&lt;/code&gt; and enabled Rust support.&lt;/p&gt;
-&lt;p&gt;A few iterations on the configuration and &lt;code&gt;PKGBUILD&lt;/code&gt; later I had a successfully
+&lt;p&gt;A few iterations on the configuration and &lt;code&gt;PKGBUILD&lt;/code&gt; later, I had a successfully
 building kernel with Rust support enabled!&lt;/p&gt;
-&lt;p&gt;After installing the custom kernel and booting into it we should finally be
+&lt;p&gt;After installing the custom kernel and booting into it, we should finally be
 ready!&lt;/p&gt;
 &lt;h2&gt;Building the out-of-tree module&lt;/h2&gt;
 &lt;p&gt;So back to the
@@ -39,7 +38,7 @@ sudo insmod rust_out_of_tree.ko
 is because the build requires the Rust metadata which is generated during the
 kernel build. To make it easier for other people installing the &lt;code&gt;linux-rust&lt;/code&gt;
 kernel, we should package it in &lt;code&gt;linux-rust-headers&lt;/code&gt; (&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt;).&lt;/p&gt;
-&lt;p&gt;If we don't pass the &lt;code&gt;KDIR&lt;/code&gt; option we get the following build error:&lt;/p&gt;
+&lt;p&gt;If we don't pass the &lt;code&gt;KDIR&lt;/code&gt; option, we get the following build error:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1
 make -C /lib/modules/`uname -r`/build M=$PWD
 make[1]: Entering directory &amp;#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&amp;#39;
@@ -65,7 +64,7 @@ error[E0463]: can&amp;#39;t find crate for `core`
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;details&gt;
-&lt;summary&gt;Rest of the terminal output...&lt;/summary&gt;
+&lt;summary&gt;Rest of the terminal output ...&lt;/summary&gt;
 
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;error[E0463]: can&amp;#39;t find crate for `compiler_builtins`
 
@@ -162,7 +161,7 @@ make: *** [Makefile:6: default] Error 2
 
 &lt;p&gt;Ok, so the build system is unable to find all the required crates that got
 built as part of the kernel.&lt;/p&gt;
-&lt;p&gt;So to keep it simple we just add everything form the &lt;code&gt;rust/&lt;/code&gt; folder into the
+&lt;p&gt;So to keep it simple, we just add everything form the &lt;code&gt;rust/&lt;/code&gt; folder into the
 package.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1
 make -C /lib/modules/`uname -r`/build M=$PWD
@@ -176,7 +175,7 @@ error[E0514]: found crate `core` compiled by an incompatible version of rustc
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;details&gt;
-&lt;summary&gt;Rest of the terminal output...&lt;/summary&gt;
+&lt;summary&gt;Rest of the terminal output ...&lt;/summary&gt;
 
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;error[E0514]: found crate `kernel` compiled by an incompatible version of rustc
  --&amp;gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:5:5
@@ -278,10 +277,10 @@ make: *** [Makefile:6: default] Error 2
 &lt;/details&gt;
 
 &lt;p&gt;Alright, so it finds the crates, but the &lt;code&gt;rustc&lt;/code&gt; versions do not match.
-Apparently the build is executed in
+Apparently, the build is executed in
 &lt;code&gt;/usr/lib/modules/6.1.5-arch2-1-rust/build&lt;/code&gt;, so we need to tell &lt;code&gt;rustup&lt;/code&gt; that we
 want the 1.62.0 toolchain for that folder.&lt;/p&gt;
-&lt;p&gt;For that we just add the &lt;code&gt;rust-toolchain&lt;/code&gt; to the package as well.&lt;/p&gt;
+&lt;p&gt;For that, we just add the &lt;code&gt;rust-toolchain&lt;/code&gt; to the package as well.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make  LLVM=1
 make -C /lib/modules/`uname -r`/build M=$PWD
 make[1]: Entering directory &amp;#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&amp;#39;
@@ -293,7 +292,7 @@ error[E0461]: couldn&amp;#39;t find crate `core` with expected target triple tar
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;details&gt;
-&lt;summary&gt;Rest of the terminal output...&lt;/summary&gt;
+&lt;summary&gt;Rest of the terminal output ...&lt;/summary&gt;
 
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;error[E0461]: couldn&amp;#39;t find crate `compiler_builtins` with expected target triple target-12809083303779448358
   |
@@ -403,10 +402,10 @@ our case we are using a &lt;code&gt;target.json&lt;/code&gt; to define the targe
 where the difference comes from, since we are using the same JSON file.&lt;/p&gt;
 &lt;h2&gt;Summing it up&lt;/h2&gt;
 &lt;p&gt;While we managed to compile and run our out-of-tree kernel module in Rust, we
-couldn't get the build meta data packaged in a way to do it without a local
+couldn't get the build metadata packaged in a way to do it without a local
 build of the kernel.&lt;/p&gt;
-&lt;p&gt;Well let's see if anything changes with the 6.2 Linux kernel which should get
-released in February. In the meantime this kernel provides an easy way to start
+&lt;p&gt;Well, let's see if anything changes with the 6.2 Linux kernel which should get
+released in February. In the meantime, this kernel provides an easy way to start
 playing with Rust kernel modules on ArchLinux.&lt;/p&gt;
 &lt;div class="footnote"&gt;
 &lt;hr&gt;

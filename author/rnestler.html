@@ -37,20 +37,19 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
-</footer><!-- /.post-info --><p>In my last <a href="/building-an-out-of-tree-rust-kernel-module.html">blog posts</a> I
-tried to build an out-of-tree kernel module in Rust for the 6.1 stock kernel
-for ArchLinux.</p>
-<p>During this process I noticed, that while <code>CONFIG_HAVE_RUST=y</code> is set in the
-<a href="https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config">ArchLinux kernel config</a>
-, Rust support get's silently disabled, since conflicting options are set.</p>
+</footer><!-- /.post-info --><p>In my last <a href="/building-an-out-of-tree-rust-kernel-module.html">blog post</a>, I
+tried to build an out-of-tree kernel module in Rust for the 6.1 stock ArchLinux kernel.</p>
+<p>During this process I noticed that while <code>CONFIG_HAVE_RUST=y</code> is set in the
+<a href="https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config">ArchLinux kernel config</a>,
+Rust support get's silently disabled since conflicting options are set.</p>
 <h2>Building our own ArchLinux kernel</h2>
 <p>So I went ahead and started to build my own kernel with a custom config:
 <a href="https://aur.archlinux.org/packages/linux-rust">https://aur.archlinux.org/packages/linux-rust</a>.</p>
-<p>I based it of the official ArchLinux kernel package, disabled the conflicting
+<p>I based it off the official ArchLinux kernel package, disabled the conflicting
 options, ran <code>make menuconfig</code> and enabled Rust support.</p>
-<p>A few iterations on the configuration and <code>PKGBUILD</code> later I had a successfully
+<p>A few iterations on the configuration and <code>PKGBUILD</code> later, I had a successfully
 building kernel with Rust support enabled!</p>
-<p>After installing the custom kernel and booting into it we should finally be
+<p>After installing the custom kernel and booting into it, we should finally be
 ready!</p>
 <h2>Building the out-of-tree module</h2>
 <p>So back to the
@@ -77,7 +76,7 @@ sudo insmod rust_out_of_tree.ko
 is because the build requires the Rust metadata which is generated during the
 kernel build. To make it easier for other people installing the <code>linux-rust</code>
 kernel, we should package it in <code>linux-rust-headers</code> (<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>).</p>
-<p>If we don't pass the <code>KDIR</code> option we get the following build error:</p>
+<p>If we don't pass the <code>KDIR</code> option, we get the following build error:</p>
 <div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1
 make -C /lib/modules/`uname -r`/build M=$PWD
 make[1]: Entering directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
@@ -103,7 +102,7 @@ error[E0463]: can&#39;t find crate for `core`
 </code></pre></div>
 
 <details>
-<summary>Rest of the terminal output...</summary>
+<summary>Rest of the terminal output ...</summary>
 
 <div class="highlight"><pre><span></span><code>error[E0463]: can&#39;t find crate for `compiler_builtins`
 
@@ -200,7 +199,7 @@ make: *** [Makefile:6: default] Error 2
 
 <p>Ok, so the build system is unable to find all the required crates that got
 built as part of the kernel.</p>
-<p>So to keep it simple we just add everything form the <code>rust/</code> folder into the
+<p>So to keep it simple, we just add everything form the <code>rust/</code> folder into the
 package.</p>
 <div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1
 make -C /lib/modules/`uname -r`/build M=$PWD
@@ -214,7 +213,7 @@ error[E0514]: found crate `core` compiled by an incompatible version of rustc
 </code></pre></div>
 
 <details>
-<summary>Rest of the terminal output...</summary>
+<summary>Rest of the terminal output ...</summary>
 
 <div class="highlight"><pre><span></span><code>error[E0514]: found crate `kernel` compiled by an incompatible version of rustc
  --&gt; /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:5:5
@@ -316,10 +315,10 @@ make: *** [Makefile:6: default] Error 2
 </details>
 
 <p>Alright, so it finds the crates, but the <code>rustc</code> versions do not match.
-Apparently the build is executed in
+Apparently, the build is executed in
 <code>/usr/lib/modules/6.1.5-arch2-1-rust/build</code>, so we need to tell <code>rustup</code> that we
 want the 1.62.0 toolchain for that folder.</p>
-<p>For that we just add the <code>rust-toolchain</code> to the package as well.</p>
+<p>For that, we just add the <code>rust-toolchain</code> to the package as well.</p>
 <div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make  LLVM=1
 make -C /lib/modules/`uname -r`/build M=$PWD
 make[1]: Entering directory &#39;/usr/lib/modules/6.1.5-arch2-1-rust/build&#39;
@@ -331,7 +330,7 @@ error[E0461]: couldn&#39;t find crate `core` with expected target triple target-
 </code></pre></div>
 
 <details>
-<summary>Rest of the terminal output...</summary>
+<summary>Rest of the terminal output ...</summary>
 
 <div class="highlight"><pre><span></span><code>error[E0461]: couldn&#39;t find crate `compiler_builtins` with expected target triple target-12809083303779448358
   |
@@ -441,10 +440,10 @@ our case we are using a <code>target.json</code> to define the target, so I've n
 where the difference comes from, since we are using the same JSON file.</p>
 <h2>Summing it up</h2>
 <p>While we managed to compile and run our out-of-tree kernel module in Rust, we
-couldn't get the build meta data packaged in a way to do it without a local
+couldn't get the build metadata packaged in a way to do it without a local
 build of the kernel.</p>
-<p>Well let's see if anything changes with the 6.2 Linux kernel which should get
-released in February. In the meantime this kernel provides an easy way to start
+<p>Well, let's see if anything changes with the 6.2 Linux kernel which should get
+released in February. In the meantime, this kernel provides an easy way to start
 playing with Rust kernel modules on ArchLinux.</p>
 <div class="footnote">
 <hr>

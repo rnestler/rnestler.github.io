@@ -3,26 +3,25 @@ Tags: rust, kernel, Linux, ArchLinux
 Language: en
 Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.
 
-In my last [blog posts](/building-an-out-of-tree-rust-kernel-module.html) I
-tried to build an out-of-tree kernel module in Rust for the 6.1 stock kernel
-for ArchLinux.
+In my last [blog post](/building-an-out-of-tree-rust-kernel-module.html), I
+tried to build an out-of-tree kernel module in Rust for the 6.1 stock ArchLinux kernel.
 
-During this process I noticed, that while `CONFIG_HAVE_RUST=y` is set in the
-[ArchLinux kernel config](https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config)
-, Rust support get's silently disabled, since conflicting options are set.
+During this process I noticed that while `CONFIG_HAVE_RUST=y` is set in the
+[ArchLinux kernel config](https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config),
+Rust support get's silently disabled since conflicting options are set.
 
 ## Building our own ArchLinux kernel
 
 So I went ahead and started to build my own kernel with a custom config:
 <https://aur.archlinux.org/packages/linux-rust>.
 
-I based it of the official ArchLinux kernel package, disabled the conflicting
+I based it off the official ArchLinux kernel package, disabled the conflicting
 options, ran `make menuconfig` and enabled Rust support.
 
-A few iterations on the configuration and `PKGBUILD` later I had a successfully
+A few iterations on the configuration and `PKGBUILD` later, I had a successfully
 building kernel with Rust support enabled!
 
-After installing the custom kernel and booting into it we should finally be
+After installing the custom kernel and booting into it, we should finally be
 ready!
 
 ## Building the out-of-tree module
@@ -57,7 +56,7 @@ is because the build requires the Rust metadata which is generated during the
 kernel build. To make it easier for other people installing the `linux-rust`
 kernel, we should package it in `linux-rust-headers` ([^1]).
 
-If we don't pass the `KDIR` option we get the following build error:
+If we don't pass the `KDIR` option, we get the following build error:
 ```text
 ..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1
 make -C /lib/modules/`uname -r`/build M=$PWD
@@ -86,7 +85,7 @@ error[E0463]: can't find crate for `core`
 ```
 
 <details>
-<summary>Rest of the terminal output...</summary>
+<summary>Rest of the terminal output ...</summary>
 ```text
 error[E0463]: can't find crate for `compiler_builtins`
 
@@ -182,7 +181,7 @@ make: *** [Makefile:6: default] Error 2
 Ok, so the build system is unable to find all the required crates that got
 built as part of the kernel.
 
-So to keep it simple we just add everything form the `rust/` folder into the
+So to keep it simple, we just add everything form the `rust/` folder into the
 package.
 
 ```text
@@ -197,7 +196,7 @@ error[E0514]: found crate `core` compiled by an incompatible version of rustc
   = help: please recompile that crate using this compiler (rustc 1.66.0 (69f9c33d7 2022-12-12)) (consider running `cargo clean` first)
 ```
 <details>
-<summary>Rest of the terminal output...</summary>
+<summary>Rest of the terminal output ...</summary>
 ```text
 error[E0514]: found crate `kernel` compiled by an incompatible version of rustc
  --> /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.rs:5:5
@@ -297,11 +296,11 @@ make: *** [Makefile:6: default] Error 2
 </details>
 
 Alright, so it finds the crates, but the `rustc` versions do not match.
-Apparently the build is executed in
+Apparently, the build is executed in
 `/usr/lib/modules/6.1.5-arch2-1-rust/build`, so we need to tell `rustup` that we
 want the 1.62.0 toolchain for that folder.
 
-For that we just add the `rust-toolchain` to the package as well.
+For that, we just add the `rust-toolchain` to the package as well.
 
 ```text
 ..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make  LLVM=1
@@ -314,7 +313,7 @@ error[E0461]: couldn't find crate `core` with expected target triple target-1280
           crate `core`, target triple target-3911737072772191946: /usr/lib/modules/6.1.5-arch2-1-rust/build/rust/libcore.rmeta
 ```
 <details>
-<summary>Rest of the terminal output...</summary>
+<summary>Rest of the terminal output ...</summary>
 ```text
 error[E0461]: couldn't find crate `compiler_builtins` with expected target triple target-12809083303779448358
   |
@@ -424,11 +423,11 @@ where the difference comes from, since we are using the same JSON file.
 ## Summing it up
 
 While we managed to compile and run our out-of-tree kernel module in Rust, we
-couldn't get the build meta data packaged in a way to do it without a local
+couldn't get the build metadata packaged in a way to do it without a local
 build of the kernel.
 
-Well let's see if anything changes with the 6.2 Linux kernel which should get
-released in February. In the meantime this kernel provides an easy way to start
+Well, let's see if anything changes with the 6.2 Linux kernel which should get
+released in February. In the meantime, this kernel provides an easy way to start
 playing with Rust kernel modules on ArchLinux.
 
 [^1]: The name of the package may be a bit misleading, since the package not

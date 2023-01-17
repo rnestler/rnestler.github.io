@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-01-15T00:00:00+01:00</updated><entry><title>Building an out-of-tree Rust Kernel Module Part Two</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-two.html" rel="alternate"></link><published>2023-01-15T00:00:00+01:00</published><updated>2023-01-15T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-01-15:/building-an-out-of-tree-rust-kernel-module-part-two.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my last &lt;a href="/building-an-out-of-tree-rust-kernel-module.html"&gt;blog post&lt;/a&gt;, I
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-01-17T00:00:00+01:00</updated><entry><title>Limiting process RAM usage with systemd-run</title><link href="https://blog.rnstlr.ch/limiting-process-ram-usage-with-systemd-run.html" rel="alternate"></link><published>2023-01-17T00:00:00+01:00</published><updated>2023-01-17T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-01-17:/limiting-process-ram-usage-with-systemd-run.html</id><summary type="html">&lt;p class="first last"&gt;Limiting RAM usage of a build process with systemd-run&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;While building the Linux kernel with &lt;a class="reference external" href="/building-an-out-of-tree-rust-kernel-module-part-two.html"&gt;Rust support for ArchLinux&lt;/a&gt;, I ran into a
+problem where sphinx-build started using excessive amounts of RAM while
+building the HTML documentation.&lt;/p&gt;
+&lt;p&gt;This caused the system to become unresponsive before the OOM killer decided to
+just kill my user session.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 100%"&gt;
+&lt;a class="reference external image-reference" href="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png"&gt;&lt;img alt="htop just shortly before killing the build process" src="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;p class="caption"&gt;htop output just before killing the build process&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Looking for a way to not have the OOM killer kill my session, but kill the
+build process before it uses up all my available RAM, I found
+&lt;a class="reference external" href="https://unix.stackexchange.com/a/536046"&gt;https://unix.stackexchange.com/a/536046&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So, spawning the build with the following command will kill the build process
+as soon as it uses more than 20GB of RAM:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;systemd-run --scope -p &lt;span class="nv"&gt;MemoryMax&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;20G --user makepkg
+&lt;span class="go"&gt;Running scope as unit: run-r44087c0ea5d445fda135dc0db42b36ab.scope&lt;/span&gt;
+&lt;span class="go"&gt;[1]    426653 killed     systemd-run --scope -p MemoryMax=20G --user makepkg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+</content><category term="2023"></category><category term="Linux"></category><category term="ArchLinux"></category><category term="systemd"></category><category term="kernel"></category></entry><entry><title>Building an out-of-tree Rust Kernel Module Part Two</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-two.html" rel="alternate"></link><published>2023-01-15T00:00:00+01:00</published><updated>2023-01-15T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-01-15:/building-an-out-of-tree-rust-kernel-module-part-two.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my last &lt;a href="/building-an-out-of-tree-rust-kernel-module.html"&gt;blog post&lt;/a&gt;, I
 tried to build an out-of-tree kernel module in Rust for the 6.1 stock ArchLinux kernel.&lt;/p&gt;
 &lt;p&gt;During this process I noticed that while &lt;code&gt;CONFIG_HAVE_RUST=y&lt;/code&gt; is set in the
 &lt;a href="https://github.com/archlinux/svntogit-packages/blob/706494f4555dca158c9f02932717550e7b66b534/trunk/config"&gt;ArchLinux kernel config&lt;/a&gt;,

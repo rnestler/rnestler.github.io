@@ -27,14 +27,14 @@
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="https://blog.rnstlr.ch/drafts/limiting-process-ram-usage-with-systemd-run.html" rel="bookmark"
+        <a href="https://blog.rnstlr.ch/limiting-process-ram-usage-with-systemd-run.html" rel="bookmark"
            title="Permalink to Limiting process RAM usage with systemd-run">Limiting process RAM usage with systemd-run</a></h1>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2023-01-15T00:00:00+01:00">
-                Published: So 15 Januar 2023
+        <abbr class="published" title="2023-01-17T00:00:00+01:00">
+                Published: Di 17 Januar 2023
         </abbr>
 
         <address class="vcard author">
@@ -42,21 +42,23 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/systemd.html">systemd</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> </p>
-</footer><!-- /.post-info -->      <p>While building the Linux kernel with Rust support for ArchLinux I run into an
-issue, that building the HTML documentation sphinx-build starts to use
-excessive amounts of RAM.</p>
-<p>This resulted in the system being un-responsive before the OOM killer decided
-to just kill my user session.</p>
+</footer><!-- /.post-info -->      <p>While building the Linux kernel with <a class="reference external" href="/building-an-out-of-tree-rust-kernel-module-part-two.html">Rust support for ArchLinux</a>, I ran into a
+problem where sphinx-build started using excessive amounts of RAM while
+building the HTML documentation.</p>
+<p>This caused the system to become unresponsive before the OOM killer decided to
+just kill my user session.</p>
 <div class="figure align-center" style="width: 100%">
-<a class="reference external image-reference" href="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png"><img alt="htop output shortly before killing the build process" src="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png" style="width: 80%;" /></a>
-<p class="caption">htop output shortly before killing the build process</p>
+<a class="reference external image-reference" href="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png"><img alt="htop just shortly before killing the build process" src="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png" style="width: 80%;" /></a>
+<p class="caption">htop output just before killing the build process</p>
 </div>
-<p>Searching for a way to not have the OOM killer kill my session, but kill the
-build process before it uses all my available RAM I found
+<p>Looking for a way to not have the OOM killer kill my session, but kill the
+build process before it uses up all my available RAM, I found
 <a class="reference external" href="https://unix.stackexchange.com/a/536046">https://unix.stackexchange.com/a/536046</a>.</p>
-<p>So spawning the build with the following command will kill the build process
-once it uses more than 20GB of RAM:</p>
-<div class="highlight"><pre><span></span><span class="go">systemd-run --scope -p MemoryMax=20G --user makepkg</span>
+<p>So, spawning the build with the following command will kill the build process
+as soon as it uses more than 20GB of RAM:</p>
+<div class="highlight"><pre><span></span><span class="gp">$ </span>systemd-run --scope -p <span class="nv">MemoryMax</span><span class="o">=</span>20G --user makepkg
+<span class="go">Running scope as unit: run-r44087c0ea5d445fda135dc0db42b36ab.scope</span>
+<span class="go">[1]    426653 killed     systemd-run --scope -p MemoryMax=20G --user makepkg</span>
 </pre></div>
 
     </div><!-- /.entry-content -->

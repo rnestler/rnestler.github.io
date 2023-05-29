@@ -1,6 +1,5 @@
 Title: Switching my Desktop to PipeWire
 Tags: PipeWire, PulseAudio
-Status: draft
 Language: en
 Summary: How I switched my desktop from PulseAudio to PipeWire
 

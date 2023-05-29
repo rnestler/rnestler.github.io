@@ -69,18 +69,18 @@ Validated By    : Signature
 </details>
 
 But first we install `pipewire-audio`:
-```bash
+```text
 $ sudo pacman -S pipewire-audio
 ```
 
 Then we remove `pulseaudio-alsa` and install `pipewire-alsa`:
-```bash
+```text
 $ sudo pacman -Rs pulseaudio-alsa
 $ sudo pacman -S pipewire-alsa
 ```
 
 Then we install `pipewire-pulse` (which will remove `pulseaudio` and `pulseaudio-bluetooth`)
-```bash
+```text
 $ sudo pacman -S pipewire-pulse
 resolving dependencies...
 looking for conflicting packages...
@@ -97,6 +97,42 @@ Failed to stop pulseaudio.service: Unit pulseaudio.service not loaded.
 ```
 
 Since I didn't want to invest too much time (maybe I should just have stopped
-it before uninstalling it?) I just logged out to restart my session.
+it before uninstalling it?) I just logged out and back in to restart my
+session.[^session]
+
+## Problems
+
+After restarting the session pulseaudio clients seemed to be broken:
+```bash
+$ pactl stat
+Connection failure: Connection refused
+pa_context_connect() failed: Connection refused
+```
+
+It turns out that for some reason the pipewire-pulse.socket listener wasn't
+active:
+```bash
+$ systemctl --user status pipewire-pulse.socket
+○ pipewire-pulse.socket - PipeWire PulseAudio
+     Loaded: loaded (/usr/lib/systemd/user/pipewire-pulse.socket; enabled; preset: enabled)
+     Active: inactive (dead)
+   Triggers: ● pipewire-pulse.service
+     Listen: /run/user/1000/pulse/native (Stream)
+```
+
+Starting it is as easy as `systemctl --user start pipewire-pulse.socket` and
+now `pactl` shows some output:
+
+```
+$ pactl stat
+Currently in use: 2 blocks containing 8.0 KiB bytes total.
+Allocated during whole lifetime: 2 blocks containing 8.0 KiB bytes total.
+Sample cache size: 0 B
+```
+
+Also pavucontrol now shows me LDAC, AAC, and SBC-XQ in addition to just SBC:
+
+![pavucontrol showing more codecs]({static}/images/pipewire/pavucontrol-bluetooth-profiles.png){width=100%}
 
 [PipeWire]: https://pipewire.org/
+[^session]: I should probably have used `systemctl --user stop pulseaudio.service`, since these are user units.

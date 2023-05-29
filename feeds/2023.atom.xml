@@ -1,5 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2023</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2023.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-01-17T00:00:00+01:00</updated><entry><title>Limiting process RAM usage with systemd-run</title><link href="https://blog.rnstlr.ch/limiting-process-ram-usage-with-systemd-run.html" rel="alternate"></link><published>2023-01-17T00:00:00+01:00</published><updated>2023-01-17T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-01-17:/limiting-process-ram-usage-with-systemd-run.html</id><summary type="html">&lt;p class="first last"&gt;Limiting RAM usage of a build process with systemd-run&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2023</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2023.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-05-29T00:00:00+02:00</updated><entry><title>Switching my Desktop to PipeWire</title><link href="https://blog.rnstlr.ch/switching-my-desktop-to-pipewire.html" rel="alternate"></link><published>2023-05-29T00:00:00+02:00</published><updated>2023-05-29T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-05-29:/switching-my-desktop-to-pipewire.html</id><summary type="html">&lt;p&gt;How I switched my desktop from PulseAudio to PipeWire&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Background&lt;/h1&gt;
+&lt;p&gt;While I did setup my new laptop directly with PipeWire back in December 2021,
+my existing desktop PC did remain with a PulseAudio setup.&lt;/p&gt;
+&lt;h2&gt;What is PipeWire?&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="https://pipewire.org/"&gt;PipeWire&lt;/a&gt; is a new low-level multimedia framework. It aims to offer capture
+and playback for both audio and video with minimal latency and support for
+PulseAudio, JACK, ALSA and GStreamer-based applications. &lt;/p&gt;
+&lt;p&gt;Source: &lt;a href="https://wiki.archlinux.org/title/PipeWire"&gt;https://wiki.archlinux.org/title/PipeWire&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The reason I wanted to switch was, that I had some troubles with my bluetooth
+headphones (only the SBC codec was available in the A2DP profile and I had some
+reliability issues) and I heard that PipeWire should make this better.&lt;/p&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;p&gt;Most of the pipewire packages were already installed as dependencies for other packages:&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;
+
+&lt;tt&gt;pacman -Qi pipewire&lt;/tt&gt;
+
+&lt;/summary&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Name            : pipewire
+Version         : 1:0.3.71-1
+Description     : Low-latency audio/video router and processor
+Architecture    : x86_64
+URL             : https://pipewire.org
+Licenses        : MIT  LGPL
+Groups          : None
+Provides        : None
+Depends On      : libpipewire=1:0.3.71-1  libcamera-base.so=0.0.5-64  libcamera.so=0.0.5-64  libdbus-1.so=3-64  libglib-2.0.so=0-64  libncursesw.so=6-64  libpipewire-0.3.so=0-64  libreadline.so=8-64  libsystemd.so=0-64  libudev.so=1-64
+Optional Deps   : gst-plugin-pipewire: GStreamer plugin
+                  pipewire-alsa: ALSA configuration
+                  pipewire-audio: Audio support
+                  pipewire-docs: Documentation
+                  pipewire-jack: JACK support
+                  pipewire-pulse: PulseAudio replacement
+                  pipewire-roc: ROC streaming
+                  pipewire-session-manager: Session manager [installed]
+                  pipewire-v4l2: V4L2 interceptor
+                  pipewire-x11-bell: X11 bell
+                  pipewire-zeroconf: Zeroconf support
+                  realtime-privileges: realtime privileges with rt module
+                  rtkit: realtime privileges with rtkit module [installed]
+Required By     : lib32-pipewire  obs-studio  telegram-desktop  wireplumber  xdg-desktop-portal  xdg-desktop-portal-wlr
+Optional For    : chromium  electron  electron19  qt5-webengine  qt6-webengine  sdl2
+Conflicts With  : None
+Replaces        : None
+Installed Size  : 3.11 MiB
+Packager        : David Runge &amp;lt;dvzrv@archlinux.org&amp;gt;
+Build Date      : So 21 Mai 2023 15:17:29
+Install Date    : Di 23 Mai 2023 22:53:42
+Install Reason  : Installed as a dependency for another package
+Install Script  : Yes
+Validated By    : Signature
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/details&gt;
+
+&lt;p&gt;But first we install &lt;code&gt;pipewire-audio&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ sudo pacman -S pipewire-audio
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then we remove &lt;code&gt;pulseaudio-alsa&lt;/code&gt; and install &lt;code&gt;pipewire-alsa&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ sudo pacman -Rs pulseaudio-alsa
+$ sudo pacman -S pipewire-alsa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then we install &lt;code&gt;pipewire-pulse&lt;/code&gt; (which will remove &lt;code&gt;pulseaudio&lt;/code&gt; and &lt;code&gt;pulseaudio-bluetooth&lt;/code&gt;)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ sudo pacman -S pipewire-pulse
+resolving dependencies...
+looking for conflicting packages...
+:: pipewire-pulse and pulseaudio are in conflict. Remove pulseaudio? [y/N] y
+:: pipewire-pulse and pulseaudio-bluetooth are in conflict. Remove pulseaudio-bluetooth? [y/N] y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When trying to stop the (now uninstalled) pulseaudio service to start pipewire
+I got an error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemctl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stop&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pulseaudio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;Failed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stop&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pulseaudio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Unit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pulseaudio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ow"&gt;not&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;loaded&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Since I didn't want to invest too much time (maybe I should just have stopped
+it before uninstalling it?) I just logged out and back in to restart my
+session.&lt;sup id="fnref:session"&gt;&lt;a class="footnote-ref" href="#fn:session"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;h2&gt;Problems&lt;/h2&gt;
+&lt;p&gt;After restarting the session pulseaudio clients seemed to be broken:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ pactl stat
+Connection failure: Connection refused
+pa_context_connect&lt;span class="o"&gt;()&lt;/span&gt; failed: Connection refused
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;It turns out that for some reason the pipewire-pulse.socket listener wasn't
+active:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ systemctl --user status pipewire-pulse.socket
+○ pipewire-pulse.socket - PipeWire PulseAudio
+     Loaded: loaded &lt;span class="o"&gt;(&lt;/span&gt;/usr/lib/systemd/user/pipewire-pulse.socket&lt;span class="p"&gt;;&lt;/span&gt; enabled&lt;span class="p"&gt;;&lt;/span&gt; preset: enabled&lt;span class="o"&gt;)&lt;/span&gt;
+     Active: inactive &lt;span class="o"&gt;(&lt;/span&gt;dead&lt;span class="o"&gt;)&lt;/span&gt;
+   Triggers: ● pipewire-pulse.service
+     Listen: /run/user/1000/pulse/native &lt;span class="o"&gt;(&lt;/span&gt;Stream&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Starting it is as easy as &lt;code&gt;systemctl --user start pipewire-pulse.socket&lt;/code&gt; and
+now &lt;code&gt;pactl&lt;/code&gt; shows some output:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ pactl stat
+Currently &lt;span class="k"&gt;in&lt;/span&gt; use: &lt;span class="m"&gt;2&lt;/span&gt; blocks containing &lt;span class="m"&gt;8&lt;/span&gt;.0 KiB bytes total.
+Allocated during whole lifetime: &lt;span class="m"&gt;2&lt;/span&gt; blocks containing &lt;span class="m"&gt;8&lt;/span&gt;.0 KiB bytes total.
+Sample cache size: &lt;span class="m"&gt;0&lt;/span&gt; B
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Also pavucontrol now shows me LDAC, AAC, and SBC-XQ in addition to just SBC:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pavucontrol showing more codecs" src="https://blog.rnstlr.ch/images/pipewire/pavucontrol-bluetooth-profiles.png" width="100%"&gt;&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:session"&gt;
+&lt;p&gt;I should probably have used &lt;code&gt;systemctl --user stop pulseaudio.service&lt;/code&gt;, since these are user units.&amp;#160;&lt;a class="footnote-backref" href="#fnref:session" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content><category term="2023"></category><category term="PipeWire"></category><category term="PulseAudio"></category></entry><entry><title>Limiting process RAM usage with systemd-run</title><link href="https://blog.rnstlr.ch/limiting-process-ram-usage-with-systemd-run.html" rel="alternate"></link><published>2023-01-17T00:00:00+01:00</published><updated>2023-01-17T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-01-17:/limiting-process-ram-usage-with-systemd-run.html</id><summary type="html">&lt;p class="first last"&gt;Limiting RAM usage of a build process with systemd-run&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;While building the Linux kernel with &lt;a class="reference external" href="/building-an-out-of-tree-rust-kernel-module-part-two.html"&gt;Rust support for ArchLinux&lt;/a&gt;, I ran into a
 problem where sphinx-build started using excessive amounts of RAM while
 building the HTML documentation.&lt;/p&gt;

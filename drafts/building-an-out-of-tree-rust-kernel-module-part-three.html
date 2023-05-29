@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Building an out-of-tree Rust Kernel Module Part Three</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/building-an-out-of-tree-rust-kernel-module-part-three.html" rel="bookmark"
+           title="Permalink to Building an out-of-tree Rust Kernel Module Part Three">Building an out-of-tree Rust Kernel Module Part Three</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2023-04-09T00:00:00+02:00">
+                Published: So 09 April 2023
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
+</footer><!-- /.post-info -->      <p>In my last <a href="/building-an-out-of-tree-rust-kernel-module-part-two.html">blog post</a>,
+I managed to build an out-of-tree kernel module in Rust for a custom 6.1 Linux
+kernel I packaged for ArchLinux:
+<a href="https://aur.archlinux.org/packages/linux-rust">https://aur.archlinux.org/packages/linux-rust</a>.</p>
+<p>While this worked, I couldn't manage to package the correct metadata to build
+the out-of-tree kernel module without a local build of the kernel, which kind
+of defeats the purpose of the exercise.</p>
+<p>In the meantime Linux 6.2 got released so I thought I'd try again.</p>
+<h2>Updating our own ArchLinux kernel</h2>
+<p>So I went ahead and updated my <a href="https://aur.archlinux.org/packages/linux-rust">linux-rust</a> package to a 6.2 kernel. While
+doing this I tried to stay as close as possible to the default ArchLinux kernel
+packages <a href="TODO">config</a> file to make it generally usable.</p>
+<h2>Building the out-of-tree module</h2>
+<p>Updating it: https://github.com/Rust-for-Linux/rust-out-of-tree-module/pull/5</p>
+<p>Reasons for the previous error:
+ * https://github.com/Rust-for-Linux/linux/issues/792
+ * https://github.com/rust-lang/rust/pull/98225</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

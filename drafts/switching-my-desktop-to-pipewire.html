@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Switching my Desktop to PipeWire</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/switching-my-desktop-to-pipewire.html" rel="bookmark"
+           title="Permalink to Switching my Desktop to PipeWire">Switching my Desktop to PipeWire</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2023-05-29T00:00:00+02:00">
+                Published: Mo 29 Mai 2023
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/pipewire.html">PipeWire</a> <a href="https://blog.rnstlr.ch/tag/pulseaudio.html">PulseAudio</a> </p>
+</footer><!-- /.post-info -->      <h1>Background</h1>
+<p>While I did setup my new laptop directly with PipeWire back in December 2021,
+my existing desktop PC did remain with a PulseAudio setup.</p>
+<h2>What is PipeWire?</h2>
+<blockquote>
+<p><a href="https://pipewire.org/">PipeWire</a> is a new low-level multimedia framework. It aims to offer capture
+and playback for both audio and video with minimal latency and support for
+PulseAudio, JACK, ALSA and GStreamer-based applications. </p>
+<p>Source: <a href="https://wiki.archlinux.org/title/PipeWire">https://wiki.archlinux.org/title/PipeWire</a></p>
+</blockquote>
+<p>The reason I wanted to switch was, that I had some troubles with my bluetooth
+headphones (only the SBC codec was available in the A2DP profile and I had some
+reliability issues) and I heard that PipeWire should make this better.</p>
+<h2>Installation</h2>
+<p>Most of the pipewire packages were already installed as dependencies for other packages:</p>
+<details>
+<summary>
+
+<tt>pacman -Qi pipewire</tt>
+
+</summary>
+
+
+<div class="highlight"><pre><span></span><code>Name            : pipewire
+Version         : 1:0.3.71-1
+Description     : Low-latency audio/video router and processor
+Architecture    : x86_64
+URL             : https://pipewire.org
+Licenses        : MIT  LGPL
+Groups          : None
+Provides        : None
+Depends On      : libpipewire=1:0.3.71-1  libcamera-base.so=0.0.5-64  libcamera.so=0.0.5-64  libdbus-1.so=3-64  libglib-2.0.so=0-64  libncursesw.so=6-64  libpipewire-0.3.so=0-64  libreadline.so=8-64  libsystemd.so=0-64  libudev.so=1-64
+Optional Deps   : gst-plugin-pipewire: GStreamer plugin
+                  pipewire-alsa: ALSA configuration
+                  pipewire-audio: Audio support
+                  pipewire-docs: Documentation
+                  pipewire-jack: JACK support
+                  pipewire-pulse: PulseAudio replacement
+                  pipewire-roc: ROC streaming
+                  pipewire-session-manager: Session manager [installed]
+                  pipewire-v4l2: V4L2 interceptor
+                  pipewire-x11-bell: X11 bell
+                  pipewire-zeroconf: Zeroconf support
+                  realtime-privileges: realtime privileges with rt module
+                  rtkit: realtime privileges with rtkit module [installed]
+Required By     : lib32-pipewire  obs-studio  telegram-desktop  wireplumber  xdg-desktop-portal  xdg-desktop-portal-wlr
+Optional For    : chromium  electron  electron19  qt5-webengine  qt6-webengine  sdl2
+Conflicts With  : None
+Replaces        : None
+Installed Size  : 3.11 MiB
+Packager        : David Runge &lt;dvzrv@archlinux.org&gt;
+Build Date      : So 21 Mai 2023 15:17:29
+Install Date    : Di 23 Mai 2023 22:53:42
+Install Reason  : Installed as a dependency for another package
+Install Script  : Yes
+Validated By    : Signature
+</code></pre></div>
+
+
+</details>
+
+<p>But first we install <code>pipewire-audio</code>:</p>
+<div class="highlight"><pre><span></span><code>$ sudo pacman -S pipewire-audio
+</code></pre></div>
+
+<p>Then we remove <code>pulseaudio-alsa</code> and install <code>pipewire-alsa</code>:</p>
+<div class="highlight"><pre><span></span><code>$ sudo pacman -Rs pulseaudio-alsa
+$ sudo pacman -S pipewire-alsa
+</code></pre></div>
+
+<p>Then we install <code>pipewire-pulse</code> (which will remove <code>pulseaudio</code> and <code>pulseaudio-bluetooth</code>)</p>
+<div class="highlight"><pre><span></span><code>$ sudo pacman -S pipewire-pulse
+resolving dependencies...
+looking for conflicting packages...
+:: pipewire-pulse and pulseaudio are in conflict. Remove pulseaudio? [y/N] y
+:: pipewire-pulse and pulseaudio-bluetooth are in conflict. Remove pulseaudio-bluetooth? [y/N] y
+</code></pre></div>
+
+<p>When trying to stop the (now uninstalled) pulseaudio service to start pipewire
+I got an error:</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">pulseaudio</span><span class="o">.</span><span class="n">service</span><span class="w"></span>
+<span class="n">Failed</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">pulseaudio</span><span class="o">.</span><span class="n">service</span><span class="p">:</span><span class="w"> </span><span class="n">Unit</span><span class="w"> </span><span class="n">pulseaudio</span><span class="o">.</span><span class="n">service</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">loaded</span><span class="o">.</span><span class="w"></span>
+</code></pre></div>
+
+<p>Since I didn't want to invest too much time (maybe I should just have stopped
+it before uninstalling it?) I just logged out and back in to restart my
+session.<sup id="fnref:session"><a class="footnote-ref" href="#fn:session">1</a></sup></p>
+<h2>Problems</h2>
+<p>After restarting the session pulseaudio clients seemed to be broken:</p>
+<div class="highlight"><pre><span></span><code>$ pactl stat
+Connection failure: Connection refused
+pa_context_connect<span class="o">()</span> failed: Connection refused
+</code></pre></div>
+
+<p>It turns out that for some reason the pipewire-pulse.socket listener wasn't
+active:</p>
+<div class="highlight"><pre><span></span><code>$ systemctl --user status pipewire-pulse.socket
+○ pipewire-pulse.socket - PipeWire PulseAudio
+     Loaded: loaded <span class="o">(</span>/usr/lib/systemd/user/pipewire-pulse.socket<span class="p">;</span> enabled<span class="p">;</span> preset: enabled<span class="o">)</span>
+     Active: inactive <span class="o">(</span>dead<span class="o">)</span>
+   Triggers: ● pipewire-pulse.service
+     Listen: /run/user/1000/pulse/native <span class="o">(</span>Stream<span class="o">)</span>
+</code></pre></div>
+
+<p>Starting it is as easy as <code>systemctl --user start pipewire-pulse.socket</code> and
+now <code>pactl</code> shows some output:</p>
+<div class="highlight"><pre><span></span><code>$ pactl stat
+Currently <span class="k">in</span> use: <span class="m">2</span> blocks containing <span class="m">8</span>.0 KiB bytes total.
+Allocated during whole lifetime: <span class="m">2</span> blocks containing <span class="m">8</span>.0 KiB bytes total.
+Sample cache size: <span class="m">0</span> B
+</code></pre></div>
+
+<p>Also pavucontrol now shows me LDAC, AAC, and SBC-XQ in addition to just SBC:</p>
+<p><img alt="pavucontrol showing more codecs" src="https://blog.rnstlr.ch/images/pipewire/pavucontrol-bluetooth-profiles.png" width="100%"></p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:session">
+<p>I should probably have used <code>systemctl --user stop pulseaudio.service</code>, since these are user units.&#160;<a class="footnote-backref" href="#fnref:session" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

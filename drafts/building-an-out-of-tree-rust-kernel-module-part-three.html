@@ -53,12 +53,94 @@ of defeats the purpose of the exercise.</p>
 <h2>Updating our own ArchLinux kernel</h2>
 <p>So I went ahead and updated my <a href="https://aur.archlinux.org/packages/linux-rust">linux-rust</a> package to a 6.2 kernel. While
 doing this I tried to stay as close as possible to the default ArchLinux kernel
-packages <a href="TODO">config</a> file to make it generally usable.</p>
+packages <a href="https://github.com/archlinux/svntogit-packages/blob/4f7eadd27c78bb52f78246256b6775f2c16125fd/repos/core-x86_64/config">config</a> file to make it generally usable.</p>
 <h2>Building the out-of-tree module</h2>
-<p>Updating it: https://github.com/Rust-for-Linux/rust-out-of-tree-module/pull/5</p>
-<p>Reasons for the previous error:
- * https://github.com/Rust-for-Linux/linux/issues/792
- * https://github.com/rust-lang/rust/pull/98225</p>
+<p>Linux 6.2 changed the module metadata strings from byte arrays to proper
+<code>str</code>s. For that we needed to update the kernel module. See:
+<a href="https://github.com/Rust-for-Linux/rust-out-of-tree-module/pull/5">https://github.com/Rust-for-Linux/rust-out-of-tree-module/pull/5</a></p>
+<h2>Same error as before</h2>
+<p>So I went ahead recompiled the kernel, rebooted, tried to compile the kernel
+module and got the same error as before:</p>
+<div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make LLVM=1
+make -C /lib/modules/`uname -r`/build M=$PWD
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+error[E0461]: couldn&#39;t find crate `core` with expected target triple target-12809083303779448358
+  |
+  = note: the following crate versions were found:
+          crate `core`, target triple target-5559158138856098584: /usr/lib/modules/6.2.10-arch1-1-rust/build/rust/libcore.rmeta
+</code></pre></div>
+
+<h2>Finding the root cause for the error</h2>
+<p>But this time I wanted to find out what the cause for this issue is! It turns
+out that it is a bug in rustc, where the file <em>path</em> instead of the <em>content</em>
+of the <code>target.json</code> where used. See</p>
+<ul>
+<li><a href="https://github.com/Rust-for-Linux/linux/issues/792">https://github.com/Rust-for-Linux/linux/issues/792</a></li>
+<li><a href="https://github.com/rust-lang/rust/pull/98225">https://github.com/rust-lang/rust/pull/98225</a></li>
+</ul>
+<h2>Compiling with Rust 1.63.0</h2>
+<p>So since this bug got fix in Rust 1.63.0 I decided to try to compile the kernel
+with a newer (and thus unsupported, since the Linux kernel uses unstable Rust
+features) version.</p>
+<p>This will print a scary warning during the build process:</p>
+<div class="highlight"><pre><span></span><code>***
+*** Rust compiler &#39;rustc&#39; is too new. This may or may not work.
+***   Your version:     1.63.0
+***   Expected version: 1.62.0
+***
+</code></pre></div>
+
+<p>Also there were a few warnings from the Rust compiler itself about features
+that got now stabilized:</p>
+<div class="highlight"><pre><span></span><code>warning: the feature `nll` has been stable since 1.63.0 and no longer requires an attribute to enable
+   --&gt; rust/alloc/lib.rs:170:12
+    |
+170 | #![feature(nll)] // Not necessary, but here to test the `nll` feature.
+    |            ^^^
+    |
+    = note: `#[warn(stable_features)]` on by default
+</code></pre></div>
+
+<h2>Successfully building an out-of-tree kernel module!</h2>
+<p>So finally I was able to compile the out-of-tree module without a local build
+of the kernel:</p>
+<div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make LLVM=1
+make -C /lib/modules/`uname -r`/build M=$PWD
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+  MODPOST /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/Module.symvers
+  CC [M]  /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.mod.o
+  LD [M]  /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.ko
+</code></pre></div>
+
+<p>Which also loaded successfully:</p>
+<div class="highlight"><pre><span></span><code>[125766.698929] rust_out_of_tree: loading out-of-tree module taints kernel.
+[125766.698985] rust_out_of_tree: module verification failed: signature and/or required key missing - tainting kernel
+[125766.699611] rust_out_of_tree: Rust out-of-tree sample (init)
+[125771.403175] rust_out_of_tree: My numbers are [72, 108, 200]
+[125771.403183] rust_out_of_tree: Rust out-of-tree sample (exit)
+</code></pre></div>
+
+<p>I also spent some time figuring out which parts of the build metadata are
+really needed, since previously I just copied the whole <code>rust/</code> folder. In the
+end we just need:</p>
+<ul>
+<li><code>rust/target.json</code> the custom target description</li>
+<li><code>rust/*.rmeta</code> the compiled rust libraries</li>
+<li><code>rust/*.so</code> the pre-compiled procedural macros</li>
+<li><code>rust-toolchain</code> such that we use the same Rust compiler version that was
+   used to compile the kernel</li>
+</ul>
+<h2>Looking forward</h2>
+<p>In the meantime Linux 6.3 got released and 6.4 will be released shortly. But it
+doesn't look like they will bump the minimum version of Rust needed to compile:
+<a href="https://github.com/torvalds/linux/blob/v6.4-rc6/scripts/min-tool-version.sh#L29">https://github.com/torvalds/linux/blob/v6.4-rc6/scripts/min-tool-version.sh#L29</a></p>
+<p>But reading <a href="https://rust-for-linux.com/rust-version-policy">https://rust-for-linux.com/rust-version-policy</a> it looks like
+there are plans to start tracking the latest Rust release for Linux:</p>
+<blockquote>
+<p>It remains to be decided how often the Rust version upgrades will land.
+Ideally we would track the latest Rust release, but it remains to be seen how
+other kernel developers feel about it.</p>
+</blockquote>
     </div><!-- /.entry-content -->
 
   </article>

@@ -70,7 +70,7 @@ make[1]: Leaving directory '/usr/lib/modules/6.1.5-arch2-1-rust/build'
 make: *** [Makefile:6: default] Error 2
 ```
 
-So let's add the this file to the package and try to rebuild:
+So let's add this file to the package and try to rebuild:
 
 ```text
 ..Rust-for-Linux/rust-out-of-tree-module (git)-[fix-build-for-linux-6.1] % make LLVM=1

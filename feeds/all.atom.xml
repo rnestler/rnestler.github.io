@@ -1,5 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-05-29T00:00:00+02:00</updated><entry><title>Switching my Desktop to PipeWire</title><link href="https://blog.rnstlr.ch/switching-my-desktop-to-pipewire.html" rel="alternate"></link><published>2023-05-29T00:00:00+02:00</published><updated>2023-05-29T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-05-29:/switching-my-desktop-to-pipewire.html</id><summary type="html">&lt;p&gt;How I switched my desktop from PulseAudio to PipeWire&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Background&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-06-15T00:00:00+02:00</updated><entry><title>Building an out-of-tree Rust Kernel Module Part Three</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html" rel="alternate"></link><published>2023-06-15T00:00:00+02:00</published><updated>2023-06-15T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-06-15:/building-an-out-of-tree-rust-kernel-module-part-three.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux. Part Three.&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my last &lt;a href="/building-an-out-of-tree-rust-kernel-module-part-two.html"&gt;blog post&lt;/a&gt;,
+I managed to build an out-of-tree kernel module in Rust for a custom 6.1 Linux
+kernel I packaged for ArchLinux:
+&lt;a href="https://aur.archlinux.org/packages/linux-rust"&gt;https://aur.archlinux.org/packages/linux-rust&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;While this worked, I couldn't manage to package the correct metadata to build
+the out-of-tree kernel module without a local build of the kernel, which kind
+of defeats the purpose of the exercise.&lt;/p&gt;
+&lt;p&gt;In the meantime Linux 6.2 got released so I thought I'd try again.&lt;/p&gt;
+&lt;h2&gt;Updating our own ArchLinux kernel&lt;/h2&gt;
+&lt;p&gt;So I went ahead and updated my &lt;a href="https://aur.archlinux.org/packages/linux-rust"&gt;linux-rust&lt;/a&gt; package to a 6.2 kernel. While
+doing this I tried to stay as close as possible to the default ArchLinux kernel
+packages &lt;a href="https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/6.2.10.arch1-1/config?ref_type=tags"&gt;config&lt;/a&gt; file to make it generally usable.&lt;/p&gt;
+&lt;h2&gt;Building the out-of-tree module&lt;/h2&gt;
+&lt;p&gt;Linux 6.2 changed the module metadata strings from byte arrays to proper
+&lt;code&gt;str&lt;/code&gt;s. For that we needed to update the kernel module. See:
+&lt;a href="https://github.com/Rust-for-Linux/rust-out-of-tree-module/pull/5"&gt;https://github.com/Rust-for-Linux/rust-out-of-tree-module/pull/5&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Same error as before&lt;/h2&gt;
+&lt;p&gt;So I went ahead recompiled the kernel, rebooted, tried to compile the kernel
+module and got the same error as before:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;..Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make LLVM=1
+make -C /lib/modules/`uname -r`/build M=$PWD
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+error[E0461]: couldn&amp;#39;t find crate `core` with expected target triple target-12809083303779448358
+  |
+  = note: the following crate versions were found:
+          crate `core`, target triple target-5559158138856098584: /usr/lib/modules/6.2.10-arch1-1-rust/build/rust/libcore.rmeta
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Finding the root cause for the error&lt;/h2&gt;
+&lt;p&gt;But this time I wanted to find out what the cause for this issue is! It turns
+out that it is a bug in rustc, where the file &lt;em&gt;path&lt;/em&gt; instead of the &lt;em&gt;content&lt;/em&gt;
+of the &lt;code&gt;target.json&lt;/code&gt; where used. See&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/Rust-for-Linux/linux/issues/792"&gt;https://github.com/Rust-for-Linux/linux/issues/792&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/rust-lang/rust/pull/98225"&gt;https://github.com/rust-lang/rust/pull/98225&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Compiling with Rust 1.63.0&lt;/h2&gt;
+&lt;p&gt;So since this bug got fix in Rust 1.63.0 I decided to try to compile the kernel
+with a newer (and thus unsupported, since the Linux kernel uses unstable Rust
+features) version.&lt;/p&gt;
+&lt;p&gt;This will print a scary warning during the build process:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;***
+*** Rust compiler &amp;#39;rustc&amp;#39; is too new. This may or may not work.
+***   Your version:     1.63.0
+***   Expected version: 1.62.0
+***
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Also there were a few warnings from the Rust compiler itself about features
+that got now stabilized:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;warning: the feature `nll` has been stable since 1.63.0 and no longer requires an attribute to enable
+   --&amp;gt; rust/alloc/lib.rs:170:12
+    |
+170 | #![feature(nll)] // Not necessary, but here to test the `nll` feature.
+    |            ^^^
+    |
+    = note: `#[warn(stable_features)]` on by default
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Successfully building an out-of-tree kernel module!&lt;/h2&gt;
+&lt;p&gt;So finally I was able to compile the out-of-tree module without a local build
+of the kernel:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;..Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make LLVM=1
+make -C /lib/modules/`uname -r`/build M=$PWD
+  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
+  MODPOST /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/Module.symvers
+  CC [M]  /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.mod.o
+  LD [M]  /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.ko
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Which also loaded successfully:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;[125766.698929] rust_out_of_tree: loading out-of-tree module taints kernel.
+[125766.698985] rust_out_of_tree: module verification failed: signature and/or required key missing - tainting kernel
+[125766.699611] rust_out_of_tree: Rust out-of-tree sample (init)
+[125771.403175] rust_out_of_tree: My numbers are [72, 108, 200]
+[125771.403183] rust_out_of_tree: Rust out-of-tree sample (exit)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I also spent some time figuring out which parts of the build metadata are
+really needed, since previously I just copied the whole &lt;code&gt;rust/&lt;/code&gt; folder. In the
+end we just need:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rust/target.json&lt;/code&gt; the custom target description&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rust/*.rmeta&lt;/code&gt; the compiled rust libraries&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rust/*.so&lt;/code&gt; the pre-compiled procedural macros&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rust-toolchain&lt;/code&gt; such that we use the same Rust compiler version that was
+   used to compile the kernel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Looking forward&lt;/h2&gt;
+&lt;p&gt;In the meantime Linux 6.3 got released and 6.4 will be released shortly. But it
+doesn't look like they will bump the minimum version of Rust needed to compile:
+&lt;a href="https://github.com/torvalds/linux/blob/v6.4-rc6/scripts/min-tool-version.sh#L29"&gt;https://github.com/torvalds/linux/blob/v6.4-rc6/scripts/min-tool-version.sh#L29&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;But reading &lt;a href="https://rust-for-linux.com/rust-version-policy"&gt;https://rust-for-linux.com/rust-version-policy&lt;/a&gt; it looks like
+there are plans to start tracking the latest Rust release for Linux:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;It remains to be decided how often the Rust version upgrades will land.
+Ideally we would track the latest Rust release, but it remains to be seen how
+other kernel developers feel about it.&lt;/p&gt;
+&lt;/blockquote&gt;</content><category term="2023"></category><category term="rust"></category><category term="kernel"></category><category term="Linux"></category><category term="ArchLinux"></category></entry><entry><title>Switching my Desktop to PipeWire</title><link href="https://blog.rnstlr.ch/switching-my-desktop-to-pipewire.html" rel="alternate"></link><published>2023-05-29T00:00:00+02:00</published><updated>2023-05-29T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-05-29:/switching-my-desktop-to-pipewire.html</id><summary type="html">&lt;p&gt;How I switched my desktop from PulseAudio to PipeWire&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Background&lt;/h1&gt;
 &lt;p&gt;While I did setup my new laptop directly with PipeWire back in December 2021,
 my existing desktop PC did remain with a PulseAudio setup.&lt;/p&gt;
 &lt;h2&gt;What is PipeWire?&lt;/h2&gt;

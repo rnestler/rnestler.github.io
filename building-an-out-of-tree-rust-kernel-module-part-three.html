@@ -27,14 +27,14 @@
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="https://blog.rnstlr.ch/drafts/building-an-out-of-tree-rust-kernel-module-part-three.html" rel="bookmark"
+        <a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html" rel="bookmark"
            title="Permalink to Building an out-of-tree Rust Kernel Module Part Three">Building an out-of-tree Rust Kernel Module Part Three</a></h1>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2023-06-14T00:00:00+02:00">
-                Published: Mi 14 Juni 2023
+        <abbr class="published" title="2023-06-15T00:00:00+02:00">
+                Published: Do 15 Juni 2023
         </abbr>
 
         <address class="vcard author">
@@ -53,7 +53,7 @@ of defeats the purpose of the exercise.</p>
 <h2>Updating our own ArchLinux kernel</h2>
 <p>So I went ahead and updated my <a href="https://aur.archlinux.org/packages/linux-rust">linux-rust</a> package to a 6.2 kernel. While
 doing this I tried to stay as close as possible to the default ArchLinux kernel
-packages <a href="https://github.com/archlinux/svntogit-packages/blob/4f7eadd27c78bb52f78246256b6775f2c16125fd/repos/core-x86_64/config">config</a> file to make it generally usable.</p>
+packages <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/6.2.10.arch1-1/config?ref_type=tags">config</a> file to make it generally usable.</p>
 <h2>Building the out-of-tree module</h2>
 <p>Linux 6.2 changed the module metadata strings from byte arrays to proper
 <code>str</code>s. For that we needed to update the kernel module. See:

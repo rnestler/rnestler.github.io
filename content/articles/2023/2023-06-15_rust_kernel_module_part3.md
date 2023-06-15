@@ -1,6 +1,5 @@
 Title: Building an out-of-tree Rust Kernel Module Part Three
 Tags: rust, kernel, Linux, ArchLinux
-Status: draft
 Language: en
 Summary: Trying to build a hello world out-of-tree Rust kernel module for Linux. Part Three.
 
@@ -124,4 +123,4 @@ there are plans to start tracking the latest Rust release for Linux:
 > other kernel developers feel about it.
 
 [linux-rust]: https://aur.archlinux.org/packages/linux-rust
-[config]: https://github.com/archlinux/svntogit-packages/blob/4f7eadd27c78bb52f78246256b6775f2c16125fd/repos/core-x86_64/config
+[config]: https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/6.2.10.arch1-1/config?ref_type=tags

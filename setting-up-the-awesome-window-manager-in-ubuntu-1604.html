@@ -61,10 +61,10 @@ content:</p>
 <span class="c1"># ~/.xsessionrc</span>
 <span class="c1">#</span>
 
-<span class="k">case</span> <span class="nv">$1</span> <span class="k">in</span>
+<span class="k">case</span><span class="w"> </span><span class="nv">$1</span><span class="w"> </span><span class="k">in</span>
 awesome<span class="o">)</span>
-    <span class="nb">export</span> <span class="k">$(</span>gnome-keyring-daemon -s -c pkcs11,secrets,ssh,gpg<span class="k">)</span>
-    <span class="p">;;</span>
+<span class="w">    </span><span class="nb">export</span><span class="w"> </span><span class="k">$(</span>gnome-keyring-daemon<span class="w"> </span>-s<span class="w"> </span>-c<span class="w"> </span>pkcs11,secrets,ssh,gpg<span class="k">)</span>
+<span class="w">    </span><span class="p">;;</span>
 <span class="k">esac</span>
 </pre></div>
 <p>This starts the gnome-keyring-daemon and export the <tt class="docutils literal">SSH_AUTH_SOCK</tt> variable,

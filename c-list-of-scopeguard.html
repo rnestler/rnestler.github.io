@@ -52,14 +52,14 @@ a <a class="reference external" href="https://channel9.msdn.com/Shows/Going+Deep
 <h2>Basic use of a ScopeGuard</h2>
 <p>The ScopeGuard allows to write transactional code that will undo previous parts
 if later code throws an exception.</p>
-<div class="highlight"><pre><span></span><span class="n">myVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w"></span>
-<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">myVector</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="n">myVector</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">scopeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">myVector</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span><span class="w"> </span><span class="p">});</span>
 
 <span class="c1">// Do stuff that may throw</span>
-<span class="n">database</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span><span class="w"></span>
+<span class="n">database</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
 
 <span class="c1">// everything worked, so don&#39;t undo</span>
-<span class="n">guard</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"></span>
+<span class="n">guard</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
 </pre></div>
 <p>So if <tt class="docutils literal">database.add(item)</tt> throws, the item in myVector will be removed. For
 more about the motivation behind ScopeGuard see the talk above or <a class="reference external" href="http://www.drdobbs.com/cpp/generic-change-the-way-you-write-excepti/184403758">this drdobbs
@@ -119,24 +119,24 @@ article</a>.</p>
 <h2>Why a ScopeGuardList?</h2>
 <p>If you have a transaction that consists of a lot of steps that may throw and
 need to be undone it leads to code like the following:</p>
-<div class="highlight"><pre><span></span><span class="n">doThing1</span><span class="p">();</span><span class="w"></span>
-<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing1</span><span class="p">();</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
-<span class="n">doThing2</span><span class="p">();</span><span class="w"></span>
-<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing2</span><span class="p">();</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
-<span class="n">doThing3</span><span class="p">();</span><span class="w"></span>
-<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing3</span><span class="p">();</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="n">doThing1</span><span class="p">();</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing1</span><span class="p">();</span><span class="w"> </span><span class="p">});</span>
+<span class="n">doThing2</span><span class="p">();</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing2</span><span class="p">();</span><span class="w"> </span><span class="p">});</span>
+<span class="n">doThing3</span><span class="p">();</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">guard</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">makeGuard</span><span class="p">([</span><span class="o">&amp;</span><span class="p">]()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">undoThing3</span><span class="p">();</span><span class="w"> </span><span class="p">});</span>
 
 <span class="c1">// Do stuff that may trow</span>
 
-<span class="n">guard1</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"></span>
-<span class="n">guard2</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"></span>
-<span class="n">guard3</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span><span class="w"></span>
+<span class="n">guard1</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+<span class="n">guard2</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
+<span class="n">guard3</span><span class="p">.</span><span class="n">dismiss</span><span class="p">();</span>
 </pre></div>
 <p>Things get even worse when doing something in a loop:</p>
-<div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">doStuff</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">doStuff</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 <span class="w">    </span><span class="c1">// how do we create a guard for every operation?</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </pre></div>
 <p>To avoid that repetition and the potential error of a missing call to
 <tt class="docutils literal">dismiss()</tt> we came up with a <tt class="docutils literal">ScopeGuardList</tt>.</p>

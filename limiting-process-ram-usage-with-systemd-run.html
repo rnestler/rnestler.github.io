@@ -56,7 +56,7 @@ build process before it uses up all my available RAM, I found
 <a class="reference external" href="https://unix.stackexchange.com/a/536046">https://unix.stackexchange.com/a/536046</a>.</p>
 <p>So, spawning the build with the following command will kill the build process
 as soon as it uses more than 20GB of RAM:</p>
-<div class="highlight"><pre><span></span><span class="gp">$ </span>systemd-run --scope -p <span class="nv">MemoryMax</span><span class="o">=</span>20G --user makepkg
+<div class="highlight"><pre><span></span><span class="gp">$ </span>systemd-run<span class="w"> </span>--scope<span class="w"> </span>-p<span class="w"> </span><span class="nv">MemoryMax</span><span class="o">=</span>20G<span class="w"> </span>--user<span class="w"> </span>makepkg
 <span class="go">Running scope as unit: run-r44087c0ea5d445fda135dc0db42b36ab.scope</span>
 <span class="go">[1]    426653 killed     systemd-run --scope -p MemoryMax=20G --user makepkg</span>
 </pre></div>

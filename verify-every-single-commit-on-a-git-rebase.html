@@ -46,78 +46,78 @@
 we screw up the commits in between without noticing, since the final commit
 compiles and passes every unit test.</p>
 <p>For example imagine we have this little Rust code:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>Now we want to show how nicely Rust can print a <tt class="docutils literal"><span class="pre">std::Vec</span></tt> so we create a
 branch: <tt class="docutils literal">git checkout <span class="pre">-b</span> add_vector</tt> and add the following:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
 
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>This will compile and give us some wonderful output:</p>
-<div class="highlight"><pre><span></span>$ cargo run
-v: <span class="o">[</span><span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span><span class="o">]</span>
-Hello, world!
+<div class="highlight"><pre><span></span>$<span class="w"> </span>cargo<span class="w"> </span>run
+v:<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span><span class="o">]</span>
+Hello,<span class="w"> </span>world!
 </pre></div>
 <p>We are satisfied with the changes and commit it:</p>
-<div class="highlight"><pre><span></span>$ git add src/main.rs
-$ git commit -m <span class="s2">&quot;Print vector&quot;</span>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>src/main.rs
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Print vector&quot;</span>
 </pre></div>
 <p>We than add some more code to show the length of our fancy vector:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
 
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
 
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v.len(): {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">len</span><span class="p">());</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v.len(): {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">len</span><span class="p">());</span>
+<span class="p">}</span>
 </pre></div>
 <p>This also works just fine so we commit it:</p>
-<div class="highlight"><pre><span></span>$ git add src/main.rs
-$ git commit -m <span class="s2">&quot;Print length of vector&quot;</span>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>src/main.rs
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Print length of vector&quot;</span>
 </pre></div>
 <p>But of course we are not satisfied with the commit history and want to
 rearrange our two commits. So we do a interactive rebase:</p>
-<div class="highlight"><pre><span></span>$ git rebase -i master
-pick 8fc4573 Print length of vector
-pick 6d22bd9 Print vector
+<div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>rebase<span class="w"> </span>-i<span class="w"> </span>master
+pick<span class="w"> </span>8fc4573<span class="w"> </span>Print<span class="w"> </span>length<span class="w"> </span>of<span class="w"> </span>vector
+pick<span class="w"> </span>6d22bd9<span class="w"> </span>Print<span class="w"> </span>vector
 </pre></div>
 <p>This will succeed without error and we still receive the correct output:</p>
-<div class="highlight"><pre><span></span>$ cargo run
-v: <span class="o">[</span><span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span><span class="o">]</span>
-Hello, world!
-v.len<span class="o">()</span>: <span class="m">3</span>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>cargo<span class="w"> </span>run
+v:<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span><span class="o">]</span>
+Hello,<span class="w"> </span>world!
+v.len<span class="o">()</span>:<span class="w"> </span><span class="m">3</span>
 </pre></div>
 <p>But we introduced a broken commit while rebasing! To detect this we can run the
 following:</p>
-<div class="highlight"><pre><span></span>$ git rebase -i master -x <span class="s2">&quot;cargo build&quot;</span>
+<div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>rebase<span class="w"> </span>-i<span class="w"> </span>master<span class="w"> </span>-x<span class="w"> </span><span class="s2">&quot;cargo build&quot;</span>
 
-Executing: cargo build
-   Compiling git_rebase_x_test v0.1.0 <span class="o">(</span>file:///home/rnestler/proggen/git_rebase_x_test<span class="o">)</span>
-error<span class="o">[</span>E0425<span class="o">]</span>: unresolved name <span class="sb">`</span>v<span class="sb">`</span>
- --&gt; src/main.rs:4:29
-  <span class="p">|</span>
-<span class="m">4</span> <span class="p">|</span>     println!<span class="o">(</span><span class="s2">&quot;v.len(): {}&quot;</span>, v.len<span class="o">())</span><span class="p">;</span>
-  <span class="p">|</span>                             ^
-&lt;std macros&gt;:2:27: <span class="m">2</span>:58 note: <span class="k">in</span> this expansion of format_args!
-&lt;std macros&gt;:3:1: <span class="m">3</span>:54 note: <span class="k">in</span> this expansion of print! <span class="o">(</span>defined <span class="k">in</span> &lt;std macros&gt;<span class="o">)</span>
-src/main.rs:4:5: <span class="m">4</span>:38 note: <span class="k">in</span> this expansion of println! <span class="o">(</span>defined <span class="k">in</span> &lt;std macros&gt;<span class="o">)</span>
+Executing:<span class="w"> </span>cargo<span class="w"> </span>build
+<span class="w">   </span>Compiling<span class="w"> </span>git_rebase_x_test<span class="w"> </span>v0.1.0<span class="w"> </span><span class="o">(</span>file:///home/rnestler/proggen/git_rebase_x_test<span class="o">)</span>
+error<span class="o">[</span>E0425<span class="o">]</span>:<span class="w"> </span>unresolved<span class="w"> </span>name<span class="w"> </span><span class="sb">`</span>v<span class="sb">`</span>
+<span class="w"> </span>--&gt;<span class="w"> </span>src/main.rs:4:29
+<span class="w">  </span><span class="p">|</span>
+<span class="m">4</span><span class="w"> </span><span class="p">|</span><span class="w">     </span>println!<span class="o">(</span><span class="s2">&quot;v.len(): {}&quot;</span>,<span class="w"> </span>v.len<span class="o">())</span><span class="p">;</span>
+<span class="w">  </span><span class="p">|</span><span class="w">                             </span>^
+&lt;std<span class="w"> </span>macros&gt;:2:27:<span class="w"> </span><span class="m">2</span>:58<span class="w"> </span>note:<span class="w"> </span><span class="k">in</span><span class="w"> </span>this<span class="w"> </span>expansion<span class="w"> </span>of<span class="w"> </span>format_args!
+&lt;std<span class="w"> </span>macros&gt;:3:1:<span class="w"> </span><span class="m">3</span>:54<span class="w"> </span>note:<span class="w"> </span><span class="k">in</span><span class="w"> </span>this<span class="w"> </span>expansion<span class="w"> </span>of<span class="w"> </span>print!<span class="w"> </span><span class="o">(</span>defined<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;std<span class="w"> </span>macros&gt;<span class="o">)</span>
+src/main.rs:4:5:<span class="w"> </span><span class="m">4</span>:38<span class="w"> </span>note:<span class="w"> </span><span class="k">in</span><span class="w"> </span>this<span class="w"> </span>expansion<span class="w"> </span>of<span class="w"> </span>println!<span class="w"> </span><span class="o">(</span>defined<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;std<span class="w"> </span>macros&gt;<span class="o">)</span>
 
-error: aborting due to previous error
+error:<span class="w"> </span>aborting<span class="w"> </span>due<span class="w"> </span>to<span class="w"> </span>previous<span class="w"> </span>error
 
-error: Could not compile <span class="sb">`</span>git_rebase_x_test<span class="sb">`</span>.
+error:<span class="w"> </span>Could<span class="w"> </span>not<span class="w"> </span>compile<span class="w"> </span><span class="sb">`</span>git_rebase_x_test<span class="sb">`</span>.
 
-To learn more, run the <span class="nb">command</span> again with --verbose.
-Execution failed: cargo build
-You can fix the problem, and <span class="k">then</span> run
+To<span class="w"> </span>learn<span class="w"> </span>more,<span class="w"> </span>run<span class="w"> </span>the<span class="w"> </span><span class="nb">command</span><span class="w"> </span>again<span class="w"> </span>with<span class="w"> </span>--verbose.
+Execution<span class="w"> </span>failed:<span class="w"> </span>cargo<span class="w"> </span>build
+You<span class="w"> </span>can<span class="w"> </span>fix<span class="w"> </span>the<span class="w"> </span>problem,<span class="w"> </span>and<span class="w"> </span><span class="k">then</span><span class="w"> </span>run
 
-    git rebase --continue
+<span class="w">    </span>git<span class="w"> </span>rebase<span class="w"> </span>--continue
 </pre></div>
 <p>This will execute the command after <tt class="docutils literal"><span class="pre">-x</span></tt> for every commit and stop rebasing
 if the command fails.  We now can go on and fix this commit and continue

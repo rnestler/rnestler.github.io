@@ -4,22 +4,22 @@
 the system enters sleep state.  This is how its done.&lt;/p&gt;
 &lt;p&gt;First we create a new systemd unit in /etc/systemd/system called
 suspend&amp;#64;.service&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;User suspend actions&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;Before&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sleep.target&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;User suspend actions&lt;/span&gt;
+&lt;span class="na"&gt;Before&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sleep.target&lt;/span&gt;
 
-&lt;span class="k"&gt;[Service]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;User&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;%I&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;Environment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;DISPLAY=:0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/slock&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;span class="na"&gt;User&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;%I&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;simple&lt;/span&gt;
+&lt;span class="na"&gt;Environment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;DISPLAY=:0&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/slock&lt;/span&gt;
 
-&lt;span class="k"&gt;[Install]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sleep.target&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;[Install]&lt;/span&gt;
+&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;sleep.target&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So what did we do? We created a unit that runs before sleep.target is reached.
 This unit will run as a configurable user by enabling &lt;cite&gt;suspend&amp;#64;$USER.service&lt;/cite&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;# &lt;/span&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; suspend@&lt;span class="nv"&gt;$USER&lt;/span&gt;.service
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;# &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;enable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;suspend@&lt;span class="nv"&gt;$USER&lt;/span&gt;.service
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So the /usr/bin/slock runs as $USER.  To be able to communicate with the
 X-Server we need to set the DISPLAY variable to :0.&lt;/p&gt;
@@ -37,24 +37,24 @@ create my blog.&lt;/p&gt;
 &lt;div class="section" id="setting-up-pelican"&gt;
 &lt;h2&gt;Setting up pelican&lt;/h2&gt;
 &lt;p&gt;Setting up pelican is quite straight forward. First I created a new developement environment with &lt;a class="reference external" href="http://www.virtualenv.org/"&gt;virtualenv&lt;/a&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ virtualenv blogenv
-$ &lt;span class="nb"&gt;cd&lt;/span&gt; blogenv
-$ . bin/acivate
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;virtualenv&lt;span class="w"&gt; &lt;/span&gt;blogenv
+$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;blogenv
+$&lt;span class="w"&gt; &lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;bin/acivate
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Then installing pelican&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pip install pelican
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;pelican
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The next step is to create the base structure with the interactive
 pelican-quickstart&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir blog&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; blog
-$ pelican-quickstart
-$ ls
-content/            fabfile.py  output/         publishconf.py
-develop_server.sh*  Makefile    pelicanconf.py
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;mkdir&lt;span class="w"&gt; &lt;/span&gt;blog&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;blog
+$&lt;span class="w"&gt; &lt;/span&gt;pelican-quickstart
+$&lt;span class="w"&gt; &lt;/span&gt;ls
+content/&lt;span class="w"&gt;            &lt;/span&gt;fabfile.py&lt;span class="w"&gt;  &lt;/span&gt;output/&lt;span class="w"&gt;         &lt;/span&gt;publishconf.py
+develop_server.sh*&lt;span class="w"&gt;  &lt;/span&gt;Makefile&lt;span class="w"&gt;    &lt;/span&gt;pelicanconf.py
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Thats it! Your pelican installation is finished! To generate your still empty blog is easy&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ make html
-$ make devserver
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;make&lt;span class="w"&gt; &lt;/span&gt;html
+$&lt;span class="w"&gt; &lt;/span&gt;make&lt;span class="w"&gt; &lt;/span&gt;devserver
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;After that you can preview you blog on &lt;a class="reference external" href="http://localhost:8000"&gt;http://localhost:8000&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
@@ -70,19 +70,19 @@ $ make devserver
 &lt;/blockquote&gt;
 &lt;p&gt;Pelican supports this approach as seen in &lt;a class="reference external" href="http://docs.getpelican.com/en/3.3.0/tips.html#user-pages"&gt;http://docs.getpelican.com/en/3.3.0/tips.html#user-pages&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;So all you need to do is to install ghp-import&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% pip install ghp-import
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;ghp-import
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Then change SITEURL in publishconf.py to &lt;a class="reference external" href="http://username.github.io"&gt;http://username.github.io&lt;/a&gt; and edit the
 github target in the Makefile to look like this&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;github&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;publish&lt;/span&gt;
-  ghp-import &lt;span class="k"&gt;$(&lt;/span&gt;OUTPUTDIR&lt;span class="k"&gt;)&lt;/span&gt;
-  git push git@github.com:username.username.io.git gh-pages:master
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;github&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;publish&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;ghp-import&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;OUTPUTDIR&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;push&lt;span class="w"&gt; &lt;/span&gt;git@github.com:username.username.io.git&lt;span class="w"&gt; &lt;/span&gt;gh-pages:master
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;ghp-import will create a branch in the current git repository called gh-pages
 and commit any changes in the output directory to it. Then we push this branch
 to the master branch in our username.github.io repository.&lt;/p&gt;
 &lt;p&gt;So if you type&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ make github
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;make&lt;span class="w"&gt; &lt;/span&gt;github
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;The blog gets published under &lt;a class="reference external" href="http://username.github.io"&gt;http://username.github.io&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;

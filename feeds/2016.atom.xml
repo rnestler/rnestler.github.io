@@ -3,75 +3,75 @@
 </summary><content type="html">&lt;p&gt;Recently, probably due to an unexpected power failure, the &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/Man_page"&gt;man page&lt;/a&gt; cache on
 my machine which is managed by &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; got corrupt. I noticed when
 &lt;tt class="docutils literal"&gt;systemctl&lt;/tt&gt; showed the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;man-db.service&lt;/span&gt;&lt;/tt&gt; as failed:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo systemctl
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl
 ...
-● man-db.service                     loaded failed failed    Update man-db cache
+●&lt;span class="w"&gt; &lt;/span&gt;man-db.service&lt;span class="w"&gt;                     &lt;/span&gt;loaded&lt;span class="w"&gt; &lt;/span&gt;failed&lt;span class="w"&gt; &lt;/span&gt;failed&lt;span class="w"&gt;    &lt;/span&gt;Update&lt;span class="w"&gt; &lt;/span&gt;man-db&lt;span class="w"&gt; &lt;/span&gt;cache
 ...
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;tt class="docutils literal"&gt;systemctl status&lt;/tt&gt; didn't reveal that much information on the issue:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo systemctl status man-db.service
-● man-db.service - Update man-db cache
-   Loaded: loaded &lt;span class="o"&gt;(&lt;/span&gt;/usr/lib/systemd/system/man-db.service&lt;span class="p"&gt;;&lt;/span&gt; static&lt;span class="p"&gt;;&lt;/span&gt; vendor preset: disabled&lt;span class="o"&gt;)&lt;/span&gt;
-   Active: failed &lt;span class="o"&gt;(&lt;/span&gt;Result: exit-code&lt;span class="o"&gt;)&lt;/span&gt; since Sam &lt;span class="m"&gt;2016&lt;/span&gt;-11-26 &lt;span class="m"&gt;16&lt;/span&gt;:47:53 CET&lt;span class="p"&gt;;&lt;/span&gt; 10min ago
-  Process: &lt;span class="m"&gt;23481&lt;/span&gt; &lt;span class="nv"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/mandb &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited, &lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/FAILURE&lt;span class="o"&gt;)&lt;/span&gt;
-  Process: &lt;span class="m"&gt;23475&lt;/span&gt; &lt;span class="nv"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/mkdir -p /var/cache/man &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited, &lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;/SUCCESS&lt;span class="o"&gt;)&lt;/span&gt;
- Main PID: &lt;span class="m"&gt;23481&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited, &lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/FAILURE&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;status&lt;span class="w"&gt; &lt;/span&gt;man-db.service
+●&lt;span class="w"&gt; &lt;/span&gt;man-db.service&lt;span class="w"&gt; &lt;/span&gt;-&lt;span class="w"&gt; &lt;/span&gt;Update&lt;span class="w"&gt; &lt;/span&gt;man-db&lt;span class="w"&gt; &lt;/span&gt;cache
+&lt;span class="w"&gt;   &lt;/span&gt;Loaded:&lt;span class="w"&gt; &lt;/span&gt;loaded&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;/usr/lib/systemd/system/man-db.service&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;static&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;vendor&lt;span class="w"&gt; &lt;/span&gt;preset:&lt;span class="w"&gt; &lt;/span&gt;disabled&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;   &lt;/span&gt;Active:&lt;span class="w"&gt; &lt;/span&gt;failed&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;Result:&lt;span class="w"&gt; &lt;/span&gt;exit-code&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;since&lt;span class="w"&gt; &lt;/span&gt;Sam&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2016&lt;/span&gt;-11-26&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;CET&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;10min&lt;span class="w"&gt; &lt;/span&gt;ago
+&lt;span class="w"&gt;  &lt;/span&gt;Process:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/mandb&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/FAILURE&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;Process:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;23475&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/bin/mkdir&lt;span class="w"&gt; &lt;/span&gt;-p&lt;span class="w"&gt; &lt;/span&gt;/var/cache/man&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;/SUCCESS&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;Main&lt;span class="w"&gt; &lt;/span&gt;PID:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/FAILURE&lt;span class="o"&gt;)&lt;/span&gt;
 
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: Handbuchseiten unter /usr/share/man/ru.KOI8-R werden verar
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: Alte Datenbankeinträge &lt;span class="k"&gt;in&lt;/span&gt; /usr/share/man/tr werden gelösch
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: Handbuchseiten unter /usr/share/man/tr werden verarbeitet
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: Alte Datenbankeinträge &lt;span class="k"&gt;in&lt;/span&gt; /usr/share/man/fi werden gelösch
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: Handbuchseiten unter /usr/share/man/fi werden verarbeitet
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: Alte Datenbankeinträge &lt;span class="k"&gt;in&lt;/span&gt; /usr/share/man/zh werden gelösch
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo systemd&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: man-db.service: Main process exited, &lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited, &lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/F
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo systemd&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: Failed to start Update man-db cache.
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo systemd&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: man-db.service: Unit entered failed state.
-Nov &lt;span class="m"&gt;26&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;:47:53 tuxedo systemd&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;: man-db.service: Failed with result &lt;span class="s1"&gt;&amp;#39;exit-code&amp;#39;&lt;/span&gt;.
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Handbuchseiten&lt;span class="w"&gt; &lt;/span&gt;unter&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/ru.KOI8-R&lt;span class="w"&gt; &lt;/span&gt;werden&lt;span class="w"&gt; &lt;/span&gt;verar
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Alte&lt;span class="w"&gt; &lt;/span&gt;Datenbankeinträge&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/tr&lt;span class="w"&gt; &lt;/span&gt;werden&lt;span class="w"&gt; &lt;/span&gt;gelösch
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Handbuchseiten&lt;span class="w"&gt; &lt;/span&gt;unter&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/tr&lt;span class="w"&gt; &lt;/span&gt;werden&lt;span class="w"&gt; &lt;/span&gt;verarbeitet
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Alte&lt;span class="w"&gt; &lt;/span&gt;Datenbankeinträge&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/fi&lt;span class="w"&gt; &lt;/span&gt;werden&lt;span class="w"&gt; &lt;/span&gt;gelösch
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Handbuchseiten&lt;span class="w"&gt; &lt;/span&gt;unter&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/fi&lt;span class="w"&gt; &lt;/span&gt;werden&lt;span class="w"&gt; &lt;/span&gt;verarbeitet
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;mandb&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23481&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Alte&lt;span class="w"&gt; &lt;/span&gt;Datenbankeinträge&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/zh&lt;span class="w"&gt; &lt;/span&gt;werden&lt;span class="w"&gt; &lt;/span&gt;gelösch
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;systemd&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;man-db.service:&lt;span class="w"&gt; &lt;/span&gt;Main&lt;span class="w"&gt; &lt;/span&gt;process&lt;span class="w"&gt; &lt;/span&gt;exited,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;exited,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;/F
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;systemd&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Failed&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;Update&lt;span class="w"&gt; &lt;/span&gt;man-db&lt;span class="w"&gt; &lt;/span&gt;cache.
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;systemd&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;man-db.service:&lt;span class="w"&gt; &lt;/span&gt;Unit&lt;span class="w"&gt; &lt;/span&gt;entered&lt;span class="w"&gt; &lt;/span&gt;failed&lt;span class="w"&gt; &lt;/span&gt;state.
+Nov&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;:47:53&lt;span class="w"&gt; &lt;/span&gt;tuxedo&lt;span class="w"&gt; &lt;/span&gt;systemd&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;man-db.service:&lt;span class="w"&gt; &lt;/span&gt;Failed&lt;span class="w"&gt; &lt;/span&gt;with&lt;span class="w"&gt; &lt;/span&gt;result&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;exit-code&amp;#39;&lt;/span&gt;.
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So I ran &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; manually to figure out what was wrong:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo mandb
-Purging old database entries &lt;span class="k"&gt;in&lt;/span&gt; /usr/share/man...
-Processing manual pages under /usr/share/man...
-Purging old database entries &lt;span class="k"&gt;in&lt;/span&gt; /usr/share/man/sr@latin...
-Processing manual pages under /usr/share/man/sr@latin...
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;mandb
+Purging&lt;span class="w"&gt; &lt;/span&gt;old&lt;span class="w"&gt; &lt;/span&gt;database&lt;span class="w"&gt; &lt;/span&gt;entries&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man...
+Processing&lt;span class="w"&gt; &lt;/span&gt;manual&lt;span class="w"&gt; &lt;/span&gt;pages&lt;span class="w"&gt; &lt;/span&gt;under&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man...
+Purging&lt;span class="w"&gt; &lt;/span&gt;old&lt;span class="w"&gt; &lt;/span&gt;database&lt;span class="w"&gt; &lt;/span&gt;entries&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/sr@latin...
+Processing&lt;span class="w"&gt; &lt;/span&gt;manual&lt;span class="w"&gt; &lt;/span&gt;pages&lt;span class="w"&gt; &lt;/span&gt;under&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/sr@latin...
 ...
-Purging old database entries &lt;span class="k"&gt;in&lt;/span&gt; /usr/share/man/zh...
-gdbm fatal: Unexpected end of file
+Purging&lt;span class="w"&gt; &lt;/span&gt;old&lt;span class="w"&gt; &lt;/span&gt;database&lt;span class="w"&gt; &lt;/span&gt;entries&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/zh...
+gdbm&lt;span class="w"&gt; &lt;/span&gt;fatal:&lt;span class="w"&gt; &lt;/span&gt;Unexpected&lt;span class="w"&gt; &lt;/span&gt;end&lt;span class="w"&gt; &lt;/span&gt;of&lt;span class="w"&gt; &lt;/span&gt;file
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So gdbm seemed to have some problem. Since I didn't know what &lt;tt class="docutils literal"&gt;gdbm&lt;/tt&gt; was, I
 asked the all knowingly package manager of ArchLinux:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% pacman -Qi gdbm
-Name            : gdbm
-Version         : &lt;span class="m"&gt;1&lt;/span&gt;.12-2
-Description     : GNU database library
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="w"&gt; &lt;/span&gt;pacman&lt;span class="w"&gt; &lt;/span&gt;-Qi&lt;span class="w"&gt; &lt;/span&gt;gdbm
+Name&lt;span class="w"&gt;            &lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;gdbm
+Version&lt;span class="w"&gt;         &lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;.12-2
+Description&lt;span class="w"&gt;     &lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;GNU&lt;span class="w"&gt; &lt;/span&gt;database&lt;span class="w"&gt; &lt;/span&gt;library
 ...
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Since it is a database library I assumed that the database must be corrupt.
 Lucky enough &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; provides an option to create the database from scratch:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo mandb -c
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;mandb&lt;span class="w"&gt; &lt;/span&gt;-c
 
-Processing manual pages under /usr/share/man...
-Updating index cache &lt;span class="k"&gt;for&lt;/span&gt; path &lt;span class="sb"&gt;`&lt;/span&gt;/usr/share/man/man1&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;. Wait...mandb: warning: /usr/share/man/man1/gdk-pixbuf-csource.1.gz: whatis parse &lt;span class="k"&gt;for&lt;/span&gt; gdk-pixbuf-csource&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; failed
-mandb: warning: /usr/share/man/man1/gdk-pixbuf-query-loaders.1.gz: whatis parse &lt;span class="k"&gt;for&lt;/span&gt; gdk-pixbuf-query-loaders&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; failed
+Processing&lt;span class="w"&gt; &lt;/span&gt;manual&lt;span class="w"&gt; &lt;/span&gt;pages&lt;span class="w"&gt; &lt;/span&gt;under&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man...
+Updating&lt;span class="w"&gt; &lt;/span&gt;index&lt;span class="w"&gt; &lt;/span&gt;cache&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;path&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;/usr/share/man/man1&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;.&lt;span class="w"&gt; &lt;/span&gt;Wait...mandb:&lt;span class="w"&gt; &lt;/span&gt;warning:&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/man1/gdk-pixbuf-csource.1.gz:&lt;span class="w"&gt; &lt;/span&gt;whatis&lt;span class="w"&gt; &lt;/span&gt;parse&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;gdk-pixbuf-csource&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;failed
+mandb:&lt;span class="w"&gt; &lt;/span&gt;warning:&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/man1/gdk-pixbuf-query-loaders.1.gz:&lt;span class="w"&gt; &lt;/span&gt;whatis&lt;span class="w"&gt; &lt;/span&gt;parse&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;gdk-pixbuf-query-loaders&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;failed
 ...
-Processing manual pages under /usr/local/man...
-&lt;span class="m"&gt;124&lt;/span&gt; man subdirectories contained newer manual pages.
-&lt;span class="m"&gt;22844&lt;/span&gt; manual pages were added.
-&lt;span class="m"&gt;0&lt;/span&gt; stray cats were added.
+Processing&lt;span class="w"&gt; &lt;/span&gt;manual&lt;span class="w"&gt; &lt;/span&gt;pages&lt;span class="w"&gt; &lt;/span&gt;under&lt;span class="w"&gt; &lt;/span&gt;/usr/local/man...
+&lt;span class="m"&gt;124&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;man&lt;span class="w"&gt; &lt;/span&gt;subdirectories&lt;span class="w"&gt; &lt;/span&gt;contained&lt;span class="w"&gt; &lt;/span&gt;newer&lt;span class="w"&gt; &lt;/span&gt;manual&lt;span class="w"&gt; &lt;/span&gt;pages.
+&lt;span class="m"&gt;22844&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;manual&lt;span class="w"&gt; &lt;/span&gt;pages&lt;span class="w"&gt; &lt;/span&gt;were&lt;span class="w"&gt; &lt;/span&gt;added.
+&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;stray&lt;span class="w"&gt; &lt;/span&gt;cats&lt;span class="w"&gt; &lt;/span&gt;were&lt;span class="w"&gt; &lt;/span&gt;added.
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;It spilled my screen with lots of &lt;a class="reference external" href="https://gist.github.com/rnestler/0ad8fdeb54e732922721bd4ef785a8d9#file-mandb_c_output-txt"&gt;output and warnings&lt;/a&gt;, but seemed to finish
 properly.&lt;/p&gt;
 &lt;p&gt;It didn't help though and &lt;tt class="docutils literal"&gt;mandb&lt;/tt&gt; still failed. Looking at the output again I
 noticed the line &lt;tt class="docutils literal"&gt;Purging old database entries in &lt;span class="pre"&gt;/usr/share/man/zh...&lt;/span&gt;&lt;/tt&gt;. To
 see which package placed its manpage there I queried pacman again:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% &lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;C pacman -Qo /usr/share/man/zh
-/usr/share/man/zh/ is owned by nmap &lt;span class="m"&gt;7&lt;/span&gt;.31-1
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;C&lt;span class="w"&gt; &lt;/span&gt;pacman&lt;span class="w"&gt; &lt;/span&gt;-Qo&lt;span class="w"&gt; &lt;/span&gt;/usr/share/man/zh
+/usr/share/man/zh/&lt;span class="w"&gt; &lt;/span&gt;is&lt;span class="w"&gt; &lt;/span&gt;owned&lt;span class="w"&gt; &lt;/span&gt;by&lt;span class="w"&gt; &lt;/span&gt;nmap&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;.31-1
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So I tried to uninstall and reinstall nmap:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;% sudo pacman -R nmap
-% sudo mandb
-% sudo pacman -S nmap
-% sudo mandb
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;%&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;pacman&lt;span class="w"&gt; &lt;/span&gt;-R&lt;span class="w"&gt; &lt;/span&gt;nmap
+%&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;mandb
+%&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;pacman&lt;span class="w"&gt; &lt;/span&gt;-S&lt;span class="w"&gt; &lt;/span&gt;nmap
+%&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;mandb
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;And this time it finally worked! I'm still not sure what exactly triggered the
 failure in the first place, but I'm not sure how to further debug it.&lt;/p&gt;
@@ -80,78 +80,78 @@ failure in the first place, but I'm not sure how to further debug it.&lt;/p&gt;
 we screw up the commits in between without noticing, since the final commit
 compiles and passes every unit test.&lt;/p&gt;
 &lt;p&gt;For example imagine we have this little Rust code:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now we want to show how nicely Rust can print a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;std::Vec&lt;/span&gt;&lt;/tt&gt; so we create a
 branch: &lt;tt class="docutils literal"&gt;git checkout &lt;span class="pre"&gt;-b&lt;/span&gt; add_vector&lt;/tt&gt; and add the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v: {:?}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v: {:?}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This will compile and give us some wonderful output:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cargo run
-v: &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-Hello, world!
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;cargo&lt;span class="w"&gt; &lt;/span&gt;run
+v:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+Hello,&lt;span class="w"&gt; &lt;/span&gt;world!
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We are satisfied with the changes and commit it:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git add src/main.rs
-$ git commit -m &lt;span class="s2"&gt;&amp;quot;Print vector&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;src/main.rs
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Print vector&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We than add some more code to show the length of our fancy vector:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v: {:?}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v: {:?}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v.len(): {}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v.len(): {}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This also works just fine so we commit it:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git add src/main.rs
-$ git commit -m &lt;span class="s2"&gt;&amp;quot;Print length of vector&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;src/main.rs
+$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Print length of vector&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;But of course we are not satisfied with the commit history and want to
 rearrange our two commits. So we do a interactive rebase:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git rebase -i master
-pick 8fc4573 Print length of vector
-pick 6d22bd9 Print vector
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;rebase&lt;span class="w"&gt; &lt;/span&gt;-i&lt;span class="w"&gt; &lt;/span&gt;master
+pick&lt;span class="w"&gt; &lt;/span&gt;8fc4573&lt;span class="w"&gt; &lt;/span&gt;Print&lt;span class="w"&gt; &lt;/span&gt;length&lt;span class="w"&gt; &lt;/span&gt;of&lt;span class="w"&gt; &lt;/span&gt;vector
+pick&lt;span class="w"&gt; &lt;/span&gt;6d22bd9&lt;span class="w"&gt; &lt;/span&gt;Print&lt;span class="w"&gt; &lt;/span&gt;vector
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This will succeed without error and we still receive the correct output:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cargo run
-v: &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="m"&gt;2&lt;/span&gt;, &lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-Hello, world!
-v.len&lt;span class="o"&gt;()&lt;/span&gt;: &lt;span class="m"&gt;3&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;cargo&lt;span class="w"&gt; &lt;/span&gt;run
+v:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+Hello,&lt;span class="w"&gt; &lt;/span&gt;world!
+v.len&lt;span class="o"&gt;()&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;But we introduced a broken commit while rebasing! To detect this we can run the
 following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git rebase -i master -x &lt;span class="s2"&gt;&amp;quot;cargo build&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;rebase&lt;span class="w"&gt; &lt;/span&gt;-i&lt;span class="w"&gt; &lt;/span&gt;master&lt;span class="w"&gt; &lt;/span&gt;-x&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;cargo build&amp;quot;&lt;/span&gt;
 
-Executing: cargo build
-   Compiling git_rebase_x_test v0.1.0 &lt;span class="o"&gt;(&lt;/span&gt;file:///home/rnestler/proggen/git_rebase_x_test&lt;span class="o"&gt;)&lt;/span&gt;
-error&lt;span class="o"&gt;[&lt;/span&gt;E0425&lt;span class="o"&gt;]&lt;/span&gt;: unresolved name &lt;span class="sb"&gt;`&lt;/span&gt;v&lt;span class="sb"&gt;`&lt;/span&gt;
- --&amp;gt; src/main.rs:4:29
-  &lt;span class="p"&gt;|&lt;/span&gt;
-&lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;     println!&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;v.len(): {}&amp;quot;&lt;/span&gt;, v.len&lt;span class="o"&gt;())&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="p"&gt;|&lt;/span&gt;                             ^
-&amp;lt;std macros&amp;gt;:2:27: &lt;span class="m"&gt;2&lt;/span&gt;:58 note: &lt;span class="k"&gt;in&lt;/span&gt; this expansion of format_args!
-&amp;lt;std macros&amp;gt;:3:1: &lt;span class="m"&gt;3&lt;/span&gt;:54 note: &lt;span class="k"&gt;in&lt;/span&gt; this expansion of print! &lt;span class="o"&gt;(&lt;/span&gt;defined &lt;span class="k"&gt;in&lt;/span&gt; &amp;lt;std macros&amp;gt;&lt;span class="o"&gt;)&lt;/span&gt;
-src/main.rs:4:5: &lt;span class="m"&gt;4&lt;/span&gt;:38 note: &lt;span class="k"&gt;in&lt;/span&gt; this expansion of println! &lt;span class="o"&gt;(&lt;/span&gt;defined &lt;span class="k"&gt;in&lt;/span&gt; &amp;lt;std macros&amp;gt;&lt;span class="o"&gt;)&lt;/span&gt;
+Executing:&lt;span class="w"&gt; &lt;/span&gt;cargo&lt;span class="w"&gt; &lt;/span&gt;build
+&lt;span class="w"&gt;   &lt;/span&gt;Compiling&lt;span class="w"&gt; &lt;/span&gt;git_rebase_x_test&lt;span class="w"&gt; &lt;/span&gt;v0.1.0&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;file:///home/rnestler/proggen/git_rebase_x_test&lt;span class="o"&gt;)&lt;/span&gt;
+error&lt;span class="o"&gt;[&lt;/span&gt;E0425&lt;span class="o"&gt;]&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;unresolved&lt;span class="w"&gt; &lt;/span&gt;name&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;v&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;--&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;src/main.rs:4:29
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;println!&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;v.len(): {}&amp;quot;&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;v.len&lt;span class="o"&gt;())&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt;                             &lt;/span&gt;^
+&amp;lt;std&lt;span class="w"&gt; &lt;/span&gt;macros&amp;gt;:2:27:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;:58&lt;span class="w"&gt; &lt;/span&gt;note:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;this&lt;span class="w"&gt; &lt;/span&gt;expansion&lt;span class="w"&gt; &lt;/span&gt;of&lt;span class="w"&gt; &lt;/span&gt;format_args!
+&amp;lt;std&lt;span class="w"&gt; &lt;/span&gt;macros&amp;gt;:3:1:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;:54&lt;span class="w"&gt; &lt;/span&gt;note:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;this&lt;span class="w"&gt; &lt;/span&gt;expansion&lt;span class="w"&gt; &lt;/span&gt;of&lt;span class="w"&gt; &lt;/span&gt;print!&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;defined&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;std&lt;span class="w"&gt; &lt;/span&gt;macros&amp;gt;&lt;span class="o"&gt;)&lt;/span&gt;
+src/main.rs:4:5:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;:38&lt;span class="w"&gt; &lt;/span&gt;note:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;this&lt;span class="w"&gt; &lt;/span&gt;expansion&lt;span class="w"&gt; &lt;/span&gt;of&lt;span class="w"&gt; &lt;/span&gt;println!&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;defined&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;lt;std&lt;span class="w"&gt; &lt;/span&gt;macros&amp;gt;&lt;span class="o"&gt;)&lt;/span&gt;
 
-error: aborting due to previous error
+error:&lt;span class="w"&gt; &lt;/span&gt;aborting&lt;span class="w"&gt; &lt;/span&gt;due&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;previous&lt;span class="w"&gt; &lt;/span&gt;error
 
-error: Could not compile &lt;span class="sb"&gt;`&lt;/span&gt;git_rebase_x_test&lt;span class="sb"&gt;`&lt;/span&gt;.
+error:&lt;span class="w"&gt; &lt;/span&gt;Could&lt;span class="w"&gt; &lt;/span&gt;not&lt;span class="w"&gt; &lt;/span&gt;compile&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;git_rebase_x_test&lt;span class="sb"&gt;`&lt;/span&gt;.
 
-To learn more, run the &lt;span class="nb"&gt;command&lt;/span&gt; again with --verbose.
-Execution failed: cargo build
-You can fix the problem, and &lt;span class="k"&gt;then&lt;/span&gt; run
+To&lt;span class="w"&gt; &lt;/span&gt;learn&lt;span class="w"&gt; &lt;/span&gt;more,&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;the&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;again&lt;span class="w"&gt; &lt;/span&gt;with&lt;span class="w"&gt; &lt;/span&gt;--verbose.
+Execution&lt;span class="w"&gt; &lt;/span&gt;failed:&lt;span class="w"&gt; &lt;/span&gt;cargo&lt;span class="w"&gt; &lt;/span&gt;build
+You&lt;span class="w"&gt; &lt;/span&gt;can&lt;span class="w"&gt; &lt;/span&gt;fix&lt;span class="w"&gt; &lt;/span&gt;the&lt;span class="w"&gt; &lt;/span&gt;problem,&lt;span class="w"&gt; &lt;/span&gt;and&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;run
 
-    git rebase --continue
+&lt;span class="w"&gt;    &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;rebase&lt;span class="w"&gt; &lt;/span&gt;--continue
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This will execute the command after &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;-x&lt;/span&gt;&lt;/tt&gt; for every commit and stop rebasing
 if the command fails.  We now can go on and fix this commit and continue
@@ -178,10 +178,10 @@ content:&lt;/p&gt;
 &lt;span class="c1"&gt;# ~/.xsessionrc&lt;/span&gt;
 &lt;span class="c1"&gt;#&lt;/span&gt;
 
-&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt;
+&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;
 awesome&lt;span class="o"&gt;)&lt;/span&gt;
-    &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;gnome-keyring-daemon -s -c pkcs11,secrets,ssh,gpg&lt;span class="k"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;;;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;gnome-keyring-daemon&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;-c&lt;span class="w"&gt; &lt;/span&gt;pkcs11,secrets,ssh,gpg&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;;;&lt;/span&gt;
 &lt;span class="k"&gt;esac&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This starts the gnome-keyring-daemon and export the &lt;tt class="docutils literal"&gt;SSH_AUTH_SOCK&lt;/tt&gt; variable,
@@ -253,14 +253,14 @@ a &lt;a class="reference external" href="https://channel9.msdn.com/Shows/Going+D
 &lt;h2&gt;Basic use of a ScopeGuard&lt;/h2&gt;
 &lt;p&gt;The ScopeGuard allows to write transactional code that will undo previous parts
 if later code throws an exception.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;myVector&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push_back&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;scopeGuard&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;]()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;myVector&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pop_back&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;myVector&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push_back&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;scopeGuard&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;]()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;myVector&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pop_back&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
 
 &lt;span class="c1"&gt;// Do stuff that may throw&lt;/span&gt;
-&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
 &lt;span class="c1"&gt;// everything worked, so don&amp;#39;t undo&lt;/span&gt;
-&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dismiss&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dismiss&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So if &lt;tt class="docutils literal"&gt;database.add(item)&lt;/tt&gt; throws, the item in myVector will be removed. For
 more about the motivation behind ScopeGuard see the talk above or &lt;a class="reference external" href="http://www.drdobbs.com/cpp/generic-change-the-way-you-write-excepti/184403758"&gt;this drdobbs
@@ -320,24 +320,24 @@ article&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;Why a ScopeGuardList?&lt;/h2&gt;
 &lt;p&gt;If you have a transaction that consists of a lot of steps that may throw and
 need to be undone it leads to code like the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;doThing1&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;makeGuard&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;]()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;undoThing1&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;doThing2&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;makeGuard&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;]()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;undoThing2&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;doThing3&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;makeGuard&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;]()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;undoThing3&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;doThing1&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;makeGuard&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;]()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;undoThing1&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="n"&gt;doThing2&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;makeGuard&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;]()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;undoThing2&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="n"&gt;doThing3&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="k"&gt;auto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;guard&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;makeGuard&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;]()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;undoThing3&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
 
 &lt;span class="c1"&gt;// Do stuff that may trow&lt;/span&gt;
 
-&lt;span class="n"&gt;guard1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dismiss&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;guard2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dismiss&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="n"&gt;guard3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dismiss&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;guard1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dismiss&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;guard2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dismiss&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;guard3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dismiss&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Things get even worse when doing something in a loop:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;doStuff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;doStuff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;// how do we create a guard for every operation?&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;To avoid that repetition and the potential error of a missing call to
 &lt;tt class="docutils literal"&gt;dismiss()&lt;/tt&gt; we came up with a &lt;tt class="docutils literal"&gt;ScopeGuardList&lt;/tt&gt;.&lt;/p&gt;

@@ -47,7 +47,7 @@ a deeper look at <a class="reference external" href="http://www.rust-lang.org/">
 <div class="section" id="getting-rust">
 <h2>Getting Rust</h2>
 <p>Installing Rust under arch is as easy</p>
-<div class="highlight"><pre><span></span>$ sudo pacman -S rust
+<div class="highlight"><pre><span></span>$<span class="w"> </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>rust
 </pre></div>
 <p>The above will install the latest version from the <a class="reference external" href="https://www.archlinux.org/packages/community/x86_64/rust/">community repo</a>.  If you want the
 latest and greatest version you could also try <a class="reference external" href="https://aur.archlinux.org/packages/rust-nightly/">the nightly build</a>.</p>
@@ -56,36 +56,36 @@ latest and greatest version you could also try <a class="reference external" hre
 <div class="section" id="hello-world">
 <h2>Hello World!</h2>
 <p>Here comes the obligatory &quot;Hello World!&quot; code in Rust</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <div class="section" id="immutability">
 <h2>Immutability</h2>
 <p>Beeing a <a class="reference external" href="http://gamesfromwithin.com/wp-content/uploads/2010/07/const_nazi.mov">C++ const-nazi</a> I
 really liked that by default all variable bindings are immutable.</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">x</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>The example above will give you a compile error:</p>
-<div class="highlight"><pre><span></span>mut.rs:4:5: <span class="m">4</span>:9 error: re-assignment of immutable variable <span class="sb">`</span>x<span class="sb">`</span>
-mut.rs:4     <span class="nv">x</span><span class="o">+=</span><span class="m">1</span><span class="p">;</span>
-             ^~~~
-mut.rs:3:9: <span class="m">3</span>:10 note: prior assignment occurs here
-mut.rs:3     <span class="nb">let</span> <span class="nv">x</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span>
-                 ^
-error: aborting due to previous error
+<div class="highlight"><pre><span></span>mut.rs:4:5:<span class="w"> </span><span class="m">4</span>:9<span class="w"> </span>error:<span class="w"> </span>re-assignment<span class="w"> </span>of<span class="w"> </span>immutable<span class="w"> </span>variable<span class="w"> </span><span class="sb">`</span>x<span class="sb">`</span>
+mut.rs:4<span class="w">     </span><span class="nv">x</span><span class="o">+=</span><span class="m">1</span><span class="p">;</span>
+<span class="w">             </span>^~~~
+mut.rs:3:9:<span class="w"> </span><span class="m">3</span>:10<span class="w"> </span>note:<span class="w"> </span>prior<span class="w"> </span>assignment<span class="w"> </span>occurs<span class="w"> </span>here
+mut.rs:3<span class="w">     </span><span class="nb">let</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">                 </span>^
+error:<span class="w"> </span>aborting<span class="w"> </span>due<span class="w"> </span>to<span class="w"> </span>previous<span class="w"> </span>error
 </pre></div>
 <p>By using the &quot;mut&quot; keyword we mark the variable as mutable</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">x</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">x</span><span class="o">+=</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 <p>So the code will print &quot;2&quot;</p>
 <p>Rust will also emit a warning when not using variables or an error when trying

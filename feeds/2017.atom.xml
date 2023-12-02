@@ -518,9 +518,9 @@ out of nowhere and transfer funds.&lt;/p&gt;
 &lt;p&gt;I found a bug in the implementation, where if one transferred funds from a
 wallet to itself it would just increase the balance of this wallet!  The fix
 was as simple as adding&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sender&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;receiver&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(())&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sender&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;receiver&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(())&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;inside a function.  I didn't have time to figure out why the bug happened
 exactly, since all the function does is decrement on the &lt;tt class="docutils literal"&gt;sender&lt;/tt&gt; and
@@ -1337,23 +1337,23 @@ display manager which can start Wayland sessions.&lt;/p&gt;
 &lt;p&gt;So my choice fell on &lt;a class="reference external" href="https://freedesktop.org/wiki/Software/LightDM/"&gt;LightDM&lt;/a&gt;, which should &amp;quot;support different display
 technologies (X, Mir, Wayland, ...)&amp;quot; according to their website.&lt;/p&gt;
 &lt;p&gt;Installing it on ArchLinux is as easy as:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -S lightdm-gtk-greeter
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;pacman&lt;span class="w"&gt; &lt;/span&gt;-S&lt;span class="w"&gt; &lt;/span&gt;lightdm-gtk-greeter
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Then we need to deactivate SLiM and activate LightDM:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo systemctl disable slim.service
-sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; lightdm.service
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;disable&lt;span class="w"&gt; &lt;/span&gt;slim.service
+sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;enable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;lightdm.service
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;To switch without a reboot one needs to logout from the X-session, switch to a
 TTY with Ctrl-Alt-1 and stop SLiM and start LightDM:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo systemctl stop slim.service
-sudo systemctl start lightdm.service
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;stop&lt;span class="w"&gt; &lt;/span&gt;slim.service
+sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;lightdm.service
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;After that I could login just to notice that my &lt;cite&gt;~/.xinitrc&lt;/cite&gt; wasn't getting
 executed, so my helper tools like nm-applet weren't running. Since I already
 solved that issue under &lt;a class="reference external" href="https://rnestler.github.io/setting-up-the-awesome-window-manager-in-ubuntu-1604.html"&gt;Ubuntu&lt;/a&gt;, I was a bit surprised that I need to solve
 it differently under ArchLinux according to &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/LightDM#Migrating_from_SLiM"&gt;the WiKi&lt;/a&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mv ~/.xinitrc ~/.xprofile
-vim ~/.xprofile &lt;span class="c1"&gt;# remove the &amp;quot;exec awesome&amp;quot; line&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mv&lt;span class="w"&gt; &lt;/span&gt;~/.xinitrc&lt;span class="w"&gt; &lt;/span&gt;~/.xprofile
+vim&lt;span class="w"&gt; &lt;/span&gt;~/.xprofile&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# remove the &amp;quot;exec awesome&amp;quot; line&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Finally, I enjoy a working X-Session with the &lt;a class="reference external" href="https://awesomewm.org/"&gt;awesome window manager&lt;/a&gt; again,
 while looking forward to a Wayland based desktop, maybe running the &lt;a class="reference external" href="https://github.com/Immington-Industries/way-cooler"&gt;Way

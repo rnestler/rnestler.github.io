@@ -45,75 +45,75 @@
 </footer><!-- /.post-info -->      <p>Recently, probably due to an unexpected power failure, the <a class="reference external" href="https://wiki.archlinux.org/index.php/Man_page">man page</a> cache on
 my machine which is managed by <tt class="docutils literal">mandb</tt> got corrupt. I noticed when
 <tt class="docutils literal">systemctl</tt> showed the <tt class="docutils literal"><span class="pre">man-db.service</span></tt> as failed:</p>
-<div class="highlight"><pre><span></span>% sudo systemctl
+<div class="highlight"><pre><span></span>%<span class="w"> </span>sudo<span class="w"> </span>systemctl
 ...
-● man-db.service                     loaded failed failed    Update man-db cache
+●<span class="w"> </span>man-db.service<span class="w">                     </span>loaded<span class="w"> </span>failed<span class="w"> </span>failed<span class="w">    </span>Update<span class="w"> </span>man-db<span class="w"> </span>cache
 ...
 </pre></div>
 <p><tt class="docutils literal">systemctl status</tt> didn't reveal that much information on the issue:</p>
-<div class="highlight"><pre><span></span>% sudo systemctl status man-db.service
-● man-db.service - Update man-db cache
-   Loaded: loaded <span class="o">(</span>/usr/lib/systemd/system/man-db.service<span class="p">;</span> static<span class="p">;</span> vendor preset: disabled<span class="o">)</span>
-   Active: failed <span class="o">(</span>Result: exit-code<span class="o">)</span> since Sam <span class="m">2016</span>-11-26 <span class="m">16</span>:47:53 CET<span class="p">;</span> 10min ago
-  Process: <span class="m">23481</span> <span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/mandb <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">1</span>/FAILURE<span class="o">)</span>
-  Process: <span class="m">23475</span> <span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/mkdir -p /var/cache/man <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">0</span>/SUCCESS<span class="o">)</span>
- Main PID: <span class="m">23481</span> <span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">1</span>/FAILURE<span class="o">)</span>
+<div class="highlight"><pre><span></span>%<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>man-db.service
+●<span class="w"> </span>man-db.service<span class="w"> </span>-<span class="w"> </span>Update<span class="w"> </span>man-db<span class="w"> </span>cache
+<span class="w">   </span>Loaded:<span class="w"> </span>loaded<span class="w"> </span><span class="o">(</span>/usr/lib/systemd/system/man-db.service<span class="p">;</span><span class="w"> </span>static<span class="p">;</span><span class="w"> </span>vendor<span class="w"> </span>preset:<span class="w"> </span>disabled<span class="o">)</span>
+<span class="w">   </span>Active:<span class="w"> </span>failed<span class="w"> </span><span class="o">(</span>Result:<span class="w"> </span>exit-code<span class="o">)</span><span class="w"> </span>since<span class="w"> </span>Sam<span class="w"> </span><span class="m">2016</span>-11-26<span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>CET<span class="p">;</span><span class="w"> </span>10min<span class="w"> </span>ago
+<span class="w">  </span>Process:<span class="w"> </span><span class="m">23481</span><span class="w"> </span><span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/mandb<span class="w"> </span><span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">1</span>/FAILURE<span class="o">)</span>
+<span class="w">  </span>Process:<span class="w"> </span><span class="m">23475</span><span class="w"> </span><span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/mkdir<span class="w"> </span>-p<span class="w"> </span>/var/cache/man<span class="w"> </span><span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">0</span>/SUCCESS<span class="o">)</span>
+<span class="w"> </span>Main<span class="w"> </span>PID:<span class="w"> </span><span class="m">23481</span><span class="w"> </span><span class="o">(</span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">1</span>/FAILURE<span class="o">)</span>
 
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/ru.KOI8-R werden verar
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge <span class="k">in</span> /usr/share/man/tr werden gelösch
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/tr werden verarbeitet
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge <span class="k">in</span> /usr/share/man/fi werden gelösch
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Handbuchseiten unter /usr/share/man/fi werden verarbeitet
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>: Alte Datenbankeinträge <span class="k">in</span> /usr/share/man/zh werden gelösch
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: man-db.service: Main process exited, <span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span><span class="m">1</span>/F
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: Failed to start Update man-db cache.
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: man-db.service: Unit entered failed state.
-Nov <span class="m">26</span> <span class="m">16</span>:47:53 tuxedo systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>: man-db.service: Failed with result <span class="s1">&#39;exit-code&#39;</span>.
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>:<span class="w"> </span>Handbuchseiten<span class="w"> </span>unter<span class="w"> </span>/usr/share/man/ru.KOI8-R<span class="w"> </span>werden<span class="w"> </span>verar
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>:<span class="w"> </span>Alte<span class="w"> </span>Datenbankeinträge<span class="w"> </span><span class="k">in</span><span class="w"> </span>/usr/share/man/tr<span class="w"> </span>werden<span class="w"> </span>gelösch
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>:<span class="w"> </span>Handbuchseiten<span class="w"> </span>unter<span class="w"> </span>/usr/share/man/tr<span class="w"> </span>werden<span class="w"> </span>verarbeitet
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>:<span class="w"> </span>Alte<span class="w"> </span>Datenbankeinträge<span class="w"> </span><span class="k">in</span><span class="w"> </span>/usr/share/man/fi<span class="w"> </span>werden<span class="w"> </span>gelösch
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>:<span class="w"> </span>Handbuchseiten<span class="w"> </span>unter<span class="w"> </span>/usr/share/man/fi<span class="w"> </span>werden<span class="w"> </span>verarbeitet
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>mandb<span class="o">[</span><span class="m">23481</span><span class="o">]</span>:<span class="w"> </span>Alte<span class="w"> </span>Datenbankeinträge<span class="w"> </span><span class="k">in</span><span class="w"> </span>/usr/share/man/zh<span class="w"> </span>werden<span class="w"> </span>gelösch
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>man-db.service:<span class="w"> </span>Main<span class="w"> </span>process<span class="w"> </span>exited,<span class="w"> </span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">1</span>/F
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>start<span class="w"> </span>Update<span class="w"> </span>man-db<span class="w"> </span>cache.
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>man-db.service:<span class="w"> </span>Unit<span class="w"> </span>entered<span class="w"> </span>failed<span class="w"> </span>state.
+Nov<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">16</span>:47:53<span class="w"> </span>tuxedo<span class="w"> </span>systemd<span class="o">[</span><span class="m">1</span><span class="o">]</span>:<span class="w"> </span>man-db.service:<span class="w"> </span>Failed<span class="w"> </span>with<span class="w"> </span>result<span class="w"> </span><span class="s1">&#39;exit-code&#39;</span>.
 </pre></div>
 <p>So I ran <tt class="docutils literal">mandb</tt> manually to figure out what was wrong:</p>
-<div class="highlight"><pre><span></span>% sudo mandb
-Purging old database entries <span class="k">in</span> /usr/share/man...
-Processing manual pages under /usr/share/man...
-Purging old database entries <span class="k">in</span> /usr/share/man/sr@latin...
-Processing manual pages under /usr/share/man/sr@latin...
+<div class="highlight"><pre><span></span>%<span class="w"> </span>sudo<span class="w"> </span>mandb
+Purging<span class="w"> </span>old<span class="w"> </span>database<span class="w"> </span>entries<span class="w"> </span><span class="k">in</span><span class="w"> </span>/usr/share/man...
+Processing<span class="w"> </span>manual<span class="w"> </span>pages<span class="w"> </span>under<span class="w"> </span>/usr/share/man...
+Purging<span class="w"> </span>old<span class="w"> </span>database<span class="w"> </span>entries<span class="w"> </span><span class="k">in</span><span class="w"> </span>/usr/share/man/sr@latin...
+Processing<span class="w"> </span>manual<span class="w"> </span>pages<span class="w"> </span>under<span class="w"> </span>/usr/share/man/sr@latin...
 ...
-Purging old database entries <span class="k">in</span> /usr/share/man/zh...
-gdbm fatal: Unexpected end of file
+Purging<span class="w"> </span>old<span class="w"> </span>database<span class="w"> </span>entries<span class="w"> </span><span class="k">in</span><span class="w"> </span>/usr/share/man/zh...
+gdbm<span class="w"> </span>fatal:<span class="w"> </span>Unexpected<span class="w"> </span>end<span class="w"> </span>of<span class="w"> </span>file
 </pre></div>
 <p>So gdbm seemed to have some problem. Since I didn't know what <tt class="docutils literal">gdbm</tt> was, I
 asked the all knowingly package manager of ArchLinux:</p>
-<div class="highlight"><pre><span></span>% pacman -Qi gdbm
-Name            : gdbm
-Version         : <span class="m">1</span>.12-2
-Description     : GNU database library
+<div class="highlight"><pre><span></span>%<span class="w"> </span>pacman<span class="w"> </span>-Qi<span class="w"> </span>gdbm
+Name<span class="w">            </span>:<span class="w"> </span>gdbm
+Version<span class="w">         </span>:<span class="w"> </span><span class="m">1</span>.12-2
+Description<span class="w">     </span>:<span class="w"> </span>GNU<span class="w"> </span>database<span class="w"> </span>library
 ...
 </pre></div>
 <p>Since it is a database library I assumed that the database must be corrupt.
 Lucky enough <tt class="docutils literal">mandb</tt> provides an option to create the database from scratch:</p>
-<div class="highlight"><pre><span></span>% sudo mandb -c
+<div class="highlight"><pre><span></span>%<span class="w"> </span>sudo<span class="w"> </span>mandb<span class="w"> </span>-c
 
-Processing manual pages under /usr/share/man...
-Updating index cache <span class="k">for</span> path <span class="sb">`</span>/usr/share/man/man1<span class="err">&#39;</span>. Wait...mandb: warning: /usr/share/man/man1/gdk-pixbuf-csource.1.gz: whatis parse <span class="k">for</span> gdk-pixbuf-csource<span class="o">(</span><span class="m">1</span><span class="o">)</span> failed
-mandb: warning: /usr/share/man/man1/gdk-pixbuf-query-loaders.1.gz: whatis parse <span class="k">for</span> gdk-pixbuf-query-loaders<span class="o">(</span><span class="m">1</span><span class="o">)</span> failed
+Processing<span class="w"> </span>manual<span class="w"> </span>pages<span class="w"> </span>under<span class="w"> </span>/usr/share/man...
+Updating<span class="w"> </span>index<span class="w"> </span>cache<span class="w"> </span><span class="k">for</span><span class="w"> </span>path<span class="w"> </span><span class="sb">`</span>/usr/share/man/man1<span class="err">&#39;</span>.<span class="w"> </span>Wait...mandb:<span class="w"> </span>warning:<span class="w"> </span>/usr/share/man/man1/gdk-pixbuf-csource.1.gz:<span class="w"> </span>whatis<span class="w"> </span>parse<span class="w"> </span><span class="k">for</span><span class="w"> </span>gdk-pixbuf-csource<span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w"> </span>failed
+mandb:<span class="w"> </span>warning:<span class="w"> </span>/usr/share/man/man1/gdk-pixbuf-query-loaders.1.gz:<span class="w"> </span>whatis<span class="w"> </span>parse<span class="w"> </span><span class="k">for</span><span class="w"> </span>gdk-pixbuf-query-loaders<span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w"> </span>failed
 ...
-Processing manual pages under /usr/local/man...
-<span class="m">124</span> man subdirectories contained newer manual pages.
-<span class="m">22844</span> manual pages were added.
-<span class="m">0</span> stray cats were added.
+Processing<span class="w"> </span>manual<span class="w"> </span>pages<span class="w"> </span>under<span class="w"> </span>/usr/local/man...
+<span class="m">124</span><span class="w"> </span>man<span class="w"> </span>subdirectories<span class="w"> </span>contained<span class="w"> </span>newer<span class="w"> </span>manual<span class="w"> </span>pages.
+<span class="m">22844</span><span class="w"> </span>manual<span class="w"> </span>pages<span class="w"> </span>were<span class="w"> </span>added.
+<span class="m">0</span><span class="w"> </span>stray<span class="w"> </span>cats<span class="w"> </span>were<span class="w"> </span>added.
 </pre></div>
 <p>It spilled my screen with lots of <a class="reference external" href="https://gist.github.com/rnestler/0ad8fdeb54e732922721bd4ef785a8d9#file-mandb_c_output-txt">output and warnings</a>, but seemed to finish
 properly.</p>
 <p>It didn't help though and <tt class="docutils literal">mandb</tt> still failed. Looking at the output again I
 noticed the line <tt class="docutils literal">Purging old database entries in <span class="pre">/usr/share/man/zh...</span></tt>. To
 see which package placed its manpage there I queried pacman again:</p>
-<div class="highlight"><pre><span></span>% <span class="nv">LANG</span><span class="o">=</span>C pacman -Qo /usr/share/man/zh
-/usr/share/man/zh/ is owned by nmap <span class="m">7</span>.31-1
+<div class="highlight"><pre><span></span>%<span class="w"> </span><span class="nv">LANG</span><span class="o">=</span>C<span class="w"> </span>pacman<span class="w"> </span>-Qo<span class="w"> </span>/usr/share/man/zh
+/usr/share/man/zh/<span class="w"> </span>is<span class="w"> </span>owned<span class="w"> </span>by<span class="w"> </span>nmap<span class="w"> </span><span class="m">7</span>.31-1
 </pre></div>
 <p>So I tried to uninstall and reinstall nmap:</p>
-<div class="highlight"><pre><span></span>% sudo pacman -R nmap
-% sudo mandb
-% sudo pacman -S nmap
-% sudo mandb
+<div class="highlight"><pre><span></span>%<span class="w"> </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-R<span class="w"> </span>nmap
+%<span class="w"> </span>sudo<span class="w"> </span>mandb
+%<span class="w"> </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>nmap
+%<span class="w"> </span>sudo<span class="w"> </span>mandb
 </pre></div>
 <p>And this time it finally worked! I'm still not sure what exactly triggered the
 failure in the first place, but I'm not sure how to further debug it.</p>

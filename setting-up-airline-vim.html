@@ -50,7 +50,7 @@ package manager for <a class="reference external" href="https://aur4.archlinux.o
 <div class="section" id="installing-vundle">
 <h2>Installing vundle</h2>
 <p>First one needs to get the vundle plug-in via git:</p>
-<div class="highlight"><pre><span></span>git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+<div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/VundleVim/Vundle.vim.git<span class="w"> </span>~/.vim/bundle/Vundle.vim
 </pre></div>
 <p>Then one needs to setup Vim to use it:</p>
 <div class="highlight"><pre><span></span><span class="c">&quot; ~/.vimrc</span>
@@ -86,21 +86,21 @@ g:airline_powerline_fonts = 1</tt> lets one use the <a class="reference external
 <p>Configuring my terminal emulator of choice, urxvt, turned out to be a bit of a
 hassle.</p>
 <p>Installing the fonts was easy:</p>
-<div class="highlight"><pre><span></span>git clone https://github.com/powerline/fonts.git
-<span class="nb">cd</span> fonts
+<div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/powerline/fonts.git
+<span class="nb">cd</span><span class="w"> </span>fonts
 ./install.sh
 </pre></div>
 <p>Then in <tt class="docutils literal"><span class="pre">~/.Xresources</span></tt> configure urxvt to use a powerline font:</p>
-<div class="highlight"><pre><span></span>URxvt.font: xft:DejaVu Sans Mono <span class="k">for</span> Powerline:size<span class="o">=</span><span class="m">11</span>
+<div class="highlight"><pre><span></span>URxvt.font:<span class="w"> </span>xft:DejaVu<span class="w"> </span>Sans<span class="w"> </span>Mono<span class="w"> </span><span class="k">for</span><span class="w"> </span>Powerline:size<span class="o">=</span><span class="m">11</span>
 </pre></div>
 <p>Then reloading the configuration</p>
-<div class="highlight"><pre><span></span>xrdb -merge ~/.Xresources
+<div class="highlight"><pre><span></span>xrdb<span class="w"> </span>-merge<span class="w"> </span>~/.Xresources
 </pre></div>
 <p>The problem was that urxvt didn't like that at all and displayed the fonts with
 the spacing all messed up. After an hour of googling and trying out different
 stuff, it turned out I just needed to kill and restart the urxvtd daemon!</p>
-<div class="highlight"><pre><span></span>% killall urxvtd
-% urxvtd -q -o -f
+<div class="highlight"><pre><span></span>%<span class="w"> </span>killall<span class="w"> </span>urxvtd
+%<span class="w"> </span>urxvtd<span class="w"> </span>-q<span class="w"> </span>-o<span class="w"> </span>-f
 </pre></div>
 <p>After that it worked like a charm and the special symbols did show up nicely:</p>
 <img alt="Vim screen shot with airline and powerline fonts" class="align-center" src="/images/vim-airline1.png" style="width: 100%;" />

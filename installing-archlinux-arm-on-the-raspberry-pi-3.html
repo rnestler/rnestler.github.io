@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Installing ArchLinux ARM on the Raspberry Pi 3</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html" rel="bookmark"
+           title="Permalink to Installing ArchLinux ARM on the Raspberry Pi 3">Installing ArchLinux ARM on the Raspberry Pi 3</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2023-12-05T00:00:00+01:00">
+                Published: Di 05 Dezember 2023
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> </p>
+</footer><!-- /.post-info -->      <p>Today I plugged in my Raspberry Pi 3 which had
+<a href="https://retropie.org.uk/">RetroPie</a> installed on it. It notified me, that the
+installation is out of date and not longer supported and I should reinstall the
+system.</p>
+<p>Since I had to do a reinstall anyway and didn't want to be bothered again in
+the future, I decided to try out ArchLinux ARM, so I just get the rolling
+releases without a need to do re-installs.</p>
+<h1>Installation</h1>
+<p>To install the base image I followed mostly the guide from ArchLinux ARM:
+<a href="https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3">https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3</a></p>
+<p>For the setup I needed to connect it with an Ethernet cable, since the guide
+doesn't explain how to set up WiFi prior to first booting it.</p>
+<p>After that I logged in via ssh. I needed to enforce password authentication,
+since otherwise ssh would just try all my ssh keys to authenticate which lead
+to a <code>Received disconnect from 192.168.0.31 port 22:2: Too many authentication
+failures</code></p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>-o<span class="w"> </span><span class="nv">PreferredAuthentications</span><span class="o">=</span>password<span class="w"> </span>alarm@alarmpi
+<span class="c1"># switch to root user</span>
+su
+<span class="c1"># From the install guide</span>
+pacman-key<span class="w"> </span>--init
+pacman-key<span class="w"> </span>--populate<span class="w"> </span>archlinuxarm
+<span class="c1"># Update the whole system</span>
+pacman<span class="w"> </span>-Syu
+</code></pre></div>
+
+<p>During the update step I got a scary warning while building the initramfs:</p>
+<div class="highlight"><pre><span></span><code>(12/14) Updating linux-rpi initcpios...
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux-rpi.preset: &#39;default&#39;
+==&gt; Using configuration file: &#39;/etc/mkinitcpio.conf&#39;
+  -&gt; -k 6.1.64-2-rpi-ARCH -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+==&gt; Starting build: &#39;6.1.64-2-rpi-ARCH&#39;
+  -&gt; Running build hook: [base]
+  -&gt; Running build hook: [udev]
+  -&gt; Running build hook: [autodetect]
+  -&gt; Running build hook: [modconf]
+  -&gt; Running build hook: [kms]
+  -&gt; Running build hook: [keyboard]
+  -&gt; Running build hook: [keymap]
+  -&gt; Running build hook: [consolefont]
+==&gt; WARNING: consolefont: no font found in configuration
+  -&gt; Running build hook: [block]
+  -&gt; Running build hook: [filesystems]
+  -&gt; Running build hook: [fsck]
+==&gt; Generating module dependencies
+==&gt; Creating gzip-compressed initcpio image: &#39;/boot/initramfs-linux.img&#39;
+==&gt; WARNING: errors were encountered during the build. The image may not be complete.
+error: command failed to execute correctly
+</code></pre></div>
+
+<p>I tried to figure out what went wrong and then decided to just reboot and see
+if we can still do that, which worked without problems.</p>
+<h2>Configuring WiFi</h2>
+<p>Since I didn't want to bother with connecting the raspi with an ethernet cable
+at the location were I wanted to run it, I needed to configure WiFi before
+continuing.</p>
+<p>Since it will run stationary, it is enough to just hard-code a single network:</p>
+<div class="highlight"><pre><span></span><code>wpa_passphrase<span class="w"> </span>SSID<span class="w"> </span>PSK<span class="w"> </span>&gt;<span class="w"> </span>/etc/wpa_supplicant/wpa_supplicant@wlan0.service
+systemctl<span class="w"> </span>start<span class="w"> </span>wpa_supplicant@wlan0.service
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>wpa_supplicant@wlan0.service
+</code></pre></div>
+
+<p>Then we tell systemd-network to enable DHCP for the wlan0 interface by creating
+<code>/etc/systemd/network/wlan0.network</code> with the following content:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Match]</span>
+<span class="na">Name</span><span class="o">=</span><span class="s">wlan0</span>
+
+<span class="k">[Network]</span>
+<span class="na">DHCP</span><span class="o">=</span><span class="s">yes</span>
+<span class="na">IgnoreCarrierLoss</span><span class="o">=</span><span class="s">3s</span>
+</code></pre></div>
+
+<p>After reloading with <code>systemctl reload systemd-networkd.service</code> WiFi was
+connected.</p>
+<h1>Installing Kodi</h1>
+<p>Since I wanted to run Kodi on the Pi (along side RetroPi / Emulation station)
+I followed this guide: <a href="https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi">https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi</a></p>
+<div class="highlight"><pre><span></span><code>pacman -S kodi
+# selecting kodi-rpi
+</code></pre></div>
+
+<p>After installing the output of pacman showed the following:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Remove any manual tweaks made to /boot/config.txt particulary a line such
+    as gpu_mem=xxx.  Driver setup for Kodi is stored in /boot/kodi.config.txt
+
+    Manually append the following to /boot/config.txt to make them active:
+    [all]
+    include kodi.config.txt
+
+    A reboot will be required to activate them if this is a fresh install.`
+</code></pre></div>
+
+<details>
+<summary>Optional kodi dependencies</summary>
+Kodi showed the following optional dependencies: Since I currently don't want
+to use bluetooth for anything, nor want to use pipewire or pulseaudio but plain
+ALSA, I didn't install any of them.
+
+<div class="highlight"><pre><span></span><code>Optional dependencies for kodi-rpi
+    afpfs-ng: Apple shares support
+    bluez: Blutooth support
+    linux-rpi: HW accelerated decoding [installed]
+    python-pybluez: Bluetooth support
+    pulseaudio: PulseAudio support
+    pipewire: PipeWire support
+</code></pre></div>
+
+
+</details>
+
+<p>So I edited it accordingly, enabled the kodi service and rebooted:</p>
+<div class="highlight"><pre><span></span><code>sudo systemctl enable kodi.service
+</code></pre></div>
+
+<p>So far everything is working quite nicely and one of the next things will be to
+get a spotify plugin to run on the Raspberry Pi.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

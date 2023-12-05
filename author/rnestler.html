@@ -26,7 +26,146 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html">Building an out-of-tree Rust Kernel Module Part Three</a></h1>
+                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html">Installing ArchLinux ARM on the Raspberry Pi 3</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2023-12-05T00:00:00+01:00">
+                Published: Di 05 Dezember 2023
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> </p>
+</footer><!-- /.post-info --><p>Today I plugged in my Raspberry Pi 3 which had
+<a href="https://retropie.org.uk/">RetroPie</a> installed on it. It notified me, that the
+installation is out of date and not longer supported and I should reinstall the
+system.</p>
+<p>Since I had to do a reinstall anyway and didn't want to be bothered again in
+the future, I decided to try out ArchLinux ARM, so I just get the rolling
+releases without a need to do re-installs.</p>
+<h1>Installation</h1>
+<p>To install the base image I followed mostly the guide from ArchLinux ARM:
+<a href="https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3">https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3</a></p>
+<p>For the setup I needed to connect it with an Ethernet cable, since the guide
+doesn't explain how to set up WiFi prior to first booting it.</p>
+<p>After that I logged in via ssh. I needed to enforce password authentication,
+since otherwise ssh would just try all my ssh keys to authenticate which lead
+to a <code>Received disconnect from 192.168.0.31 port 22:2: Too many authentication
+failures</code></p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>-o<span class="w"> </span><span class="nv">PreferredAuthentications</span><span class="o">=</span>password<span class="w"> </span>alarm@alarmpi
+<span class="c1"># switch to root user</span>
+su
+<span class="c1"># From the install guide</span>
+pacman-key<span class="w"> </span>--init
+pacman-key<span class="w"> </span>--populate<span class="w"> </span>archlinuxarm
+<span class="c1"># Update the whole system</span>
+pacman<span class="w"> </span>-Syu
+</code></pre></div>
+
+<p>During the update step I got a scary warning while building the initramfs:</p>
+<div class="highlight"><pre><span></span><code>(12/14) Updating linux-rpi initcpios...
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux-rpi.preset: &#39;default&#39;
+==&gt; Using configuration file: &#39;/etc/mkinitcpio.conf&#39;
+  -&gt; -k 6.1.64-2-rpi-ARCH -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+==&gt; Starting build: &#39;6.1.64-2-rpi-ARCH&#39;
+  -&gt; Running build hook: [base]
+  -&gt; Running build hook: [udev]
+  -&gt; Running build hook: [autodetect]
+  -&gt; Running build hook: [modconf]
+  -&gt; Running build hook: [kms]
+  -&gt; Running build hook: [keyboard]
+  -&gt; Running build hook: [keymap]
+  -&gt; Running build hook: [consolefont]
+==&gt; WARNING: consolefont: no font found in configuration
+  -&gt; Running build hook: [block]
+  -&gt; Running build hook: [filesystems]
+  -&gt; Running build hook: [fsck]
+==&gt; Generating module dependencies
+==&gt; Creating gzip-compressed initcpio image: &#39;/boot/initramfs-linux.img&#39;
+==&gt; WARNING: errors were encountered during the build. The image may not be complete.
+error: command failed to execute correctly
+</code></pre></div>
+
+<p>I tried to figure out what went wrong and then decided to just reboot and see
+if we can still do that, which worked without problems.</p>
+<h2>Configuring WiFi</h2>
+<p>Since I didn't want to bother with connecting the raspi with an ethernet cable
+at the location were I wanted to run it, I needed to configure WiFi before
+continuing.</p>
+<p>Since it will run stationary, it is enough to just hard-code a single network:</p>
+<div class="highlight"><pre><span></span><code>wpa_passphrase<span class="w"> </span>SSID<span class="w"> </span>PSK<span class="w"> </span>&gt;<span class="w"> </span>/etc/wpa_supplicant/wpa_supplicant@wlan0.service
+systemctl<span class="w"> </span>start<span class="w"> </span>wpa_supplicant@wlan0.service
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>wpa_supplicant@wlan0.service
+</code></pre></div>
+
+<p>Then we tell systemd-network to enable DHCP for the wlan0 interface by creating
+<code>/etc/systemd/network/wlan0.network</code> with the following content:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[Match]</span>
+<span class="na">Name</span><span class="o">=</span><span class="s">wlan0</span>
+
+<span class="k">[Network]</span>
+<span class="na">DHCP</span><span class="o">=</span><span class="s">yes</span>
+<span class="na">IgnoreCarrierLoss</span><span class="o">=</span><span class="s">3s</span>
+</code></pre></div>
+
+<p>After reloading with <code>systemctl reload systemd-networkd.service</code> WiFi was
+connected.</p>
+<h1>Installing Kodi</h1>
+<p>Since I wanted to run Kodi on the Pi (along side RetroPi / Emulation station)
+I followed this guide: <a href="https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi">https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi</a></p>
+<div class="highlight"><pre><span></span><code>pacman -S kodi
+# selecting kodi-rpi
+</code></pre></div>
+
+<p>After installing the output of pacman showed the following:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Remove any manual tweaks made to /boot/config.txt particulary a line such
+    as gpu_mem=xxx.  Driver setup for Kodi is stored in /boot/kodi.config.txt
+
+    Manually append the following to /boot/config.txt to make them active:
+    [all]
+    include kodi.config.txt
+
+    A reboot will be required to activate them if this is a fresh install.`
+</code></pre></div>
+
+<details>
+<summary>Optional kodi dependencies</summary>
+Kodi showed the following optional dependencies: Since I currently don't want
+to use bluetooth for anything, nor want to use pipewire or pulseaudio but plain
+ALSA, I didn't install any of them.
+
+<div class="highlight"><pre><span></span><code>Optional dependencies for kodi-rpi
+    afpfs-ng: Apple shares support
+    bluez: Blutooth support
+    linux-rpi: HW accelerated decoding [installed]
+    python-pybluez: Bluetooth support
+    pulseaudio: PulseAudio support
+    pipewire: PipeWire support
+</code></pre></div>
+
+
+</details>
+
+<p>So I edited it accordingly, enabled the kodi service and rebooted:</p>
+<div class="highlight"><pre><span></span><code>sudo systemctl enable kodi.service
+</code></pre></div>
+
+<p>So far everything is working quite nicely and one of the next things will be to
+get a spotify plugin to run on the Raspberry Pi.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html" rel="bookmark"
+                           title="Permalink to Building an out-of-tree Rust Kernel Module Part Three">Building an out-of-tree Rust Kernel Module Part Three</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2023-06-15T00:00:00+02:00">
                 Published: Do 15 Juni 2023
@@ -37,110 +176,10 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
-</footer><!-- /.post-info --><p>In my last <a href="/building-an-out-of-tree-rust-kernel-module-part-two.html">blog post</a>,
-I managed to build an out-of-tree kernel module in Rust for a custom 6.1 Linux
-kernel I packaged for ArchLinux:
-<a href="https://aur.archlinux.org/packages/linux-rust">https://aur.archlinux.org/packages/linux-rust</a>.</p>
-<p>While this worked, I couldn't manage to package the correct metadata to build
-the out-of-tree kernel module without a local build of the kernel, which kind
-of defeats the purpose of the exercise.</p>
-<p>In the meantime Linux 6.2 got released so I thought I'd try again.</p>
-<h2>Updating our own ArchLinux kernel</h2>
-<p>So I went ahead and updated my <a href="https://aur.archlinux.org/packages/linux-rust">linux-rust</a> package to a 6.2 kernel. While
-doing this I tried to stay as close as possible to the default ArchLinux kernel
-packages <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/6.2.10.arch1-1/config?ref_type=tags">config</a> file to make it generally usable.</p>
-<h2>Building the out-of-tree module</h2>
-<p>Linux 6.2 changed the module metadata strings from byte arrays to proper
-<code>str</code>s. For that we needed to update the kernel module. See:
-<a href="https://github.com/Rust-for-Linux/rust-out-of-tree-module/pull/5">https://github.com/Rust-for-Linux/rust-out-of-tree-module/pull/5</a></p>
-<h2>Same error as before</h2>
-<p>So I went ahead recompiled the kernel, rebooted, tried to compile the kernel
-module and got the same error as before:</p>
-<div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make LLVM=1
-make -C /lib/modules/`uname -r`/build M=$PWD
-  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
-error[E0461]: couldn&#39;t find crate `core` with expected target triple target-12809083303779448358
-  |
-  = note: the following crate versions were found:
-          crate `core`, target triple target-5559158138856098584: /usr/lib/modules/6.2.10-arch1-1-rust/build/rust/libcore.rmeta
-</code></pre></div>
-
-<h2>Finding the root cause for the error</h2>
-<p>But this time I wanted to find out what the cause for this issue is! It turns
-out that it is a bug in rustc, where the file <em>path</em> instead of the <em>content</em>
-of the <code>target.json</code> where used. See</p>
-<ul>
-<li><a href="https://github.com/Rust-for-Linux/linux/issues/792">https://github.com/Rust-for-Linux/linux/issues/792</a></li>
-<li><a href="https://github.com/rust-lang/rust/pull/98225">https://github.com/rust-lang/rust/pull/98225</a></li>
-</ul>
-<h2>Compiling with Rust 1.63.0</h2>
-<p>So since this bug got fix in Rust 1.63.0 I decided to try to compile the kernel
-with a newer (and thus unsupported, since the Linux kernel uses unstable Rust
-features) version.</p>
-<p>This will print a scary warning during the build process:</p>
-<div class="highlight"><pre><span></span><code>***
-*** Rust compiler &#39;rustc&#39; is too new. This may or may not work.
-***   Your version:     1.63.0
-***   Expected version: 1.62.0
-***
-</code></pre></div>
-
-<p>Also there were a few warnings from the Rust compiler itself about features
-that got now stabilized:</p>
-<div class="highlight"><pre><span></span><code>warning: the feature `nll` has been stable since 1.63.0 and no longer requires an attribute to enable
-   --&gt; rust/alloc/lib.rs:170:12
-    |
-170 | #![feature(nll)] // Not necessary, but here to test the `nll` feature.
-    |            ^^^
-    |
-    = note: `#[warn(stable_features)]` on by default
-</code></pre></div>
-
-<h2>Successfully building an out-of-tree kernel module!</h2>
-<p>So finally I was able to compile the out-of-tree module without a local build
-of the kernel:</p>
-<div class="highlight"><pre><span></span><code>..Rust-for-Linux/rust-out-of-tree-module (git)-[main] % make LLVM=1
-make -C /lib/modules/`uname -r`/build M=$PWD
-  RUSTC [M] /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.o
-  MODPOST /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/Module.symvers
-  CC [M]  /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.mod.o
-  LD [M]  /home/roughl/projects/github/Rust-for-Linux/rust-out-of-tree-module/rust_out_of_tree.ko
-</code></pre></div>
-
-<p>Which also loaded successfully:</p>
-<div class="highlight"><pre><span></span><code>[125766.698929] rust_out_of_tree: loading out-of-tree module taints kernel.
-[125766.698985] rust_out_of_tree: module verification failed: signature and/or required key missing - tainting kernel
-[125766.699611] rust_out_of_tree: Rust out-of-tree sample (init)
-[125771.403175] rust_out_of_tree: My numbers are [72, 108, 200]
-[125771.403183] rust_out_of_tree: Rust out-of-tree sample (exit)
-</code></pre></div>
-
-<p>I also spent some time figuring out which parts of the build metadata are
-really needed, since previously I just copied the whole <code>rust/</code> folder. In the
-end we just need:</p>
-<ul>
-<li><code>rust/target.json</code> the custom target description</li>
-<li><code>rust/*.rmeta</code> the compiled rust libraries</li>
-<li><code>rust/*.so</code> the pre-compiled procedural macros</li>
-<li><code>rust-toolchain</code> such that we use the same Rust compiler version that was
-   used to compile the kernel</li>
-</ul>
-<h2>Looking forward</h2>
-<p>In the meantime Linux 6.3 got released and 6.4 will be released shortly. But it
-doesn't look like they will bump the minimum version of Rust needed to compile:
-<a href="https://github.com/torvalds/linux/blob/v6.4-rc6/scripts/min-tool-version.sh#L29">https://github.com/torvalds/linux/blob/v6.4-rc6/scripts/min-tool-version.sh#L29</a></p>
-<p>But reading <a href="https://rust-for-linux.com/rust-version-policy">https://rust-for-linux.com/rust-version-policy</a> it looks like
-there are plans to start tracking the latest Rust release for Linux:</p>
-<blockquote>
-<p>It remains to be decided how often the Rust version upgrades will land.
-Ideally we would track the latest Rust release, but it remains to be seen how
-other kernel developers feel about it.</p>
-</blockquote>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Trying to build a hello world out-of-tree Rust kernel module for Linux. Part Three.</p>
+                <a class="readmore" href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -319,29 +358,6 @@ other kernel developers feel about it.</p>
 </footer><!-- /.post-info -->                <p class="first last">Visiting Sarajevo</p>
 
                 <a class="readmore" href="https://blog.rnstlr.ch/visiting-sarajevo.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-hacklab-belgrade.html" rel="bookmark"
-                           title="Permalink to Visiting Hacklab Belgrade">Visiting Hacklab Belgrade</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-10T00:00:00+02:00">
-                Published: Mi 10 Mai 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting the <a class="reference external" href="http://oosm.org/">Hacklab Belgrade</a>.</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-hacklab-belgrade.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

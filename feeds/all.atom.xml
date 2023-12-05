@@ -1,5 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-06-15T00:00:00+02:00</updated><entry><title>Building an out-of-tree Rust Kernel Module Part Three</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html" rel="alternate"></link><published>2023-06-15T00:00:00+02:00</published><updated>2023-06-15T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-06-15:/building-an-out-of-tree-rust-kernel-module-part-three.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux. Part Three.&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my last &lt;a href="/building-an-out-of-tree-rust-kernel-module-part-two.html"&gt;blog post&lt;/a&gt;,
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-12-05T00:00:00+01:00</updated><entry><title>Installing ArchLinux ARM on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2023-12-05T00:00:00+01:00</published><updated>2023-12-05T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-12-05:/installing-archlinux-arm-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Replacing my RetroPie installation with ArchLinux ARM on my Raspberry Pi 3&lt;/p&gt;</summary><content type="html">&lt;p&gt;Today I plugged in my Raspberry Pi 3 which had
+&lt;a href="https://retropie.org.uk/"&gt;RetroPie&lt;/a&gt; installed on it. It notified me, that the
+installation is out of date and not longer supported and I should reinstall the
+system.&lt;/p&gt;
+&lt;p&gt;Since I had to do a reinstall anyway and didn't want to be bothered again in
+the future, I decided to try out ArchLinux ARM, so I just get the rolling
+releases without a need to do re-installs.&lt;/p&gt;
+&lt;h1&gt;Installation&lt;/h1&gt;
+&lt;p&gt;To install the base image I followed mostly the guide from ArchLinux ARM:
+&lt;a href="https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3"&gt;https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For the setup I needed to connect it with an Ethernet cable, since the guide
+doesn't explain how to set up WiFi prior to first booting it.&lt;/p&gt;
+&lt;p&gt;After that I logged in via ssh. I needed to enforce password authentication,
+since otherwise ssh would just try all my ssh keys to authenticate which lead
+to a &lt;code&gt;Received disconnect from 192.168.0.31 port 22:2: Too many authentication
+failures&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ssh&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;PreferredAuthentications&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;password&lt;span class="w"&gt; &lt;/span&gt;alarm@alarmpi
+&lt;span class="c1"&gt;# switch to root user&lt;/span&gt;
+su
+&lt;span class="c1"&gt;# From the install guide&lt;/span&gt;
+pacman-key&lt;span class="w"&gt; &lt;/span&gt;--init
+pacman-key&lt;span class="w"&gt; &lt;/span&gt;--populate&lt;span class="w"&gt; &lt;/span&gt;archlinuxarm
+&lt;span class="c1"&gt;# Update the whole system&lt;/span&gt;
+pacman&lt;span class="w"&gt; &lt;/span&gt;-Syu
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;During the update step I got a scary warning while building the initramfs:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;(12/14) Updating linux-rpi initcpios...
+==&amp;gt; Building image from preset: /etc/mkinitcpio.d/linux-rpi.preset: &amp;#39;default&amp;#39;
+==&amp;gt; Using configuration file: &amp;#39;/etc/mkinitcpio.conf&amp;#39;
+  -&amp;gt; -k 6.1.64-2-rpi-ARCH -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
+==&amp;gt; Starting build: &amp;#39;6.1.64-2-rpi-ARCH&amp;#39;
+  -&amp;gt; Running build hook: [base]
+  -&amp;gt; Running build hook: [udev]
+  -&amp;gt; Running build hook: [autodetect]
+  -&amp;gt; Running build hook: [modconf]
+  -&amp;gt; Running build hook: [kms]
+  -&amp;gt; Running build hook: [keyboard]
+  -&amp;gt; Running build hook: [keymap]
+  -&amp;gt; Running build hook: [consolefont]
+==&amp;gt; WARNING: consolefont: no font found in configuration
+  -&amp;gt; Running build hook: [block]
+  -&amp;gt; Running build hook: [filesystems]
+  -&amp;gt; Running build hook: [fsck]
+==&amp;gt; Generating module dependencies
+==&amp;gt; Creating gzip-compressed initcpio image: &amp;#39;/boot/initramfs-linux.img&amp;#39;
+==&amp;gt; WARNING: errors were encountered during the build. The image may not be complete.
+error: command failed to execute correctly
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I tried to figure out what went wrong and then decided to just reboot and see
+if we can still do that, which worked without problems.&lt;/p&gt;
+&lt;h2&gt;Configuring WiFi&lt;/h2&gt;
+&lt;p&gt;Since I didn't want to bother with connecting the raspi with an ethernet cable
+at the location were I wanted to run it, I needed to configure WiFi before
+continuing.&lt;/p&gt;
+&lt;p&gt;Since it will run stationary, it is enough to just hard-code a single network:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;wpa_passphrase&lt;span class="w"&gt; &lt;/span&gt;SSID&lt;span class="w"&gt; &lt;/span&gt;PSK&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;/etc/wpa_supplicant/wpa_supplicant@wlan0.service
+systemctl&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;wpa_supplicant@wlan0.service
+systemctl&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;enable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;wpa_supplicant@wlan0.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then we tell systemd-network to enable DHCP for the wlan0 interface by creating
+&lt;code&gt;/etc/systemd/network/wlan0.network&lt;/code&gt; with the following content:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[Match]&lt;/span&gt;
+&lt;span class="na"&gt;Name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;wlan0&lt;/span&gt;
+
+&lt;span class="k"&gt;[Network]&lt;/span&gt;
+&lt;span class="na"&gt;DHCP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;yes&lt;/span&gt;
+&lt;span class="na"&gt;IgnoreCarrierLoss&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;3s&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After reloading with &lt;code&gt;systemctl reload systemd-networkd.service&lt;/code&gt; WiFi was
+connected.&lt;/p&gt;
+&lt;h1&gt;Installing Kodi&lt;/h1&gt;
+&lt;p&gt;Since I wanted to run Kodi on the Pi (along side RetroPi / Emulation station)
+I followed this guide: &lt;a href="https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi"&gt;https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pacman -S kodi
+# selecting kodi-rpi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After installing the output of pacman showed the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; Remove any manual tweaks made to /boot/config.txt particulary a line such
+    as gpu_mem=xxx.  Driver setup for Kodi is stored in /boot/kodi.config.txt
+
+    Manually append the following to /boot/config.txt to make them active:
+    [all]
+    include kodi.config.txt
+
+    A reboot will be required to activate them if this is a fresh install.`
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;details&gt;
+&lt;summary&gt;Optional kodi dependencies&lt;/summary&gt;
+Kodi showed the following optional dependencies: Since I currently don't want
+to use bluetooth for anything, nor want to use pipewire or pulseaudio but plain
+ALSA, I didn't install any of them.
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Optional dependencies for kodi-rpi
+    afpfs-ng: Apple shares support
+    bluez: Blutooth support
+    linux-rpi: HW accelerated decoding [installed]
+    python-pybluez: Bluetooth support
+    pulseaudio: PulseAudio support
+    pipewire: PipeWire support
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/details&gt;
+
+&lt;p&gt;So I edited it accordingly, enabled the kodi service and rebooted:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo systemctl enable kodi.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;So far everything is working quite nicely and one of the next things will be to
+get a spotify plugin to run on the Raspberry Pi.&lt;/p&gt;</content><category term="2023"></category><category term="Raspberry Pi"></category><category term="Linux"></category><category term="ArchLinux"></category><category term="ARM"></category></entry><entry><title>Building an out-of-tree Rust Kernel Module Part Three</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html" rel="alternate"></link><published>2023-06-15T00:00:00+02:00</published><updated>2023-06-15T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-06-15:/building-an-out-of-tree-rust-kernel-module-part-three.html</id><summary type="html">&lt;p&gt;Trying to build a hello world out-of-tree Rust kernel module for Linux. Part Three.&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my last &lt;a href="/building-an-out-of-tree-rust-kernel-module-part-two.html"&gt;blog post&lt;/a&gt;,
 I managed to build an out-of-tree kernel module in Rust for a custom 6.1 Linux
 kernel I packaged for ArchLinux:
 &lt;a href="https://aur.archlinux.org/packages/linux-rust"&gt;https://aur.archlinux.org/packages/linux-rust&lt;/a&gt;.&lt;/p&gt;

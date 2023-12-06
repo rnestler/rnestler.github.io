@@ -146,3 +146,23 @@ real	0m2.899s
 user	0m0.318s
 sys	0m0.072s
 ```
+
+## Improving spotifyd
+
+ * More metadata for hook: <https://github.com/Spotifyd/spotifyd/issues/522>
+
+## Using a Python script
+ * <https://lazka.github.io/pgi-docs/Playerctl-2.0/classes/Player.html>
+ * <https://pygobject.readthedocs.io/en/latest/guide/api/properties.html>
+
+## Sound mixing problems
+
+ * Only one devise can play on alsa at a time -> Playing notification sound
+   from kodi may lead spotifyd to crash since it can't start playing
+ * Solutions:
+   * <https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Dmix>
+   * Pipewire which would also enable using it as BT player? <https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/>
+
+## Developing a Kodi plugin
+
+ * 

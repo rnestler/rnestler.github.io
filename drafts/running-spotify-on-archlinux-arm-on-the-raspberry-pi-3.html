@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Running Spotify on ArchLinux ARM on the Raspberry Pi 3</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/running-spotify-on-archlinux-arm-on-the-raspberry-pi-3.html" rel="bookmark"
+           title="Permalink to Running Spotify on ArchLinux ARM on the Raspberry Pi 3">Running Spotify on ArchLinux ARM on the Raspberry Pi 3</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2023-12-05T00:00:00+01:00">
+                Published: Di 05 Dezember 2023
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> </p>
+</footer><!-- /.post-info -->      <h1>Trying the Kodi Add-On</h1>
+<p>The first thing I tried was to look for a Spotify Kodi Add-On. What I found
+that looked promising was the following:
+<a href="https://github.com/glk1001/glk1001.github.io">https://github.com/glk1001/glk1001.github.io</a></p>
+<p>But after installing and getting it to run I encountered a few issues:</p>
+<ul>
+<li>It was a bit cumbersome to navigate from inside Kodi and a bit laggy</li>
+<li>Spotify connect wasn't working from my phone</li>
+<li>My spotify account got blocked after a while and I received the follwoing
+   email from spotify:<blockquote>
+<p>To protect your Spotify account, we have reset your password as we have
+detected suspicious activity.</p>
+</blockquote>
+</li>
+</ul>
+<p>Since I have previously used <code>spotifyd</code> and it seemed to work great with
+Spotify connect, I decided to not bother any longer and try it out on the Pi as
+well.</p>
+<h1>Trying spotifyd</h1>
+<h2>Installation</h2>
+<p>Luckily ArchLinux ARM provides us with a package out of the box:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>spotifyd
+</code></pre></div>
+
+<h2>Running as a system service</h2>
+<p>Since I didn't want to need to log in to run spotifyd as a user service I tried
+to run it as a system service:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>cp<span class="w"> </span>/usr/lib/systemd/user/spotifyd.service<span class="w">  </span>/etc/systemd/system
+$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+<span class="c1"># Create /etc/spotifyd.conf with the following content</span>
+<span class="o">[</span>global<span class="o">]</span>
+<span class="nv">use_mpris</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span>
+$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>spotifyd.service
+$<span class="w"> </span>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>spotifyd.service
+</code></pre></div>
+
+<details>
+<summary>Why do we need to disable mpris?</summary>
+
+When running as a system service, spotifyd can't connect to the user session
+dbus service and will crash when starting:
+
+
+<div class="highlight"><pre><span></span><code>Dec 03 20:42:01 alarmpi spotifyd[6793]: The application panicked (crashed).
+Dec 03 20:42:01 alarmpi spotifyd[6793]: Message:  Failed to initialize DBus connection: D-Bus error: Using X11 for dbus-daemon autolaunch was disabled at compile time, set your DBUS_SESSION_BUS_ADDRESS instead (&gt;
+Dec 03 20:42:01 alarmpi spotifyd[6793]: Location: src/dbus_mpris.rs:169
+Dec 03 20:42:01 alarmpi spotifyd[6793]: Backtrace omitted. Run with RUST_BACKTRACE=1 environment variable to display it.
+Dec 03 20:42:01 alarmpi spotifyd[6793]: Run with RUST_BACKTRACE=full to include source snippets.
+Dec 03 20:42:01 alarmpi systemd[1]: spotifyd.service: Main process exited, code=exited, status=101/n/a
+Dec 03 20:42:01 alarmpi systemd[1]: spotifyd.service: Failed with result &#39;exit-code&#39;.`
+</code></pre></div>
+
+
+</details>
+
+<p>So while ths worked quite well it has two downsides:</p>
+<ul>
+<li>Running as a system service means we run spotifyd as root. This is not nice
+   from a security perspective (we could probably change this by creating a new
+   user to run it as)</li>
+<li>Can't control it via playerctl / MPRIS over dbus</li>
+</ul>
+<h2>Running it as user service</h2>
+<p>So how can we run spotifyd on boot, but still run it in the user session? The
+trick is to
+<a href="https://www.freedesktop.org/software/systemd/man/latest/loginctl.html#enable-linger%20USER%E2%80%A6"><code>enable-linger</code></a>
+for the user that should run the spotifyd service and then enable it as a user
+service. See also
+<a href="https://github.com/Spotifyd/spotifyd/wiki/Installing-on-a-Raspberry-Pi#starting-spotifyd-at-boot">https://github.com/Spotifyd/spotifyd/wiki/Installing-on-a-Raspberry-Pi#starting-spotifyd-at-boot</a></p>
+<div class="highlight"><pre><span></span><code># As the user &#39;alarm&#39;
+$ loginctl enable-linger
+$ systemctl --user enable spotifyd.service
+</code></pre></div>
+
+<p>When then trying to play something over spotify I noticed, that spotifyd crashes:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>journalctl<span class="w"> </span>--user<span class="w"> </span>-u<span class="w"> </span>spotifyd.service
+...
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>ALSA<span class="w"> </span>lib<span class="w"> </span>confmisc.c:855:<span class="o">(</span>parse_card<span class="o">)</span><span class="w"> </span>cannot<span class="w"> </span>find<span class="w"> </span>card<span class="w"> </span><span class="s1">&#39;0&#39;</span>
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>ALSA<span class="w"> </span>lib<span class="w"> </span>conf.c:5204:<span class="o">(</span>_snd_config_evaluate<span class="o">)</span><span class="w"> </span><span class="k">function</span><span class="w"> </span>snd_func_car&gt;
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>ALSA<span class="w"> </span>lib<span class="w"> </span>confmisc.c:422:<span class="o">(</span>snd_func_concat<span class="o">)</span><span class="w"> </span>error<span class="w"> </span>evaluating<span class="w"> </span>strings
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>ALSA<span class="w"> </span>lib<span class="w"> </span>conf.c:5204:<span class="o">(</span>_snd_config_evaluate<span class="o">)</span><span class="w"> </span><span class="k">function</span><span class="w"> </span>snd_func_con&gt;
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>ALSA<span class="w"> </span>lib<span class="w"> </span>confmisc.c:1342:<span class="o">(</span>snd_func_refer<span class="o">)</span><span class="w"> </span>error<span class="w"> </span>evaluating<span class="w"> </span>name
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>ALSA<span class="w"> </span>lib<span class="w"> </span>conf.c:5204:<span class="o">(</span>_snd_config_evaluate<span class="o">)</span><span class="w"> </span><span class="k">function</span><span class="w"> </span>snd_func_ref&gt;
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>ALSA<span class="w"> </span>lib<span class="w"> </span>conf.c:5727:<span class="o">(</span>snd_config_expand<span class="o">)</span><span class="w"> </span>Evaluate<span class="w"> </span>error:<span class="w"> </span>No<span class="w"> </span>such<span class="w"> </span>&gt;
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>ALSA<span class="w"> </span>lib<span class="w"> </span>pcm.c:2675:<span class="o">(</span>snd_pcm_open_noupdate<span class="o">)</span><span class="w"> </span>Unknown<span class="w"> </span>PCM<span class="w"> </span>default
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>spotifyd<span class="o">[</span><span class="m">2589</span><span class="o">]</span>:<span class="w"> </span>Audio<span class="w"> </span>Sink<span class="w"> </span>Error<span class="w"> </span>Connection<span class="w"> </span>Refused:<span class="w"> </span>&lt;AlsaSink&gt;<span class="w"> </span>Device<span class="w"> </span>default<span class="w"> </span>Ma&gt;
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>systemd<span class="o">[</span><span class="m">458</span><span class="o">]</span>:<span class="w"> </span>spotifyd.service:<span class="w"> </span>Main<span class="w"> </span>process<span class="w"> </span>exited,<span class="w"> </span><span class="nv">code</span><span class="o">=</span>exited,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="m">1</span>/FAILURE
+Dec<span class="w"> </span><span class="m">05</span><span class="w"> </span><span class="m">14</span>:57:50<span class="w"> </span>alarmpi<span class="w"> </span>systemd<span class="o">[</span><span class="m">458</span><span class="o">]</span>:<span class="w"> </span>spotifyd.service:<span class="w"> </span>Failed<span class="w"> </span>with<span class="w"> </span>result<span class="w"> </span><span class="s1">&#39;exit-code&#39;</span>.
+</code></pre></div>
+
+<p>Probably we need to add our user to the <code>audio</code> group:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span>audio<span class="w"> </span>alarm
+</code></pre></div>
+
+<p>After that a reboot was necessary so the spotifyd service starts with the new
+permissions.</p>
+<h2>Integrating With Kodi</h2>
+<p>I wanted to have at least some integration with Kodi, so I decided to write a
+little script to show which song is playing.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>kodi-rpi-eventclients<span class="w"> </span>playerctl
+</code></pre></div>
+
+<p>Then a simple script at <code>~/bin/spotifyd_kodi_notification.sh</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/bash</span>
+<span class="nv">song</span><span class="o">=</span><span class="k">$(</span>playerctl<span class="w"> </span>metadata<span class="w"> </span>title<span class="k">)</span>
+kodi-send<span class="w"> </span>--host<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span>--action<span class="w"> </span><span class="s2">&quot;Notification(Spotify,</span><span class="nv">$song</span><span class="s2">,5000,DefaultIconInfo.png)&quot;</span>
+</code></pre></div>
+
+<p>and configure spotifyd to call it in <code>~/.config/spotifyd/spotifyd.conf</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[global]</span>
+<span class="na">on_song_change_hook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;~/bin/spotifyd_kodi_notification.sh&#39;</span>
+</code></pre></div>
+
+<p>And we get nice little notifiations whenever a song changes.</p>
+<p>A bit annoying is, that the script needs almost 3 seconds to execute:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">time</span><span class="w"> </span>bin/spotifyd_kodi_notification.sh
+Sending:<span class="w"> </span><span class="o">{</span><span class="s1">&#39;type&#39;</span>:<span class="w"> </span><span class="s1">&#39;action&#39;</span>,<span class="w"> </span><span class="s1">&#39;content&#39;</span>:<span class="w"> </span><span class="s1">&#39;Notification(Spotify,Hu Chai,5000,DefaultIconInfo.png)&#39;</span><span class="o">}</span>
+
+real<span class="w">    </span>0m2.899s
+user<span class="w">    </span>0m0.318s
+sys<span class="w"> </span>0m0.072s
+</code></pre></div>
+
+<h2>Improving spotifyd</h2>
+<ul>
+<li>More metadata for hook: <a href="https://github.com/Spotifyd/spotifyd/issues/522">https://github.com/Spotifyd/spotifyd/issues/522</a></li>
+</ul>
+<h2>Using a Python script</h2>
+<ul>
+<li><a href="https://lazka.github.io/pgi-docs/Playerctl-2.0/classes/Player.html">https://lazka.github.io/pgi-docs/Playerctl-2.0/classes/Player.html</a></li>
+<li><a href="https://pygobject.readthedocs.io/en/latest/guide/api/properties.html">https://pygobject.readthedocs.io/en/latest/guide/api/properties.html</a></li>
+</ul>
+<h2>Sound mixing problems</h2>
+<ul>
+<li>Only one devise can play on alsa at a time -&gt; Playing notification sound
+   from kodi may lead spotifyd to crash since it can't start playing</li>
+<li>Solutions:</li>
+<li><a href="https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Dmix">https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Dmix</a></li>
+<li>Pipewire which would also enable using it as BT player? <a href="https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/">https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/</a></li>
+</ul>
+<h2>Developing a Kodi plugin</h2>
+<ul>
+<li></li>
+</ul>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

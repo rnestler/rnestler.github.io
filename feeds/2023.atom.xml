@@ -73,6 +73,16 @@ systemctl&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;enable&lt;/s
 
 &lt;p&gt;After reloading with &lt;code&gt;systemctl reload systemd-networkd.service&lt;/code&gt; WiFi was
 connected.&lt;/p&gt;
+&lt;h3&gt;Update 2023-12-14&lt;/h3&gt;
+&lt;p&gt;After a while I noticed, that the &lt;code&gt;systemd-networkd-wait-online.service&lt;/code&gt; blocks
+the startup of the pi for about 2 minutes. This is due to the fact that it will
+wait for all links to be fully configured by default. (See
+&lt;a href="https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.service.html"&gt;https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.service.html&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;This can be changed by only waiting for &lt;code&gt;wlan0&lt;/code&gt; to be up:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemctl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;networkd&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;wait&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;online&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemctl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;networkd&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;wait&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;online&lt;/span&gt;&lt;span class="nv"&gt;@wlan0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 &lt;h1&gt;Installing Kodi&lt;/h1&gt;
 &lt;p&gt;Since I wanted to run Kodi on the Pi (along side RetroPi / Emulation station)
 I followed this guide: &lt;a href="https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi"&gt;https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi&lt;/a&gt;&lt;/p&gt;

@@ -116,6 +116,16 @@ systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> 
 
 <p>After reloading with <code>systemctl reload systemd-networkd.service</code> WiFi was
 connected.</p>
+<h3>Update 2023-12-14</h3>
+<p>After a while I noticed, that the <code>systemd-networkd-wait-online.service</code> blocks
+the startup of the pi for about 2 minutes. This is due to the fact that it will
+wait for all links to be fully configured by default. (See
+<a href="https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.service.html">https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.service.html</a>)</p>
+<p>This can be changed by only waiting for <code>wlan0</code> to be up:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">disable</span><span class="w"> </span><span class="n">systemd</span><span class="o">-</span><span class="n">networkd</span><span class="o">-</span><span class="n">wait</span><span class="o">-</span><span class="n">online</span><span class="p">.</span><span class="n">service</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">systemd</span><span class="o">-</span><span class="n">networkd</span><span class="o">-</span><span class="n">wait</span><span class="o">-</span><span class="n">online</span><span class="nv">@wlan0</span><span class="p">.</span><span class="n">service</span>
+</code></pre></div>
+
 <h1>Installing Kodi</h1>
 <p>Since I wanted to run Kodi on the Pi (along side RetroPi / Emulation station)
 I followed this guide: <a href="https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi">https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi</a></p>

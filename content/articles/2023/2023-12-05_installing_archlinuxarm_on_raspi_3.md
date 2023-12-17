@@ -93,6 +93,20 @@ IgnoreCarrierLoss=3s
 After reloading with `systemctl reload systemd-networkd.service` WiFi was
 connected.
 
+### Update 2023-12-14
+
+After a while I noticed, that the `systemd-networkd-wait-online.service` blocks
+the startup of the pi for about 2 minutes. This is due to the fact that it will
+wait for all links to be fully configured by default. (See
+<https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.service.html>)
+
+This can be changed by only waiting for `wlan0` to be up:
+
+```
+sudo systemctl disable systemd-networkd-wait-online.service
+sudo systemctl enable systemd-networkd-wait-online@wlan0.service
+```
+
 # Installing Kodi
 
 Since I wanted to run Kodi on the Pi (along side RetroPi / Emulation station)

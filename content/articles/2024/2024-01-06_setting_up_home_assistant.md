@@ -1,7 +1,6 @@
 Title: Setting up Home Assistant on the Raspberry Pi 3
 Tags: Raspberry Pi, Linux, Home Assistant
 Language: en
-Status: draft
 Summary: Setting up Home Assistant to automate stuff at home
 
 # Motivation
@@ -11,7 +10,7 @@ CO2 Gadget](https://www.sensirion.com/products/catalog/SCD4x-CO2-Gadget) and
 [SHT4x Smart
 Gadget](https://sensirion.com/de/produkte/katalog/SHT4x-Smart-Gadget) running.
 Also I decided that I want to use smart plugs to power on my coffee machine in
-the morning. 
+the morning.
 
 While one can see the sensor data perfectly fine with the [Sensirion MyAmbience
 App](https://play.google.com/store/apps/details?id=com.sensirion.myam) and also
@@ -191,3 +190,25 @@ bugtrackers of Home Assistant did reveal quite some issues that people are havin
 
  * <https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth>
  * <https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi>
+
+I then remembered that I read the following on <https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3>
+
+> ARMv7 Installation
+>
+> Use this installation if you require any of the vendor's kernel hacks,
+> overlays, or closed-source GPU blobs and utilities.
+
+So maybe we can just use the 32bit version of the OS and everything will work
+out of the box?
+
+Turns out it is exactly like that! Just doing the same as above just with the 32bit image worked out of the box:
+
+```
+$ wget https://github.com/home-assistant/operating-system/releases/download/11.3/haos_rpi3-11.3.img.xz
+$ xz --decompress --stdout haos_rpi3-11.3.img.xz | sudo dd of=/dev/sda bs=64k oflag=dsync status=progress
+```
+
+The sensors immediately showed up as discovered devices and could easily be
+added and the values shown:
+
+![CO2 measurement]({static}/images/home_assistant/co2-sensor.png){width=100%}

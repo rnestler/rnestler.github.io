@@ -181,11 +181,13 @@ continued.
 # Configuring
 
 One of the first things I noticed after setting up the basic system is that:
+
  * I needed to replace the USB power cable, since the RPI Power status reported a problem
  * Bluetooth seems broken...
 
 While I could easily fix the power supply issue with a different USB cable, I
 couldn't figure out what the issue with bluetooth is. Looking at the
 bugtrackers of Home Assistant did reveal quite some issues that people are having with bluetooth:
+
  * <https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth>
  * <https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi>

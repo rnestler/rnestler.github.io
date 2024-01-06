@@ -21,23 +21,37 @@ Assistant](https://www.home-assistant.io).
 
 # Installing Home Assistant
 
- * Raspberry Pi 3 B
- * https://www.home-assistant.io/installation/raspberrypi
- * `xz --decompress --stdout haos_rpi3-64-11.3.img.xz| sudo dd of=/dev/sda bs=64k oflag=dsync status=progress`
+Installing Home Assistant on a Raspberry Pi is very easy: Just follow the guide
+at <https://www.home-assistant.io/installation/raspberrypi>. Since I didn't
+want to use the GUI tools to flash the SD card I used the command line
+directly:
+
+```bash
+$ wget https://github.com/home-assistant/operating-system/releases/download/11.3/haos_rpi3-64-11.3.img.xz
+$ xz --decompress --stdout haos_rpi3-64-11.3.img.xz| sudo dd of=/dev/sda bs=64k oflag=dsync status=progress
+```
+
+After that I inserted the SD card into the Raspberry Pi and plugged in power.
 
 # Setting it up
 
- * https://www.home-assistant.io/getting-started/onboarding/
- * http://homeassistant.local:8123/
+I mostly followed the guide at
+<https://www.home-assistant.io/getting-started/onboarding/>
 
-Stuck a long time at:
+
+When connecting to <http://homeassistant.local:8123/> I was greeted by the
+setup screen:
+
+![Home Assistant Setup Screen]({static}/images/home_assistant/preparing-home-assistant.png)
+
+This setup screen seemed stuck at the following step in the logs:
 ```
 [supervisor.host.manager] Host information reload completed
 ```
 
 <details>
 <summary>Full logs</summary>
-```
+```text
 s6-rc: info: service s6rc-oneshot-runner: starting
 s6-rc: info: service s6rc-oneshot-runner successfully started
 s6-rc: info: service fix-attrs: starting
@@ -161,8 +175,17 @@ INFO: Starting local supervisor watchdog...
 ```
 </details>
 
+But after like 10 minutes (which the screen tells you it can take) it
+continued.
 
 # Configuring
 
- * Replacing USB cable due to power failure
- * Bluetooth broken...
+One of the first things I noticed after setting up the basic system is that:
+ * I needed to replace the USB power cable, since the RPI Power status reported a problem
+ * Bluetooth seems broken...
+
+While I could easily fix the power supply issue with a different USB cable, I
+couldn't figure out what the issue with bluetooth is. Looking at the
+bugtrackers of Home Assistant did reveal quite some issues that people are having with bluetooth:
+ * <https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth>
+ * <https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi>

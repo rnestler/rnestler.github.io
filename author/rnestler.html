@@ -21,12 +21,227 @@
                     <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html">Installing ArchLinux ARM on the Raspberry Pi 3</a></h1>
+                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/setting-up-home-assistant-on-the-raspberry-pi-3.html">Setting up Home Assistant on the Raspberry Pi 3</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2024-01-06T00:00:00+01:00">
+                Published: Sa 06 Januar 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/home-assistant.html">Home Assistant</a> </p>
+</footer><!-- /.post-info --><h1>Motivation</h1>
+<p>From my time working at Sensirion I still have a lot of sensors like the <a href="https://www.sensirion.com/products/catalog/SCD4x-CO2-Gadget">SCD4x
+CO2 Gadget</a> and
+<a href="https://sensirion.com/de/produkte/katalog/SHT4x-Smart-Gadget">SHT4x Smart
+Gadget</a> running.
+Also I decided that I want to use smart plugs to power on my coffee machine in
+the morning.</p>
+<p>While one can see the sensor data perfectly fine with the <a href="https://play.google.com/store/apps/details?id=com.sensirion.myam">Sensirion MyAmbience
+App</a> and also
+use the specific apps for the smart plugs, I wanted a bit more integration for
+everything and thus decided to try out <a href="https://www.home-assistant.io">Home
+Assistant</a>.</p>
+<h1>Installing Home Assistant</h1>
+<p>Installing Home Assistant on a Raspberry Pi is very easy: Just follow the guide
+at <a href="https://www.home-assistant.io/installation/raspberrypi">https://www.home-assistant.io/installation/raspberrypi</a>. Since I didn't
+want to use the GUI tools to flash the SD card I used the command line
+directly:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>wget<span class="w"> </span>https://github.com/home-assistant/operating-system/releases/download/11.3/haos_rpi3-64-11.3.img.xz
+$<span class="w"> </span>xz<span class="w"> </span>--decompress<span class="w"> </span>--stdout<span class="w"> </span>haos_rpi3-64-11.3.img.xz<span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>dd<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/sda<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>64k<span class="w"> </span><span class="nv">oflag</span><span class="o">=</span>dsync<span class="w"> </span><span class="nv">status</span><span class="o">=</span>progress
+</code></pre></div>
+
+<p>After that I inserted the SD card into the Raspberry Pi and plugged in power.</p>
+<h1>Setting it up</h1>
+<p>I mostly followed the guide at
+<a href="https://www.home-assistant.io/getting-started/onboarding/">https://www.home-assistant.io/getting-started/onboarding/</a></p>
+<p>When connecting to <a href="http://homeassistant.local:8123/">http://homeassistant.local:8123/</a> I was greeted by the
+setup screen:</p>
+<p><img alt="Home Assistant Setup Screen" src="https://blog.rnstlr.ch/images/home_assistant/preparing-home-assistant.png"></p>
+<p>This setup screen seemed stuck at the following step in the logs:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">supervisor</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">manager</span><span class="p">]</span><span class="w"> </span><span class="n">Host</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">reload</span><span class="w"> </span><span class="n">completed</span>
+</code></pre></div>
+
+<details>
+<summary>Full logs</summary>
+
+<div class="highlight"><pre><span></span><code>s6-rc: info: service s6rc-oneshot-runner: starting
+s6-rc: info: service s6rc-oneshot-runner successfully started
+s6-rc: info: service fix-attrs: starting
+s6-rc: info: service fix-attrs successfully started
+s6-rc: info: service legacy-cont-init: starting
+cont-init: info: running /etc/cont-init.d/udev.sh
+INFO: Using udev information from host
+cont-init: info: /etc/cont-init.d/udev.sh exited 0
+s6-rc: info: service legacy-cont-init successfully started
+s6-rc: info: service legacy-services: starting
+services-up: info: copying legacy longrun supervisor (no readiness notification)
+services-up: info: copying legacy longrun watchdog (no readiness notification)
+s6-rc: info: service legacy-services successfully started
+INFO: Starting local supervisor watchdog...
+[__main__] Initializing Supervisor setup
+[supervisor.docker.network] Can&#39;t find Supervisor network, creating a new network
+[supervisor.bootstrap] Seting up coresys for machine: raspberrypi3-64
+[supervisor.docker.supervisor] Attaching to Supervisor ghcr.io/home-assistant/aarch64-hassio-supervisor with version 2023.12.0
+[supervisor.docker.supervisor] Connecting Supervisor to hassio-network
+[supervisor.resolution.evaluate] Starting system evaluation with state initialize
+[supervisor.resolution.evaluate] System evaluation complete
+[__main__] Setting up Supervisor
+[supervisor.api] Starting API on 172.30.32.2
+[supervisor.hardware.monitor] Started Supervisor hardware monitor
+[supervisor.dbus.manager] Connected to system D-Bus.
+[supervisor.dbus.agent] Load dbus interface io.hass.os
+[supervisor.dbus.hostname] Load dbus interface org.freedesktop.hostname1
+[supervisor.dbus.logind] Load dbus interface org.freedesktop.login1
+[supervisor.dbus.network] Load dbus interface org.freedesktop.NetworkManager
+[supervisor.dbus.rauc] Load dbus interface de.pengutronix.rauc
+[supervisor.dbus.resolved] Load dbus interface org.freedesktop.resolve1
+[supervisor.dbus.systemd] Load dbus interface org.freedesktop.systemd1
+[supervisor.dbus.timedate] Load dbus interface org.freedesktop.timedate1
+[supervisor.host.services] Updating service information
+[supervisor.host.sound] Updating PulseAudio information
+[supervisor.host.sound] Can&#39;t update PulseAudio data: Failed to connect to pulseaudio server
+[supervisor.host.network] Updating local network information
+[supervisor.host.apparmor] Loading AppArmor Profiles: {&#39;hassio-supervisor&#39;}
+[supervisor.docker.monitor] Started docker events monitor
+[supervisor.updater] Fetching update data from https://version.home-assistant.io/stable.json
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-cli versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-cli with version 2023.11.0
+[supervisor.plugins.cli] Starting CLI plugin
+[supervisor.docker.cli] Starting CLI ghcr.io/home-assistant/aarch64-hassio-cli with version 2023.11.0 - 172.30.32.5
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-dns versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-dns with version 2023.06.2
+[supervisor.plugins.dns] Starting CoreDNS plugin
+[supervisor.docker.dns] Starting DNS ghcr.io/home-assistant/aarch64-hassio-dns with version 2023.06.2 - 172.30.32.3
+[supervisor.plugins.dns] Updated /etc/resolv.conf
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-audio versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-audio with version 2023.12.0
+[supervisor.plugins.audio] Starting Audio plugin
+[supervisor.docker.audio] Starting Audio ghcr.io/home-assistant/aarch64-hassio-audio with version 2023.12.0 - 172.30.32.4
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-observer versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-observer with version 2023.06.0
+[supervisor.plugins.observer] Starting observer plugin
+[supervisor.docker.observer] Starting Observer ghcr.io/home-assistant/aarch64-hassio-observer with version 2023.06.0 - 172.30.32.6
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-multicast versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-multicast with version 2023.06.2
+[supervisor.plugins.multicast] Starting Multicast plugin
+[supervisor.docker.multicast] Starting Multicast ghcr.io/home-assistant/aarch64-hassio-multicast with version 2023.06.2 - Host
+[supervisor.homeassistant.secrets] Loaded 0 Home Assistant secrets
+[supervisor.docker.interface] No version found for ghcr.io/home-assistant/raspberrypi3-64-homeassistant
+[supervisor.homeassistant.core] No Home Assistant Docker image ghcr.io/home-assistant/raspberrypi3-64-homeassistant found.
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/raspberrypi3-64-homeassistant with version landingpage
+[supervisor.homeassistant.core] Using preinstalled landingpage
+[supervisor.homeassistant.core] Starting HomeAssistant landingpage
+[supervisor.homeassistant.module] Update pulse/client.config: /data/tmp/homeassistant_pulse
+[supervisor.docker.homeassistant] Starting Home Assistant ghcr.io/home-assistant/raspberrypi3-64-homeassistant with version landingpage
+[supervisor.os.manager] Detect Home Assistant Operating System 11.3 / BootSlot A
+[supervisor.store.git] Cloning add-on https://github.com/esphome/home-assistant-addon repository
+[supervisor.store.git] Cloning add-on https://github.com/hassio-addons/repository repository
+[supervisor.store.git] Cloning add-on https://github.com/home-assistant/addons repository
+[supervisor.store] Loading add-ons from store: 72 all - 72 new - 0 remove
+[supervisor.addons.manager] Found 0 installed add-ons
+[supervisor.backups.manager] Found 0 backup files
+[supervisor.discovery] Loaded 0 messages
+[supervisor.ingress] Loaded 0 ingress sessions
+[supervisor.resolution.check] Starting system checks with state setup
+[supervisor.resolution.check] System checks complete
+[supervisor.resolution.evaluate] Starting system evaluation with state setup
+[supervisor.resolution.evaluate] System evaluation complete
+[supervisor.jobs] &#39;ResolutionFixup.run_autofix&#39; blocked from execution, system is not running - setup
+[supervisor.resolution.evaluate] Starting system evaluation with state setup
+[supervisor.resolution.evaluate] System evaluation complete
+[__main__] Running Supervisor
+[supervisor.os.manager] Rauc: A - marked slot kernel.0 as good
+[supervisor.addons.manager] Phase &#39;initialize&#39; starting 0 add-ons
+[supervisor.addons.manager] Phase &#39;system&#39; starting 0 add-ons
+[supervisor.addons.manager] Phase &#39;services&#39; starting 0 add-ons
+[supervisor.core] Skipping start of Home Assistant
+[supervisor.addons.manager] Phase &#39;application&#39; starting 0 add-ons
+[supervisor.misc.tasks] All core tasks are scheduled
+[supervisor.core] Supervisor is up and running
+[supervisor.homeassistant.core] Home Assistant setup
+[supervisor.docker.interface] Updating image ghcr.io/home-assistant/raspberrypi3-64-homeassistant:landingpage to ghcr.io/home-assistant/raspberrypi3-64-homeassistant:2024.1.1
+[supervisor.docker.interface] Downloading docker image ghcr.io/home-assistant/raspberrypi3-64-homeassistant with tag 2024.1.1.
+[supervisor.host.info] Updating local host information
+[supervisor.resolution.check] Starting system checks with state running
+[supervisor.resolution.checks.base] Run check for dns_server_failed/dns_server
+[supervisor.resolution.checks.base] Run check for pwned/addon
+[supervisor.resolution.checks.base] Run check for ipv4_connection_problem/system
+[supervisor.resolution.checks.base] Run check for dns_server_ipv6_error/dns_server
+[supervisor.resolution.checks.base] Run check for security/core
+[supervisor.resolution.checks.base] Run check for docker_config/system
+[supervisor.resolution.checks.base] Run check for trust/supervisor
+[supervisor.resolution.checks.base] Run check for no_current_backup/system
+[supervisor.resolution.module] Create new suggestion create_full_backup - system / None
+[supervisor.resolution.module] Create new issue no_current_backup - system / None
+[supervisor.resolution.checks.base] Run check for free_space/system
+[supervisor.resolution.checks.base] Run check for multiple_data_disks/system
+[supervisor.resolution.check] System checks complete
+[supervisor.resolution.evaluate] Starting system evaluation with state running
+[supervisor.resolution.evaluate] System evaluation complete
+[supervisor.resolution.fixup] Starting system autofix at state running
+[supervisor.resolution.fixup] System autofix complete
+[supervisor.host.services] Updating service information
+[supervisor.host.network] Updating local network information
+[supervisor.host.sound] Updating PulseAudio information
+[supervisor.host.manager] Host information reload completed
+</code></pre></div>
+
+
+</details>
+
+<p>But after like 10 minutes (which the screen tells you it can take) it
+continued.</p>
+<h1>Configuring</h1>
+<p>One of the first things I noticed after setting up the basic system is that:</p>
+<ul>
+<li>I needed to replace the USB power cable, since the RPI Power status reported a problem</li>
+<li>Bluetooth seems broken...</li>
+</ul>
+<p>While I could easily fix the power supply issue with a different USB cable, I
+couldn't figure out what the issue with bluetooth is. Looking at the
+bugtrackers of Home Assistant did reveal quite some issues that people are having with bluetooth:</p>
+<ul>
+<li><a href="https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth">https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth</a></li>
+<li><a href="https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi">https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi</a></li>
+</ul>
+<p>I then remembered that I read the following on <a href="https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3">https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3</a></p>
+<blockquote>
+<p>ARMv7 Installation</p>
+<p>Use this installation if you require any of the vendor's kernel hacks,
+overlays, or closed-source GPU blobs and utilities.</p>
+</blockquote>
+<p>So maybe we can just use the 32bit version of the OS and everything will work
+out of the box?</p>
+<p>Turns out it is exactly like that! Just doing the same as above just with the 32bit image worked out of the box:</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">wget</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="o">/</span><span class="n">operating</span><span class="o">-</span><span class="n">system</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="mf">11.3</span><span class="o">/</span><span class="n">haos_rpi3</span><span class="o">-</span><span class="mf">11.3</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">xz</span>
+<span class="o">$</span><span class="w"> </span><span class="n">xz</span><span class="w"> </span><span class="o">--</span><span class="n">decompress</span><span class="w"> </span><span class="o">--</span><span class="n">stdout</span><span class="w"> </span><span class="n">haos_rpi3</span><span class="o">-</span><span class="mf">11.3</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">xz</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">dd</span><span class="w"> </span><span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span><span class="w"> </span><span class="n">bs</span><span class="o">=</span><span class="mi">64</span><span class="n">k</span><span class="w"> </span><span class="n">oflag</span><span class="o">=</span><span class="n">dsync</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="n">progress</span>
+</code></pre></div>
+
+<p>The sensors immediately showed up as discovered devices and could easily be
+added and the values shown:</p>
+<p><img alt="CO2 measurement" src="https://blog.rnstlr.ch/images/home_assistant/co2-sensor.png" width="100%"></p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html" rel="bookmark"
+                           title="Permalink to Installing ArchLinux ARM on the Raspberry Pi 3">Installing ArchLinux ARM on the Raspberry Pi 3</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2023-12-05T00:00:00+01:00">
                 Published: Di 05 Dezember 2023
@@ -37,137 +252,10 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> </p>
-</footer><!-- /.post-info --><p>Today I plugged in my Raspberry Pi 3 which had
-<a href="https://retropie.org.uk/">RetroPie</a> installed on it. It notified me, that the
-installation is out of date and not longer supported and I should reinstall the
-system.</p>
-<p>Since I had to do a reinstall anyway and didn't want to be bothered again in
-the future, I decided to try out ArchLinux ARM, so I just get the rolling
-releases without a need to do re-installs.</p>
-<h1>Installation</h1>
-<p>To install the base image I followed mostly the guide from ArchLinux ARM:
-<a href="https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3">https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3</a></p>
-<p>For the setup I needed to connect it with an Ethernet cable, since the guide
-doesn't explain how to set up WiFi prior to first booting it.</p>
-<p>After that I logged in via ssh. I needed to enforce password authentication,
-since otherwise ssh would just try all my ssh keys to authenticate which lead
-to a <code>Received disconnect from 192.168.0.31 port 22:2: Too many authentication
-failures</code></p>
-<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>-o<span class="w"> </span><span class="nv">PreferredAuthentications</span><span class="o">=</span>password<span class="w"> </span>alarm@alarmpi
-<span class="c1"># switch to root user</span>
-su
-<span class="c1"># From the install guide</span>
-pacman-key<span class="w"> </span>--init
-pacman-key<span class="w"> </span>--populate<span class="w"> </span>archlinuxarm
-<span class="c1"># Update the whole system</span>
-pacman<span class="w"> </span>-Syu
-</code></pre></div>
-
-<p>During the update step I got a scary warning while building the initramfs:</p>
-<div class="highlight"><pre><span></span><code>(12/14) Updating linux-rpi initcpios...
-==&gt; Building image from preset: /etc/mkinitcpio.d/linux-rpi.preset: &#39;default&#39;
-==&gt; Using configuration file: &#39;/etc/mkinitcpio.conf&#39;
-  -&gt; -k 6.1.64-2-rpi-ARCH -c /etc/mkinitcpio.conf -g /boot/initramfs-linux.img
-==&gt; Starting build: &#39;6.1.64-2-rpi-ARCH&#39;
-  -&gt; Running build hook: [base]
-  -&gt; Running build hook: [udev]
-  -&gt; Running build hook: [autodetect]
-  -&gt; Running build hook: [modconf]
-  -&gt; Running build hook: [kms]
-  -&gt; Running build hook: [keyboard]
-  -&gt; Running build hook: [keymap]
-  -&gt; Running build hook: [consolefont]
-==&gt; WARNING: consolefont: no font found in configuration
-  -&gt; Running build hook: [block]
-  -&gt; Running build hook: [filesystems]
-  -&gt; Running build hook: [fsck]
-==&gt; Generating module dependencies
-==&gt; Creating gzip-compressed initcpio image: &#39;/boot/initramfs-linux.img&#39;
-==&gt; WARNING: errors were encountered during the build. The image may not be complete.
-error: command failed to execute correctly
-</code></pre></div>
-
-<p>I tried to figure out what went wrong and then decided to just reboot and see
-if we can still do that, which worked without problems.</p>
-<h2>Configuring WiFi</h2>
-<p>Since I didn't want to bother with connecting the raspi with an ethernet cable
-at the location were I wanted to run it, I needed to configure WiFi before
-continuing.</p>
-<p>Since it will run stationary, it is enough to just hard-code a single network:</p>
-<div class="highlight"><pre><span></span><code>wpa_passphrase<span class="w"> </span>SSID<span class="w"> </span>PSK<span class="w"> </span>&gt;<span class="w"> </span>/etc/wpa_supplicant/wpa_supplicant@wlan0.service
-systemctl<span class="w"> </span>start<span class="w"> </span>wpa_supplicant@wlan0.service
-systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>wpa_supplicant@wlan0.service
-</code></pre></div>
-
-<p>Then we tell systemd-network to enable DHCP for the wlan0 interface by creating
-<code>/etc/systemd/network/wlan0.network</code> with the following content:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Match]</span>
-<span class="na">Name</span><span class="o">=</span><span class="s">wlan0</span>
-
-<span class="k">[Network]</span>
-<span class="na">DHCP</span><span class="o">=</span><span class="s">yes</span>
-<span class="na">IgnoreCarrierLoss</span><span class="o">=</span><span class="s">3s</span>
-</code></pre></div>
-
-<p>After reloading with <code>systemctl reload systemd-networkd.service</code> WiFi was
-connected.</p>
-<h3>Update 2023-12-14</h3>
-<p>After a while I noticed, that the <code>systemd-networkd-wait-online.service</code> blocks
-the startup of the pi for about 2 minutes. This is due to the fact that it will
-wait for all links to be fully configured by default. (See
-<a href="https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.service.html">https://www.freedesktop.org/software/systemd/man/latest/systemd-networkd-wait-online.service.html</a>)</p>
-<p>This can be changed by only waiting for <code>wlan0</code> to be up:</p>
-<div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">disable</span><span class="w"> </span><span class="n">systemd</span><span class="o">-</span><span class="n">networkd</span><span class="o">-</span><span class="n">wait</span><span class="o">-</span><span class="n">online</span><span class="p">.</span><span class="n">service</span>
-<span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">systemd</span><span class="o">-</span><span class="n">networkd</span><span class="o">-</span><span class="n">wait</span><span class="o">-</span><span class="n">online</span><span class="nv">@wlan0</span><span class="p">.</span><span class="n">service</span>
-</code></pre></div>
-
-<h1>Installing Kodi</h1>
-<p>Since I wanted to run Kodi on the Pi (along side RetroPi / Emulation station)
-I followed this guide: <a href="https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi">https://kodi.wiki/view/HOW-TO:Install_Kodi_on_Raspberry_Pi</a></p>
-<div class="highlight"><pre><span></span><code>pacman -S kodi
-# selecting kodi-rpi
-</code></pre></div>
-
-<p>After installing the output of pacman showed the following:</p>
-<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; Remove any manual tweaks made to /boot/config.txt particulary a line such
-    as gpu_mem=xxx.  Driver setup for Kodi is stored in /boot/kodi.config.txt
-
-    Manually append the following to /boot/config.txt to make them active:
-    [all]
-    include kodi.config.txt
-
-    A reboot will be required to activate them if this is a fresh install.`
-</code></pre></div>
-
-<details>
-<summary>Optional kodi dependencies</summary>
-Kodi showed the following optional dependencies: Since I currently don't want
-to use bluetooth for anything, nor want to use pipewire or pulseaudio but plain
-ALSA, I didn't install any of them.
-
-<div class="highlight"><pre><span></span><code>Optional dependencies for kodi-rpi
-    afpfs-ng: Apple shares support
-    bluez: Blutooth support
-    linux-rpi: HW accelerated decoding [installed]
-    python-pybluez: Bluetooth support
-    pulseaudio: PulseAudio support
-    pipewire: PipeWire support
-</code></pre></div>
-
-
-</details>
-
-<p>So I edited it accordingly, enabled the kodi service and rebooted:</p>
-<div class="highlight"><pre><span></span><code>sudo systemctl enable kodi.service
-</code></pre></div>
-
-<p>So far everything is working quite nicely and one of the next things will be to
-get a spotify plugin to run on the Raspberry Pi.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Replacing my RetroPie installation with ArchLinux ARM on my Raspberry Pi 3</p>
+                <a class="readmore" href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -345,29 +433,6 @@ get a spotify plugin to run on the Raspberry Pi.</p>                </article>
 </footer><!-- /.post-info -->                <p class="first last">Visiting <a class="reference external" href="https://hacklab01.org/">hacklab01</a> in Zagreb</p>
 
                 <a class="readmore" href="https://blog.rnstlr.ch/visiting-hacklab01.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/visiting-sarajevo.html" rel="bookmark"
-                           title="Permalink to Visiting Sarajevo">Visiting Sarajevo</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-05-14T00:00:00+02:00">
-                Published: So 14 Mai 2017
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2017.html">2017</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/tour-de-hackerspace.html">tour de hackerspace</a> <a href="https://blog.rnstlr.ch/tag/hackerspace.html">hackerspace</a> <a href="https://blog.rnstlr.ch/tag/travelling.html">travelling</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Visiting Sarajevo</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/visiting-sarajevo.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

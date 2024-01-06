@@ -21,13 +21,14 @@
                     <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
                     <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="https://blog.rnstlr.ch/drafts/setting-up-home-assistant-on-the-raspberry-pi-3.html" rel="bookmark"
+        <a href="https://blog.rnstlr.ch/setting-up-home-assistant-on-the-raspberry-pi-3.html" rel="bookmark"
            title="Permalink to Setting up Home Assistant on the Raspberry Pi 3">Setting up Home Assistant on the Raspberry Pi 3</a></h1>
     </header>
 
@@ -48,7 +49,7 @@ CO2 Gadget</a> and
 <a href="https://sensirion.com/de/produkte/katalog/SHT4x-Smart-Gadget">SHT4x Smart
 Gadget</a> running.
 Also I decided that I want to use smart plugs to power on my coffee machine in
-the morning. </p>
+the morning.</p>
 <p>While one can see the sensor data perfectly fine with the <a href="https://play.google.com/store/apps/details?id=com.sensirion.myam">Sensirion MyAmbience
 App</a> and also
 use the specific apps for the smart plugs, I wanted a bit more integration for
@@ -205,14 +206,34 @@ INFO: Starting local supervisor watchdog...
 <p>But after like 10 minutes (which the screen tells you it can take) it
 continued.</p>
 <h1>Configuring</h1>
-<p>One of the first things I noticed after setting up the basic system is that:
- * I needed to replace the USB power cable, since the RPI Power status reported a problem
- * Bluetooth seems broken...</p>
+<p>One of the first things I noticed after setting up the basic system is that:</p>
+<ul>
+<li>I needed to replace the USB power cable, since the RPI Power status reported a problem</li>
+<li>Bluetooth seems broken...</li>
+</ul>
 <p>While I could easily fix the power supply issue with a different USB cable, I
 couldn't figure out what the issue with bluetooth is. Looking at the
-bugtrackers of Home Assistant did reveal quite some issues that people are having with bluetooth:
- * <a href="https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth">https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth</a>
- * <a href="https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi">https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi</a></p>
+bugtrackers of Home Assistant did reveal quite some issues that people are having with bluetooth:</p>
+<ul>
+<li><a href="https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth">https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth</a></li>
+<li><a href="https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi">https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi</a></li>
+</ul>
+<p>I then remembered that I read the following on <a href="https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3">https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3</a></p>
+<blockquote>
+<p>ARMv7 Installation</p>
+<p>Use this installation if you require any of the vendor's kernel hacks,
+overlays, or closed-source GPU blobs and utilities.</p>
+</blockquote>
+<p>So maybe we can just use the 32bit version of the OS and everything will work
+out of the box?</p>
+<p>Turns out it is exactly like that! Just doing the same as above just with the 32bit image worked out of the box:</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">wget</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="o">/</span><span class="n">operating</span><span class="o">-</span><span class="n">system</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="mf">11.3</span><span class="o">/</span><span class="n">haos_rpi3</span><span class="o">-</span><span class="mf">11.3</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">xz</span>
+<span class="o">$</span><span class="w"> </span><span class="n">xz</span><span class="w"> </span><span class="o">--</span><span class="n">decompress</span><span class="w"> </span><span class="o">--</span><span class="n">stdout</span><span class="w"> </span><span class="n">haos_rpi3</span><span class="o">-</span><span class="mf">11.3</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">xz</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">dd</span><span class="w"> </span><span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span><span class="w"> </span><span class="n">bs</span><span class="o">=</span><span class="mi">64</span><span class="n">k</span><span class="w"> </span><span class="n">oflag</span><span class="o">=</span><span class="n">dsync</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="n">progress</span>
+</code></pre></div>
+
+<p>The sensors immediately showed up as discovered devices and could easily be
+added and the values shown:</p>
+<p><img alt="CO2 measurement" src="https://blog.rnstlr.ch/images/home_assistant/co2-sensor.png" width="100%"></p>
     </div><!-- /.entry-content -->
 
   </article>

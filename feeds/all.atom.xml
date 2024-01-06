@@ -1,5 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2023-12-05T00:00:00+01:00</updated><entry><title>Installing ArchLinux ARM on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2023-12-05T00:00:00+01:00</published><updated>2023-12-05T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-12-05:/installing-archlinux-arm-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Replacing my RetroPie installation with ArchLinux ARM on my Raspberry Pi 3&lt;/p&gt;</summary><content type="html">&lt;p&gt;Today I plugged in my Raspberry Pi 3 which had
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2024-01-06T00:00:00+01:00</updated><entry><title>Setting up Home Assistant on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/setting-up-home-assistant-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2024-01-06T00:00:00+01:00</published><updated>2024-01-06T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-01-06:/setting-up-home-assistant-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Setting up Home Assistant to automate stuff at home&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Motivation&lt;/h1&gt;
+&lt;p&gt;From my time working at Sensirion I still have a lot of sensors like the &lt;a href="https://www.sensirion.com/products/catalog/SCD4x-CO2-Gadget"&gt;SCD4x
+CO2 Gadget&lt;/a&gt; and
+&lt;a href="https://sensirion.com/de/produkte/katalog/SHT4x-Smart-Gadget"&gt;SHT4x Smart
+Gadget&lt;/a&gt; running.
+Also I decided that I want to use smart plugs to power on my coffee machine in
+the morning.&lt;/p&gt;
+&lt;p&gt;While one can see the sensor data perfectly fine with the &lt;a href="https://play.google.com/store/apps/details?id=com.sensirion.myam"&gt;Sensirion MyAmbience
+App&lt;/a&gt; and also
+use the specific apps for the smart plugs, I wanted a bit more integration for
+everything and thus decided to try out &lt;a href="https://www.home-assistant.io"&gt;Home
+Assistant&lt;/a&gt;.&lt;/p&gt;
+&lt;h1&gt;Installing Home Assistant&lt;/h1&gt;
+&lt;p&gt;Installing Home Assistant on a Raspberry Pi is very easy: Just follow the guide
+at &lt;a href="https://www.home-assistant.io/installation/raspberrypi"&gt;https://www.home-assistant.io/installation/raspberrypi&lt;/a&gt;. Since I didn't
+want to use the GUI tools to flash the SD card I used the command line
+directly:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;wget&lt;span class="w"&gt; &lt;/span&gt;https://github.com/home-assistant/operating-system/releases/download/11.3/haos_rpi3-64-11.3.img.xz
+$&lt;span class="w"&gt; &lt;/span&gt;xz&lt;span class="w"&gt; &lt;/span&gt;--decompress&lt;span class="w"&gt; &lt;/span&gt;--stdout&lt;span class="w"&gt; &lt;/span&gt;haos_rpi3-64-11.3.img.xz&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;dd&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/dev/sda&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;64k&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;oflag&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;dsync&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;progress
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After that I inserted the SD card into the Raspberry Pi and plugged in power.&lt;/p&gt;
+&lt;h1&gt;Setting it up&lt;/h1&gt;
+&lt;p&gt;I mostly followed the guide at
+&lt;a href="https://www.home-assistant.io/getting-started/onboarding/"&gt;https://www.home-assistant.io/getting-started/onboarding/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When connecting to &lt;a href="http://homeassistant.local:8123/"&gt;http://homeassistant.local:8123/&lt;/a&gt; I was greeted by the
+setup screen:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Home Assistant Setup Screen" src="https://blog.rnstlr.ch/images/home_assistant/preparing-home-assistant.png"&gt;&lt;/p&gt;
+&lt;p&gt;This setup screen seemed stuck at the following step in the logs:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;supervisor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;manager&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Host&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;information&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;reload&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;completed&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;details&gt;
+&lt;summary&gt;Full logs&lt;/summary&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;s6-rc: info: service s6rc-oneshot-runner: starting
+s6-rc: info: service s6rc-oneshot-runner successfully started
+s6-rc: info: service fix-attrs: starting
+s6-rc: info: service fix-attrs successfully started
+s6-rc: info: service legacy-cont-init: starting
+cont-init: info: running /etc/cont-init.d/udev.sh
+INFO: Using udev information from host
+cont-init: info: /etc/cont-init.d/udev.sh exited 0
+s6-rc: info: service legacy-cont-init successfully started
+s6-rc: info: service legacy-services: starting
+services-up: info: copying legacy longrun supervisor (no readiness notification)
+services-up: info: copying legacy longrun watchdog (no readiness notification)
+s6-rc: info: service legacy-services successfully started
+INFO: Starting local supervisor watchdog...
+[__main__] Initializing Supervisor setup
+[supervisor.docker.network] Can&amp;#39;t find Supervisor network, creating a new network
+[supervisor.bootstrap] Seting up coresys for machine: raspberrypi3-64
+[supervisor.docker.supervisor] Attaching to Supervisor ghcr.io/home-assistant/aarch64-hassio-supervisor with version 2023.12.0
+[supervisor.docker.supervisor] Connecting Supervisor to hassio-network
+[supervisor.resolution.evaluate] Starting system evaluation with state initialize
+[supervisor.resolution.evaluate] System evaluation complete
+[__main__] Setting up Supervisor
+[supervisor.api] Starting API on 172.30.32.2
+[supervisor.hardware.monitor] Started Supervisor hardware monitor
+[supervisor.dbus.manager] Connected to system D-Bus.
+[supervisor.dbus.agent] Load dbus interface io.hass.os
+[supervisor.dbus.hostname] Load dbus interface org.freedesktop.hostname1
+[supervisor.dbus.logind] Load dbus interface org.freedesktop.login1
+[supervisor.dbus.network] Load dbus interface org.freedesktop.NetworkManager
+[supervisor.dbus.rauc] Load dbus interface de.pengutronix.rauc
+[supervisor.dbus.resolved] Load dbus interface org.freedesktop.resolve1
+[supervisor.dbus.systemd] Load dbus interface org.freedesktop.systemd1
+[supervisor.dbus.timedate] Load dbus interface org.freedesktop.timedate1
+[supervisor.host.services] Updating service information
+[supervisor.host.sound] Updating PulseAudio information
+[supervisor.host.sound] Can&amp;#39;t update PulseAudio data: Failed to connect to pulseaudio server
+[supervisor.host.network] Updating local network information
+[supervisor.host.apparmor] Loading AppArmor Profiles: {&amp;#39;hassio-supervisor&amp;#39;}
+[supervisor.docker.monitor] Started docker events monitor
+[supervisor.updater] Fetching update data from https://version.home-assistant.io/stable.json
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-cli versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-cli with version 2023.11.0
+[supervisor.plugins.cli] Starting CLI plugin
+[supervisor.docker.cli] Starting CLI ghcr.io/home-assistant/aarch64-hassio-cli with version 2023.11.0 - 172.30.32.5
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-dns versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-dns with version 2023.06.2
+[supervisor.plugins.dns] Starting CoreDNS plugin
+[supervisor.docker.dns] Starting DNS ghcr.io/home-assistant/aarch64-hassio-dns with version 2023.06.2 - 172.30.32.3
+[supervisor.plugins.dns] Updated /etc/resolv.conf
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-audio versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-audio with version 2023.12.0
+[supervisor.plugins.audio] Starting Audio plugin
+[supervisor.docker.audio] Starting Audio ghcr.io/home-assistant/aarch64-hassio-audio with version 2023.12.0 - 172.30.32.4
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-observer versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-observer with version 2023.06.0
+[supervisor.plugins.observer] Starting observer plugin
+[supervisor.docker.observer] Starting Observer ghcr.io/home-assistant/aarch64-hassio-observer with version 2023.06.0 - 172.30.32.6
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-multicast versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-multicast with version 2023.06.2
+[supervisor.plugins.multicast] Starting Multicast plugin
+[supervisor.docker.multicast] Starting Multicast ghcr.io/home-assistant/aarch64-hassio-multicast with version 2023.06.2 - Host
+[supervisor.homeassistant.secrets] Loaded 0 Home Assistant secrets
+[supervisor.docker.interface] No version found for ghcr.io/home-assistant/raspberrypi3-64-homeassistant
+[supervisor.homeassistant.core] No Home Assistant Docker image ghcr.io/home-assistant/raspberrypi3-64-homeassistant found.
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/raspberrypi3-64-homeassistant with version landingpage
+[supervisor.homeassistant.core] Using preinstalled landingpage
+[supervisor.homeassistant.core] Starting HomeAssistant landingpage
+[supervisor.homeassistant.module] Update pulse/client.config: /data/tmp/homeassistant_pulse
+[supervisor.docker.homeassistant] Starting Home Assistant ghcr.io/home-assistant/raspberrypi3-64-homeassistant with version landingpage
+[supervisor.os.manager] Detect Home Assistant Operating System 11.3 / BootSlot A
+[supervisor.store.git] Cloning add-on https://github.com/esphome/home-assistant-addon repository
+[supervisor.store.git] Cloning add-on https://github.com/hassio-addons/repository repository
+[supervisor.store.git] Cloning add-on https://github.com/home-assistant/addons repository
+[supervisor.store] Loading add-ons from store: 72 all - 72 new - 0 remove
+[supervisor.addons.manager] Found 0 installed add-ons
+[supervisor.backups.manager] Found 0 backup files
+[supervisor.discovery] Loaded 0 messages
+[supervisor.ingress] Loaded 0 ingress sessions
+[supervisor.resolution.check] Starting system checks with state setup
+[supervisor.resolution.check] System checks complete
+[supervisor.resolution.evaluate] Starting system evaluation with state setup
+[supervisor.resolution.evaluate] System evaluation complete
+[supervisor.jobs] &amp;#39;ResolutionFixup.run_autofix&amp;#39; blocked from execution, system is not running - setup
+[supervisor.resolution.evaluate] Starting system evaluation with state setup
+[supervisor.resolution.evaluate] System evaluation complete
+[__main__] Running Supervisor
+[supervisor.os.manager] Rauc: A - marked slot kernel.0 as good
+[supervisor.addons.manager] Phase &amp;#39;initialize&amp;#39; starting 0 add-ons
+[supervisor.addons.manager] Phase &amp;#39;system&amp;#39; starting 0 add-ons
+[supervisor.addons.manager] Phase &amp;#39;services&amp;#39; starting 0 add-ons
+[supervisor.core] Skipping start of Home Assistant
+[supervisor.addons.manager] Phase &amp;#39;application&amp;#39; starting 0 add-ons
+[supervisor.misc.tasks] All core tasks are scheduled
+[supervisor.core] Supervisor is up and running
+[supervisor.homeassistant.core] Home Assistant setup
+[supervisor.docker.interface] Updating image ghcr.io/home-assistant/raspberrypi3-64-homeassistant:landingpage to ghcr.io/home-assistant/raspberrypi3-64-homeassistant:2024.1.1
+[supervisor.docker.interface] Downloading docker image ghcr.io/home-assistant/raspberrypi3-64-homeassistant with tag 2024.1.1.
+[supervisor.host.info] Updating local host information
+[supervisor.resolution.check] Starting system checks with state running
+[supervisor.resolution.checks.base] Run check for dns_server_failed/dns_server
+[supervisor.resolution.checks.base] Run check for pwned/addon
+[supervisor.resolution.checks.base] Run check for ipv4_connection_problem/system
+[supervisor.resolution.checks.base] Run check for dns_server_ipv6_error/dns_server
+[supervisor.resolution.checks.base] Run check for security/core
+[supervisor.resolution.checks.base] Run check for docker_config/system
+[supervisor.resolution.checks.base] Run check for trust/supervisor
+[supervisor.resolution.checks.base] Run check for no_current_backup/system
+[supervisor.resolution.module] Create new suggestion create_full_backup - system / None
+[supervisor.resolution.module] Create new issue no_current_backup - system / None
+[supervisor.resolution.checks.base] Run check for free_space/system
+[supervisor.resolution.checks.base] Run check for multiple_data_disks/system
+[supervisor.resolution.check] System checks complete
+[supervisor.resolution.evaluate] Starting system evaluation with state running
+[supervisor.resolution.evaluate] System evaluation complete
+[supervisor.resolution.fixup] Starting system autofix at state running
+[supervisor.resolution.fixup] System autofix complete
+[supervisor.host.services] Updating service information
+[supervisor.host.network] Updating local network information
+[supervisor.host.sound] Updating PulseAudio information
+[supervisor.host.manager] Host information reload completed
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/details&gt;
+
+&lt;p&gt;But after like 10 minutes (which the screen tells you it can take) it
+continued.&lt;/p&gt;
+&lt;h1&gt;Configuring&lt;/h1&gt;
+&lt;p&gt;One of the first things I noticed after setting up the basic system is that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I needed to replace the USB power cable, since the RPI Power status reported a problem&lt;/li&gt;
+&lt;li&gt;Bluetooth seems broken...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While I could easily fix the power supply issue with a different USB cable, I
+couldn't figure out what the issue with bluetooth is. Looking at the
+bugtrackers of Home Assistant did reveal quite some issues that people are having with bluetooth:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth"&gt;https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi"&gt;https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I then remembered that I read the following on &lt;a href="https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3"&gt;https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ARMv7 Installation&lt;/p&gt;
+&lt;p&gt;Use this installation if you require any of the vendor's kernel hacks,
+overlays, or closed-source GPU blobs and utilities.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So maybe we can just use the 32bit version of the OS and everything will work
+out of the box?&lt;/p&gt;
+&lt;p&gt;Turns out it is exactly like that! Just doing the same as above just with the 32bit image worked out of the box:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;wget&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;home&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;assistant&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;operating&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;releases&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;11.3&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;haos_rpi3&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;11.3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xz&lt;/span&gt;
+&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;xz&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;decompress&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;haos_rpi3&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;11.3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xz&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;dd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sda&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;bs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oflag&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;dsync&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;progress&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The sensors immediately showed up as discovered devices and could easily be
+added and the values shown:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="CO2 measurement" src="https://blog.rnstlr.ch/images/home_assistant/co2-sensor.png" width="100%"&gt;&lt;/p&gt;</content><category term="2024"></category><category term="Raspberry Pi"></category><category term="Linux"></category><category term="Home Assistant"></category></entry><entry><title>Installing ArchLinux ARM on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2023-12-05T00:00:00+01:00</published><updated>2023-12-05T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2023-12-05:/installing-archlinux-arm-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Replacing my RetroPie installation with ArchLinux ARM on my Raspberry Pi 3&lt;/p&gt;</summary><content type="html">&lt;p&gt;Today I plugged in my Raspberry Pi 3 which had
 &lt;a href="https://retropie.org.uk/"&gt;RetroPie&lt;/a&gt; installed on it. It notified me, that the
 installation is out of date and not longer supported and I should reinstall the
 system.&lt;/p&gt;

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Setting up Home Assistant on the Raspberry Pi 3</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/setting-up-home-assistant-on-the-raspberry-pi-3.html" rel="bookmark"
+           title="Permalink to Setting up Home Assistant on the Raspberry Pi 3">Setting up Home Assistant on the Raspberry Pi 3</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-01-06T00:00:00+01:00">
+                Published: Sa 06 Januar 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/home-assistant.html">Home Assistant</a> </p>
+</footer><!-- /.post-info -->      <h1>Motivation</h1>
+<p>From my time working at Sensirion I still have a lot of sensors like the <a href="https://www.sensirion.com/products/catalog/SCD4x-CO2-Gadget">SCD4x
+CO2 Gadget</a> and
+<a href="https://sensirion.com/de/produkte/katalog/SHT4x-Smart-Gadget">SHT4x Smart
+Gadget</a> running.
+Also I decided that I want to use smart plugs to power on my coffee machine in
+the morning. </p>
+<p>While one can see the sensor data perfectly fine with the <a href="https://play.google.com/store/apps/details?id=com.sensirion.myam">Sensirion MyAmbience
+App</a> and also
+use the specific apps for the smart plugs, I wanted a bit more integration for
+everything and thus decided to try out <a href="https://www.home-assistant.io">Home
+Assistant</a>.</p>
+<h1>Installing Home Assistant</h1>
+<p>Installing Home Assistant on a Raspberry Pi is very easy: Just follow the guide
+at <a href="https://www.home-assistant.io/installation/raspberrypi">https://www.home-assistant.io/installation/raspberrypi</a>. Since I didn't
+want to use the GUI tools to flash the SD card I used the command line
+directly:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>wget<span class="w"> </span>https://github.com/home-assistant/operating-system/releases/download/11.3/haos_rpi3-64-11.3.img.xz
+$<span class="w"> </span>xz<span class="w"> </span>--decompress<span class="w"> </span>--stdout<span class="w"> </span>haos_rpi3-64-11.3.img.xz<span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>dd<span class="w"> </span><span class="nv">of</span><span class="o">=</span>/dev/sda<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>64k<span class="w"> </span><span class="nv">oflag</span><span class="o">=</span>dsync<span class="w"> </span><span class="nv">status</span><span class="o">=</span>progress
+</code></pre></div>
+
+<p>After that I inserted the SD card into the Raspberry Pi and plugged in power.</p>
+<h1>Setting it up</h1>
+<p>I mostly followed the guide at
+<a href="https://www.home-assistant.io/getting-started/onboarding/">https://www.home-assistant.io/getting-started/onboarding/</a></p>
+<p>When connecting to <a href="http://homeassistant.local:8123/">http://homeassistant.local:8123/</a> I was greeted by the
+setup screen:</p>
+<p><img alt="Home Assistant Setup Screen" src="https://blog.rnstlr.ch/images/home_assistant/preparing-home-assistant.png"></p>
+<p>This setup screen seemed stuck at the following step in the logs:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">supervisor</span><span class="o">.</span><span class="n">host</span><span class="o">.</span><span class="n">manager</span><span class="p">]</span><span class="w"> </span><span class="n">Host</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">reload</span><span class="w"> </span><span class="n">completed</span>
+</code></pre></div>
+
+<details>
+<summary>Full logs</summary>
+
+<div class="highlight"><pre><span></span><code>s6-rc: info: service s6rc-oneshot-runner: starting
+s6-rc: info: service s6rc-oneshot-runner successfully started
+s6-rc: info: service fix-attrs: starting
+s6-rc: info: service fix-attrs successfully started
+s6-rc: info: service legacy-cont-init: starting
+cont-init: info: running /etc/cont-init.d/udev.sh
+INFO: Using udev information from host
+cont-init: info: /etc/cont-init.d/udev.sh exited 0
+s6-rc: info: service legacy-cont-init successfully started
+s6-rc: info: service legacy-services: starting
+services-up: info: copying legacy longrun supervisor (no readiness notification)
+services-up: info: copying legacy longrun watchdog (no readiness notification)
+s6-rc: info: service legacy-services successfully started
+INFO: Starting local supervisor watchdog...
+[__main__] Initializing Supervisor setup
+[supervisor.docker.network] Can&#39;t find Supervisor network, creating a new network
+[supervisor.bootstrap] Seting up coresys for machine: raspberrypi3-64
+[supervisor.docker.supervisor] Attaching to Supervisor ghcr.io/home-assistant/aarch64-hassio-supervisor with version 2023.12.0
+[supervisor.docker.supervisor] Connecting Supervisor to hassio-network
+[supervisor.resolution.evaluate] Starting system evaluation with state initialize
+[supervisor.resolution.evaluate] System evaluation complete
+[__main__] Setting up Supervisor
+[supervisor.api] Starting API on 172.30.32.2
+[supervisor.hardware.monitor] Started Supervisor hardware monitor
+[supervisor.dbus.manager] Connected to system D-Bus.
+[supervisor.dbus.agent] Load dbus interface io.hass.os
+[supervisor.dbus.hostname] Load dbus interface org.freedesktop.hostname1
+[supervisor.dbus.logind] Load dbus interface org.freedesktop.login1
+[supervisor.dbus.network] Load dbus interface org.freedesktop.NetworkManager
+[supervisor.dbus.rauc] Load dbus interface de.pengutronix.rauc
+[supervisor.dbus.resolved] Load dbus interface org.freedesktop.resolve1
+[supervisor.dbus.systemd] Load dbus interface org.freedesktop.systemd1
+[supervisor.dbus.timedate] Load dbus interface org.freedesktop.timedate1
+[supervisor.host.services] Updating service information
+[supervisor.host.sound] Updating PulseAudio information
+[supervisor.host.sound] Can&#39;t update PulseAudio data: Failed to connect to pulseaudio server
+[supervisor.host.network] Updating local network information
+[supervisor.host.apparmor] Loading AppArmor Profiles: {&#39;hassio-supervisor&#39;}
+[supervisor.docker.monitor] Started docker events monitor
+[supervisor.updater] Fetching update data from https://version.home-assistant.io/stable.json
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-cli versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-cli with version 2023.11.0
+[supervisor.plugins.cli] Starting CLI plugin
+[supervisor.docker.cli] Starting CLI ghcr.io/home-assistant/aarch64-hassio-cli with version 2023.11.0 - 172.30.32.5
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-dns versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-dns with version 2023.06.2
+[supervisor.plugins.dns] Starting CoreDNS plugin
+[supervisor.docker.dns] Starting DNS ghcr.io/home-assistant/aarch64-hassio-dns with version 2023.06.2 - 172.30.32.3
+[supervisor.plugins.dns] Updated /etc/resolv.conf
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-audio versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-audio with version 2023.12.0
+[supervisor.plugins.audio] Starting Audio plugin
+[supervisor.docker.audio] Starting Audio ghcr.io/home-assistant/aarch64-hassio-audio with version 2023.12.0 - 172.30.32.4
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-observer versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-observer with version 2023.06.0
+[supervisor.plugins.observer] Starting observer plugin
+[supervisor.docker.observer] Starting Observer ghcr.io/home-assistant/aarch64-hassio-observer with version 2023.06.0 - 172.30.32.6
+[supervisor.docker.interface] Found ghcr.io/home-assistant/aarch64-hassio-multicast versions: []
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/aarch64-hassio-multicast with version 2023.06.2
+[supervisor.plugins.multicast] Starting Multicast plugin
+[supervisor.docker.multicast] Starting Multicast ghcr.io/home-assistant/aarch64-hassio-multicast with version 2023.06.2 - Host
+[supervisor.homeassistant.secrets] Loaded 0 Home Assistant secrets
+[supervisor.docker.interface] No version found for ghcr.io/home-assistant/raspberrypi3-64-homeassistant
+[supervisor.homeassistant.core] No Home Assistant Docker image ghcr.io/home-assistant/raspberrypi3-64-homeassistant found.
+[supervisor.docker.interface] Attaching to ghcr.io/home-assistant/raspberrypi3-64-homeassistant with version landingpage
+[supervisor.homeassistant.core] Using preinstalled landingpage
+[supervisor.homeassistant.core] Starting HomeAssistant landingpage
+[supervisor.homeassistant.module] Update pulse/client.config: /data/tmp/homeassistant_pulse
+[supervisor.docker.homeassistant] Starting Home Assistant ghcr.io/home-assistant/raspberrypi3-64-homeassistant with version landingpage
+[supervisor.os.manager] Detect Home Assistant Operating System 11.3 / BootSlot A
+[supervisor.store.git] Cloning add-on https://github.com/esphome/home-assistant-addon repository
+[supervisor.store.git] Cloning add-on https://github.com/hassio-addons/repository repository
+[supervisor.store.git] Cloning add-on https://github.com/home-assistant/addons repository
+[supervisor.store] Loading add-ons from store: 72 all - 72 new - 0 remove
+[supervisor.addons.manager] Found 0 installed add-ons
+[supervisor.backups.manager] Found 0 backup files
+[supervisor.discovery] Loaded 0 messages
+[supervisor.ingress] Loaded 0 ingress sessions
+[supervisor.resolution.check] Starting system checks with state setup
+[supervisor.resolution.check] System checks complete
+[supervisor.resolution.evaluate] Starting system evaluation with state setup
+[supervisor.resolution.evaluate] System evaluation complete
+[supervisor.jobs] &#39;ResolutionFixup.run_autofix&#39; blocked from execution, system is not running - setup
+[supervisor.resolution.evaluate] Starting system evaluation with state setup
+[supervisor.resolution.evaluate] System evaluation complete
+[__main__] Running Supervisor
+[supervisor.os.manager] Rauc: A - marked slot kernel.0 as good
+[supervisor.addons.manager] Phase &#39;initialize&#39; starting 0 add-ons
+[supervisor.addons.manager] Phase &#39;system&#39; starting 0 add-ons
+[supervisor.addons.manager] Phase &#39;services&#39; starting 0 add-ons
+[supervisor.core] Skipping start of Home Assistant
+[supervisor.addons.manager] Phase &#39;application&#39; starting 0 add-ons
+[supervisor.misc.tasks] All core tasks are scheduled
+[supervisor.core] Supervisor is up and running
+[supervisor.homeassistant.core] Home Assistant setup
+[supervisor.docker.interface] Updating image ghcr.io/home-assistant/raspberrypi3-64-homeassistant:landingpage to ghcr.io/home-assistant/raspberrypi3-64-homeassistant:2024.1.1
+[supervisor.docker.interface] Downloading docker image ghcr.io/home-assistant/raspberrypi3-64-homeassistant with tag 2024.1.1.
+[supervisor.host.info] Updating local host information
+[supervisor.resolution.check] Starting system checks with state running
+[supervisor.resolution.checks.base] Run check for dns_server_failed/dns_server
+[supervisor.resolution.checks.base] Run check for pwned/addon
+[supervisor.resolution.checks.base] Run check for ipv4_connection_problem/system
+[supervisor.resolution.checks.base] Run check for dns_server_ipv6_error/dns_server
+[supervisor.resolution.checks.base] Run check for security/core
+[supervisor.resolution.checks.base] Run check for docker_config/system
+[supervisor.resolution.checks.base] Run check for trust/supervisor
+[supervisor.resolution.checks.base] Run check for no_current_backup/system
+[supervisor.resolution.module] Create new suggestion create_full_backup - system / None
+[supervisor.resolution.module] Create new issue no_current_backup - system / None
+[supervisor.resolution.checks.base] Run check for free_space/system
+[supervisor.resolution.checks.base] Run check for multiple_data_disks/system
+[supervisor.resolution.check] System checks complete
+[supervisor.resolution.evaluate] Starting system evaluation with state running
+[supervisor.resolution.evaluate] System evaluation complete
+[supervisor.resolution.fixup] Starting system autofix at state running
+[supervisor.resolution.fixup] System autofix complete
+[supervisor.host.services] Updating service information
+[supervisor.host.network] Updating local network information
+[supervisor.host.sound] Updating PulseAudio information
+[supervisor.host.manager] Host information reload completed
+</code></pre></div>
+
+
+</details>
+
+<p>But after like 10 minutes (which the screen tells you it can take) it
+continued.</p>
+<h1>Configuring</h1>
+<p>One of the first things I noticed after setting up the basic system is that:
+ * I needed to replace the USB power cable, since the RPI Power status reported a problem
+ * Bluetooth seems broken...</p>
+<p>While I could easily fix the power supply issue with a different USB cable, I
+couldn't figure out what the issue with bluetooth is. Looking at the
+bugtrackers of Home Assistant did reveal quite some issues that people are having with bluetooth:
+ * <a href="https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth">https://github.com/home-assistant/core/issues?q=is%3Aissue+is%3Aopen+bluetooth</a>
+ * <a href="https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi">https://github.com/home-assistant/operating-system/issues?q=bluetooth+is%3Aopen+label%3Aboard%2Fraspberrypi</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

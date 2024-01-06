@@ -180,7 +180,22 @@ sys<span class="w"> </span>0m0.072s
    from kodi may lead spotifyd to crash since it can't start playing</li>
 <li>Solutions:</li>
 <li><a href="https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Dmix">https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Dmix</a></li>
-<li>Pipewire which would also enable using it as BT player? <a href="https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/">https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/</a></li>
+<li>
+<p>Pipewire which would also enable using it as BT player? <a href="https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/">https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/</a></p>
+</li>
+<li>
+<p>Alsa dmix
+   <code># /etc/asound.conf
+   pcm.dsp {
+       type plug
+       slave.pcm "dmix"
+   }</code>
+   didn't work...</p>
+</li>
+<li>pipewire
+ <code>sudo pacman -S pipewire-audio
+ sudo pacman -S pipewire-alsa</code>
+ Doesn't work as well -&gt; kodi-standalone blocks Alsa device</li>
 </ul>
 <h2>Developing a Kodi plugin</h2>
 <ul>

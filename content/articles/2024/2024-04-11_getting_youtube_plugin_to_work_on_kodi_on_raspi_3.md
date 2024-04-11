@@ -1,6 +1,5 @@
 Title: YouTube plugin for Kodi on the Raspberry Pi 3
 Tags: Raspberry Pi, Linux, ArchLinux, ARM, Kodi
-Status: draft
 Language: en
 Summary: Getting the YouTube plugin for Kodi to work on the Raspberry Pi 3
 

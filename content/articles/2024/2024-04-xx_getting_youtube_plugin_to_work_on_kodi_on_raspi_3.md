@@ -105,8 +105,12 @@ with `sudo pacman -S rapidjson`.
 
 # Success
 
-After the two bumps the build finished and I could install the addon:
+After the two bumps the build finished without further problems and I could
+install the addon:
 
 ```bash
 sudo pacman -U kodi-addon-inputstream-adaptive-git-21.4.4.Omega.r9.g109c0e7a-1-armv7h.pkg.tar.xz
+sudo systemctl restart kodi.service
 ```
+
+![Installing the YouTube addon]({static}/images/kodi/kodi-youtube-addon-install.png){width=100%}

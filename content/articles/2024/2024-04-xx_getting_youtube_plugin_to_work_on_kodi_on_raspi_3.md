@@ -26,7 +26,7 @@ Luckily there is a PKGBUILD available on the AUR:
 I didn't want to bother with cross-compiling for the Pi I thought I'll just
 compile it on the Pi itself: 
 
-```
+```bash
 sudo pacman -S base-devel git
 git clone https://aur.archlinux.org/kodi-addon-inputstream-adaptive-git.git
 cd kodi-addon-inputstream-adaptive-git/
@@ -38,7 +38,7 @@ makepkg -s
 The first error I ran into was that the build wants to use an unsupported flag
 for the compiler:
 
-```
+```text
 ==> Starting build()...
 -- The C compiler identification is GNU 12.1.0
 -- The CXX compiler identification is GNU 12.1.0
@@ -85,14 +85,13 @@ It turns out that it was due to a wrong default configuration in
 `/etc/makepkg.conf`. This issue was already reported twice in the forums, so I
 didn't bother to report it as well:
 
- * https://archlinuxarm.org/forum/viewtopic.php?f=15&t=16837&p=72357&hilit=no+omit+leaf+frame+pointer#p72357
- * https://archlinuxarm.org/forum/viewtopic.php?f=57&t=16830&p=72344&hilit=no+omit+leaf+frame+pointer#p72344
+ * <https://archlinuxarm.org/forum/viewtopic.php?f=15&t=16837&p=72357>
+ * <https://archlinuxarm.org/forum/viewtopic.php?f=57&t=16830&p=72344>
 
 Removing `-mno-omit-leaf-frame-pointer` from `/etc/makepkg.conf` got me a bit
 further: 
 
-
-```
+```text
 CMake Error at /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
   Could NOT find RAPIDJSON (missing: RAPIDJSON_INCLUDES)
 Call Stack (most recent call first):
@@ -103,3 +102,11 @@ Call Stack (most recent call first):
 
 This was just a missing dependency in the PKGBUILD, which I could just install
 with `sudo pacman -S rapidjson`.
+
+# Success
+
+After the two bumps the build finished and I could install the addon:
+
+```bash
+sudo pacman -U kodi-addon-inputstream-adaptive-git-21.4.4.Omega.r9.g109c0e7a-1-armv7h.pkg.tar.xz
+```

@@ -166,3 +166,8 @@ sys	0m0.072s
 ## Developing a Kodi plugin
 
  * 
+
+## Libretro
+
+ * https://archlinuxarm.org/forum/viewtopic.php?t=16315
+ * `sudo pacman -S kodi-platform`

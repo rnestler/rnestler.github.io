@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>YouTube plugin for Kodi on the Raspberry Pi 3</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html" rel="bookmark"
+           title="Permalink to YouTube plugin for Kodi on the Raspberry Pi 3">YouTube plugin for Kodi on the Raspberry Pi 3</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="9999-12-31T23:59:59.999999+01:00">
+                Published: 
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> <a href="https://blog.rnstlr.ch/tag/kodi.html">Kodi</a> </p>
+</footer><!-- /.post-info -->      <p>Last year I installed Kodi on my RaspberryPi 3 to use as a media system. While
+it runs quite nicely to stream stuff from my NAS with remote controlling from
+<a href="https://f-droid.org/packages/org.xbmc.kore/">Kore</a>, every now and then I
+wanted to play something from YouTube, which didn't work.</p>
+<p>Installing the YouTube plugin always failed with Kodi being unable to install a
+dependency called <code>inputstream-adaptive</code>. Looking at
+<a href="https://kodi.tv/addons/omega/inputstream.adaptive/">https://kodi.tv/addons/omega/inputstream.adaptive/</a>` it seems, that the plugin
+is only available for Windows, OSX and Android.</p>
+<p>Looking at the ArchLinuxARM forums I found
+<a href="https://archlinuxarm.org/forum/viewtopic.php?f=60&amp;t=13189&amp;p=59774&amp;hilit=kodi+inputstream#p59774">https://archlinuxarm.org/forum/viewtopic.php?f=60&amp;t=13189&amp;p=59774&amp;hilit=kodi+inputstream#p59774</a>
+which shows that people built the plugin themselves to get other plugins to
+work.</p>
+<h1>Installing from AUR</h1>
+<p>Luckily there is a PKGBUILD available on the AUR:
+<a href="https://aur.archlinux.org/packages/kodi-addon-inputstream-adaptive-git">https://aur.archlinux.org/packages/kodi-addon-inputstream-adaptive-git</a>. Since
+I didn't want to bother with cross-compiling for the Pi I thought I'll just
+compile it on the Pi itself: </p>
+<div class="highlight"><pre><span></span><code>sudo pacman -S base-devel git
+git clone https://aur.archlinux.org/kodi-addon-inputstream-adaptive-git.git
+cd kodi-addon-inputstream-adaptive-git/
+makepkg -s
+</code></pre></div>
+
+<h1>Trouble</h1>
+<p>The first error I ran into was that the build wants to use an unsupported flag
+for the compiler:</p>
+<div class="highlight"><pre><span></span><code><span class="o">==</span><span class="p">&gt;</span><span class="w"> </span><span class="nx">Starting</span><span class="w"> </span><span class="nx">build</span><span class="p">()</span><span class="o">...</span>
+<span class="o">--</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">C</span><span class="w"> </span><span class="nx">compiler</span><span class="w"> </span><span class="nx">identification</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">GNU</span><span class="w"> </span><span class="m m-Double">12.1.0</span>
+<span class="o">--</span><span class="w"> </span><span class="nx">The</span><span class="w"> </span><span class="nx">CXX</span><span class="w"> </span><span class="nx">compiler</span><span class="w"> </span><span class="nx">identification</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">GNU</span><span class="w"> </span><span class="m m-Double">12.1.0</span>
+<span class="o">--</span><span class="w"> </span><span class="nx">Detecting</span><span class="w"> </span><span class="nx">C</span><span class="w"> </span><span class="nx">compiler</span><span class="w"> </span><span class="nx">ABI</span><span class="w"> </span><span class="nx">info</span>
+<span class="o">--</span><span class="w"> </span><span class="nx">Detecting</span><span class="w"> </span><span class="nx">C</span><span class="w"> </span><span class="nx">compiler</span><span class="w"> </span><span class="nx">ABI</span><span class="w"> </span><span class="nx">info</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">failed</span>
+<span class="o">--</span><span class="w"> </span><span class="nx">Check</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">working</span><span class="w"> </span><span class="nx">C</span><span class="w"> </span><span class="nx">compiler</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">cc</span>
+<span class="o">--</span><span class="w"> </span><span class="nx">Check</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">working</span><span class="w"> </span><span class="nx">C</span><span class="w"> </span><span class="nx">compiler</span><span class="p">:</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">cc</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">broken</span>
+<span class="nx">CMake</span><span class="w"> </span><span class="nx">Error</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">share</span><span class="o">/</span><span class="nx">cmake</span><span class="o">/</span><span class="nx">Modules</span><span class="o">/</span><span class="nx">CMakeTestCCompiler</span><span class="p">.</span><span class="nx">cmake</span><span class="p">:</span><span class="mi">67</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">):</span>
+<span class="w">  </span><span class="nx">The</span><span class="w"> </span><span class="nx">C</span><span class="w"> </span><span class="nx">compiler</span>
+
+<span class="w">    </span><span class="s">&quot;/usr/bin/cc&quot;</span>
+
+<span class="w">  </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">able</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">compile</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">simple</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">program</span><span class="p">.</span>
+
+<span class="w">  </span><span class="nx">It</span><span class="w"> </span><span class="nx">fails</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">following</span><span class="w"> </span><span class="nx">output</span><span class="p">:</span>
+
+<span class="w">    </span><span class="nx">Change</span><span class="w"> </span><span class="nx">Dir</span><span class="p">:</span><span class="w"> </span><span class="err">&#39;</span><span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">alarm</span><span class="o">/</span><span class="nx">archpkg</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">-</span><span class="nx">build</span><span class="o">/</span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">CMakeScratch</span><span class="o">/</span><span class="nx">TryCompile</span><span class="o">-</span><span class="nx">SzNkS5</span><span class="err">&#39;</span>
+
+<span class="w">    </span><span class="nx">Run</span><span class="w"> </span><span class="nx">Build</span><span class="w"> </span><span class="nx">Command</span><span class="p">(</span><span class="nx">s</span><span class="p">):</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">cmake</span><span class="w"> </span><span class="o">-</span><span class="nx">E</span><span class="w"> </span><span class="nx">env</span><span class="w"> </span><span class="nx">VERBOSE</span><span class="p">=</span><span class="mi">1</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">make</span><span class="w"> </span><span class="o">-</span><span class="nx">f</span><span class="w"> </span><span class="nx">Makefile</span><span class="w"> </span><span class="nx">cmTC_def07</span><span class="o">/</span><span class="nx">fast</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">make</span><span class="w">  </span><span class="o">-</span><span class="nx">f</span><span class="w"> </span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">cmTC_def07</span><span class="p">.</span><span class="nx">dir</span><span class="o">/</span><span class="nx">build</span><span class="p">.</span><span class="nx">make</span><span class="w"> </span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">cmTC_def07</span><span class="p">.</span><span class="nx">dir</span><span class="o">/</span><span class="nx">build</span>
+<span class="w">    </span><span class="nx">make</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="nx">Entering</span><span class="w"> </span><span class="nx">directory</span><span class="w"> </span><span class="err">&#39;</span><span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">alarm</span><span class="o">/</span><span class="nx">archpkg</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">-</span><span class="nx">build</span><span class="o">/</span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">CMakeScratch</span><span class="o">/</span><span class="nx">TryCompile</span><span class="o">-</span><span class="nx">SzNkS5</span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">Building</span><span class="w"> </span><span class="nx">C</span><span class="w"> </span><span class="nx">object</span><span class="w"> </span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">cmTC_def07</span><span class="p">.</span><span class="nx">dir</span><span class="o">/</span><span class="nx">testCCompiler</span><span class="p">.</span><span class="nx">c</span><span class="p">.</span><span class="nx">o</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">cc</span><span class="w">   </span><span class="o">-</span><span class="nx">march</span><span class="p">=</span><span class="nx">armv7</span><span class="o">-</span><span class="nx">a</span><span class="w"> </span><span class="o">-</span><span class="nx">mfloat</span><span class="o">-</span><span class="nx">abi</span><span class="p">=</span><span class="nx">hard</span><span class="w"> </span><span class="o">-</span><span class="nx">mfpu</span><span class="p">=</span><span class="nx">neon</span><span class="w"> </span><span class="o">-</span><span class="nx">O2</span><span class="w"> </span><span class="o">-</span><span class="nx">pipe</span><span class="w"> </span><span class="o">-</span><span class="nx">fstack</span><span class="o">-</span><span class="nx">protector</span><span class="o">-</span><span class="nx">strong</span><span class="w"> </span><span class="o">-</span><span class="nx">fno</span><span class="o">-</span><span class="nx">plt</span><span class="w"> </span><span class="o">-</span><span class="nx">fexceptions</span><span class="w">         </span><span class="o">-</span><span class="nx">Wp</span><span class="p">,</span><span class="o">-</span><span class="nx">D_FORTIFY_SOURCE</span><span class="p">=</span><span class="mi">3</span><span class="w"> </span><span class="o">-</span><span class="nx">Wformat</span><span class="w"> </span><span class="o">-</span><span class="nx">Werror</span><span class="p">=</span><span class="nx">format</span><span class="o">-</span><span class="nx">security</span><span class="w">         </span><span class="o">-</span><span class="nx">fstack</span><span class="o">-</span><span class="nx">clash</span><span class="o">-</span><span class="nx">protection</span><span class="w">         </span><span class="o">-</span><span class="nx">fno</span><span class="o">-</span><span class="nx">omit</span><span class="o">-</span><span class="nx">frame</span><span class="o">-</span><span class="nx">pointer</span><span class="w"> </span><span class="o">-</span><span class="nx">mno</span><span class="o">-</span><span class="nx">omit</span><span class="o">-</span><span class="nx">leaf</span><span class="o">-</span><span class="nx">frame</span><span class="o">-</span><span class="nx">pointer</span><span class="w">  </span><span class="o">-</span><span class="nx">o</span><span class="w"> </span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">cmTC_def07</span><span class="p">.</span><span class="nx">dir</span><span class="o">/</span><span class="nx">testCCompiler</span><span class="p">.</span><span class="nx">c</span><span class="p">.</span><span class="nx">o</span><span class="w"> </span><span class="o">-</span><span class="nx">c</span><span class="w"> </span><span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">alarm</span><span class="o">/</span><span class="nx">archpkg</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">-</span><span class="nx">build</span><span class="o">/</span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">CMakeScratch</span><span class="o">/</span><span class="nx">TryCompile</span><span class="o">-</span><span class="nx">SzNkS5</span><span class="o">/</span><span class="nx">testCCompiler</span><span class="p">.</span><span class="nx">c</span>
+<span class="w">    </span><span class="nx">cc</span><span class="p">:</span><span class="w"> </span><span class="nx">error</span><span class="p">:</span><span class="w"> </span><span class="nx">unrecognized</span><span class="w"> </span><span class="nx">command</span><span class="o">-</span><span class="nx">line</span><span class="w"> </span><span class="nx">option</span><span class="w"> </span><span class="err">&#39;</span><span class="o">-</span><span class="nx">mno</span><span class="o">-</span><span class="nx">omit</span><span class="o">-</span><span class="nx">leaf</span><span class="o">-</span><span class="nx">frame</span><span class="o">-</span><span class="nx">pointer</span><span class="err">&#39;</span><span class="p">;</span><span class="w"> </span><span class="nx">did</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">mean</span><span class="w"> </span><span class="err">&#39;</span><span class="o">-</span><span class="nx">fno</span><span class="o">-</span><span class="nx">omit</span><span class="o">-</span><span class="nx">frame</span><span class="o">-</span><span class="nx">pointer</span><span class="err">&#39;</span><span class="p">?</span>
+<span class="w">    </span><span class="nx">make</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="o">***</span><span class="w"> </span><span class="p">[</span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">cmTC_def07</span><span class="p">.</span><span class="nx">dir</span><span class="o">/</span><span class="nx">build</span><span class="p">.</span><span class="nx">make</span><span class="p">:</span><span class="mi">78</span><span class="p">:</span><span class="w"> </span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">cmTC_def07</span><span class="p">.</span><span class="nx">dir</span><span class="o">/</span><span class="nx">testCCompiler</span><span class="p">.</span><span class="nx">c</span><span class="p">.</span><span class="nx">o</span><span class="p">]</span><span class="w"> </span><span class="nx">Error</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="nx">make</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="w"> </span><span class="nx">Leaving</span><span class="w"> </span><span class="nx">directory</span><span class="w"> </span><span class="err">&#39;</span><span class="o">/</span><span class="nx">home</span><span class="o">/</span><span class="nx">alarm</span><span class="o">/</span><span class="nx">archpkg</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">/</span><span class="nx">kodi</span><span class="o">-</span><span class="nx">addon</span><span class="o">-</span><span class="nx">inputstream</span><span class="o">-</span><span class="nx">adaptive</span><span class="o">-</span><span class="nx">git</span><span class="o">-</span><span class="nx">build</span><span class="o">/</span><span class="nx">CMakeFiles</span><span class="o">/</span><span class="nx">CMakeScratch</span><span class="o">/</span><span class="nx">TryCompile</span><span class="o">-</span><span class="nx">SzNkS5</span><span class="err">&#39;</span>
+<span class="w">    </span><span class="nx">make</span><span class="p">:</span><span class="w"> </span><span class="o">***</span><span class="w"> </span><span class="p">[</span><span class="nx">Makefile</span><span class="p">:</span><span class="mi">127</span><span class="p">:</span><span class="w"> </span><span class="nx">cmTC_def07</span><span class="o">/</span><span class="nx">fast</span><span class="p">]</span><span class="w"> </span><span class="nx">Error</span><span class="w"> </span><span class="mi">2</span>
+
+
+<span class="w">  </span><span class="nx">CMake</span><span class="w"> </span><span class="nx">will</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="nx">be</span><span class="w"> </span><span class="nx">able</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">correctly</span><span class="w"> </span><span class="nx">generate</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">project</span><span class="p">.</span>
+<span class="nx">Call</span><span class="w"> </span><span class="nx">Stack</span><span class="w"> </span><span class="p">(</span><span class="nx">most</span><span class="w"> </span><span class="nx">recent</span><span class="w"> </span><span class="nx">call</span><span class="w"> </span><span class="nx">first</span><span class="p">):</span>
+<span class="w">  </span><span class="nx">CMakeLists</span><span class="p">.</span><span class="nx">txt</span><span class="p">:</span><span class="mi">5</span><span class="w"> </span><span class="p">(</span><span class="nx">project</span><span class="p">)</span>
+
+
+<span class="o">--</span><span class="w"> </span><span class="nx">Configuring</span><span class="w"> </span><span class="nx">incomplete</span><span class="p">,</span><span class="w"> </span><span class="nx">errors</span><span class="w"> </span><span class="nx">occurred</span><span class="p">!</span>
+<span class="o">==</span><span class="p">&gt;</span><span class="w"> </span><span class="nx">ERROR</span><span class="p">:</span><span class="w"> </span><span class="nx">A</span><span class="w"> </span><span class="nx">failure</span><span class="w"> </span><span class="nx">occurred</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">build</span><span class="p">().</span>
+<span class="w">    </span><span class="nx">Aborting</span><span class="o">...</span>
+</code></pre></div>
+
+<p>The culprit was <code>cc: error: unrecognized command-line option '-mno-omit-leaf-frame-pointer'; did you mean '-fno-omit-frame-pointer'</code>.</p>
+<p>It turns out that it was due to a wrong default configuration in
+<code>/etc/makepkg.conf</code>. This issue was already reported twice in the forums, so I
+didn't bother to report it as well:</p>
+<ul>
+<li>https://archlinuxarm.org/forum/viewtopic.php?f=15&amp;t=16837&amp;p=72357&amp;hilit=no+omit+leaf+frame+pointer#p72357</li>
+<li>https://archlinuxarm.org/forum/viewtopic.php?f=57&amp;t=16830&amp;p=72344&amp;hilit=no+omit+leaf+frame+pointer#p72344</li>
+</ul>
+<p>Removing <code>-mno-omit-leaf-frame-pointer</code> from <code>/etc/makepkg.conf</code> got me a bit
+further: </p>
+<div class="highlight"><pre><span></span><code><span class="nx">CMake</span><span class="w"> </span><span class="nx">Error</span><span class="w"> </span><span class="nx">at</span><span class="w"> </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">share</span><span class="o">/</span><span class="nx">cmake</span><span class="o">/</span><span class="nx">Modules</span><span class="o">/</span><span class="nx">FindPackageHandleStandardArgs</span><span class="p">.</span><span class="nx">cmake</span><span class="p">:</span><span class="mi">230</span><span class="w"> </span><span class="p">(</span><span class="nx">message</span><span class="p">):</span>
+<span class="w">  </span><span class="nx">Could</span><span class="w"> </span><span class="nx">NOT</span><span class="w"> </span><span class="nx">find</span><span class="w"> </span><span class="nx">RAPIDJSON</span><span class="w"> </span><span class="p">(</span><span class="nx">missing</span><span class="p">:</span><span class="w"> </span><span class="nx">RAPIDJSON_INCLUDES</span><span class="p">)</span>
+<span class="nx">Call</span><span class="w"> </span><span class="nx">Stack</span><span class="w"> </span><span class="p">(</span><span class="nx">most</span><span class="w"> </span><span class="nx">recent</span><span class="w"> </span><span class="nx">call</span><span class="w"> </span><span class="nx">first</span><span class="p">):</span>
+<span class="w">  </span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">share</span><span class="o">/</span><span class="nx">cmake</span><span class="o">/</span><span class="nx">Modules</span><span class="o">/</span><span class="nx">FindPackageHandleStandardArgs</span><span class="p">.</span><span class="nx">cmake</span><span class="p">:</span><span class="mi">600</span><span class="w"> </span><span class="p">(</span><span class="nx">_FPHSA_FAILURE_MESSAGE</span><span class="p">)</span>
+<span class="w">  </span><span class="nx">FindRAPIDJSON</span><span class="p">.</span><span class="nx">cmake</span><span class="p">:</span><span class="mi">19</span><span class="w"> </span><span class="p">(</span><span class="nx">find_package_handle_standard_args</span><span class="p">)</span>
+<span class="w">  </span><span class="nx">CMakeLists</span><span class="p">.</span><span class="nx">txt</span><span class="p">:</span><span class="mi">18</span><span class="w"> </span><span class="p">(</span><span class="nx">find_package</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This was just a missing dependency in the PKGBUILD, which I could just install
+with <code>sudo pacman -S rapidjson</code>.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

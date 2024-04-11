@@ -1,5 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2024-01-06T00:00:00+01:00</updated><entry><title>Setting up Home Assistant on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/setting-up-home-assistant-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2024-01-06T00:00:00+01:00</published><updated>2024-01-06T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-01-06:/setting-up-home-assistant-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Setting up Home Assistant to automate stuff at home&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Motivation&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2024-04-11T00:00:00+02:00</updated><entry><title>YouTube plugin for Kodi on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2024-04-11T00:00:00+02:00</published><updated>2024-04-11T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-04-11:/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Getting the YouTube plugin for Kodi to work on the Raspberry Pi 3&lt;/p&gt;</summary><content type="html">&lt;p&gt;Last year I installed Kodi on my RaspberryPi 3 to use as a media system. While
+it runs quite nicely to stream stuff from my NAS with remote controlling from
+&lt;a href="https://f-droid.org/packages/org.xbmc.kore/"&gt;Kore&lt;/a&gt;, every now and then I
+wanted to play something from YouTube, which didn't work.&lt;/p&gt;
+&lt;p&gt;Installing the YouTube plugin always failed with Kodi being unable to install a
+dependency called &lt;code&gt;inputstream-adaptive&lt;/code&gt;. Looking at
+&lt;a href="https://kodi.tv/addons/omega/inputstream.adaptive/"&gt;https://kodi.tv/addons/omega/inputstream.adaptive/&lt;/a&gt;` it seems, that the plugin
+is only available for Windows, OSX and Android.&lt;/p&gt;
+&lt;p&gt;Looking at the ArchLinuxARM forums I found
+&lt;a href="https://archlinuxarm.org/forum/viewtopic.php?f=60&amp;amp;t=13189&amp;amp;p=59774&amp;amp;hilit=kodi+inputstream#p59774"&gt;https://archlinuxarm.org/forum/viewtopic.php?f=60&amp;amp;t=13189&amp;amp;p=59774&amp;amp;hilit=kodi+inputstream#p59774&lt;/a&gt;
+which shows that people built the plugin themselves to get other plugins to
+work.&lt;/p&gt;
+&lt;h1&gt;Installing from AUR&lt;/h1&gt;
+&lt;p&gt;Luckily there is a PKGBUILD available on the AUR:
+&lt;a href="https://aur.archlinux.org/packages/kodi-addon-inputstream-adaptive-git"&gt;https://aur.archlinux.org/packages/kodi-addon-inputstream-adaptive-git&lt;/a&gt;. Since
+I didn't want to bother with cross-compiling for the Pi I thought I'll just
+compile it on the Pi itself: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;pacman&lt;span class="w"&gt; &lt;/span&gt;-S&lt;span class="w"&gt; &lt;/span&gt;base-devel&lt;span class="w"&gt; &lt;/span&gt;git
+git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://aur.archlinux.org/kodi-addon-inputstream-adaptive-git.git
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;kodi-addon-inputstream-adaptive-git/
+makepkg&lt;span class="w"&gt; &lt;/span&gt;-s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1&gt;Trouble&lt;/h1&gt;
+&lt;p&gt;The first error I ran into was that the build wants to use an unsupported flag
+for the compiler:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;==&amp;gt; Starting build()...
+-- The C compiler identification is GNU 12.1.0
+-- The CXX compiler identification is GNU 12.1.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - failed
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc - broken
+CMake Error at /usr/share/cmake/Modules/CMakeTestCCompiler.cmake:67 (message):
+  The C compiler
+
+    &amp;quot;/usr/bin/cc&amp;quot;
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: &amp;#39;/home/alarm/archpkg/kodi-addon-inputstream-adaptive-git/src/kodi-addon-inputstream-adaptive-git/kodi-addon-inputstream-adaptive-git-build/CMakeFiles/CMakeScratch/TryCompile-SzNkS5&amp;#39;
+
+    Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_def07/fast
+    /usr/bin/make  -f CMakeFiles/cmTC_def07.dir/build.make CMakeFiles/cmTC_def07.dir/build
+    make[1]: Entering directory &amp;#39;/home/alarm/archpkg/kodi-addon-inputstream-adaptive-git/src/kodi-addon-inputstream-adaptive-git/kodi-addon-inputstream-adaptive-git-build/CMakeFiles/CMakeScratch/TryCompile-SzNkS5&amp;#39;
+    Building C object CMakeFiles/cmTC_def07.dir/testCCompiler.c.o
+    /usr/bin/cc   -march=armv7-a -mfloat-abi=hard -mfpu=neon -O2 -pipe -fstack-protector-strong -fno-plt -fexceptions         -Wp,-D_FORTIFY_SOURCE=3 -Wformat -Werror=format-security         -fstack-clash-protection         -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer  -o CMakeFiles/cmTC_def07.dir/testCCompiler.c.o -c /home/alarm/archpkg/kodi-addon-inputstream-adaptive-git/src/kodi-addon-inputstream-adaptive-git/kodi-addon-inputstream-adaptive-git-build/CMakeFiles/CMakeScratch/TryCompile-SzNkS5/testCCompiler.c
+    cc: error: unrecognized command-line option &amp;#39;-mno-omit-leaf-frame-pointer&amp;#39;; did you mean &amp;#39;-fno-omit-frame-pointer&amp;#39;?
+    make[1]: *** [CMakeFiles/cmTC_def07.dir/build.make:78: CMakeFiles/cmTC_def07.dir/testCCompiler.c.o] Error 1
+    make[1]: Leaving directory &amp;#39;/home/alarm/archpkg/kodi-addon-inputstream-adaptive-git/src/kodi-addon-inputstream-adaptive-git/kodi-addon-inputstream-adaptive-git-build/CMakeFiles/CMakeScratch/TryCompile-SzNkS5&amp;#39;
+    make: *** [Makefile:127: cmTC_def07/fast] Error 2
+
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:5 (project)
+
+
+-- Configuring incomplete, errors occurred!
+==&amp;gt; ERROR: A failure occurred in build().
+    Aborting...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The culprit was &lt;code&gt;cc: error: unrecognized command-line option '-mno-omit-leaf-frame-pointer'; did you mean '-fno-omit-frame-pointer'&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;It turns out that it was due to a wrong default configuration in
+&lt;code&gt;/etc/makepkg.conf&lt;/code&gt;. This issue was already reported twice in the forums, so I
+didn't bother to report it as well:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://archlinuxarm.org/forum/viewtopic.php?f=15&amp;amp;t=16837&amp;amp;p=72357"&gt;https://archlinuxarm.org/forum/viewtopic.php?f=15&amp;amp;t=16837&amp;amp;p=72357&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://archlinuxarm.org/forum/viewtopic.php?f=57&amp;amp;t=16830&amp;amp;p=72344"&gt;https://archlinuxarm.org/forum/viewtopic.php?f=57&amp;amp;t=16830&amp;amp;p=72344&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Removing &lt;code&gt;-mno-omit-leaf-frame-pointer&lt;/code&gt; from &lt;code&gt;/etc/makepkg.conf&lt;/code&gt; got me a bit
+further: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;CMake Error at /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
+  Could NOT find RAPIDJSON (missing: RAPIDJSON_INCLUDES)
+Call Stack (most recent call first):
+  /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:600 (_FPHSA_FAILURE_MESSAGE)
+  FindRAPIDJSON.cmake:19 (find_package_handle_standard_args)
+  CMakeLists.txt:18 (find_package)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This was just a missing dependency in the PKGBUILD, which I could just install
+with &lt;code&gt;sudo pacman -S rapidjson&lt;/code&gt;.&lt;/p&gt;
+&lt;h1&gt;Success&lt;/h1&gt;
+&lt;p&gt;After the two bumps the build finished without further problems and I could
+install the addon:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;pacman&lt;span class="w"&gt; &lt;/span&gt;-U&lt;span class="w"&gt; &lt;/span&gt;kodi-addon-inputstream-adaptive-git-21.4.4.Omega.r9.g109c0e7a-1-armv7h.pkg.tar.xz
+sudo&lt;span class="w"&gt; &lt;/span&gt;systemctl&lt;span class="w"&gt; &lt;/span&gt;restart&lt;span class="w"&gt; &lt;/span&gt;kodi.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img alt="Installing the YouTube addon" src="https://blog.rnstlr.ch/images/kodi/kodi-youtube-addon-install.png" width="100%"&gt;&lt;/p&gt;</content><category term="2024"></category><category term="Raspberry Pi"></category><category term="Linux"></category><category term="ArchLinux"></category><category term="ARM"></category><category term="Kodi"></category></entry><entry><title>Setting up Home Assistant on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/setting-up-home-assistant-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2024-01-06T00:00:00+01:00</published><updated>2024-01-06T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-01-06:/setting-up-home-assistant-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Setting up Home Assistant to automate stuff at home&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Motivation&lt;/h1&gt;
 &lt;p&gt;From my time working at Sensirion I still have a lot of sensors like the &lt;a href="https://www.sensirion.com/products/catalog/SCD4x-CO2-Gadget"&gt;SCD4x
 CO2 Gadget&lt;/a&gt; and
 &lt;a href="https://sensirion.com/de/produkte/katalog/SHT4x-Smart-Gadget"&gt;SHT4x Smart

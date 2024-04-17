@@ -163,6 +163,22 @@ sys	0m0.072s
    * <https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Dmix>
    * Pipewire which would also enable using it as BT player? <https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/>
 
+ * Alsa dmix
+   ```
+   # /etc/asound.conf
+   pcm.dsp {
+       type plug
+       slave.pcm "dmix"
+   }
+   ```
+   didn't work...
+ * pipewire
+ ```
+ sudo pacman -S pipewire-audio
+ sudo pacman -S pipewire-alsa
+ ```
+ Doesn't work as well -> kodi-standalone blocks Alsa device
+
 ## Developing a Kodi plugin
 
  * 

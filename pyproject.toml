@@ -3,6 +3,7 @@ name = "blog.rnstlr.ch"
 version = "0.1.0"
 description = "The pelican project for my blog"
 authors = ["Raphael Nestler <raphael.nestler@gmail.com>"]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "~3.10.8"

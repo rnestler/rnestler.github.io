@@ -10,7 +10,7 @@ restructured text source files.
 ```
 asdf install
 poetry env use $(asdf which python)
-poetry install --no-root
+poetry install
 poetry shell
 # or alternatively
 source $(poetry env info --path)/bin/activate

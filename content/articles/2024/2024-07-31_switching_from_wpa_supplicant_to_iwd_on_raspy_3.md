@@ -50,7 +50,7 @@ sudo mount /dev/sda1 /mnt
 sudo pacman -U /mnt/iwd-2.19-1-armv7h.pkg.tar.xz /mnt/ell-0.67-1-armv7h.pkg.tar.xz
 ```
 
-Then I replaced wpla\_supplicant with `iwd`
+Then I replaced `wpa_supplicant` with `iwd`
 
 ```
 sudo systemctl stop wpa_supplicant@wlan0.service

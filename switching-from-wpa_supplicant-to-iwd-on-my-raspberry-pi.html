@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Switching from wpa_supplicant to iwd on my Raspberry Pi</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/switching-from-wpa_supplicant-to-iwd-on-my-raspberry-pi.html" rel="bookmark"
+           title="Permalink to Switching from wpa_supplicant to iwd on my Raspberry Pi">Switching from wpa_supplicant to iwd on my Raspberry Pi</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2024-07-31T00:00:00+02:00">
+                Published: Mi 31 Juli 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> <a href="https://blog.rnstlr.ch/tag/kodi.html">Kodi</a> </p>
+</footer><!-- /.post-info -->      <p>After upgrading my archlinuxarm based Kodi media center as usual with just
+running <code>pacman -Syu</code> over ssh I didn't suspect anything. But on the next
+reboot the system blocked with waiting for wlan0 to get online.</p>
+<p>At first I suspected the kernel or linux-firmware upgrade, since a quick search
+found that this caused trouble in the past: <a href="https://archlinuxarm.org/forum/viewtopic.php?t=15833">firmware update breaks wifi on
+Rpi3</a></p>
+<h1>Downgrading <code>linux-firmware</code></h1>
+<p>Since remote connection was broken I sat with the keyboard in front of the TV
+screen and tried to downgrade the <code>linux-firmware</code> package from the pkg cache:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">pacman</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">pacman</span><span class="o">/</span><span class="n">pkg</span><span class="o">/</span><span class="n">linux</span><span class="o">-</span><span class="n">firmware</span><span class="o">-</span><span class="mf">20240610.9</span><span class="n">c10a208</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">any</span><span class="o">.</span><span class="n">pkg</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
+</code></pre></div>
+
+<p>My hope for this easy fix were crushed, when the network still didn't start
+correctly after the next reboot. So I started to look into system logs with
+<code>sudo systemctl status --all</code> and realized that <code>wpa_supplicant@wlan0.service</code>
+couldn't start.</p>
+<h1>Investigating Further</h1>
+<p>Searching again I found <a href="https://bbs.archlinux.org/viewtopic.php?id=298025">https://bbs.archlinux.org/viewtopic.php?id=298025</a>
+from 2024-07-25 indicating that WiFi on Broadcom devices seems broken after the
+upgrade to <code>wpa_supplicant</code> 2.11.</p>
+<p>Looking again in <code>/var/cache/pacman/pkg/</code> I realized that the old
+<code>wpa_supplicant</code> package was missing. Probably since it 2.10 was the current
+version when I installed the whole system.</p>
+<p>Moving forward I decided to switch to <code>iwd</code>, which seems better maintained and
+I also use it on my Laptop.</p>
+<h1>Switching to <code>iwd</code></h1>
+<p>So I headed to <a href="https://archlinuxarm.org/packages/armv7h/iwd">https://archlinuxarm.org/packages/armv7h/iwd</a>, downloaded the
+package and its dependency <code>ell</code> manually, copied it together with the WiFi
+configuration from my laptop from <code>/var/lib/iwd/</code> to a USB flash drive and
+installed them:</p>
+<div class="highlight"><pre><span></span><code>sudo mount /dev/sda1 /mnt
+sudo pacman -U /mnt/iwd-2.19-1-armv7h.pkg.tar.xz /mnt/ell-0.67-1-armv7h.pkg.tar.xz
+</code></pre></div>
+
+<p>Then I replaced <code>wpa_supplicant</code> with <code>iwd</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">wpa_supplicant</span><span class="nv">@wlan0</span><span class="p">.</span><span class="n">service</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">disable</span><span class="w"> </span><span class="n">wpa_supplicant</span><span class="nv">@wlan0</span><span class="p">.</span><span class="n">service</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">pacman</span><span class="w"> </span><span class="o">-</span><span class="n">Rs</span><span class="w"> </span><span class="n">wpa_supplicant</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">iwd</span><span class="p">.</span><span class="n">service</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="k">start</span><span class="w"> </span><span class="n">iwd</span><span class="p">.</span><span class="n">service</span>
+</code></pre></div>
+
+<p>And 🎉 working WiFi again on my Kodi system!</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

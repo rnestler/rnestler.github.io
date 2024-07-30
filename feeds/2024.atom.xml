@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2024</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2024.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2024-04-11T00:00:00+02:00</updated><entry><title>YouTube plugin for Kodi on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2024-04-11T00:00:00+02:00</published><updated>2024-04-11T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-04-11:/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Getting the YouTube plugin for Kodi to work on the Raspberry Pi 3&lt;/p&gt;</summary><content type="html">&lt;p&gt;Last year I installed Kodi on my RaspberryPi 3 to use as a media system. While
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2024</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2024.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2024-07-31T00:00:00+02:00</updated><entry><title>Switching from wpa_supplicant to iwd on my Raspberry Pi</title><link href="https://blog.rnstlr.ch/switching-from-wpa_supplicant-to-iwd-on-my-raspberry-pi.html" rel="alternate"></link><published>2024-07-31T00:00:00+02:00</published><updated>2024-07-31T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-07-31:/switching-from-wpa_supplicant-to-iwd-on-my-raspberry-pi.html</id><summary type="html">&lt;p&gt;Switching from the broken &lt;code&gt;wpa_supplicant&lt;/code&gt; to &lt;code&gt;iwd&lt;/code&gt; for my Kodi installation on a Raspberry Pi 3&lt;/p&gt;</summary><content type="html">&lt;p&gt;After upgrading my archlinuxarm based Kodi media center as usual with just
+running &lt;code&gt;pacman -Syu&lt;/code&gt; over ssh I didn't suspect anything. But on the next
+reboot the system blocked with waiting for wlan0 to get online.&lt;/p&gt;
+&lt;p&gt;At first I suspected the kernel or linux-firmware upgrade, since a quick search
+found that this caused trouble in the past: &lt;a href="https://archlinuxarm.org/forum/viewtopic.php?t=15833"&gt;firmware update breaks wifi on
+Rpi3&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;Downgrading &lt;code&gt;linux-firmware&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;Since remote connection was broken I sat with the keyboard in front of the TV
+screen and tried to downgrade the &lt;code&gt;linux-firmware&lt;/code&gt; package from the pkg cache:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pacman&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;U&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pacman&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pkg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;linux&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;firmware&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;20240610.9&lt;/span&gt;&lt;span class="n"&gt;c10a208&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;any&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pkg&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xz&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;My hope for this easy fix were crushed, when the network still didn't start
+correctly after the next reboot. So I started to look into system logs with
+&lt;code&gt;sudo systemctl status --all&lt;/code&gt; and realized that &lt;code&gt;wpa_supplicant@wlan0.service&lt;/code&gt;
+couldn't start.&lt;/p&gt;
+&lt;h1&gt;Investigating Further&lt;/h1&gt;
+&lt;p&gt;Searching again I found &lt;a href="https://bbs.archlinux.org/viewtopic.php?id=298025"&gt;https://bbs.archlinux.org/viewtopic.php?id=298025&lt;/a&gt;
+from 2024-07-25 indicating that WiFi on Broadcom devices seems broken after the
+upgrade to &lt;code&gt;wpa_supplicant&lt;/code&gt; 2.11.&lt;/p&gt;
+&lt;p&gt;Looking again in &lt;code&gt;/var/cache/pacman/pkg/&lt;/code&gt; I realized that the old
+&lt;code&gt;wpa_supplicant&lt;/code&gt; package was missing. Probably since it 2.10 was the current
+version when I installed the whole system.&lt;/p&gt;
+&lt;p&gt;Moving forward I decided to switch to &lt;code&gt;iwd&lt;/code&gt;, which seems better maintained and
+I also use it on my Laptop.&lt;/p&gt;
+&lt;h1&gt;Switching to &lt;code&gt;iwd&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;So I headed to &lt;a href="https://archlinuxarm.org/packages/armv7h/iwd"&gt;https://archlinuxarm.org/packages/armv7h/iwd&lt;/a&gt;, downloaded the
+package and its dependency &lt;code&gt;ell&lt;/code&gt; manually, copied it together with the WiFi
+configuration from my laptop from &lt;code&gt;/var/lib/iwd/&lt;/code&gt; to a USB flash drive and
+installed them:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo mount /dev/sda1 /mnt
+sudo pacman -U /mnt/iwd-2.19-1-armv7h.pkg.tar.xz /mnt/ell-0.67-1-armv7h.pkg.tar.xz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then I replaced &lt;code&gt;wpa_supplicant&lt;/code&gt; with &lt;code&gt;iwd&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemctl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stop&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;wpa_supplicant&lt;/span&gt;&lt;span class="nv"&gt;@wlan0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemctl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;wpa_supplicant&lt;/span&gt;&lt;span class="nv"&gt;@wlan0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pacman&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Rs&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;wpa_supplicant&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemctl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;iwd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;systemctl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;start&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;iwd&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And 🎉 working WiFi again on my Kodi system!&lt;/p&gt;</content><category term="2024"></category><category term="Raspberry Pi"></category><category term="Linux"></category><category term="ArchLinux"></category><category term="ARM"></category><category term="Kodi"></category></entry><entry><title>YouTube plugin for Kodi on the Raspberry Pi 3</title><link href="https://blog.rnstlr.ch/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html" rel="alternate"></link><published>2024-04-11T00:00:00+02:00</published><updated>2024-04-11T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-04-11:/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html</id><summary type="html">&lt;p&gt;Getting the YouTube plugin for Kodi to work on the Raspberry Pi 3&lt;/p&gt;</summary><content type="html">&lt;p&gt;Last year I installed Kodi on my RaspberryPi 3 to use as a media system. While
 it runs quite nicely to stream stuff from my NAS with remote controlling from
 &lt;a href="https://f-droid.org/packages/org.xbmc.kore/"&gt;Kore&lt;/a&gt;, every now and then I
 wanted to play something from YouTube, which didn't work.&lt;/p&gt;

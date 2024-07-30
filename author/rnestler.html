@@ -27,7 +27,73 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html">YouTube plugin for Kodi on the Raspberry Pi 3</a></h1>
+                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/switching-from-wpa_supplicant-to-iwd-on-my-raspberry-pi.html">Switching from wpa_supplicant to iwd on my Raspberry Pi</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2024-07-31T00:00:00+02:00">
+                Published: Mi 31 Juli 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> <a href="https://blog.rnstlr.ch/tag/kodi.html">Kodi</a> </p>
+</footer><!-- /.post-info --><p>After upgrading my archlinuxarm based Kodi media center as usual with just
+running <code>pacman -Syu</code> over ssh I didn't suspect anything. But on the next
+reboot the system blocked with waiting for wlan0 to get online.</p>
+<p>At first I suspected the kernel or linux-firmware upgrade, since a quick search
+found that this caused trouble in the past: <a href="https://archlinuxarm.org/forum/viewtopic.php?t=15833">firmware update breaks wifi on
+Rpi3</a></p>
+<h1>Downgrading <code>linux-firmware</code></h1>
+<p>Since remote connection was broken I sat with the keyboard in front of the TV
+screen and tried to downgrade the <code>linux-firmware</code> package from the pkg cache:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">pacman</span><span class="w"> </span><span class="o">-</span><span class="n">U</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">pacman</span><span class="o">/</span><span class="n">pkg</span><span class="o">/</span><span class="n">linux</span><span class="o">-</span><span class="n">firmware</span><span class="o">-</span><span class="mf">20240610.9</span><span class="n">c10a208</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">any</span><span class="o">.</span><span class="n">pkg</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
+</code></pre></div>
+
+<p>My hope for this easy fix were crushed, when the network still didn't start
+correctly after the next reboot. So I started to look into system logs with
+<code>sudo systemctl status --all</code> and realized that <code>wpa_supplicant@wlan0.service</code>
+couldn't start.</p>
+<h1>Investigating Further</h1>
+<p>Searching again I found <a href="https://bbs.archlinux.org/viewtopic.php?id=298025">https://bbs.archlinux.org/viewtopic.php?id=298025</a>
+from 2024-07-25 indicating that WiFi on Broadcom devices seems broken after the
+upgrade to <code>wpa_supplicant</code> 2.11.</p>
+<p>Looking again in <code>/var/cache/pacman/pkg/</code> I realized that the old
+<code>wpa_supplicant</code> package was missing. Probably since it 2.10 was the current
+version when I installed the whole system.</p>
+<p>Moving forward I decided to switch to <code>iwd</code>, which seems better maintained and
+I also use it on my Laptop.</p>
+<h1>Switching to <code>iwd</code></h1>
+<p>So I headed to <a href="https://archlinuxarm.org/packages/armv7h/iwd">https://archlinuxarm.org/packages/armv7h/iwd</a>, downloaded the
+package and its dependency <code>ell</code> manually, copied it together with the WiFi
+configuration from my laptop from <code>/var/lib/iwd/</code> to a USB flash drive and
+installed them:</p>
+<div class="highlight"><pre><span></span><code>sudo mount /dev/sda1 /mnt
+sudo pacman -U /mnt/iwd-2.19-1-armv7h.pkg.tar.xz /mnt/ell-0.67-1-armv7h.pkg.tar.xz
+</code></pre></div>
+
+<p>Then I replaced <code>wpa_supplicant</code> with <code>iwd</code></p>
+<div class="highlight"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">wpa_supplicant</span><span class="nv">@wlan0</span><span class="p">.</span><span class="n">service</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">disable</span><span class="w"> </span><span class="n">wpa_supplicant</span><span class="nv">@wlan0</span><span class="p">.</span><span class="n">service</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">pacman</span><span class="w"> </span><span class="o">-</span><span class="n">Rs</span><span class="w"> </span><span class="n">wpa_supplicant</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="n">iwd</span><span class="p">.</span><span class="n">service</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">systemctl</span><span class="w"> </span><span class="k">start</span><span class="w"> </span><span class="n">iwd</span><span class="p">.</span><span class="n">service</span>
+</code></pre></div>
+
+<p>And 🎉 working WiFi again on my Kodi system!</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://blog.rnstlr.ch/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html" rel="bookmark"
+                           title="Permalink to YouTube plugin for Kodi on the Raspberry Pi 3">YouTube plugin for Kodi on the Raspberry Pi 3</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2024-04-11T00:00:00+02:00">
                 Published: Do 11 April 2024
@@ -38,104 +104,10 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> <a href="https://blog.rnstlr.ch/tag/kodi.html">Kodi</a> </p>
-</footer><!-- /.post-info --><p>Last year I installed Kodi on my RaspberryPi 3 to use as a media system. While
-it runs quite nicely to stream stuff from my NAS with remote controlling from
-<a href="https://f-droid.org/packages/org.xbmc.kore/">Kore</a>, every now and then I
-wanted to play something from YouTube, which didn't work.</p>
-<p>Installing the YouTube plugin always failed with Kodi being unable to install a
-dependency called <code>inputstream-adaptive</code>. Looking at
-<a href="https://kodi.tv/addons/omega/inputstream.adaptive/">https://kodi.tv/addons/omega/inputstream.adaptive/</a>` it seems, that the plugin
-is only available for Windows, OSX and Android.</p>
-<p>Looking at the ArchLinuxARM forums I found
-<a href="https://archlinuxarm.org/forum/viewtopic.php?f=60&amp;t=13189&amp;p=59774&amp;hilit=kodi+inputstream#p59774">https://archlinuxarm.org/forum/viewtopic.php?f=60&amp;t=13189&amp;p=59774&amp;hilit=kodi+inputstream#p59774</a>
-which shows that people built the plugin themselves to get other plugins to
-work.</p>
-<h1>Installing from AUR</h1>
-<p>Luckily there is a PKGBUILD available on the AUR:
-<a href="https://aur.archlinux.org/packages/kodi-addon-inputstream-adaptive-git">https://aur.archlinux.org/packages/kodi-addon-inputstream-adaptive-git</a>. Since
-I didn't want to bother with cross-compiling for the Pi I thought I'll just
-compile it on the Pi itself: </p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>base-devel<span class="w"> </span>git
-git<span class="w"> </span>clone<span class="w"> </span>https://aur.archlinux.org/kodi-addon-inputstream-adaptive-git.git
-<span class="nb">cd</span><span class="w"> </span>kodi-addon-inputstream-adaptive-git/
-makepkg<span class="w"> </span>-s
-</code></pre></div>
-
-<h1>Trouble</h1>
-<p>The first error I ran into was that the build wants to use an unsupported flag
-for the compiler:</p>
-<div class="highlight"><pre><span></span><code>==&gt; Starting build()...
--- The C compiler identification is GNU 12.1.0
--- The CXX compiler identification is GNU 12.1.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - failed
--- Check for working C compiler: /usr/bin/cc
--- Check for working C compiler: /usr/bin/cc - broken
-CMake Error at /usr/share/cmake/Modules/CMakeTestCCompiler.cmake:67 (message):
-  The C compiler
-
-    &quot;/usr/bin/cc&quot;
-
-  is not able to compile a simple test program.
-
-  It fails with the following output:
-
-    Change Dir: &#39;/home/alarm/archpkg/kodi-addon-inputstream-adaptive-git/src/kodi-addon-inputstream-adaptive-git/kodi-addon-inputstream-adaptive-git-build/CMakeFiles/CMakeScratch/TryCompile-SzNkS5&#39;
-
-    Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_def07/fast
-    /usr/bin/make  -f CMakeFiles/cmTC_def07.dir/build.make CMakeFiles/cmTC_def07.dir/build
-    make[1]: Entering directory &#39;/home/alarm/archpkg/kodi-addon-inputstream-adaptive-git/src/kodi-addon-inputstream-adaptive-git/kodi-addon-inputstream-adaptive-git-build/CMakeFiles/CMakeScratch/TryCompile-SzNkS5&#39;
-    Building C object CMakeFiles/cmTC_def07.dir/testCCompiler.c.o
-    /usr/bin/cc   -march=armv7-a -mfloat-abi=hard -mfpu=neon -O2 -pipe -fstack-protector-strong -fno-plt -fexceptions         -Wp,-D_FORTIFY_SOURCE=3 -Wformat -Werror=format-security         -fstack-clash-protection         -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer  -o CMakeFiles/cmTC_def07.dir/testCCompiler.c.o -c /home/alarm/archpkg/kodi-addon-inputstream-adaptive-git/src/kodi-addon-inputstream-adaptive-git/kodi-addon-inputstream-adaptive-git-build/CMakeFiles/CMakeScratch/TryCompile-SzNkS5/testCCompiler.c
-    cc: error: unrecognized command-line option &#39;-mno-omit-leaf-frame-pointer&#39;; did you mean &#39;-fno-omit-frame-pointer&#39;?
-    make[1]: *** [CMakeFiles/cmTC_def07.dir/build.make:78: CMakeFiles/cmTC_def07.dir/testCCompiler.c.o] Error 1
-    make[1]: Leaving directory &#39;/home/alarm/archpkg/kodi-addon-inputstream-adaptive-git/src/kodi-addon-inputstream-adaptive-git/kodi-addon-inputstream-adaptive-git-build/CMakeFiles/CMakeScratch/TryCompile-SzNkS5&#39;
-    make: *** [Makefile:127: cmTC_def07/fast] Error 2
-
-
-  CMake will not be able to correctly generate this project.
-Call Stack (most recent call first):
-  CMakeLists.txt:5 (project)
-
-
--- Configuring incomplete, errors occurred!
-==&gt; ERROR: A failure occurred in build().
-    Aborting...
-</code></pre></div>
-
-<p>The culprit was <code>cc: error: unrecognized command-line option '-mno-omit-leaf-frame-pointer'; did you mean '-fno-omit-frame-pointer'</code>.</p>
-<p>It turns out that it was due to a wrong default configuration in
-<code>/etc/makepkg.conf</code>. This issue was already reported twice in the forums, so I
-didn't bother to report it as well:</p>
-<ul>
-<li><a href="https://archlinuxarm.org/forum/viewtopic.php?f=15&amp;t=16837&amp;p=72357">https://archlinuxarm.org/forum/viewtopic.php?f=15&amp;t=16837&amp;p=72357</a></li>
-<li><a href="https://archlinuxarm.org/forum/viewtopic.php?f=57&amp;t=16830&amp;p=72344">https://archlinuxarm.org/forum/viewtopic.php?f=57&amp;t=16830&amp;p=72344</a></li>
-</ul>
-<p>Removing <code>-mno-omit-leaf-frame-pointer</code> from <code>/etc/makepkg.conf</code> got me a bit
-further: </p>
-<div class="highlight"><pre><span></span><code>CMake Error at /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
-  Could NOT find RAPIDJSON (missing: RAPIDJSON_INCLUDES)
-Call Stack (most recent call first):
-  /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:600 (_FPHSA_FAILURE_MESSAGE)
-  FindRAPIDJSON.cmake:19 (find_package_handle_standard_args)
-  CMakeLists.txt:18 (find_package)
-</code></pre></div>
-
-<p>This was just a missing dependency in the PKGBUILD, which I could just install
-with <code>sudo pacman -S rapidjson</code>.</p>
-<h1>Success</h1>
-<p>After the two bumps the build finished without further problems and I could
-install the addon:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>pacman<span class="w"> </span>-U<span class="w"> </span>kodi-addon-inputstream-adaptive-git-21.4.4.Omega.r9.g109c0e7a-1-armv7h.pkg.tar.xz
-sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>kodi.service
-</code></pre></div>
-
-<p><img alt="Installing the YouTube addon" src="https://blog.rnstlr.ch/images/kodi/kodi-youtube-addon-install.png" width="100%"></p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Getting the YouTube plugin for Kodi to work on the Raspberry Pi 3</p>
+                <a class="readmore" href="https://blog.rnstlr.ch/youtube-plugin-for-kodi-on-the-raspberry-pi-3.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -311,29 +283,6 @@ sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class=
 <p>tags: <a href="https://blog.rnstlr.ch/tag/learning.html">learning</a> <a href="https://blog.rnstlr.ch/tag/ruby.html">ruby</a> <a href="https://blog.rnstlr.ch/tag/bundler.html">bundler</a> <a href="https://blog.rnstlr.ch/tag/learning-ruby-like-its-2009.html">learning-ruby-like-its-2009</a> </p>
 </footer><!-- /.post-info -->                <p>First part of my journey to learn ruby and rails. Focusing on bundler and version management.</p>
                 <a class="readmore" href="https://blog.rnstlr.ch/learning-ruby-like-its-2009-part-1.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/starting-to-blog-again.html" rel="bookmark"
-                           title="Permalink to Starting to blog again">Starting to blog again</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-02-10T00:00:00+01:00">
-                Published: Do 10 Februar 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/meta.html">meta</a> <a href="https://blog.rnstlr.ch/tag/blog.html">blog</a> </p>
-</footer><!-- /.post-info -->                <p class="first last">Why I want to start blogging again</p>
-
-                <a class="readmore" href="https://blog.rnstlr.ch/starting-to-blog-again.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

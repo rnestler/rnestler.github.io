@@ -1,7 +1,6 @@
 Title: Switching from wpa_supplicant to iwd on my Raspberry Pi
 Tags: Raspberry Pi, Linux, ArchLinux, ARM, Kodi
 Language: en
-State: draft
 Summary: Switching from the broken `wpa_supplicant` to `iwd` for my Kodi installation on a Raspberry Pi 3
 
 After upgrading my archlinuxarm based Kodi media center as usual with just

@@ -1,8 +1,8 @@
-Title: Switching from wpa\_supplicant to iwd on the Raspberry Pi 3
+Title: Switching from wpa_supplicant to iwd on my Raspberry Pi
 Tags: Raspberry Pi, Linux, ArchLinux, ARM, Kodi
 Language: en
 State: draft
-Summary: Switching from the broken wpa\_supplicant to iwd for my Kodi installation on a Raspberry Pi 3
+Summary: Switching from the broken `wpa_supplicant` to `iwd` for my Kodi installation on a Raspberry Pi 3
 
 After upgrading my archlinuxarm based Kodi media center as usual with just
 running `pacman -Syu` over ssh I didn't suspect anything. But on the next
@@ -28,8 +28,8 @@ couldn't start.
 
 # Investigating Further
 
-Searching again I found https://bbs.archlinux.org/viewtopic.php?id=298025 from
-2024-07-25 indicating that WiFi on Broadcom devices seems broken after the
+Searching again I found <https://bbs.archlinux.org/viewtopic.php?id=298025>
+from 2024-07-25 indicating that WiFi on Broadcom devices seems broken after the
 upgrade to `wpa_supplicant` 2.11.
 
 Looking again in `/var/cache/pacman/pkg/` I realized that the old
@@ -41,7 +41,7 @@ I also use it on my Laptop.
 
 # Switching to `iwd`
 
-So I headed to https://archlinuxarm.org/packages/armv7h/iwd, downloaded the
+So I headed to <https://archlinuxarm.org/packages/armv7h/iwd>, downloaded the
 package and its dependency `ell` manually, copied it together with the WiFi
 configuration from my laptop from `/var/lib/iwd/` to a USB flash drive and
 installed them:

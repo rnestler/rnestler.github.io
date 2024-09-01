@@ -215,3 +215,94 @@ dtoverlay=hifiberry-dacplus,slave
 
 For the next step I powered down and hooked up the Raspberry Pi to the
 hardware.
+
+## Configuring Audio
+
+To be able to test I needed to add the `alarm` user to the `audio` group:
+
+```
+sudo usermod -G audio -a alarm
+```
+
+Then I used `aplay -l` to find out which device got which card index:
+
+```text
+$ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 0: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: sndrpihifiberry [snd_rpi_hifiberry_dacplus], device 0: HiFiBerry DAC+ HiFi pcm512x-hifi-0 [HiFiBerry DAC+ HiFi pcm512x-hifi-0]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+```
+
+To route audio by default to the hifiberry device I configured alsa to use
+card-1 by default I created `/etc/alsa/conf.d/default.conf` with the following
+content ([^1]):
+
+```
+defaults.pcm.card 1
+defaults.ctl.card 1
+```
+
+Then I used `speaker-test` to test the speakers
+
+```
+$ speaker-test -c 2
+
+speaker-test 1.2.12
+
+Playback device is default
+Stream parameters are 48000Hz, S16_LE, 2 channels
+Using 16 octaves of pink noise
+Rate set to 48000Hz (requested 48000Hz)
+Buffer size range from 8 to 131072
+Period size range from 4 to 65536
+Periods = 4
+was set period_size = 12000
+was set buffer_size = 48000
+ 0 - Front Left
+ 1 - Front Right
+Time per period = 5.007955
+ 0 - Front Left
+ 1 - Front Right
+```
+
+After connecting my USB audio device I noticed, that the indices of the sound
+cards changed:
+
+```text
+$ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 0: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: CODEC [USB AUDIO  CODEC], device 0: USB Audio [USB Audio]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 2: sndrpihifiberry [snd_rpi_hifiberry_dacplus], device 0: HiFiBerry DAC+ HiFi pcm512x-hifi-0 [HiFiBerry DAC+ HiFi pcm512x-hifi-0]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+```
+
+So to get around that I switched the configuration to use the name of the card.
+For that we need to use a slightly different syntax:
+
+```
+pcm.!default {
+	type hw
+	card sndrpihifiberry
+}
+
+ctl.!default {
+	type hw
+	card sndrpihifiberry
+}
+```
+
+### Notes
+
+ * Playing back line in: `alsaloop -C hw:1,0 -P hw:2,0`
+
+[^1]: See also <https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Setting_the_default_sound_card_via_defaults_node>

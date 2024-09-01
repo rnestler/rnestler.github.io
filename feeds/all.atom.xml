@@ -674,7 +674,9 @@ building the HTML documentation.&lt;/p&gt;
 &lt;p&gt;This caused the system to become unresponsive before the OOM killer decided to
 just kill my user session.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 100%"&gt;
-&lt;a class="reference external image-reference" href="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png"&gt;&lt;img alt="htop just shortly before killing the build process" src="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png"&gt;
+&lt;img alt="htop just shortly before killing the build process" src="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;htop output just before killing the build process&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Looking for a way to not have the OOM killer kill my session, but kill the
@@ -1555,11 +1557,15 @@ visiting a hackerspace, but an alternative culture centre called Medika &lt;a cl
 which is run by &lt;a class="reference external" href="http://attack.hr/"&gt;AKC Attack&lt;/a&gt;.  So upon arrival I was quite enchanted by the
 charm of the place.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_3.jpg"&gt;&lt;img alt="Entry hall in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_3.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_3.jpg"&gt;
+&lt;img alt="Entry hall in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_3.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Entry hall in Medika&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_entry.jpg"&gt;&lt;img alt="Entry to hacklab01" src="/images/tour_de_hackerspace/hacklab01/hacklab01_entry.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_entry.jpg"&gt;
+&lt;img alt="Entry to hacklab01" src="/images/tour_de_hackerspace/hacklab01/hacklab01_entry.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Entry to hacklab01&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Since Vedran was in the middle of a meeting, I just sat down and started to
@@ -1573,19 +1579,25 @@ decided that I will give a short introduction to Rust on Tuesday.&lt;/p&gt;
 hackerspace itself consists of a single room, containing an electronics
 workspace, some tables for laptop work, couches and a bunch of other stuff.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_room.jpg"&gt;&lt;img alt="The hacklab01 room" src="/images/tour_de_hackerspace/hacklab01/hacklab01_room.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_room.jpg"&gt;
+&lt;img alt="The hacklab01 room" src="/images/tour_de_hackerspace/hacklab01/hacklab01_room.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;The hacklab01 room&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;But since there are various other NGOs and artist in the same complex, there
 was plenty of stuff to see! &lt;a class="footnote-reference" href="#footnote-3" id="footnote-reference-3"&gt;[3]&lt;/a&gt;&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg"&gt;&lt;img alt="Hallway in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg"&gt;
+&lt;img alt="Hallway in Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_hallway.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Hallway in Medika&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The rooms for residents of Medika, including showers and toilets, are separated
 from the rest of the building.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_1.jpg"&gt;&lt;img alt="Door to the living part of Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_1.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_1.jpg"&gt;
+&lt;img alt="Door to the living part of Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_1.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Door to the living part of Medika&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Sadly I didn't take pictures of every room.  In the &amp;quot;headquarter&amp;quot; of the
@@ -1596,7 +1608,9 @@ stressful for her and most of the people living or working in Medika.  On the
 bright side this also forced them to closely work together, which strengthened
 their the Medika community as a whole.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_2.jpg"&gt;&lt;img alt="&amp;quot;headquarters&amp;quot; of Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_2.jpg"&gt;
+&lt;img alt="&amp;quot;headquarters&amp;quot; of Medika" src="/images/tour_de_hackerspace/hacklab01/hacklab01_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;&amp;quot;headquarters&amp;quot; of Medika&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;They told me that similar stuff happened before and that the situation as a
@@ -1610,7 +1624,9 @@ tell them that I have all that stuff with me!  I found this level of
 hospitality quite amazing and welcoming!&lt;/p&gt;
 &lt;p&gt;The next day Vedran showed my around the old town of the city in the afternoon.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_city_6.jpg"&gt;&lt;img alt="The national theatre" src="/images/tour_de_hackerspace/hacklab01/hacklab01_city_6.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_city_6.jpg"&gt;
+&lt;img alt="The national theatre" src="/images/tour_de_hackerspace/hacklab01/hacklab01_city_6.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;The national theatre&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;When we got a coffee, we started to talk about the problems they have with the
@@ -1621,7 +1637,9 @@ be charged because of corruption, but doesn't need to resign because of that.
 According to an &lt;a class="reference external" href="https://www.unodc.org/documents/data-and-analysis/statistics/corruption/Croatia_corruption_report_web_version.pdf"&gt;UN report&lt;/a&gt; corruption and bribery is very common in Croatia,
 so maybe the population just got used to it.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_city_2.jpg"&gt;&lt;img alt="View over the old town" src="/images/tour_de_hackerspace/hacklab01/hacklab01_city_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_city_2.jpg"&gt;
+&lt;img alt="View over the old town" src="/images/tour_de_hackerspace/hacklab01/hacklab01_city_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;View over the old town&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The rest of the afternoon I spent in the hackerspace itself, writing my blog
@@ -1646,7 +1664,9 @@ when I got up people where already preparing stuff for the party.&lt;/p&gt;
 &lt;p&gt;Since it was very nice weather I decided to take a look at the Botanics garden
 in Zagreb.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_botanic_garden_4.jpg"&gt;&lt;img alt="Botanics garden" src="/images/tour_de_hackerspace/hacklab01/hacklab01_botanic_garden_4.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_botanic_garden_4.jpg"&gt;
+&lt;img alt="Botanics garden" src="/images/tour_de_hackerspace/hacklab01/hacklab01_botanic_garden_4.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Botanics garden&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;After that I wandered around the city and got some coffee (and somehow got
@@ -1654,30 +1674,40 @@ member of a &lt;a class="reference external" href="https://www.facebook.com/page
 Rust workshop I agreed to give in hacklab01!  So I rushed back to the space and
 shortly after had an awesome time helping people getting started with Rust.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_rust_intro.jpg"&gt;&lt;img alt="Introduction to Rust" src="/images/tour_de_hackerspace/hacklab01/hacklab01_rust_intro.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_rust_intro.jpg"&gt;
+&lt;img alt="Introduction to Rust" src="/images/tour_de_hackerspace/hacklab01/hacklab01_rust_intro.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Introduction to Rust&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;After the workshop we joined the party&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_party.jpg"&gt;&lt;img alt="Party time!" src="/images/tour_de_hackerspace/hacklab01/hacklab01_party.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/hacklab01/hacklab01_party.jpg"&gt;
+&lt;img alt="Party time!" src="/images/tour_de_hackerspace/hacklab01/hacklab01_party.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Party time!&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Vedran suggested that I also visit another hackerspace in Zagreb, namely
 RADIONA.  One member of them offered to pick up by car at Medika and drive us
 to the space.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_1.jpg"&gt;&lt;img alt="Electronic lab and 3D printers in RADIONA" src="/images/tour_de_hackerspace/radiona/radiona_1.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_1.jpg"&gt;
+&lt;img alt="Electronic lab and 3D printers in RADIONA" src="/images/tour_de_hackerspace/radiona/radiona_1.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Electronic lab and 3D printers in RADIONA&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_2.jpg"&gt;&lt;img alt="Famous Nikola Tesla in RADIONA" src="/images/tour_de_hackerspace/radiona/radiona_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_2.jpg"&gt;
+&lt;img alt="Famous Nikola Tesla in RADIONA" src="/images/tour_de_hackerspace/radiona/radiona_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Famous Nikola Tesla in RADIONA&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;It is a rather small space, even smaller than coredump, but the community is
 very alive.  One of the members built his own electric skateboard and we had
 lots of fun talking about the design of it and testing it.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_skate_board.mp4"&gt;&lt;img alt="DIY electric skateboard" src="/images/tour_de_hackerspace/radiona/radiona_skate_board_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/radiona/radiona_skate_board.mp4"&gt;
+&lt;img alt="DIY electric skateboard" src="/images/tour_de_hackerspace/radiona/radiona_skate_board_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;DIY electric skateboard&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;After our short visit, we returned back to Medika, enjoying the party for the
@@ -1737,7 +1767,9 @@ was really nice, we talked a lot, and he explained my the different places
 while we were passing by.  I loved the experience of entering Bosnia when
 suddenly the whole landscape looks different, with lots of hills and forests.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_travel_2.jpg"&gt;&lt;img alt="View during a break on the car ride" src="/images/tour_de_hackerspace/sarajevo/sarajevo_travel_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_travel_2.jpg"&gt;
+&lt;img alt="View during a break on the car ride" src="/images/tour_de_hackerspace/sarajevo/sarajevo_travel_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;View during a break on the car ride&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;We then arrived in the early afternoon in Sarajevo.  Quite early during my
@@ -1749,7 +1781,9 @@ couch surf at his place and meet him there in the evening.&lt;/p&gt;
 luggage in a nearby hostel and wander around the old town of the city.  I had
 some of the &lt;a class="reference external" href="https://duckduckgo.com/?q=bosnian+coffee&amp;amp;yeg=B&amp;amp;iax=1&amp;amp;ia=images"&gt;Bosnian coffee&lt;/a&gt; and tried the Ćevapi for late lunch.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_2.jpg"&gt;&lt;img alt="Sarajevo old town" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_2.jpg"&gt;
+&lt;img alt="Sarajevo old town" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Sarajevo old town&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;At some point during the afternoon I noticed that I forgot my Ferris plushie in
@@ -1762,7 +1796,9 @@ guys I've seen earlier in the afternoon in the old town.  I always love meeting
 other people who are travelling because they are most of the time easy going
 and have some interesting stories to tell.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_6.jpg"&gt;&lt;img alt="Sarajevo during the night" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_6.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_6.jpg"&gt;
+&lt;img alt="Sarajevo during the night" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_6.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Sarajevo during the night&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;We ended up having lots of fun this night which lead to me having a very hard
@@ -1774,15 +1810,21 @@ Tabija castle&lt;/a&gt; where one has a nice view over the city.  During my way 
 also enjoyed exploring this part of the city which consist of many small
 streets and alleyways.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_8.jpg"&gt;&lt;img alt="On my way to Bijela Tabija" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_8.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_8.jpg"&gt;
+&lt;img alt="On my way to Bijela Tabija" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_8.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;On my way to Bijela Tabija&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_14.jpg"&gt;&lt;img alt="Ruins of the Bijela Tabija castle" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_14.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_14.jpg"&gt;
+&lt;img alt="Ruins of the Bijela Tabija castle" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_14.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Ruins of the Bijela Tabija castle&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_17.jpg"&gt;&lt;img alt="View over Sarajevo" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_17.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_city_17.jpg"&gt;
+&lt;img alt="View over Sarajevo" src="/images/tour_de_hackerspace/sarajevo/sarajevo_city_17.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;View over Sarajevo&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;In the evening we had again lots of fun, this time visiting a shisha bar /
@@ -1795,7 +1837,9 @@ to visit his workplace in Sarajevo.  He works for the &lt;a class="reference ext
 Corruption Reporting Project&lt;/a&gt; (OCCRP), which does a great job supporting
 investigative journalism all over the world.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_occrp_office.jpg"&gt;&lt;img alt="Door to czesiek's office in the OCCRP place" src="/images/tour_de_hackerspace/sarajevo/sarajevo_occrp_office.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_occrp_office.jpg"&gt;
+&lt;img alt="Door to czesiek's office in the OCCRP place" src="/images/tour_de_hackerspace/sarajevo/sarajevo_occrp_office.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Door to czesiek's office in the OCCRP place&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Since I wanted to avoid taking pictures of any sensitive material I just took a
@@ -1819,7 +1863,9 @@ Bosnian, Mexican, American, British and Swiss)!&lt;/p&gt;
 and I attended a &lt;a class="reference external" href="https://www.mreza-mira.net/vijesti/razno/lgbti-zajednica-odrzala-lekciju-vlastima/"&gt;protest&lt;/a&gt; against violence towards LGBT people.  It was a
 very peaceful and somewhat cheerful event.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="http://static.ba.n1info.com/Picture/112125/jpeg/Sequence-01.Still011.jpg"&gt;&lt;img alt="Protesters, source: http://ba.n1info.com/a153795/Vijesti/Vijesti/Odrzan-protest-LGBTI-osoba.html" src="http://static.ba.n1info.com/Picture/112125/jpeg/Sequence-01.Still011.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="http://static.ba.n1info.com/Picture/112125/jpeg/Sequence-01.Still011.jpg"&gt;
+&lt;img alt="Protesters, source: http://ba.n1info.com/a153795/Vijesti/Vijesti/Odrzan-protest-LGBTI-osoba.html" src="http://static.ba.n1info.com/Picture/112125/jpeg/Sequence-01.Still011.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Protesters, source: &lt;a class="reference external" href="http://ba.n1info.com/a153795/Vijesti/Vijesti/Odrzan-protest-LGBTI-osoba.html"&gt;http://ba.n1info.com/a153795/Vijesti/Vijesti/Odrzan-protest-LGBTI-osoba.html&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;After the protest we went for some coffee and I had the opportunity to meet
@@ -1834,7 +1880,9 @@ amazing people, amongst others Emina Bošnjak from the &lt;a class="reference ex
 enough time to go up to &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Trebević"&gt;Trebević&lt;/a&gt; mountain, enjoy the view and walk the way
 down.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_mountain_2.jpg"&gt;&lt;img alt="View from Trebević" src="/images/tour_de_hackerspace/sarajevo/sarajevo_mountain_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/sarajevo/sarajevo_mountain_2.jpg"&gt;
+&lt;img alt="View from Trebević" src="/images/tour_de_hackerspace/sarajevo/sarajevo_mountain_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;View from Trebević&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;I really loved my stay in Sarajevo.  czesiek is an awesome host and I can
@@ -1865,30 +1913,40 @@ the afternoon so I can take a look at the hacklab.&lt;/p&gt;
 &lt;p&gt;So the next day I took a look at the city and then proceeded to the hacklab in
 the afternoon.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_city.jpg"&gt;&lt;img alt="View in Belgrade where the Danube and Sava rivers join" src="/images/tour_de_hackerspace/belgrad/belgrad_city.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_city.jpg"&gt;
+&lt;img alt="View in Belgrade where the Danube and Sava rivers join" src="/images/tour_de_hackerspace/belgrad/belgrad_city.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;View in Belgrade where the Danube and Sava rivers join&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The hacklab is actually located in a former flat and thus contains a nice
 kitchen and bathroom.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_main_room.jpg"&gt;&lt;img alt="Main room of the hacklab" src="/images/tour_de_hackerspace/belgrad/belgrad_main_room.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_main_room.jpg"&gt;
+&lt;img alt="Main room of the hacklab" src="/images/tour_de_hackerspace/belgrad/belgrad_main_room.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Main room of the hacklab&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The space basically consists of the main room which has some working places and
 sofas.  There is also a place to do electronics work.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_electronics_work.jpg"&gt;&lt;img alt="Electronics work place" src="/images/tour_de_hackerspace/belgrad/belgrad_electronics_work.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_electronics_work.jpg"&gt;
+&lt;img alt="Electronics work place" src="/images/tour_de_hackerspace/belgrad/belgrad_electronics_work.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Electronics work place&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;They also have a second room which provides some more working space.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_room_2.jpg"&gt;&lt;img alt="Second room" src="/images/tour_de_hackerspace/belgrad/belgrad_room_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_room_2.jpg"&gt;
+&lt;img alt="Second room" src="/images/tour_de_hackerspace/belgrad/belgrad_room_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Second room&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;An interesting thing in their space is the book scanning machine.  One can use
 it to digitize books.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_book_scanning.jpg"&gt;&lt;img alt="Book scanning machine" src="/images/tour_de_hackerspace/belgrad/belgrad_book_scanning.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/belgrad/belgrad_book_scanning.jpg"&gt;
+&lt;img alt="Book scanning machine" src="/images/tour_de_hackerspace/belgrad/belgrad_book_scanning.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Book scanning machine&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;After showing me around we got to talk about what they mainly do in the space.
@@ -1905,13 +1963,17 @@ that he can pick me up from the train station and I can spend the night in the
 hackerspace.  After some difficulties finding each other at the train station
 we went directly to the space.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_entry.jpg"&gt;&lt;img alt="Entry to the Plan Zero hackerspace" src="/images/tour_de_hackerspace/plan_zero/plan_zero_entry.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_entry.jpg"&gt;
+&lt;img alt="Entry to the Plan Zero hackerspace" src="/images/tour_de_hackerspace/plan_zero/plan_zero_entry.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Entry to the &lt;a class="reference external" href="http://planzero.ro"&gt;Plan Zero&lt;/a&gt; hackerspace&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;He then gave me a short tour around the space, especially showing me their (or
 mainly his) awesome collection of fully working retro computers.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_3.jpg"&gt;&lt;img alt="Retro computer collection" src="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_3.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_3.jpg"&gt;
+&lt;img alt="Retro computer collection" src="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_3.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Retro computer collection&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Amongst others they own a C-64, an Amiga, Apple-II clones and a &lt;a class="reference external" href="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_2.jpg"&gt;Mac Classic&lt;/a&gt;.
@@ -1921,7 +1983,9 @@ impressed by this level of trust they showed me!&lt;/p&gt;
 &lt;p&gt;So after hacking a &lt;em&gt;tiny bit&lt;/em&gt; on the C-64 while getting constant attention from
 the cat which lives in the space, I went to sleep around 3 in the morning.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_c64.mp4"&gt;&lt;img alt="Having fun with the C-64" src="/images/tour_de_hackerspace/plan_zero/plan_zero_c64.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_c64.mp4"&gt;
+&lt;img alt="Having fun with the C-64" src="/images/tour_de_hackerspace/plan_zero/plan_zero_c64.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Having fun with the C-64&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;The next day I explored the city and met with Mihai in the afternoon.  We then
@@ -1930,28 +1994,38 @@ returned to the hackerspace.&lt;/p&gt;
 &lt;p&gt;Like almost every hackerspace Plan Zero also has a main room.  In contrast to
 other spaces the main room is more about hanging out and eating than working.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_main_room.jpg"&gt;&lt;img alt="Main room" src="/images/tour_de_hackerspace/plan_zero/plan_zero_main_room.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_main_room.jpg"&gt;
+&lt;img alt="Main room" src="/images/tour_de_hackerspace/plan_zero/plan_zero_main_room.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Main room&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Next there is a room with electronics equipment 3D printers and work places.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_electronics_working_room.jpg"&gt;&lt;img alt="Electronics / working room" src="/images/tour_de_hackerspace/plan_zero/plan_zero_electronics_working_room.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_electronics_working_room.jpg"&gt;
+&lt;img alt="Electronics / working room" src="/images/tour_de_hackerspace/plan_zero/plan_zero_electronics_working_room.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Electronics / working room&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_3d_printers.jpg"&gt;&lt;img alt="3D printers" src="/images/tour_de_hackerspace/plan_zero/plan_zero_3d_printers.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_3d_printers.jpg"&gt;
+&lt;img alt="3D printers" src="/images/tour_de_hackerspace/plan_zero/plan_zero_3d_printers.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;3D printers&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;While three 3D printers are fully operational, one of the members is building a
 forth printer next to them.&lt;/p&gt;
 &lt;p&gt;The space is also well equipped for most mechanic needs, with a nice workshop.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_work_shop_2.jpg"&gt;&lt;img alt="Workshop tooling" src="/images/tour_de_hackerspace/plan_zero/plan_zero_work_shop_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_work_shop_2.jpg"&gt;
+&lt;img alt="Workshop tooling" src="/images/tour_de_hackerspace/plan_zero/plan_zero_work_shop_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Workshop tooling&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Also similar to other spaces there is a small storage room for random stuff.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_storage.jpg"&gt;&lt;img alt="Storage room" src="/images/tour_de_hackerspace/plan_zero/plan_zero_storage.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_storage.jpg"&gt;
+&lt;img alt="Storage room" src="/images/tour_de_hackerspace/plan_zero/plan_zero_storage.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Storage room&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;After I spent some time taking a closer look at the space, taking pictures and
@@ -1971,7 +2045,9 @@ emulator which allows to connect USB thumb drives with images on it.  After
 trying several USB drives and bricking one due to wrong wiring, he finally got
 it working:&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_4.jpg"&gt;&lt;img alt="Amiga running a disk image with the floppy emulator" src="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_4.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_4.jpg"&gt;
+&lt;img alt="Amiga running a disk image with the floppy emulator" src="/images/tour_de_hackerspace/plan_zero/plan_zero_retro_4.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Amiga running a disk image with the floppy emulator&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;When planning for my next destination I realized that traveling through the
@@ -2002,25 +2078,33 @@ planing ;)&lt;/p&gt;
 &lt;p&gt;Anyway, I spent the next day taking a look at the wonderful city of Szeged,
 including a visit to the &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Szeged_witch_trials"&gt;&amp;quot;Witch Island&amp;quot; area&lt;/a&gt; and the local zoo.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/city/szeged_city_5.jpg"&gt;&lt;img alt="Szeged Cathedral" src="/images/tour_de_hackerspace/szeged/city/szeged_city_5.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/city/szeged_city_5.jpg"&gt;
+&lt;img alt="Szeged Cathedral" src="/images/tour_de_hackerspace/szeged/city/szeged_city_5.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Szeged Cathedral&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;In the evening I finally managed to pay a short visit to the Hackerspace
 Szeged.  They had a follow up of their lock picking workshop of the day before,
 so they explained me how to theoretically pick combination locks.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_lock.jpg"&gt;&lt;img alt="Combination lock for the workshop" src="/images/tour_de_hackerspace/szeged/szeged_lock.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_lock.jpg"&gt;
+&lt;img alt="Combination lock for the workshop" src="/images/tour_de_hackerspace/szeged/szeged_lock.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Combination lock for the workshop&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;They are a young and rather small hackerspace, but active nevertheless!  The
 space consist of the classical main room:&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_main_room_1.jpg"&gt;&lt;img alt="Main room of the Hackerspace Szeged" src="/images/tour_de_hackerspace/szeged/szeged_main_room_1.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_main_room_1.jpg"&gt;
+&lt;img alt="Main room of the Hackerspace Szeged" src="/images/tour_de_hackerspace/szeged/szeged_main_room_1.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Main room of the Hackerspace Szeged&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;And a second smaller room which they mostly use as a storage room.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_second_room.jpg"&gt;&lt;img alt="Main room of the Hackerspace Szeged" src="/images/tour_de_hackerspace/szeged/szeged_second_room.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/szeged/szeged_second_room.jpg"&gt;
+&lt;img alt="Main room of the Hackerspace Szeged" src="/images/tour_de_hackerspace/szeged/szeged_second_room.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Main room of the Hackerspace Szeged&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Since I already made plans to spend the rest of the evening with Zsuzsa and
@@ -2038,7 +2122,9 @@ my ticket with the train crew, buying additional tickets and so on.&lt;/p&gt;
 &lt;p&gt;The train ride was quite an adventure and I even got to ride the famous
 &amp;quot;platzkart&amp;quot; class night train.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_train_ride_3.jpg"&gt;&lt;img alt="The famous platzkart" src="/images/tour_de_hackerspace/kiev/kiev_train_ride_3.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_train_ride_3.jpg"&gt;
+&lt;img alt="The famous platzkart" src="/images/tour_de_hackerspace/kiev/kiev_train_ride_3.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;The famous platzkart&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;I didn't take many pictures during the platzkart train ride, but if you want
@@ -2059,7 +2145,9 @@ even works.  By the end of the workshop we had some kind of crypto currency
 implemented with a little node based web app to create new wallets, add funds
 out of nowhere and transfer funds.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_rustfest_crypto_3.png"&gt;&lt;img alt="Screenshots from the webapp" src="/images/tour_de_hackerspace/kiev/kiev_rustfest_crypto_3.png" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_rustfest_crypto_3.png"&gt;
+&lt;img alt="Screenshots from the webapp" src="/images/tour_de_hackerspace/kiev/kiev_rustfest_crypto_3.png" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Screenshots from the webapp&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;I found a bug in the implementation, where if one transferred funds from a
@@ -2076,20 +2164,42 @@ increment on the &lt;tt class="docutils literal"&gt;receiver&lt;/tt&gt;, which s
 &lt;p&gt;After the workshop we formed a little group of Rustaceans and had a great time
 taking a look at the city!&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg"&gt;&lt;img alt="View over parts of Kiev" src="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg"&gt;
+&lt;img alt="View over parts of Kiev" src="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;View over parts of Kiev&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Here are some more images:&lt;/p&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_1.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_1.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_2.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_2.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_3.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_3.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_4.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_4.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_5.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_5.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_6.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_6.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_8.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_8.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_9.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_9.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_10.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_10.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_1.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_1.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_2.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_2.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_3.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_3.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_4.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_4.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_5.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_5.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_6.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_6.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_7.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_8.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_8.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_9.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_9.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/city/kiev_city_10.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/city/kiev_city_10.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;p&gt;In the evening we found a wonderful place for dinner and later met with some
 other Rustaceans to spend some time in a bar which &lt;a class="reference external" href="https://twitter.com/steveklabnik"&gt;Steve Klabnik&lt;/a&gt; suggested.&lt;/p&gt;
 &lt;p&gt;The next morning it was time for a quite diverse range of &lt;a class="reference external" href="http://2017.rustfest.eu/talks/"&gt;talks&lt;/a&gt;.  I
@@ -2106,7 +2216,9 @@ with Rust&lt;/a&gt; (still not finished)&lt;/li&gt;
 Rustacean Pattern&lt;/a&gt;, &lt;a class="reference external" href="https://twitter.com/qedunham"&gt;E Dunham&lt;/a&gt;.  She was impressed, that my girlfriend
 actually managed to create a Plushie Ferris from her description.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="https://twitter.com/NGC_3572/status/852546171440685056"&gt;&lt;img alt="My Plushie Ferris" src="/images/tour_de_hackerspace/kiev/ferris.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="https://twitter.com/NGC_3572/status/852546171440685056"&gt;
+&lt;img alt="My Plushie Ferris" src="/images/tour_de_hackerspace/kiev/ferris.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;My Plushie Ferris, picture taken by &lt;a class="reference external" href="https://twitter.com/NGC_3572"&gt;thomascovenant (&amp;#64;NGC_3572)&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;In the evening we had a great time during the after party.  Getting to know the
@@ -2115,7 +2227,9 @@ talked to quite a few people and learned lots of stuff.  I also talked to
 &lt;a class="reference external" href="https://twitter.com/ag_dubs"&gt;Ashley Williams&lt;/a&gt; about how to best teach kids programming and other stuff,
 since we &lt;a class="reference external" href="https://www.coredump.ch/2014/11/10/ferienpass-im-hackerspace/"&gt;do that&lt;/a&gt; in &lt;a class="reference external" href="https://www.coredump.ch/2016/11/01/ferienpass-2016/"&gt;our hackerspace&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="https://twitter.com/NGC_3572/status/858773710869803008"&gt;&lt;img alt="Me and some other Rustaceans" src="/images/tour_de_hackerspace/kiev/kiev_rustaceans.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="https://twitter.com/NGC_3572/status/858773710869803008"&gt;
+&lt;img alt="Me and some other Rustaceans" src="/images/tour_de_hackerspace/kiev/kiev_rustaceans.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Me and some other Rustaceans&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Just like last year, RustFest was super amazing!  It's so awesome to meet this
@@ -2136,64 +2250,86 @@ was always fun to hang out with them.  So I was happy I brought some Swiss
 chocolate with me which I could give them as a gift.&lt;/p&gt;
 &lt;p&gt;After dropping my luggage we went to the hackerspace.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_entry.jpg"&gt;&lt;img alt="Entry to the HackLab  Kyiv" src="/images/tour_de_hackerspace/kiev/kiev_entry.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_entry.jpg"&gt;
+&lt;img alt="Entry to the HackLab  Kyiv" src="/images/tour_de_hackerspace/kiev/kiev_entry.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Entry to the HackLab  Kyiv&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Their hackerspace consist mostly of people which are interested in mechanical
 engineering and electronics.  Due to that they own some awesome equippment such
 as multiple CNC machines, 3D printers, compressors and lots of other tools.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_cnc.jpg"&gt;&lt;img alt="CNC mill" src="/images/tour_de_hackerspace/kiev/kiev_cnc.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_cnc.jpg"&gt;
+&lt;img alt="CNC mill" src="/images/tour_de_hackerspace/kiev/kiev_cnc.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;CNC mill&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_big_cnc.jpg"&gt;&lt;img alt="Even bigger CNC mill" src="/images/tour_de_hackerspace/kiev/kiev_big_cnc.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_big_cnc.jpg"&gt;
+&lt;img alt="Even bigger CNC mill" src="/images/tour_de_hackerspace/kiev/kiev_big_cnc.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Even bigger CNC mill&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_3d_printers.jpg"&gt;&lt;img alt="3D printers" src="/images/tour_de_hackerspace/kiev/kiev_3d_printers.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_3d_printers.jpg"&gt;
+&lt;img alt="3D printers" src="/images/tour_de_hackerspace/kiev/kiev_3d_printers.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;3D printers&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;They created quite some awesome stuff with their 3D printer, including molds to
 create metallic stuff!&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_3d_prints.jpg"&gt;&lt;img alt="Awesome stuff they created with the 3D printers" src="/images/tour_de_hackerspace/kiev/kiev_3d_prints.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_3d_prints.jpg"&gt;
+&lt;img alt="Awesome stuff they created with the 3D printers" src="/images/tour_de_hackerspace/kiev/kiev_3d_prints.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Awesome stuff they created with the 3D printers&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Like most hackerspaces they also feature a big main working room&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_main_room_2.jpg"&gt;&lt;img alt="Main room" src="/images/tour_de_hackerspace/kiev/kiev_main_room_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_main_room_2.jpg"&gt;
+&lt;img alt="Main room" src="/images/tour_de_hackerspace/kiev/kiev_main_room_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Main room&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Additionally to that they feature:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
 &lt;dt&gt;A workshop&lt;/dt&gt;
-&lt;dd&gt;&lt;a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;dd&gt;&lt;a class="reference external image-reference first last" href="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
 &lt;dt&gt;A storage room&lt;/dt&gt;
-&lt;dd&gt;&lt;a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;dd&gt;&lt;a class="reference external image-reference first last" href="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_workshop.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
 &lt;dt&gt;Chemistry lab&lt;/dt&gt;
-&lt;dd&gt;&lt;a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_chemistry.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_chemistry.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;dd&gt;&lt;a class="reference external image-reference first last" href="/images/tour_de_hackerspace/kiev/kiev_chemistry.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_chemistry.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
 &lt;dt&gt;A soldering place&lt;/dt&gt;
-&lt;dd&gt;&lt;a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_soldering.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_soldering.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;dd&gt;&lt;a class="reference external image-reference first last" href="/images/tour_de_hackerspace/kiev/kiev_soldering.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_soldering.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;dl class="first docutils"&gt;
 &lt;dt&gt;A Tesla coil&lt;/dt&gt;
-&lt;dd&gt;&lt;a class="first last reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_tesla_coil.jpg"&gt;&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_tesla_coil.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;dd&gt;&lt;a class="reference external image-reference first last" href="/images/tour_de_hackerspace/kiev/kiev_tesla_coil.jpg"&gt;
+&lt;img alt="" src="/images/tour_de_hackerspace/kiev/kiev_tesla_coil.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;/li&gt;
@@ -2202,7 +2338,9 @@ create metallic stuff!&lt;/p&gt;
 ceramics.  They told me that they share some tools and generally support each
 other.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 80%"&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_ceramics_2.jpg"&gt;&lt;img alt="Ceramics studio" src="/images/tour_de_hackerspace/kiev/kiev_ceramics_2.jpg" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/kiev/kiev_ceramics_2.jpg"&gt;
+&lt;img alt="Ceramics studio" src="/images/tour_de_hackerspace/kiev/kiev_ceramics_2.jpg" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;Ceramics studio&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;After they had shown me around and I talked to most of them for some time, some
@@ -2462,17 +2600,23 @@ description&lt;/a&gt; on how to find their space.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;A big main working room&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_main_room.jpg"&gt;&lt;img alt="brmlab main working room" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_main_room.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_main_room.jpg"&gt;
+&lt;img alt="brmlab main working room" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_main_room.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;A small server room&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_server_room.jpg"&gt;&lt;img alt="brmlab server room" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_server_room.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_server_room.jpg"&gt;
+&lt;img alt="brmlab server room" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_server_room.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;A workshop&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_workshop.jpg"&gt;&lt;img alt="brmlab workshop" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_workshop.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/brmlab/brmlab_workshop.jpg"&gt;
+&lt;img alt="brmlab workshop" class="align-center" src="/images/tour_de_hackerspace/brmlab/brmlab_workshop.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -2778,19 +2922,27 @@ its 160m² still huge compared to coredump!&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;A laptop lounge with presentation screen&lt;/li&gt;
 &lt;/ul&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_main_room_0.jpg"&gt;&lt;img alt="chaosdorf laptop lounge" class="align-center" src="/images/tour_de_hackerspace/chaosdorf/chaosdorf_main_room_0.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_main_room_0.jpg"&gt;
+&lt;img alt="chaosdorf laptop lounge" class="align-center" src="/images/tour_de_hackerspace/chaosdorf/chaosdorf_main_room_0.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;A kitchen (with a nice hack for the &lt;a class="reference external" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_kitchen_hack.jpg"&gt;hood ventilator light&lt;/a&gt;)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_kitchen.jpg"&gt;&lt;img alt="chaosdorf kitchen" class="align-center" src="/images/tour_de_hackerspace/chaosdorf/chaosdorf_kitchen.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_kitchen.jpg"&gt;
+&lt;img alt="chaosdorf kitchen" class="align-center" src="/images/tour_de_hackerspace/chaosdorf/chaosdorf_kitchen.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;A laser cutter and 3D printers&lt;/li&gt;
 &lt;/ul&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_laser_cutter.jpg"&gt;&lt;img alt="chaosdorf laser cutter / 3D printer" class="align-center" src="/images/tour_de_hackerspace/chaosdorf/chaosdorf_laser_cutter.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_laser_cutter.jpg"&gt;
+&lt;img alt="chaosdorf laser cutter / 3D printer" class="align-center" src="/images/tour_de_hackerspace/chaosdorf/chaosdorf_laser_cutter.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;A combined smoking, TV and workshop room&lt;/li&gt;
 &lt;/ul&gt;
-&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_work_shop.jpg"&gt;&lt;img alt="chaosdorf work shop" class="align-center" src="/images/tour_de_hackerspace/chaosdorf/chaosdorf_work_shop.jpg" style="width: 10%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="/images/tour_de_hackerspace/chaosdorf/chaosdorf_work_shop.jpg"&gt;
+&lt;img alt="chaosdorf work shop" class="align-center" src="/images/tour_de_hackerspace/chaosdorf/chaosdorf_work_shop.jpg" style="width: 10%;" /&gt;
+&lt;/a&gt;
 &lt;p&gt;Similar to shackspace some members in chaosdorf also cook dinner for the group
 and I could join them on Tuesday evening.  Having a nice kitchen in your space
 seems to pay off!&lt;/p&gt;
@@ -2986,13 +3138,13 @@ failure in the first place, but I'm not sure how to further debug it.&lt;/p&gt;
 we screw up the commits in between without noticing, since the final commit
 compiles and passes every unit test.&lt;/p&gt;
 &lt;p&gt;For example imagine we have this little Rust code:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now we want to show how nicely Rust can print a &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;std::Vec&lt;/span&gt;&lt;/tt&gt; so we create a
 branch: &lt;tt class="docutils literal"&gt;git checkout &lt;span class="pre"&gt;-b&lt;/span&gt; add_vector&lt;/tt&gt; and add the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v: {:?}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
@@ -3009,7 +3161,7 @@ Hello,&lt;span class="w"&gt; &lt;/span&gt;world!
 $&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Print vector&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;We than add some more code to show the length of our fancy vector:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;v: {:?}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 
@@ -3489,20 +3641,20 @@ crate.&lt;/p&gt;
 &lt;p&gt;Using the &lt;tt class="docutils literal"&gt;#[derive(RustcEncodable)]&lt;/tt&gt; attribute on a type, serializing a
 struct is as easy as calling &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;json::encode(&amp;amp;status).unwrap()&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;crate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustc_serialize&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustc_serialize&lt;/span&gt;::&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustc_serialize&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="cp"&gt;#[derive(RustcEncodable)]&lt;/span&gt;
-&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;Status&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;api&lt;/span&gt;: &lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;space&lt;/span&gt;: &lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;: &lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Status&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;api&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;space&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;: &lt;span class="nb"&gt;String&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;::&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;Status&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;api&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;0.13&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;space&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;coredump&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
-&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;https://www.coredump.ch/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;Status&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;api&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;0.13&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;space&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;coredump&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://www.coredump.ch/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
@@ -3520,9 +3672,9 @@ solution!&lt;/p&gt;
 of the Space API contain the property &lt;tt class="docutils literal"&gt;type&lt;/tt&gt; which is a keyword in Rust.
 Of course using it as an identifier for a Struct field yields a compile error:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#[derive(RustcEncodable)]&lt;/span&gt;
-&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;type&lt;/span&gt;: &lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;: &lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;pre class="literal-block"&gt;
@@ -3538,20 +3690,20 @@ serialization.&lt;/p&gt;
 &lt;p&gt;My first idea was to implement the &lt;a class="reference external" href="http://doc.rust-lang.org/rustc-serialize/rustc_serialize/json/trait.ToJson.html"&gt;ToJson&lt;/a&gt;
 trait for Feed.  Implementing &lt;tt class="docutils literal"&gt;ToJson&lt;/tt&gt; is easy, there is just one method
 &lt;tt class="docutils literal"&gt;to_json&lt;/tt&gt; which returns the &lt;tt class="docutils literal"&gt;Json&lt;/tt&gt; object:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;::&lt;span class="n"&gt;ToJson&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;to_json&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nc"&gt;Json&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BTreeMap&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;ToJson&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;to_json&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Json&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BTreeMap&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;feed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_json&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;feed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_string&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_json&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
-&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;Json&lt;/span&gt;::&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;feed&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;Json&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;feed&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Sadly this means the &lt;tt class="docutils literal"&gt;Feeds&lt;/tt&gt; struct can't hold the Feed struct directly
 anymore, but needs it as a &lt;tt class="docutils literal"&gt;Json&lt;/tt&gt; object:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#[derive(RustcEncodable)]&lt;/span&gt;
-&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;Feeds&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;: &lt;span class="nc"&gt;Json&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Feeds&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Json&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Otherwise the Encodable trait can't be derived anymore, because it's not
@@ -3564,7 +3716,7 @@ could set &lt;tt class="docutils literal"&gt;blog&lt;/tt&gt; field to any Json s
 for Feed.
 The required method for Encodable may be a bit intimidating at the first look:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;pub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;trait&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Encodable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;encode&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;: &lt;span class="nc"&gt;Encoder&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;encode&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Encoder&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Basically it takes a reference to self and an Encoder and returns an &lt;a class="reference external" href="http://doc.rust-lang.org/nightly/core/result/enum.Result.html"&gt;Result&lt;/a&gt; containing
@@ -3580,23 +3732,23 @@ rustc -Z unstable-options src/spaceapi.rs --pretty expanded
 &lt;/pre&gt;
 &lt;p&gt;The expanded code is pretty readable and it was easy to find the corresponding
 trait implementation generated by the Rust compiler:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;::&lt;span class="n"&gt;rustc_serialize&lt;/span&gt;::&lt;span class="n"&gt;Encodable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;encode&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;__S&lt;/span&gt;: ::&lt;span class="n"&gt;rustc_serialize&lt;/span&gt;::&lt;span class="n"&gt;Encoder&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__arg_0&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__S&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="w"&gt;     &lt;/span&gt;-&amp;gt; ::&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;result&lt;/span&gt;::&lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__S&lt;/span&gt;::&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;rustc_serialize&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Encodable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;encode&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;__S&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;rustc_serialize&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Encoder&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__arg_0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__S&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__S&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt;: &lt;span class="nc"&gt;ref&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__self_0_0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;: &lt;span class="nc"&gt;ref&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__self_0_1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
-&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;__arg_0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Feed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;ref&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__self_0_0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;ref&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__self_0_1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;__arg_0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Feed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;                                &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;_type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt;                                                           &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                                                           &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;                                                           &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__self_0_0&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="w"&gt;                                                       &lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;                                    &lt;/span&gt;::&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;result&lt;/span&gt;::&lt;span class="nb"&gt;Result&lt;/span&gt;::&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__try_var&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;                                    &lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__try_var&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
 &lt;span class="w"&gt;                                    &lt;/span&gt;&lt;span class="n"&gt;__try_var&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt;                                    &lt;/span&gt;::&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;result&lt;/span&gt;::&lt;span class="nb"&gt;Result&lt;/span&gt;::&lt;span class="nb"&gt;Err&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__try_var&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
-&lt;span class="w"&gt;                                    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;::&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;result&lt;/span&gt;::&lt;span class="nb"&gt;Result&lt;/span&gt;::&lt;span class="nb"&gt;Err&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__try_var&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="w"&gt;                                    &lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;Err&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__try_var&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;                                    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;Err&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__try_var&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
 &lt;span class="w"&gt;                                &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
 &lt;span class="w"&gt;                                &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="w"&gt;                                                            &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                                                            &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;                                                            &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;__self_0_1&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="w"&gt;                                                        &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}),&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
@@ -3606,12 +3758,12 @@ trait implementation generated by the Rust compiler:&lt;/p&gt;
 &lt;p&gt;So from there I tried to make the code a bit more readable which resulted in
 the following:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Encodable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;encode&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;: &lt;span class="nc"&gt;Encoder&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;encoder&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;::&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;encode&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Encoder&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;encoder&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Result&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt;: &lt;span class="nc"&gt;ref&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_type&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;: &lt;span class="nc"&gt;ref&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_url&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
-&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;encoder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Feed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;Feed&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;ref&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_type&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;ref&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_url&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;encoder&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Feed&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="kr"&gt;try&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_type&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="p"&gt;)));&lt;/span&gt;
-&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_url&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;emit_struct_field&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;url&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="k"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_url&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;enc&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;
 &lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;}),&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
@@ -3634,14 +3786,14 @@ see &lt;a class="reference external" href="https://github.com/rust-lang/rust-wik
 &lt;div class="section" id="references"&gt;
 &lt;h3&gt;References&lt;/h3&gt;
 &lt;p&gt;One of the first pointer type you will meet in Rust is the reference type.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;x = {}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;x = {}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -3696,11 +3848,11 @@ reference.cpp:3:6: note: in passing argument 1 of &amp;#39;void add_one(int&amp;
       ^
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Surprising to me, doing the same within Rust works&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;print!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;adding one to {}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; -&amp;gt; {}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -3712,8 +3864,8 @@ to temporaries in Rust.&lt;/p&gt;
 &lt;div class="section" id="heap-pointers"&gt;
 &lt;h3&gt;Heap pointers&lt;/h3&gt;
 &lt;p&gt;For managing data on the heap Rust has the &lt;tt class="docutils literal"&gt;Box&amp;lt;T&amp;gt;&lt;/tt&gt; type&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -3736,12 +3888,12 @@ goes out of scope. In the C++ world this is called &lt;a class="reference extern
 &lt;p&gt;The Box type is an owning type. Meaning that it owns the resources it is
 pointing to. The same is true for &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;std::unique_ptr&lt;/span&gt;&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;When passing a Box type to a function the ownership transfers to this function:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;: &lt;span class="nb"&gt;Box&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
-&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Box&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;add_one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -3806,7 +3958,7 @@ standard&lt;/a&gt;
 &lt;tt class="docutils literal"&gt;push_back&lt;/tt&gt; invalidates any reference to elements (iterators).  So accessing
 it triggers undefined behaviour.&lt;/p&gt;
 &lt;p&gt;Trying the same in Rust&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[];&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
@@ -3831,7 +3983,7 @@ rust_dangling.rs:8 }
 &lt;p&gt;Rust tries to tell us, that we can't change the vector, because there is still
 a reference to it in scope, namely &lt;tt class="docutils literal"&gt;x&lt;/tt&gt;!
 To fix the issue we need to limit the scope of &lt;tt class="docutils literal"&gt;x&lt;/tt&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="fm"&gt;vec!&lt;/span&gt;&lt;span class="p"&gt;[];&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;push&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
@@ -3860,7 +4012,7 @@ latest and greatest version you could also try &lt;a class="reference external" 
 &lt;div class="section" id="hello-world"&gt;
 &lt;h2&gt;Hello World!&lt;/h2&gt;
 &lt;p&gt;Here comes the obligatory &amp;quot;Hello World!&amp;quot; code in Rust&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello World!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -3869,7 +4021,7 @@ latest and greatest version you could also try &lt;a class="reference external" 
 &lt;h2&gt;Immutability&lt;/h2&gt;
 &lt;p&gt;Beeing a &lt;a class="reference external" href="http://gamesfromwithin.com/wp-content/uploads/2010/07/const_nazi.mov"&gt;C++ const-nazi&lt;/a&gt; I
 really liked that by default all variable bindings are immutable.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -3885,7 +4037,7 @@ mut.rs:3&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="nb"&gt;let&lt;/s
 error:&lt;span class="w"&gt; &lt;/span&gt;aborting&lt;span class="w"&gt; &lt;/span&gt;due&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;previous&lt;span class="w"&gt; &lt;/span&gt;error
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;By using the &amp;quot;mut&amp;quot; keyword we mark the variable as mutable&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;+=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;

@@ -47,13 +47,13 @@
 we screw up the commits in between without noticing, since the final commit
 compiles and passes every unit test.</p>
 <p>For example imagine we have this little Rust code:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 <p>Now we want to show how nicely Rust can print a <tt class="docutils literal"><span class="pre">std::Vec</span></tt> so we create a
 branch: <tt class="docutils literal">git checkout <span class="pre">-b</span> add_vector</tt> and add the following:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
 
@@ -70,7 +70,7 @@ Hello,<span class="w"> </span>world!
 $<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Print vector&quot;</span>
 </pre></div>
 <p>We than add some more code to show the length of our fancy vector:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;v: {:?}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
 

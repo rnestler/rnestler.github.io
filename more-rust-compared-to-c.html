@@ -53,14 +53,14 @@ see <a class="reference external" href="https://github.com/rust-lang/rust-wiki-b
 <div class="section" id="references">
 <h3>References</h3>
 <p>One of the first pointer type you will meet in Rust is the reference type.</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;x = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
 <span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;x = {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">fn</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">num</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="k">fn</span><span class="w"> </span><span class="nf">add_one</span><span class="p">(</span><span class="n">num</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -115,11 +115,11 @@ reference.cpp:3:6: note: in passing argument 1 of &#39;void add_one(int&amp;)&#3
       ^
 </pre></div>
 <p>Surprising to me, doing the same within Rust works</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">fn</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">num</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="k">fn</span><span class="w"> </span><span class="nf">add_one</span><span class="p">(</span><span class="n">num</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="kt">i32</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="fm">print!</span><span class="p">(</span><span class="s">&quot;adding one to {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num</span><span class="p">);</span>
 <span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot; -&gt; {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">num</span><span class="p">);</span>
@@ -131,8 +131,8 @@ to temporaries in Rust.</p>
 <div class="section" id="heap-pointers">
 <h3>Heap pointers</h3>
 <p>For managing data on the heap Rust has the <tt class="docutils literal">Box&lt;T&gt;</tt> type</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -155,12 +155,12 @@ goes out of scope. In the C++ world this is called <a class="reference external"
 <p>The Box type is an owning type. Meaning that it owns the resources it is
 pointing to. The same is true for <tt class="docutils literal"><span class="pre">std::unique_ptr</span></tt>.</p>
 <p>When passing a Box type to a function the ownership transfers to this function:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">add_one</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">num</span>: <span class="nb">Box</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">add_one</span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">num</span><span class="p">:</span><span class="w"> </span><span class="nb">Box</span><span class="o">&lt;</span><span class="kt">i32</span><span class="o">&gt;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="o">*</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Box</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
 <span class="w">    </span><span class="n">add_one</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
 <span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
@@ -225,7 +225,7 @@ standard</a>
 <tt class="docutils literal">push_back</tt> invalidates any reference to elements (iterators).  So accessing
 it triggers undefined behaviour.</p>
 <p>Trying the same in Rust</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[];</span>
 <span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
@@ -250,7 +250,7 @@ rust_dangling.rs:8 }
 <p>Rust tries to tell us, that we can't change the vector, because there is still
 a reference to it in scope, namely <tt class="docutils literal">x</tt>!
 To fix the issue we need to limit the scope of <tt class="docutils literal">x</tt>:</p>
-<div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[];</span>
 <span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
 <span class="w">    </span><span class="p">{</span>

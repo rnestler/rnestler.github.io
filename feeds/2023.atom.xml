@@ -350,7 +350,9 @@ building the HTML documentation.&lt;/p&gt;
 &lt;p&gt;This caused the system to become unresponsive before the OOM killer decided to
 just kill my user session.&lt;/p&gt;
 &lt;div class="figure align-center" style="width: 100%"&gt;
-&lt;a class="reference external image-reference" href="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png"&gt;&lt;img alt="htop just shortly before killing the build process" src="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png" style="width: 80%;" /&gt;&lt;/a&gt;
+&lt;a class="reference external image-reference" href="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png"&gt;
+&lt;img alt="htop just shortly before killing the build process" src="https://blog.rnstlr.ch/images/limiting_ram_usage/sphinx-build-excessive-ram-usage.png" style="width: 80%;" /&gt;
+&lt;/a&gt;
 &lt;p class="caption"&gt;htop output just before killing the build process&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;Looking for a way to not have the OOM killer kill my session, but kill the

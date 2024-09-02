@@ -291,18 +291,128 @@ For that we need to use a slightly different syntax:
 
 ```
 pcm.!default {
-	type hw
-	card sndrpihifiberry
+        type hw
+        card sndrpihifiberry
 }
 
 ctl.!default {
-	type hw
-	card sndrpihifiberry
+        type hw
+        card sndrpihifiberry
 }
+```
+
+
+### Setting up snapcast
+
+ * <https://archlinuxarm.org/wiki/Distcc_Cross-Compiling>
+ * <https://archlinuxarm.org/wiki/Distributed_Compiling>
+
+#### Master System (Raspberry Pi)
+
+```
+sudo pacman -S distcc
+sudo vim /etc/makepkg.conf
+```
+
+#### Slave System (Desktop PC)
+
+```
+sudo pacman -S distcc
+distccd-alarm-armv7h
+sudo vim /etc/conf.d/distccd
+wget https://archlinuxarm.org/builder/xtools/x-tools7h.tar.xz
+tar xf x-tools7h.tar.xz
+cd x-tools7h
+sudo chown -R $USER:distcc arm-unknown-linux-gnueabihf
+```
+
+```
+sudo ln -s /usr/bin/distcc /usr/lib/distcc/armv7l-unknown-linux-gnueabihf-gcc
+sudo ln -s /usr/bin/distcc /usr/lib/distcc/armv7l-unknown-linux-gnueabihf-g++
+```
+
+This failed... Trying the AUR package:
+
+```
+yay distccd-alarm-armv7h
 ```
 
 ### Notes
 
  * Playing back line in: `alsaloop -C hw:1,0 -P hw:2,0`
 
+Snapcast on Server:
+```
+1/1) installing snapcast                                                            [#################################################] 100%
+:: The default setup will create a pipe /tmp/snapfifo.
+   Due to recent changes in systemd, pipes in /tmp are by default only
+   writable by the owning user (here: sysuser snapserver).
+   The safest option is to change the location of the fifo to a
+   different location, e.g. /run/snapserver.  This can be done by
+   editing /etc/snapserver.conf
+   Another possible workaround is to disable the sysctl feature by
+   running:
+     # sysctl fs.protected_fifos=0
+:: Snapcast now has a built-in snapweb control client which is enabled
+   by default on a new setup.  This functionality enables a webserver
+   on port 1780.  This can be controlled by the doc_root variable in
+   /etc/snapserver.conf.
+Optional dependencies for snapcast
+    python-websocket-client: stream plugin script [installed]
+    python-mpd2: stream plugin script
+    python-musicbrainzngs: stream plugin script [installed]
+```
+
+ * Installing librespot: From aur with patch:
+```diff
+diff --git a/PKGBUILD b/PKGBUILD
+index 4a10228..61aeef4 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -8,16 +8,17 @@ pkgver=0.4.2
+ _commit=22f8aed
+ pkgrel=1
+ pkgdesc='Open source client library for Spotify'
+-arch=('x86_64' 'aarch64')
++arch=('armv7h' 'x86_64' 'aarch64')
+ url='https://github.com/librespot-org/librespot'
+ license=('MIT')
+ depends=(
+        'alsa-lib'
+-       'gst-plugins-base-libs'
+-       'jack'
++       #'gst-plugins-base-libs'
++       #'jack'
+        'libpulse'
+-       'portaudio'
+-       'sdl2')
++       #'portaudio'
++       #'sdl2'
++)
+ makedepends=('cargo' 'git')
+ source=("$pkgname::git+$url#commit=$_commit?signed")
+ sha256sums=('SKIP')
+@@ -25,7 +26,7 @@ validpgpkeys=('EC57B7376EAFF1A0BB56BB0187F5FDE8A56219F4') ## Roderick van Domber
+
+ prepare() {
+        cd "$pkgname"
+-       cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
++       cargo fetch --locked
+ }
+
+ build() {
+@@ -33,7 +34,7 @@ build() {
+        export CARGO_TARGET_DIR=target
+        cd "$pkgname"
+        cargo build --release --frozen --features \
+-               alsa-backend,portaudio-backend,pulseaudio-backend,jackaudio-backend,rodio-backend,rodiojack-backend,sdl-backend,gstreamer-backend
++               alsa-backend,pulseaudio-backend,rodio-backend
+ }
+
+ ## 0 tests
+ ```
+
+
+
 [^1]: See also <https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Setting_the_default_sound_card_via_defaults_node>
+

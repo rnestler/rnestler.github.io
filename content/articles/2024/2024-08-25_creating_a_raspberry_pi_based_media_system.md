@@ -412,6 +412,15 @@ index 4a10228..61aeef4 100644
  ## 0 tests
  ```
 
+  * Switching to librespot-git -> Due to spotify changes
+  * snapcast-server
+    * `bind_to_address = ::` -> Listen to both IPv4 and IPv6 (See https://github.com/badaix/snapcast/issues/715)
+    * ```
+      source = pipe:///run/snapserver/snapfifo?name=default
+      source = librespot:///usr/bin/librespot>?name=librespot&devicename=Snapcast
+      ```
+    * `/etc/default/snapclient` `SNAPCLIENT_OPTS="--host 127.0.0.1 -s 13"`
+
 
 
 [^1]: See also <https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Setting_the_default_sound_card_via_defaults_node>

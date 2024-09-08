@@ -465,6 +465,11 @@ volume from my smart phone:
 
 ## Outlook
 
+The next things I want to look at is setting up [mopidy](https://mopidy.com/)
+to stream music from my NAS and also to integrate snapcast into [my home
+assistant
+setup](https://blog.rnstlr.ch/setting-up-home-assistant-on-the-raspberry-pi-3.html).
+
 [^1]: See also <https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Setting_the_default_sound_card_via_defaults_node>
 [^2]: See also <https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#librespot>
 [^3]: See also <https://github.com/badaix/snapcast/issues/518#issuecomment-569143476>

@@ -24,6 +24,7 @@ Researching a bit I found the following interesting resources
    * <http://techroadtrip.com/audio-software/volumio-vs-moode-vs-picoreplayer/>
    * <https://www.runeaudio.com/>
    * <https://github.com/dbrgn/weltempfaenger/>
+   * <https://www.home-assistant.io/blog/2016/02/18/multi-room-audio-with-snapcast/>
 
 
 # Hardware
@@ -33,6 +34,8 @@ For the hardware I settled for
  * A Raspberry Pi 3 which I had laying around anyway
  * [HiFiBerry Amp2](https://www.hifiberry.com/shop/boards/hifiberry-amp2/)
    which looked very promising and wasn't too expensive
+
+![My hardware setup]({static}/images/snapcast/raspberry-pi-audio-setup.jpg){width=100%}
 
 # Software
 
@@ -166,7 +169,7 @@ have wifi were I want to place it:
 
 ## Enabling the Audio
 
-To get the amp running I enabled the `hifiberry-dacplus` `dtoverlay`:
+To get the amp running I enabled the `hifiberry-dacplus` `dtoverlay` in `/boot/config.txt`:
 
 ```ini
 # https://www.hifiberry.com/docs/data-sheets/datasheet-amp2/
@@ -208,7 +211,7 @@ defaults.ctl.card 1
 
 Then I used `speaker-test` to test the speakers
 
-```
+```text
 $ speaker-test -c 2
 
 speaker-test 1.2.12
@@ -261,49 +264,66 @@ ctl.!default {
 }
 ```
 
+### Playing audio from the USB audio device
 
-### Setting up snapcast
+To achieve my goal of playing back the sound from the small USB based sound
+mixer I used `alsaloop` to redirect the sound from the USB capture device to
+the playback device of the HiFiBerry:
+
+```
+alsaloop -C hw:1,0 -P hw:2,0
+```
+
+## Setting up snapcast
+
+To stream audio from various sources (including spotify) I decided to use
+[snapcast](https://github.com/badaix/snapcast). The nice thing is, that it
+allows me to play audio synchronized on both my Raspberry Pie's.
+
+Building the [snapcast `PKGBUILD`](https://aur.archlinux.org/packages/snapcast)
+directly on the Raspberry Pi failed, since the device doesn't have enough RAM.
+So I tried to follow the guides from archlinuxarm to do cross compile builds:
 
  * <https://archlinuxarm.org/wiki/Distcc_Cross-Compiling>
  * <https://archlinuxarm.org/wiki/Distributed_Compiling>
 
-#### Master System (Raspberry Pi)
+#### Distcc Master System (Raspberry Pi)
 
-```
+For the distributed build, the Raspberry Pi will be the master system. So we
+install `distcc` on it and configure `makepkg` to use it:
+
+```bash
 sudo pacman -S distcc
 sudo vim /etc/makepkg.conf
+# Edit / add the following lines
+# DISTCC_HOSTS="$IP_OF_SLAVE:3635"
+# MAKEFLAGS="-j4"
 ```
 
-#### Slave System (Desktop PC)
+#### Distcc Slave System (Desktop PC)
 
-```
-sudo pacman -S distcc
-distccd-alarm-armv7h
-sudo vim /etc/conf.d/distccd
-wget https://archlinuxarm.org/builder/xtools/x-tools7h.tar.xz
-tar xf x-tools7h.tar.xz
-cd x-tools7h
-sudo chown -R $USER:distcc arm-unknown-linux-gnueabihf
-```
+On the slave system I first tried to install the cross-compile tools manually
+like described by the archlinuxarm page, but this failed with cryptic error
+messages from the Raspberry Pi while building the package.
 
-```
-sudo ln -s /usr/bin/distcc /usr/lib/distcc/armv7l-unknown-linux-gnueabihf-gcc
-sudo ln -s /usr/bin/distcc /usr/lib/distcc/armv7l-unknown-linux-gnueabihf-g++
-```
-
-This failed... Trying the AUR package:
+So I followed the guide from the [ArchLinux distcc wiki
+page](https://wiki.archlinux.org/title/Distcc#Cross_compiling_with_distcc),
+which worked perfectly, using the [distccd-alarm-armv7h AUR
+package](https://aur.archlinux.org/packages/distccd-alarm-armv7h):
 
 ```
 yay distccd-alarm-armv7h
+sudo systemctl start distccd-armv7h.service
 ```
 
-### Notes
+This worked out of the box and I could successfully build the snapcast package
+and distribute it to my Raspberry Pies.
 
- * Playing back line in: `alsaloop -C hw:1,0 -P hw:2,0`
+### Configuring Snapcast
 
-Snapcast on Server:
-```
-1/1) installing snapcast                                                            [#################################################] 100%
+After installing snapcast it showed the following output :
+
+```text
 :: The default setup will create a pipe /tmp/snapfifo.
    Due to recent changes in systemd, pipes in /tmp are by default only
    writable by the owning user (here: sysuser snapserver).
@@ -323,7 +343,28 @@ Optional dependencies for snapcast
     python-musicbrainzngs: stream plugin script [installed]
 ```
 
- * Installing librespot: From aur with patch:
+So the first thing I did is set the default source to `source =
+pipe:///run/snapserver/snapfifo?name=default` in `/etc/snapserver.conf`.
+
+I then started the `snapserver` service and started playing white noise trough
+the snapfifo:
+
+```
+sudo systemctl start snapserver.service
+cat /dev/urandom > /run/snapserver/snapfifo
+```
+
+I could then point my smart phone to http://muzikskatolo:1780 and start
+streaming the random white noise to test that everything is working.
+
+
+### Adding librespot
+
+snapcast has out of the box support to spawn librespot. The [librespot AUR
+package](https://aur.archlinux.org/packages/librespot) needed some patching to
+be buildable for the Raspberry Pie. While at it I also removed audio backends
+and their dependencies which I didn't need:
+
 ```diff
 diff --git a/PKGBUILD b/PKGBUILD
 index 4a10228..61aeef4 100644
@@ -341,13 +382,9 @@ index 4a10228..61aeef4 100644
         'alsa-lib'
 -       'gst-plugins-base-libs'
 -       'jack'
-+       #'gst-plugins-base-libs'
-+       #'jack'
         'libpulse'
 -       'portaudio'
 -       'sdl2')
-+       #'portaudio'
-+       #'sdl2'
 +)
  makedepends=('cargo' 'git')
  source=("$pkgname::git+$url#commit=$_commit?signed")
@@ -370,18 +407,64 @@ index 4a10228..61aeef4 100644
  }
 
  ## 0 tests
- ```
+```
 
-  * Switching to librespot-git -> Due to spotify changes
-  * snapcast-server
-    * `bind_to_address = ::` -> Listen to both IPv4 and IPv6 (See https://github.com/badaix/snapcast/issues/715)
-    * ```
-      source = pipe:///run/snapserver/snapfifo?name=default
-      source = librespot:///usr/bin/librespot>?name=librespot&devicename=Snapcast
-      ```
-    * `/etc/default/snapclient` `SNAPCLIENT_OPTS="--host 127.0.0.1 -s 13"`
+Due to some random spotify changes [librespot stopped
+working](https://github.com/librespot-org/librespot/issues/972#issuecomment-2320943137)
+after a few days and I had to use the [librespot-git AUR
+package](https://aur.archlinux.org/packages/librespot-git) which continued to
+work and also didn't need any changes to the `PKGBUILD`.
+
+Adding librespot to snapcast was as easy as adding the following source to
+`/etc/snapserver.conf` ([^2]):
+```
+source = librespot:///usr/bin/librespot>?name=librespot&devicename=Snapcast
+```
+
+I then did setup the `snapclient` on my existing kodi Raspberry Pi and on the
+Pi where also the snapserver runs:
+
+```bash
+# /etc/default/snapclient on kodi system
+SNAPCLIENT_OPTS="--host $IP_OF_SNAPSERVER"
+```
+
+```bash
+# /etc/default/snapclient on muzikskatolo
+SNAPCLIENT_OPTS="--host 127.0.0.1 -s 13"
+```
+
+On muzikskatolo snapclient didn't choose the correct output device so I looked
+at the output of `snapclient -l` and hard-coded it in the options:
+```text
+# lots of other devices
+13: sysdefault:CARD=sndrpihifiberry
+snd_rpi_hifiberry_dacplus, HiFiBerry DAC+ HiFi pcm512x-hifi-0
+Default Audio Device
+```
+
+Another thing I had to change was the `bind_to_address` of the `snapserver`
+([^3]) so that it also listens to incoming IPv6 traffic:
+
+```
+[http]
+bind_to_address = ::
+[tcp]
+bind_to_address = ::
+[stream]
+bind_to_address = ::
+```
+
+I now enjoy nice multi-room synced audio while being able to easily control
+volume from my smart phone:
+
+<center>
+![Snapcast web interface]({static}/images/snapcast/snapcast-webinterface.png){width=80%}
+</center>
 
 
+## Outlook
 
 [^1]: See also <https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Setting_the_default_sound_card_via_defaults_node>
-
+[^2]: See also <https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#librespot>
+[^3]: See also <https://github.com/badaix/snapcast/issues/518#issuecomment-569143476>

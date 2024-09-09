@@ -2,7 +2,6 @@ Title: Creating a Raspberry Pi Based Media System
 Tags: Raspberry Pi, Linux, ArchLinux, ARM, snapcast, volumio, mopidy
 Language: en
 Summary: Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy
-Status: draft
 
 For quite some time I wanted to setup a Raspberry Pi based sound system with
 which I could do the following:

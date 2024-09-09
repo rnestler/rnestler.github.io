@@ -28,14 +28,14 @@
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="https://blog.rnstlr.ch/drafts/creating-a-raspberry-pi-based-media-system.html" rel="bookmark"
+        <a href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html" rel="bookmark"
            title="Permalink to Creating a Raspberry Pi Based Media System">Creating a Raspberry Pi Based Media System</a></h1>
     </header>
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2024-08-25T00:00:00+02:00">
-                Published: So 25 August 2024
+        <abbr class="published" title="2024-09-09T00:00:00+02:00">
+                Published: Mo 09 September 2024
         </abbr>
 
         <address class="vcard author">
@@ -277,7 +277,7 @@ the playback device of the HiFiBerry:</p>
 <h2>Setting up snapcast</h2>
 <p>To stream audio from various sources (including spotify) I decided to use
 <a href="https://github.com/badaix/snapcast">snapcast</a>. The nice thing is, that it
-allows me to play audio synchronized on both my Raspberry Pie's.</p>
+allows me to play audio synchronized on both my Raspberry Pis.</p>
 <p>Building the <a href="https://aur.archlinux.org/packages/snapcast">snapcast <code>PKGBUILD</code></a>
 directly on the Raspberry Pi failed, since the device doesn't have enough RAM.
 So I tried to follow the guides from archlinuxarm to do cross compile builds:</p>
@@ -308,7 +308,7 @@ sudo systemctl start distccd-armv7h.service
 </code></pre></div>
 
 <p>This worked out of the box and I could successfully build the snapcast package
-and distribute it to my Raspberry Pies.</p>
+and distribute it to my Raspberry Pis.</p>
 <h3>Configuring Snapcast</h3>
 <p>After installing snapcast it showed the following output :</p>
 <div class="highlight"><pre><span></span><code>:: The default setup will create a pipe /tmp/snapfifo.
@@ -343,7 +343,7 @@ streaming the random white noise to test that everything is working.</p>
 <h3>Adding librespot</h3>
 <p>snapcast has out of the box support to spawn librespot. The <a href="https://aur.archlinux.org/packages/librespot">librespot AUR
 package</a> needed some patching to
-be buildable for the Raspberry Pie. While at it I also removed audio backends
+be buildable for the Raspberry Pi. While at it I also removed audio backends
 and their dependencies which I didn't need:</p>
 <div class="highlight"><pre><span></span><code><span class="gh">diff --git a/PKGBUILD b/PKGBUILD</span>
 <span class="gh">index 4a10228..61aeef4 100644</span>

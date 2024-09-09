@@ -278,7 +278,7 @@ alsaloop -C hw:1,0 -P hw:2,0
 
 To stream audio from various sources (including spotify) I decided to use
 [snapcast](https://github.com/badaix/snapcast). The nice thing is, that it
-allows me to play audio synchronized on both my Raspberry Pie's.
+allows me to play audio synchronized on both my Raspberry Pis.
 
 Building the [snapcast `PKGBUILD`](https://aur.archlinux.org/packages/snapcast)
 directly on the Raspberry Pi failed, since the device doesn't have enough RAM.
@@ -317,7 +317,7 @@ sudo systemctl start distccd-armv7h.service
 ```
 
 This worked out of the box and I could successfully build the snapcast package
-and distribute it to my Raspberry Pies.
+and distribute it to my Raspberry Pis.
 
 ### Configuring Snapcast
 
@@ -362,7 +362,7 @@ streaming the random white noise to test that everything is working.
 
 snapcast has out of the box support to spawn librespot. The [librespot AUR
 package](https://aur.archlinux.org/packages/librespot) needed some patching to
-be buildable for the Raspberry Pie. While at it I also removed audio backends
+be buildable for the Raspberry Pi. While at it I also removed audio backends
 and their dependencies which I didn't need:
 
 ```diff

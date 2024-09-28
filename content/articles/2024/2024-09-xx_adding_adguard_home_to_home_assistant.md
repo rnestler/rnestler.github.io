@@ -37,6 +37,7 @@ instead of all interfaces so it won't be reachable from outside. As instructed b
 ## Configuring Router
 
 Basically there are two ways to configure your router when wanting to use AdGuard Home:
+
  1. Adding it as the DNS server your router uses
  2. Adding it to the DNS server distributed via DHCP
 
@@ -46,7 +47,7 @@ AdGuard Home DNS server.
 
 Since I didn't want to break stuff in my network I decided to first go with
 option one. Also I kept one of the original DNS servers just in case for the
-first test.
+first test run.
 
 <center>
 ![Router DNS configuration]({static}/images/home_assistant/adguard_home_router_configuration.png){width=80%}

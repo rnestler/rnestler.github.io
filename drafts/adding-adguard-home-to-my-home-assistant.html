@@ -66,15 +66,17 @@ instead of all interfaces so it won't be reachable from outside. As instructed b
 <img alt="The Home Assistant AdGuard add-on configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_addon_configuration.png" width="80%">
 </center></p>
 <h2>Configuring Router</h2>
-<p>Basically there are two ways to configure your router when wanting to use AdGuard Home:
- 1. Adding it as the DNS server your router uses
- 2. Adding it to the DNS server distributed via DHCP</p>
+<p>Basically there are two ways to configure your router when wanting to use AdGuard Home:</p>
+<ol>
+<li>Adding it as the DNS server your router uses</li>
+<li>Adding it to the DNS server distributed via DHCP</li>
+</ol>
 <p>The first one has the advantage that local names will still be resolved by the
 router, while the second one gives better statistics over which clients use the
 AdGuard Home DNS server.</p>
 <p>Since I didn't want to break stuff in my network I decided to first go with
 option one. Also I kept one of the original DNS servers just in case for the
-first test.</p>
+first test run.</p>
 <p><center>
 <img alt="Router DNS configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration.png" width="80%">
 </center></p>

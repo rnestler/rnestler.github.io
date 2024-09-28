@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Adding AdGuard Home to my Home Assistant</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/adding-adguard-home-to-my-home-assistant.html" rel="bookmark"
+           title="Permalink to Adding AdGuard Home to my Home Assistant">Adding AdGuard Home to my Home Assistant</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="9999-12-31T23:59:59.999999+01:00">
+                Published: 
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/home-assistant.html">Home Assistant</a> <a href="https://blog.rnstlr.ch/tag/adguard.html">AdGuard</a> </p>
+</footer><!-- /.post-info -->      <p>I recently noticed that home assistant offers an <a href="https://github.com/hassio-addons/addon-adguard-home">AdGuard Home
+add-on</a>. While I already
+block adds and tracking in the web with <a href="https://ublockorigin.com/">uBlock
+Origin</a> on my laptops and Android phone, I'm still
+annoyed and concerned by all the tracking that happens for example by apps.</p>
+<h1>Installing the Add-on</h1>
+<p>Installing is as easy as going to
+<a href="http://homeassistant.local:8123/hassio/store">http://homeassistant.local:8123/hassio/store</a> and selecting the AdGuard Home
+add-on.</p>
+<p>According to the <a href="https://github.com/hassio-addons/addon-adguard-home/blob/main/adguard/DOCS.md">AdGuard Home add-on install
+docs</a>
+one should configure the network to use a static IP address:
+<a href="http://homeassistant.local:8123/config/network">http://homeassistant.local:8123/config/network</a></p>
+<p><center>
+<img alt="The Home Assistant network configuration" src="https://blog.rnstlr.ch/images/home_assistant/home_assistant_network_configuration.png">
+</center></p>
+<h2>Configuring AdGuard Home</h2>
+<p>For some reason the AdGuard Home add-on only listens on the local interface
+instead of all interfaces so it won't be reachable from outside. As instructed by <a href="https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9">https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9</a> I changed the add-on configuration accordingly:</p>
+<p><center>
+<img alt="The Home Assistant AdGuard add-on configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_addon_configuration.png" width="80%">
+</center></p>
+<h2>Configuring Router</h2>
+<p>Basically there are two ways to configure your router when wanting to use AdGuard Home:
+ 1. Adding it as the DNS server your router uses
+ 2. Adding it to the DNS server distributed via DHCP</p>
+<p>The first one has the advantage that local names will still be resolved by the
+router, while the second one gives better statistics over which clients use the
+AdGuard Home DNS server.</p>
+<p>Since I didn't want to break stuff in my network I decided to first go with
+option one. Also I kept one of the original DNS servers just in case for the
+first test.</p>
+<p><center>
+<img alt="Router DNS configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration.png" width="80%">
+</center></p>
+<h2>Statistics</h2>
+<p>After a few days of usage without any problems the statistics looked like this:</p>
+<p><center>
+<img alt="AdGuard statistics" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics.png" width="80%">
+</center></p>
+<p>As you can see there are quite some blocked requests and all request originate
+from one client, my router.</p>
+<h2>Use AdGuard Directly as the DNS Server</h2>
+<p>Since the usage went without any problems I decided to configure my router to
+directly use AdGuard Home as the DNS server for its clients.</p>
+<p><center>
+<img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration_2.png">
+</center></p>
+<p>To make sure that the important local names still resolve (NAS, HomeAssistant,
+SnapCast, ...) I added them manually as DNS rewrites.</p>
+<p><center>
+<img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_dns_rewrites.png" width="80%">
+</center></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

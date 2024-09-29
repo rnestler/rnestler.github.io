@@ -59,13 +59,13 @@ one should configure the network to use a static IP address:
 <p><center>
 <img alt="The Home Assistant network configuration" src="https://blog.rnstlr.ch/images/home_assistant/home_assistant_network_configuration.png">
 </center></p>
-<h2>Configuring AdGuard Home</h2>
+<h1>Configuring AdGuard Home</h1>
 <p>For some reason the AdGuard Home add-on only listens on the local interface
 instead of all interfaces so it won't be reachable from outside. As instructed by <a href="https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9">https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9</a> I changed the add-on configuration accordingly:</p>
 <p><center>
 <img alt="The Home Assistant AdGuard add-on configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_addon_configuration.png" width="80%">
 </center></p>
-<h2>Configuring Router</h2>
+<h1>Configuring Router</h1>
 <p>Basically there are two ways to configure your router when wanting to use AdGuard Home:</p>
 <ol>
 <li>Adding it as the DNS server your router uses</li>
@@ -80,14 +80,14 @@ first test run.</p>
 <p><center>
 <img alt="Router DNS configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration.png" width="80%">
 </center></p>
-<h2>Statistics</h2>
+<h1>Statistics</h1>
 <p>After a few days of usage without any problems the statistics looked like this:</p>
 <p><center>
 <img alt="AdGuard statistics" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics.png" width="80%">
 </center></p>
 <p>As you can see there are quite some blocked requests and all request originate
 from one client, my router.</p>
-<h2>Use AdGuard Directly as the DNS Server</h2>
+<h1>Use AdGuard Directly as the DNS Server</h1>
 <p>Since the usage went without any problems I decided to configure my router to
 directly use AdGuard Home as the DNS server for its clients.</p>
 <p><center>
@@ -98,6 +98,50 @@ SnapCast, ...) I added them manually as DNS rewrites.</p>
 <p><center>
 <img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_dns_rewrites.png" width="80%">
 </center></p>
+<p>When using the DNS server directly we see in the statistics which clients
+create the most DNS queries and can also get some insight in what domains are
+queried by the WiFi switches for example.</p>
+<p><center>
+<img alt="AdGuard statistics for individual clients" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics_2.png" width="80%">
+</center></p>
+<p>What I noticed as well is that still around 25% of the requests are coming from
+the router. Since all clients should use the AdGuard DNS server directly this
+confused me. It turns out that there are two reasons for that:</p>
+<ol>
+<li>HomeAssistant itself is configured to use the router DNS directly, which is
+    probably smart to avoid trouble if the AdGuard DNS server would misbehave.</li>
+<li>My router advertises IPv6 DNS servers as well, but doesn't allow to change
+    them in the configuration, thus it still promotes itself as the DNS server
+    there.</li>
+</ol>
+<p>I found out about the IPv6 thing when I looked into the <code>systemd-resolve</code>
+status:</p>
+<div class="highlight"><pre><span></span><code>$ systemd-resolve --status
+Global
+           Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+    resolv.conf mode: foreign
+Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.9#dns.quad9.net 8.8.8.8#dns.google 2606:4700:4700::1111#cloudflare-dns.com
+                      2620:fe::9#dns.quad9.net 2001:4860:4860::8888#dns.google
+
+Link 2 (enp38s0)
+    Current Scopes: none
+         Protocols: -DefaultRoute +LLMNR mDNS=resolve -DNSOverTLS DNSSEC=no/unsupported
+
+Link 4 (wlan0)
+    Current Scopes: DNS LLMNR/IPv4 LLMNR/IPv6 mDNS/IPv4 mDNS/IPv6
+         Protocols: +DefaultRoute +LLMNR mDNS=resolve -DNSOverTLS DNSSEC=no/unsupported
+Current DNS Server: $ROUTER_IPv6_ADDRESS
+       DNS Servers: $AD_GUARD_IPv4_ADDRESS $ROUTER_IPv6_ADDRESS
+</code></pre></div>
+
+<p>So IPv6 is now available since more then 20 years but there is still very bad
+support for it available in network hardware. My options for fixing this include</p>
+<ul>
+<li>Disabling IPv6 on my router</li>
+<li>Deactivating DHCP on my router and use HomeAssistant as my DHCP server</li>
+<li>Override DNS servers on my clients</li>
+</ul>
+<p>But for now I'll just live with the slightly worse statistics on AdGuard.</p>
     </div><!-- /.entry-content -->
 
   </article>

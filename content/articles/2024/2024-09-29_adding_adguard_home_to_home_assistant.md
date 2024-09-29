@@ -2,7 +2,6 @@ Title: Adding AdGuard Home to my Home Assistant
 Tags: Raspberry Pi, Linux, Home Assistant, AdGuard
 Language: en
 Summary: Setting up a AdGuard Home on my Home Assistant
-Status: draft
 
 I recently noticed that home assistant offers an [AdGuard Home
 add-on](https://github.com/hassio-addons/addon-adguard-home). While I already
@@ -28,7 +27,9 @@ one should configure the network to use a static IP address:
 # Configuring AdGuard Home
 
 For some reason the AdGuard Home add-on only listens on the local interface
-instead of all interfaces so it won't be reachable from outside. As instructed by <https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9> I changed the add-on configuration accordingly:
+instead of all interfaces so it won't be reachable from outside. As instructed
+by <https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9>
+I changed the add-on configuration accordingly:
 
 <center>
 ![The Home Assistant AdGuard add-on configuration]({static}/images/home_assistant/adguard_home_addon_configuration.png){width=80%}
@@ -36,14 +37,14 @@ instead of all interfaces so it won't be reachable from outside. As instructed b
 
 # Configuring Router
 
-Basically there are two ways to configure your router when wanting to use AdGuard Home:
+There are two main ways to set up your router when wanting to use AdGuard Home:
 
  1. Adding it as the DNS server your router uses
- 2. Adding it to the DNS server distributed via DHCP
+ 2. Adding it as the DNS server that's distributed via DHCP
 
-The first one has the advantage that local names will still be resolved by the
-router, while the second one gives better statistics over which clients use the
-AdGuard Home DNS server.
+The first option has the advantage that local names will still be resolved by
+the router, while the second one gives better statistics on which clients use
+the AdGuard Home DNS server.
 
 Since I didn't want to break stuff in my network I decided to first go with
 option one. Also I kept one of the original DNS servers just in case for the
@@ -88,9 +89,11 @@ queried by the WiFi switches for example.
 ![AdGuard statistics for individual clients]({static}/images/home_assistant/adguard_home_statistics_2.png){width=80%}
 </center>
 
-What I noticed as well is that still around 25% of the requests are coming from
-the router. Since all clients should use the AdGuard DNS server directly this
-confused me. It turns out that there are two reasons for that:
+# IPv6 troubles
+
+I also noticed that around 25% of the requests are still coming from the
+router. Since all clients should use the AdGuard DNS server directly, this
+seemed a bit strange. It turns out there are two reasons for that:
 
  1. HomeAssistant itself is configured to use the router DNS directly, which is
     probably smart to avoid trouble if the AdGuard DNS server would misbehave.

@@ -1,5 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2024</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2024.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2024-09-09T00:00:00+02:00</updated><entry><title>Creating a Raspberry Pi Based Media System</title><link href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html" rel="alternate"></link><published>2024-09-09T00:00:00+02:00</published><updated>2024-09-09T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-09-09:/creating-a-raspberry-pi-based-media-system.html</id><summary type="html">&lt;p&gt;Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy&lt;/p&gt;</summary><content type="html">&lt;p&gt;For quite some time I wanted to setup a Raspberry Pi based sound system with
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch - 2024</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/2024.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2024-09-29T00:00:00+02:00</updated><entry><title>Adding AdGuard Home to my Home Assistant</title><link href="https://blog.rnstlr.ch/adding-adguard-home-to-my-home-assistant.html" rel="alternate"></link><published>2024-09-29T00:00:00+02:00</published><updated>2024-09-29T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-09-29:/adding-adguard-home-to-my-home-assistant.html</id><summary type="html">&lt;p&gt;Setting up a AdGuard Home on my Home Assistant&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently noticed that home assistant offers an &lt;a href="https://github.com/hassio-addons/addon-adguard-home"&gt;AdGuard Home
+add-on&lt;/a&gt;. While I already
+block adds and tracking in the web with &lt;a href="https://ublockorigin.com/"&gt;uBlock
+Origin&lt;/a&gt; on my laptops and Android phone, I'm still
+annoyed and concerned by all the tracking that happens for example by apps.&lt;/p&gt;
+&lt;h1&gt;Installing the Add-on&lt;/h1&gt;
+&lt;p&gt;Installing is as easy as going to
+&lt;a href="http://homeassistant.local:8123/hassio/store"&gt;http://homeassistant.local:8123/hassio/store&lt;/a&gt; and selecting the AdGuard Home
+add-on.&lt;/p&gt;
+&lt;p&gt;According to the &lt;a href="https://github.com/hassio-addons/addon-adguard-home/blob/main/adguard/DOCS.md"&gt;AdGuard Home add-on install
+docs&lt;/a&gt;
+one should configure the network to use a static IP address:
+&lt;a href="http://homeassistant.local:8123/config/network"&gt;http://homeassistant.local:8123/config/network&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;
+&lt;img alt="The Home Assistant network configuration" src="https://blog.rnstlr.ch/images/home_assistant/home_assistant_network_configuration.png"&gt;
+&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Configuring AdGuard Home&lt;/h1&gt;
+&lt;p&gt;For some reason the AdGuard Home add-on only listens on the local interface
+instead of all interfaces so it won't be reachable from outside. As instructed
+by &lt;a href="https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9"&gt;https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9&lt;/a&gt;
+I changed the add-on configuration accordingly:&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;
+&lt;img alt="The Home Assistant AdGuard add-on configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_addon_configuration.png" width="80%"&gt;
+&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Configuring Router&lt;/h1&gt;
+&lt;p&gt;There are two main ways to set up your router when wanting to use AdGuard Home:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Adding it as the DNS server your router uses&lt;/li&gt;
+&lt;li&gt;Adding it as the DNS server that's distributed via DHCP&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The first option has the advantage that local names will still be resolved by
+the router, while the second one gives better statistics on which clients use
+the AdGuard Home DNS server.&lt;/p&gt;
+&lt;p&gt;Since I didn't want to break stuff in my network I decided to first go with
+option one. Also I kept one of the original DNS servers just in case for the
+first test run.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;
+&lt;img alt="Router DNS configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration.png" width="80%"&gt;
+&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;Statistics&lt;/h1&gt;
+&lt;p&gt;After a few days of usage without any problems the statistics looked like this:&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;
+&lt;img alt="AdGuard statistics" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics.png" width="80%"&gt;
+&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;As you can see there are quite some blocked requests and all request originate
+from one client, my router.&lt;/p&gt;
+&lt;h1&gt;Use AdGuard Directly as the DNS Server&lt;/h1&gt;
+&lt;p&gt;Since the usage went without any problems I decided to configure my router to
+directly use AdGuard Home as the DNS server for its clients.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;
+&lt;img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration_2.png"&gt;
+&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;To make sure that the important local names still resolve (NAS, HomeAssistant,
+SnapCast, ...) I added them manually as DNS rewrites.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;
+&lt;img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_dns_rewrites.png" width="80%"&gt;
+&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;When using the DNS server directly we see in the statistics which clients
+create the most DNS queries and can also get some insight in what domains are
+queried by the WiFi switches for example.&lt;/p&gt;
+&lt;p&gt;&lt;center&gt;
+&lt;img alt="AdGuard statistics for individual clients" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics_2.png" width="80%"&gt;
+&lt;/center&gt;&lt;/p&gt;
+&lt;h1&gt;IPv6 troubles&lt;/h1&gt;
+&lt;p&gt;I also noticed that around 25% of the requests are still coming from the
+router. Since all clients should use the AdGuard DNS server directly, this
+seemed a bit strange. It turns out there are two reasons for that:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;HomeAssistant itself is configured to use the router DNS directly, which is
+    probably smart to avoid trouble if the AdGuard DNS server would misbehave.&lt;/li&gt;
+&lt;li&gt;My router advertises IPv6 DNS servers as well, but doesn't allow to change
+    them in the configuration, thus it still promotes itself as the DNS server
+    there.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I found out about the IPv6 thing when I looked into the &lt;code&gt;systemd-resolve&lt;/code&gt;
+status:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ systemd-resolve --status
+Global
+           Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+    resolv.conf mode: foreign
+Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.9#dns.quad9.net 8.8.8.8#dns.google 2606:4700:4700::1111#cloudflare-dns.com
+                      2620:fe::9#dns.quad9.net 2001:4860:4860::8888#dns.google
+
+Link 2 (enp38s0)
+    Current Scopes: none
+         Protocols: -DefaultRoute +LLMNR mDNS=resolve -DNSOverTLS DNSSEC=no/unsupported
+
+Link 4 (wlan0)
+    Current Scopes: DNS LLMNR/IPv4 LLMNR/IPv6 mDNS/IPv4 mDNS/IPv6
+         Protocols: +DefaultRoute +LLMNR mDNS=resolve -DNSOverTLS DNSSEC=no/unsupported
+Current DNS Server: $ROUTER_IPv6_ADDRESS
+       DNS Servers: $AD_GUARD_IPv4_ADDRESS $ROUTER_IPv6_ADDRESS
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;So IPv6 is now available since more then 20 years but there is still very bad
+support for it available in network hardware. My options for fixing this include&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Disabling IPv6 on my router&lt;/li&gt;
+&lt;li&gt;Deactivating DHCP on my router and use HomeAssistant as my DHCP server&lt;/li&gt;
+&lt;li&gt;Override DNS servers on my clients&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But for now I'll just live with the slightly worse statistics on AdGuard.&lt;/p&gt;</content><category term="2024"></category><category term="Raspberry Pi"></category><category term="Linux"></category><category term="Home Assistant"></category><category term="AdGuard"></category></entry><entry><title>Creating a Raspberry Pi Based Media System</title><link href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html" rel="alternate"></link><published>2024-09-09T00:00:00+02:00</published><updated>2024-09-09T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-09-09:/creating-a-raspberry-pi-based-media-system.html</id><summary type="html">&lt;p&gt;Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy&lt;/p&gt;</summary><content type="html">&lt;p&gt;For quite some time I wanted to setup a Raspberry Pi based sound system with
 which I could do the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Directly connect speakers to it&lt;/li&gt;

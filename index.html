@@ -27,7 +27,132 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html">Creating a Raspberry Pi Based Media System</a></h1>
+                    <h1 class="entry-title"><a href="https://blog.rnstlr.ch/adding-adguard-home-to-my-home-assistant.html">Adding AdGuard Home to my Home Assistant</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2024-09-29T00:00:00+02:00">
+                Published: So 29 September 2024
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/home-assistant.html">Home Assistant</a> <a href="https://blog.rnstlr.ch/tag/adguard.html">AdGuard</a> </p>
+</footer><!-- /.post-info --><p>I recently noticed that home assistant offers an <a href="https://github.com/hassio-addons/addon-adguard-home">AdGuard Home
+add-on</a>. While I already
+block adds and tracking in the web with <a href="https://ublockorigin.com/">uBlock
+Origin</a> on my laptops and Android phone, I'm still
+annoyed and concerned by all the tracking that happens for example by apps.</p>
+<h1>Installing the Add-on</h1>
+<p>Installing is as easy as going to
+<a href="http://homeassistant.local:8123/hassio/store">http://homeassistant.local:8123/hassio/store</a> and selecting the AdGuard Home
+add-on.</p>
+<p>According to the <a href="https://github.com/hassio-addons/addon-adguard-home/blob/main/adguard/DOCS.md">AdGuard Home add-on install
+docs</a>
+one should configure the network to use a static IP address:
+<a href="http://homeassistant.local:8123/config/network">http://homeassistant.local:8123/config/network</a></p>
+<p><center>
+<img alt="The Home Assistant network configuration" src="https://blog.rnstlr.ch/images/home_assistant/home_assistant_network_configuration.png">
+</center></p>
+<h1>Configuring AdGuard Home</h1>
+<p>For some reason the AdGuard Home add-on only listens on the local interface
+instead of all interfaces so it won't be reachable from outside. As instructed
+by <a href="https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9">https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9</a>
+I changed the add-on configuration accordingly:</p>
+<p><center>
+<img alt="The Home Assistant AdGuard add-on configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_addon_configuration.png" width="80%">
+</center></p>
+<h1>Configuring Router</h1>
+<p>There are two main ways to set up your router when wanting to use AdGuard Home:</p>
+<ol>
+<li>Adding it as the DNS server your router uses</li>
+<li>Adding it as the DNS server that's distributed via DHCP</li>
+</ol>
+<p>The first option has the advantage that local names will still be resolved by
+the router, while the second one gives better statistics on which clients use
+the AdGuard Home DNS server.</p>
+<p>Since I didn't want to break stuff in my network I decided to first go with
+option one. Also I kept one of the original DNS servers just in case for the
+first test run.</p>
+<p><center>
+<img alt="Router DNS configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration.png" width="80%">
+</center></p>
+<h1>Statistics</h1>
+<p>After a few days of usage without any problems the statistics looked like this:</p>
+<p><center>
+<img alt="AdGuard statistics" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics.png" width="80%">
+</center></p>
+<p>As you can see there are quite some blocked requests and all request originate
+from one client, my router.</p>
+<h1>Use AdGuard Directly as the DNS Server</h1>
+<p>Since the usage went without any problems I decided to configure my router to
+directly use AdGuard Home as the DNS server for its clients.</p>
+<p><center>
+<img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration_2.png">
+</center></p>
+<p>To make sure that the important local names still resolve (NAS, HomeAssistant,
+SnapCast, ...) I added them manually as DNS rewrites.</p>
+<p><center>
+<img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_dns_rewrites.png" width="80%">
+</center></p>
+<p>When using the DNS server directly we see in the statistics which clients
+create the most DNS queries and can also get some insight in what domains are
+queried by the WiFi switches for example.</p>
+<p><center>
+<img alt="AdGuard statistics for individual clients" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics_2.png" width="80%">
+</center></p>
+<h1>IPv6 troubles</h1>
+<p>I also noticed that around 25% of the requests are still coming from the
+router. Since all clients should use the AdGuard DNS server directly, this
+seemed a bit strange. It turns out there are two reasons for that:</p>
+<ol>
+<li>HomeAssistant itself is configured to use the router DNS directly, which is
+    probably smart to avoid trouble if the AdGuard DNS server would misbehave.</li>
+<li>My router advertises IPv6 DNS servers as well, but doesn't allow to change
+    them in the configuration, thus it still promotes itself as the DNS server
+    there.</li>
+</ol>
+<p>I found out about the IPv6 thing when I looked into the <code>systemd-resolve</code>
+status:</p>
+<div class="highlight"><pre><span></span><code>$ systemd-resolve --status
+Global
+           Protocols: +LLMNR +mDNS -DNSOverTLS DNSSEC=no/unsupported
+    resolv.conf mode: foreign
+Fallback DNS Servers: 1.1.1.1#cloudflare-dns.com 9.9.9.9#dns.quad9.net 8.8.8.8#dns.google 2606:4700:4700::1111#cloudflare-dns.com
+                      2620:fe::9#dns.quad9.net 2001:4860:4860::8888#dns.google
+
+Link 2 (enp38s0)
+    Current Scopes: none
+         Protocols: -DefaultRoute +LLMNR mDNS=resolve -DNSOverTLS DNSSEC=no/unsupported
+
+Link 4 (wlan0)
+    Current Scopes: DNS LLMNR/IPv4 LLMNR/IPv6 mDNS/IPv4 mDNS/IPv6
+         Protocols: +DefaultRoute +LLMNR mDNS=resolve -DNSOverTLS DNSSEC=no/unsupported
+Current DNS Server: $ROUTER_IPv6_ADDRESS
+       DNS Servers: $AD_GUARD_IPv4_ADDRESS $ROUTER_IPv6_ADDRESS
+</code></pre></div>
+
+<p>So IPv6 is now available since more then 20 years but there is still very bad
+support for it available in network hardware. My options for fixing this include</p>
+<ul>
+<li>Disabling IPv6 on my router</li>
+<li>Deactivating DHCP on my router and use HomeAssistant as my DHCP server</li>
+<li>Override DNS servers on my clients</li>
+</ul>
+<p>But for now I'll just live with the slightly worse statistics on AdGuard.</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html" rel="bookmark"
+                           title="Permalink to Creating a Raspberry Pi Based Media System">Creating a Raspberry Pi Based Media System</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2024-09-09T00:00:00+02:00">
                 Published: Mo 09 September 2024
@@ -38,418 +163,10 @@
         </address>
 <p>In <a href="https://blog.rnstlr.ch/category/2024.html">2024</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> <a href="https://blog.rnstlr.ch/tag/snapcast.html">snapcast</a> <a href="https://blog.rnstlr.ch/tag/volumio.html">volumio</a> <a href="https://blog.rnstlr.ch/tag/mopidy.html">mopidy</a> </p>
-</footer><!-- /.post-info --><p>For quite some time I wanted to setup a Raspberry Pi based sound system with
-which I could do the following:</p>
-<ul>
-<li>Directly connect speakers to it</li>
-<li>Stream audio from various sources</li>
-<li>Connect a small USB based sound mixer</li>
-<li>Run spotifyd</li>
-<li>Play music from my NAS</li>
-</ul>
-<h1>Resources</h1>
-<p>Researching a bit I found the following interesting resources</p>
-<ul>
-<li><a href="https://hifiberry.com/">https://hifiberry.com/</a></li>
-<li><a href="https://volumio.com/">https://volumio.com/</a></li>
-<li><a href="https://github.com/badaix/snapcast">https://github.com/badaix/snapcast</a></li>
-<li><a href="https://mopidy.com/">https://mopidy.com/</a></li>
-<li><a href="http://techroadtrip.com/audio-software/volumio-vs-moode-vs-picoreplayer/">http://techroadtrip.com/audio-software/volumio-vs-moode-vs-picoreplayer/</a></li>
-<li><a href="https://www.runeaudio.com/">https://www.runeaudio.com/</a></li>
-<li><a href="https://github.com/dbrgn/weltempfaenger/">https://github.com/dbrgn/weltempfaenger/</a></li>
-<li><a href="https://www.home-assistant.io/blog/2016/02/18/multi-room-audio-with-snapcast/">https://www.home-assistant.io/blog/2016/02/18/multi-room-audio-with-snapcast/</a></li>
-</ul>
-<h1>Hardware</h1>
-<p>For the hardware I settled for</p>
-<ul>
-<li>A Raspberry Pi 3 which I had laying around anyway</li>
-<li><a href="https://www.hifiberry.com/shop/boards/hifiberry-amp2/">HiFiBerry Amp2</a>
-   which looked very promising and wasn't too expensive</li>
-</ul>
-<p><img alt="My hardware setup" src="https://blog.rnstlr.ch/images/snapcast/raspberry-pi-audio-setup.jpg" width="100%"></p>
-<h1>Software</h1>
-<p>The first thing I tried was <a href="https://volumio.com/">volumio</a>, which directly
-offers a convenient Raspberry Pi image which gets you started quickly:
-<a href="https://volumio.com/get-started/">https://volumio.com/get-started/</a>.</p>
-<p>While it was very convenient to get started and verify that the amplifier
-works, it seemed to me that the free version is very limited and locked down.
-Also the premium price with 80$ (around 70 CHF) per year seemed a bit expensive
-to me.</p>
-<p>Since I wanted something which lets me tinker around a bit more I came up with
-the following options:</p>
-<ul>
-<li><a href="https://buildroot.org/">Buildroot</a></li>
-<li><a href="https://archlinuxarm.org/">ArchLinuxARM</a></li>
-</ul>
-<p>While buildroot would probably allow to get a much more minimal system and a
-friend of mine had a good experience using it for <a href="https://github.com/dbrgn/weltempfaenger">his
-project</a>, the guide I found for
-<a href="https://github.com/badaix/snapos/blob/master/buildroot-external/README.md">setting up
-snapcast</a>
-seemed out of date and not maintained anymore.
-Also I already know ArchLinux and used ArchLinuxARM for my <a href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html">kodi
-system</a>.</p>
-<h2>Installing ArchLinux ARM</h2>
-<details>
-<summary>So I followed the basic install guide.</summary>
-
-
-<div class="highlight"><pre><span></span><code>[alarm@alarmpi ~]$ su
-Password:
-[root@alarmpi alarm]# pacman-key --init
-gpg: /etc/pacman.d/gnupg/trustdb.gpg: trustdb created
-gpg: no ultimately trusted keys found
-gpg: starting migration from earlier GnuPG versions
-gpg: porting secret keys from &#39;/etc/pacman.d/gnupg/secring.gpg&#39; to gpg-agent
-gpg: migration succeeded
-==&gt; Generating pacman master key. This may take some time.
-gpg: Generating pacman keyring master key...
-gpg: directory &#39;/etc/pacman.d/gnupg/openpgp-revocs.d&#39; created
-gpg: revocation certificate stored as &#39;/etc/pacman.d/gnupg/openpgp-revocs.d/8277D1E09B6B70944D92CD089C16C729F5655E65.rev&#39;
-gpg: Done
-==&gt; Updating trust database...
-gpg: marginals needed: 3  completes needed: 1  trust model: pgp
-gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
-[root@alarmpi alarm]# pacman-key --populate archlinuxarm
-==&gt; Appending keys from archlinuxarm.gpg...
-==&gt; Locally signing trusted keys in keyring...
-  -&gt; Locally signed 3 keys.
-==&gt; Importing owner trust values...
-gpg: setting ownertrust to 4
-gpg: inserting ownertrust of 4
-gpg: setting ownertrust to 4
-==&gt; Updating trust database...
-gpg: marginals needed: 3  completes needed: 1  trust model: pgp
-gpg: depth: 0  valid:   1  signed:   3  trust: 0-, 0q, 0n, 0m, 0f, 1u
-gpg: depth: 1  valid:   3  signed:   1  trust: 0-, 0q, 0n, 3m, 0f, 0u
-gpg: depth: 2  valid:   1  signed:   0  trust: 1-, 0q, 0n, 0m, 0f, 0u
-[root@alarmpi alarm]# pacman -Syu
-:: Synchronizing package databases...
- core                            240.3 KiB   215 KiB/s 00:01 [################################] 100%
- extra                             9.0 MiB  5.62 MiB/s 00:02 [################################] 100%
- community                        45.0   B   236   B/s 00:00 [################################] 100%
- alarm                            94.9 KiB   474 KiB/s 00:00 [################################] 100%
- aur                               9.3 KiB  49.1 KiB/s 00:00 [################################] 100%
-:: Starting full system upgrade...
-:: Replace raspberrypi-firmware with alarm/raspberrypi-utils? [Y/n]
-</code></pre></div>
-
-
-
-</details>
-
-<p>I then changed the hostname to avoid the conflict with my existing archlinuxarm
-machine in the network and rebooted:</p>
-<div class="highlight"><pre><span></span><code>[root@alarmpi alarm]# hostnamectl hostname muzikskatolo
-[root@alarmpi alarm]# reboot
-</code></pre></div>
-
-<h2>Setting up the network</h2>
-<p>To get wifi running I installed <code>iwd</code>:</p>
-<div class="highlight"><pre><span></span><code>[root@muzikskatolo alarm]# pacman -S iwd
-[root@muzikskatolo alarm]# systemctl enable iwd.service
-[root@muzikskatolo alarm]# systemctl start iwd.service
-</code></pre></div>
-
-<p>Then connected to my wifi</p>
-<div class="highlight"><pre><span></span><code>[root@muzikskatolo alarm]# iwctl
-NetworkConfigurationEnabled: disabled
-StateDirectory: /var/lib/iwd
-Version: 2.19
-[iwd]# station wlan0 scan
-[iwd]# station wlan0 connect wifi-ssid
-Type the network passphrase for wifi-ssid psk.
-Passphrase:
-</code></pre></div>
-
-<p>And configured systemd to start DHCP for the interface by creating
-<code>/etc/systemd/network/wlan0.network</code> with the following content:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[Match]</span>
-<span class="na">Name</span><span class="o">=</span><span class="s">wlan0</span>
-
-<span class="k">[Network]</span>
-<span class="na">DHCP</span><span class="o">=</span><span class="s">yes</span>
-<span class="na">IgnoreCarrierLoss</span><span class="o">=</span><span class="s">3s</span>
-</code></pre></div>
-
-<p>Followed by</p>
-<div class="highlight"><pre><span></span><code>[root@muzikskatolo alarm]# systemctl reload systemd-networkd.service
-</code></pre></div>
-
-<p>Also I disabled waiting for all networks to be online, since the Pi will only
-have wifi were I want to place it:</p>
-<div class="highlight"><pre><span></span><code>[root@muzikskatolo alarm]# systemctl disable systemd-networkd-wait-online.service
-[root@muzikskatolo alarm]# systemctl enable systemd-networkd-wait-online@wlan0.service
-</code></pre></div>
-
-<h2>Enabling the Audio</h2>
-<p>To get the amp running I enabled the <code>hifiberry-dacplus</code> <code>dtoverlay</code> in <code>/boot/config.txt</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># https://www.hifiberry.com/docs/data-sheets/datasheet-amp2/</span>
-<span class="na">dtoverlay</span><span class="o">=</span><span class="s">hifiberry-dacplus,slave</span>
-</code></pre></div>
-
-<p>For the next step I powered down and hooked up the Raspberry Pi to the
-hardware.</p>
-<h2>Configuring Audio</h2>
-<p>To be able to test I needed to add the <code>alarm</code> user to the <code>audio</code> group:</p>
-<div class="highlight"><pre><span></span><code>sudo usermod -G audio -a alarm
-</code></pre></div>
-
-<p>Then I used <code>aplay -l</code> to find out which device got which card index:</p>
-<div class="highlight"><pre><span></span><code>$ aplay -l
-**** List of PLAYBACK Hardware Devices ****
-card 0: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 1: sndrpihifiberry [snd_rpi_hifiberry_dacplus], device 0: HiFiBerry DAC+ HiFi pcm512x-hifi-0 [HiFiBerry DAC+ HiFi pcm512x-hifi-0]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-</code></pre></div>
-
-<p>To route audio by default to the hifiberry device I configured alsa to use
-card-1 by default I created <code>/etc/alsa/conf.d/default.conf</code> with the following
-content (<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>):</p>
-<div class="highlight"><pre><span></span><code>defaults.pcm.card 1
-defaults.ctl.card 1
-</code></pre></div>
-
-<p>Then I used <code>speaker-test</code> to test the speakers</p>
-<div class="highlight"><pre><span></span><code>$ speaker-test -c 2
-
-speaker-test 1.2.12
-
-Playback device is default
-Stream parameters are 48000Hz, S16_LE, 2 channels
-Using 16 octaves of pink noise
-Rate set to 48000Hz (requested 48000Hz)
-Buffer size range from 8 to 131072
-Period size range from 4 to 65536
-Periods = 4
-was set period_size = 12000
-was set buffer_size = 48000
- 0 - Front Left
- 1 - Front Right
-Time per period = 5.007955
- 0 - Front Left
- 1 - Front Right
-</code></pre></div>
-
-<p>After connecting my USB audio device I noticed, that the indices of the sound
-cards changed:</p>
-<div class="highlight"><pre><span></span><code>$ aplay -l
-**** List of PLAYBACK Hardware Devices ****
-card 0: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 1: CODEC [USB AUDIO  CODEC], device 0: USB Audio [USB Audio]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 2: sndrpihifiberry [snd_rpi_hifiberry_dacplus], device 0: HiFiBerry DAC+ HiFi pcm512x-hifi-0 [HiFiBerry DAC+ HiFi pcm512x-hifi-0]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-</code></pre></div>
-
-<p>So to get around that I switched the configuration to use the name of the card.
-For that we need to use a slightly different syntax:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">pcm</span><span class="p">.!</span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">type</span><span class="w"> </span><span class="nx">hw</span>
-<span class="w">        </span><span class="nx">card</span><span class="w"> </span><span class="nx">sndrpihifiberry</span>
-<span class="p">}</span>
-
-<span class="nx">ctl</span><span class="p">.!</span><span class="k">default</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">type</span><span class="w"> </span><span class="nx">hw</span>
-<span class="w">        </span><span class="nx">card</span><span class="w"> </span><span class="nx">sndrpihifiberry</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<h3>Playing audio from the USB audio device</h3>
-<p>To achieve my goal of playing back the sound from the small USB based sound
-mixer I used <code>alsaloop</code> to redirect the sound from the USB capture device to
-the playback device of the HiFiBerry:</p>
-<div class="highlight"><pre><span></span><code>alsaloop -C hw:1,0 -P hw:2,0
-</code></pre></div>
-
-<h2>Setting up snapcast</h2>
-<p>To stream audio from various sources (including spotify) I decided to use
-<a href="https://github.com/badaix/snapcast">snapcast</a>. The nice thing is, that it
-allows me to play audio synchronized on both my Raspberry Pis.</p>
-<p>Building the <a href="https://aur.archlinux.org/packages/snapcast">snapcast <code>PKGBUILD</code></a>
-directly on the Raspberry Pi failed, since the device doesn't have enough RAM.
-So I tried to follow the guides from archlinuxarm to do cross compile builds:</p>
-<ul>
-<li><a href="https://archlinuxarm.org/wiki/Distcc_Cross-Compiling">https://archlinuxarm.org/wiki/Distcc_Cross-Compiling</a></li>
-<li><a href="https://archlinuxarm.org/wiki/Distributed_Compiling">https://archlinuxarm.org/wiki/Distributed_Compiling</a></li>
-</ul>
-<h4>Distcc Master System (Raspberry Pi)</h4>
-<p>For the distributed build, the Raspberry Pi will be the master system. So we
-install <code>distcc</code> on it and configure <code>makepkg</code> to use it:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>pacman<span class="w"> </span>-S<span class="w"> </span>distcc
-sudo<span class="w"> </span>vim<span class="w"> </span>/etc/makepkg.conf
-<span class="c1"># Edit / add the following lines</span>
-<span class="c1"># DISTCC_HOSTS=&quot;$IP_OF_SLAVE:3635&quot;</span>
-<span class="c1"># MAKEFLAGS=&quot;-j4&quot;</span>
-</code></pre></div>
-
-<h4>Distcc Slave System (Desktop PC)</h4>
-<p>On the slave system I first tried to install the cross-compile tools manually
-like described by the archlinuxarm page, but this failed with cryptic error
-messages from the Raspberry Pi while building the package.</p>
-<p>So I followed the guide from the <a href="https://wiki.archlinux.org/title/Distcc#Cross_compiling_with_distcc">ArchLinux distcc wiki
-page</a>,
-which worked perfectly, using the <a href="https://aur.archlinux.org/packages/distccd-alarm-armv7h">distccd-alarm-armv7h AUR
-package</a>:</p>
-<div class="highlight"><pre><span></span><code>yay distccd-alarm-armv7h
-sudo systemctl start distccd-armv7h.service
-</code></pre></div>
-
-<p>This worked out of the box and I could successfully build the snapcast package
-and distribute it to my Raspberry Pis.</p>
-<h3>Configuring Snapcast</h3>
-<p>After installing snapcast it showed the following output :</p>
-<div class="highlight"><pre><span></span><code>:: The default setup will create a pipe /tmp/snapfifo.
-   Due to recent changes in systemd, pipes in /tmp are by default only
-   writable by the owning user (here: sysuser snapserver).
-   The safest option is to change the location of the fifo to a
-   different location, e.g. /run/snapserver.  This can be done by
-   editing /etc/snapserver.conf
-   Another possible workaround is to disable the sysctl feature by
-   running:
-     # sysctl fs.protected_fifos=0
-:: Snapcast now has a built-in snapweb control client which is enabled
-   by default on a new setup.  This functionality enables a webserver
-   on port 1780.  This can be controlled by the doc_root variable in
-   /etc/snapserver.conf.
-Optional dependencies for snapcast
-    python-websocket-client: stream plugin script [installed]
-    python-mpd2: stream plugin script
-    python-musicbrainzngs: stream plugin script [installed]
-</code></pre></div>
-
-<p>So the first thing I did is set the default source to <code>source =
-pipe:///run/snapserver/snapfifo?name=default</code> in <code>/etc/snapserver.conf</code>.</p>
-<p>I then started the <code>snapserver</code> service and started playing white noise trough
-the snapfifo:</p>
-<div class="highlight"><pre><span></span><code>sudo systemctl start snapserver.service
-cat /dev/urandom &gt; /run/snapserver/snapfifo
-</code></pre></div>
-
-<p>I could then point my smart phone to http://muzikskatolo:1780 and start
-streaming the random white noise to test that everything is working.</p>
-<h3>Adding librespot</h3>
-<p>snapcast has out of the box support to spawn librespot. The <a href="https://aur.archlinux.org/packages/librespot">librespot AUR
-package</a> needed some patching to
-be buildable for the Raspberry Pi. While at it I also removed audio backends
-and their dependencies which I didn't need:</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/PKGBUILD b/PKGBUILD</span>
-<span class="gh">index 4a10228..61aeef4 100644</span>
-<span class="gd">--- a/PKGBUILD</span>
-<span class="gi">+++ b/PKGBUILD</span>
-<span class="gu">@@ -8,16 +8,17 @@ pkgver=0.4.2</span>
-<span class="w"> </span>_commit=22f8aed
-<span class="w"> </span>pkgrel=1
-<span class="w"> </span>pkgdesc=&#39;Open source client library for Spotify&#39;
-<span class="gd">-arch=(&#39;x86_64&#39; &#39;aarch64&#39;)</span>
-<span class="gi">+arch=(&#39;armv7h&#39; &#39;x86_64&#39; &#39;aarch64&#39;)</span>
-<span class="w"> </span>url=&#39;https://github.com/librespot-org/librespot&#39;
-<span class="w"> </span>license=(&#39;MIT&#39;)
-<span class="w"> </span>depends=(
-<span class="w"> </span>       &#39;alsa-lib&#39;
-<span class="gd">-       &#39;gst-plugins-base-libs&#39;</span>
-<span class="gd">-       &#39;jack&#39;</span>
-<span class="w"> </span>       &#39;libpulse&#39;
-<span class="gd">-       &#39;portaudio&#39;</span>
-<span class="gd">-       &#39;sdl2&#39;)</span>
-<span class="gi">+)</span>
-<span class="w"> </span>makedepends=(&#39;cargo&#39; &#39;git&#39;)
-<span class="w"> </span>source=(&quot;$pkgname::git+$url#commit=$_commit?signed&quot;)
-<span class="w"> </span>sha256sums=(&#39;SKIP&#39;)
-<span class="gu">@@ -25,7 +26,7 @@ validpgpkeys=(&#39;EC57B7376EAFF1A0BB56BB0187F5FDE8A56219F4&#39;) ## Roderick van Domber</span>
-
-<span class="w"> </span>prepare() {
-<span class="w"> </span>       cd &quot;$pkgname&quot;
-<span class="gd">-       cargo fetch --locked --target &quot;$CARCH-unknown-linux-gnu&quot;</span>
-<span class="gi">+       cargo fetch --locked</span>
-<span class="w"> </span>}
-
-<span class="w"> </span>build() {
-<span class="gu">@@ -33,7 +34,7 @@ build() {</span>
-<span class="w"> </span>       export CARGO_TARGET_DIR=target
-<span class="w"> </span>       cd &quot;$pkgname&quot;
-<span class="w"> </span>       cargo build --release --frozen --features \
-<span class="gd">-               alsa-backend,portaudio-backend,pulseaudio-backend,jackaudio-backend,rodio-backend,rodiojack-backend,sdl-backend,gstreamer-backend</span>
-<span class="gi">+               alsa-backend,pulseaudio-backend,rodio-backend</span>
-<span class="w"> </span>}
-
-<span class="w"> </span>## 0 tests
-</code></pre></div>
-
-<p>Due to some random spotify changes <a href="https://github.com/librespot-org/librespot/issues/972#issuecomment-2320943137">librespot stopped
-working</a>
-after a few days and I had to use the <a href="https://aur.archlinux.org/packages/librespot-git">librespot-git AUR
-package</a> which continued to
-work and also didn't need any changes to the <code>PKGBUILD</code>.</p>
-<p>Adding librespot to snapcast was as easy as adding the following source to
-<code>/etc/snapserver.conf</code> (<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>):</p>
-<div class="highlight"><pre><span></span><code>source = librespot:///usr/bin/librespot&gt;?name=librespot&amp;devicename=Snapcast
-</code></pre></div>
-
-<p>I then did setup the <code>snapclient</code> on my existing kodi Raspberry Pi and on the
-Pi where also the snapserver runs:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/default/snapclient on kodi system</span>
-<span class="nv">SNAPCLIENT_OPTS</span><span class="o">=</span><span class="s2">&quot;--host </span><span class="nv">$IP_OF_SNAPSERVER</span><span class="s2">&quot;</span>
-</code></pre></div>
-
-<div class="highlight"><pre><span></span><code><span class="c1"># /etc/default/snapclient on muzikskatolo</span>
-<span class="nv">SNAPCLIENT_OPTS</span><span class="o">=</span><span class="s2">&quot;--host 127.0.0.1 -s 13&quot;</span>
-</code></pre></div>
-
-<p>On muzikskatolo snapclient didn't choose the correct output device so I looked
-at the output of <code>snapclient -l</code> and hard-coded it in the options:</p>
-<div class="highlight"><pre><span></span><code># lots of other devices
-13: sysdefault:CARD=sndrpihifiberry
-snd_rpi_hifiberry_dacplus, HiFiBerry DAC+ HiFi pcm512x-hifi-0
-Default Audio Device
-</code></pre></div>
-
-<p>Another thing I had to change was the <code>bind_to_address</code> of the <code>snapserver</code>
-(<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>) so that it also listens to incoming IPv6 traffic:</p>
-<div class="highlight"><pre><span></span><code><span class="k">[http]</span>
-<span class="na">bind_to_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">::</span>
-<span class="k">[tcp]</span>
-<span class="na">bind_to_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">::</span>
-<span class="k">[stream]</span>
-<span class="na">bind_to_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">::</span>
-</code></pre></div>
-
-<p>I now enjoy nice multi-room synced audio while being able to easily control
-volume from my smart phone:</p>
-<p><center>
-<img alt="Snapcast web interface" src="https://blog.rnstlr.ch/images/snapcast/snapcast-webinterface.png" width="80%">
-</center></p>
-<h2>Outlook</h2>
-<p>The next things I want to look at is setting up <a href="https://mopidy.com/">mopidy</a>
-to stream music from my NAS and also to integrate snapcast into <a href="https://blog.rnstlr.ch/setting-up-home-assistant-on-the-raspberry-pi-3.html">my home
-assistant
-setup</a>.</p>
-<div class="footnote">
-<hr>
-<ol>
-<li id="fn:1">
-<p>See also <a href="https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Setting_the_default_sound_card_via_defaults_node">https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#Setting_the_default_sound_card_via_defaults_node</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:2">
-<p>See also <a href="https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#librespot">https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#librespot</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:3">
-<p>See also <a href="https://github.com/badaix/snapcast/issues/518#issuecomment-569143476">https://github.com/badaix/snapcast/issues/518#issuecomment-569143476</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                <p>Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy</p>
+                <a class="readmore" href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -625,28 +342,6 @@ setup</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
 </footer><!-- /.post-info -->                <p>Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1. Part two.</p>
                 <a class="readmore" href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-two.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html" rel="bookmark"
-                           title="Permalink to Building an out-of-tree Rust Kernel Module">Building an out-of-tree Rust Kernel Module</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2022-12-19T00:00:00+01:00">
-                Published: Mo 19 Dezember 2022
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-        </address>
-<p>In <a href="https://blog.rnstlr.ch/category/2022.html">2022</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
-</footer><!-- /.post-info -->                <p>Trying to build a hello world out-of-tree Rust kernel module for Linux 6.1</p>
-                <a class="readmore" href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
                 </ol><!-- /#posts-list -->

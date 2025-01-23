@@ -18,12 +18,15 @@ What I didn't get to yet was configuring mopidy to play music from my NAS.
 Installing mopidy is as easy as `sudo pacman -S mopidy`. Configuring snapcast
 and mopidy to play music works as follows:
 
- 1. Editing `/etc/snapserver.conf`
-    ```toml
+1. Editing `/etc/snapserver.conf`
+
+    ```ini
     source = pipe:///run/snapserver/snapfifo?name=mopidy
     ```
- 2. Editing `/etc/mopidy/mopidy.conf` to configure mopidy's audio output
-    ```toml
+
+2. Editing `/etc/mopidy/mopidy.conf` to configure mopidy's audio output
+
+    ```ini
     [audio]
     output = audioresample ! audioconvert ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/run/snapserver/snapfifo
     ```
@@ -50,21 +53,21 @@ domain=your_domain  # Optional, if applicable
 
 To give mopidy access to the files I looked for its user and group ID
 
-```passwd
+```text
 $ cat /etc/passwd|grep mopidy
 mopidy:x:46:46:Mopidy User:/var/lib/mopidy:/usr/bin/nologin
 ```
 
-and put it together like this: 
+and put it together like this:
 
-```fstab
+```text
 #/etc/fstab
 //$IP_OF_NAS/$PATH_TO_MUSIC  /mnt/music  cifs  credentials=/var/lib/private/nas-cifs-credentials,uid=46,gid=46  0  0
 ```
 
 Then we need to tell the mopidy extension where our music is:
 
-```toml
+```ini
 #/etc/mopidy/mopidy.conf
 [local]
 media_dir = /mnt/music
@@ -72,9 +75,11 @@ media_dir = /mnt/music
 
 And let it scan the directory
 
-```
+```text
 $ sudo mopidyctl local scan
 ```
+
+### mopidy-mpd
 
 To control mopidy I chose to use the [mpoidy-mpd](https://mopidy.com/ext/mpd/)
 extension, also available from the
@@ -87,15 +92,21 @@ IPv6:
 hostname = ::
 ```
 
-TODO: mpd problems:
- * https://github.com/mopidy/mopidy-mpd/issues/68 and https://github.com/mopidy/mopidy-mpd/issues/47
-  ```
-  $ mpc
-  warning: MPD 0.21 required
-  mpd version: 0.19.0
-  ```
+Trying to use it quickly revealed, that the plugin is quite outdated and won't
+work with newer `mpd` clients:
+```
+$ mpc
+warning: MPD 0.21 required
+mpd version: 0.19.0
+```
 
-mopidy-iris
+Looking at GitHub I found <https://github.com/mopidy/mopidy-mpd/issues/68> and
+<https://github.com/mopidy/mopidy-mpd/issues/47> which confirmed that.
+
+### mopidy-iris
+
+[mopidy-iris](https://github.com/jaedb/Iris/) looked like a popolar and
+well-maintained web interface for mopidy.
 
 ## Notes
 
@@ -104,4 +115,4 @@ mopidy-iris
 
 ## New stuff
 
- * https://github.com/music-assistant/server
+ * <https://github.com/music-assistant/server>

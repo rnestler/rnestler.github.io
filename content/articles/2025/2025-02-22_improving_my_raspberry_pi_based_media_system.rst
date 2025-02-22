@@ -1,7 +1,7 @@
-Improving my Raspberry Pi Based Media System
-============================================
+Adding mopidy to my Raspberry Pi Based Media System
+===================================================
 
-:tags: Raspberry Pi, Linux, ArchLinux, ARM, snapcast, volumio, mopidy
+:tags: Raspberry Pi, Linux, ArchLinux, ARM, snapcast, mopidy
 :language: en
 :summary: Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy
 :status: draft
@@ -12,10 +12,11 @@ described how I did set up a media system based on `snapcast
 <https://github.com/badaix/snapcast>`_ and `librespot
 <https://github.com/librespot-org/librespot>`_.
 
-What I didn't get to yet was configuring mopidy to play music from my NAS.
+What I didn't get to yet was configuring `mopidy <https://mopidy.com/>`_ to
+play music from my NAS.
 
-mopidy
-------
+installing mopidy
+-----------------
 
 Installing mopidy is as easy as ``sudo pacman -S mopidy``. Configuring snapcast
 and mopidy to play music works as follows:
@@ -33,18 +34,18 @@ and mopidy to play music works as follows:
       [audio]
       output = audioresample ! audioconvert ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/run/snapserver/snapfifo
 
-To be able to play local files I wanted to use the `Mopidy-Local
-<https://mopidy.com/ext/local/>`_ extension. For that I needed to install the
-following packages:
+To be able to play local files I wanted to use the `Mopidy-Local extension
+<https://mopidy.com/ext/local/>`_. For that I needed to install the
+following packages from the AUR:
 
-- `python-uritools (AUR) <https://aur.archlinux.org/packages/python-uritools>`_ (dependency of mopidy-local)
-- `mopidy-local (AUR) <https://aur.archlinux.org/packages/mopidy-local>`_
+- `python-uritools <https://aur.archlinux.org/packages/python-uritools>`_ (dependency of mopidy-local)
+- `mopidy-local <https://aur.archlinux.org/packages/mopidy-local>`_
 
 To get access to the music collection of the NAS I mounted the path system wide
 via ``/etc/fstab``.
 
-To not store the credentials in plaintext in ``/etc/fstab`` directly I create a
-credentials file in ``/var/lib/private``:
+To not store the credentials in plaintext in ``/etc/fstab`` directly I created
+a credentials file in ``/var/lib/private``:
 
 .. code-block:: ini
 
@@ -82,7 +83,7 @@ And let it scan the directory:
    $ sudo mopidyctl local scan
 
 mopidy-mpd
-^^^^^^^^^^
+----------
 
 To control mopidy I chose to use the `mpoidy-mpd
 <https://mopidy.com/ext/mpd/>`_ extension, also available from the `AUR
@@ -108,18 +109,49 @@ Looking at GitHub I found `mopidy-mpd issue 68
 <https://github.com/mopidy/mopidy-mpd/issues/68>`_ and `mopidy-mpd issue 47
 <https://github.com/mopidy/mopidy-mpd/issues/47>`_ which confirmed that.
 
-mopidy-iris
-^^^^^^^^^^^
+So I decided not to try to use it and uninstalled it again.
 
-`mopidy-iris <https://github.com/jaedb/Iris/>`_ looked like a popular and well-maintained web interface for mopidy.
+mopidy-iris
+-----------
+
+`mopidy-iris <https://github.com/jaedb/Iris/>`_ looked like a popular and
+well-maintained web interface for mopidy.
+
+After installing and restarting mopidy it we get greeted by it's webinterface
+when accessing http://$MOPIDY_HOST/iris/  🎉
+
+.. figure:: {static}/images/mopidy/mopidy-iris-welcome.png
+    :target: {static}/images/mopidy/mopidy-iris-welcome.png
+    :alt: mopidy-iris welcome screen
+    :align: center
+    :width: 60%
+    :figwidth: 100%
+
+    mopidy-iris welcome screen
 
 mopidy snapcast integration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
-- Not marked executable -> ``chmod +x ...``
-- Deps not installed:
+Snapcast supports reporting and controlling the player state of sources via
+controllscripts on the `source configuration
+<https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#sources>`_
 
-  .. code-block:: text
+.. code-block:: ini
+
+   # /etc/snapserver.conf
+   source = pipe:///run/snapserver/snapfifo?name=mopidy&controlscript=meta_mopidy.py&controlscriptparams=--mopidy-host=muzikskatolo.home
+
+I ran into a few issues issues:
+
+- The controlscript in ``/usr/share/snapserver/plug-ins/meta_mopidy.py``
+  wasn't marked as executable. This was fixed by the AUR package maintainer
+  after `I reported it
+  <https://aur.archlinux.org/packages/snapcast#comment-1008816>`_
+
+- I didn't install the optional ``python-websocket-client`` dependency for
+  ``snapserver`` which lead to a crash:
+
+  .. code-block:: python
 
      /usr/share/snapserver/plug-ins/meta_mopidy.py
      Traceback (most recent call last):
@@ -127,15 +159,100 @@ mopidy snapcast integration
          import websocket
      ModuleNotFoundError: No module named 'websocket'
 
-  -> ``sudo pacman -S --asdeps python-websockets``
-  
-  -> ``sudo pacman -S --asdeps extra/python-websocket-client``
+  Installing it with ``sudo pacman -S --asdeps python-websocket-client`` fixed it.
+
+- I needed to explicitly set the ``mopidy-host`` on the command line, since
+  otherwise the generated links to the album art won't work since they would
+  point to `localhost`.
+
+
+Accessing the snapcast webinterface then allows to see the metadata of the
+playing song:
+
+.. figure:: {static}/images/mopidy/mopidy-snapcast-integration.png
+    :target: {static}/images/mopidy/mopidy-snapcast-integration.png
+    :alt: mopidy metadata of the playing song displayed in the snapcast web interface
+    :align: center
+    :width: 60%
+    :figwidth: 100%
+
+snapcast meta sources
+---------------------
+
+Snapcast has a nice feature called `meta sources
+<https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#meta>`_.
+
+It allows to just play the audio from the first active source:
+
+.. code-block:: ini
+
+   source = pipe:///run/snapserver/snapfifo?name=mopidy&controlscript=meta_mopidy.py&controlscriptparams=--mopidy-host=muzikskatolo.home
+   source = librespot:///usr/bin/librespot>?name=librespot&devicename=Snapcast
+   source = meta:///librespot/mopidy?name=any
+
+Here I configured a meta source named "any" which plays audio from librespot or
+mopidy.
+
+scanning the local library regularly
+------------------------------------
+
+Running ``sudo mopidyctl local scan`` manually get's tedious over time when I
+add new music. So I created a systemd unit and a timer to run it daily:
+
+
+.. code-block:: ini
+
+   # /etc/systemd/system/mopidy-local-scan.service
+   [Unit]
+   Description=Mopidy music server
+   After=remote-fs.target
+
+   [Service]
+   Type=oneshot
+   User=mopidy
+   ExecStart=/usr/bin/mopidy --config /usr/share/mopidy/conf.d:/etc/mopidy/mopidy.conf local scan
+
+.. code-block:: ini
+
+   # /etc/systemd/system/daily@.timer
+   [Unit]
+   Description=Daily timer for %i service
+
+   [Timer]
+   OnCalendar=*-*-* 02:00:00
+   AccuracySec=6h
+   RandomizedDelaySec=1h
+   Unit=%i.service
+   Persistent=true
+   [Install]
+   WantedBy=timers.target
+
+
+After creating the files we can reload systemd and enable the timer:
+
+.. code-block:: text
+   $ sudo systemctl daemon-reload
+   $ sudo systemctl enable daily@mopidy-local-scan.timer
+
+   Created symlink '/etc/systemd/system/timers.target.wants/daily@mopidy-local-scan.timer' -> '/etc/systemd/system/daily@.timer'.
+   $ sudo systemctl list-timers  --all
+   NEXT                            LEFT LAST                              PASSED UNIT                             ACTIVATES
+   Sun 2025-02-23 00:00:00 UTC 3h 30min Sat 2025-02-22 09:42:48 UTC      10h ago shadow.timer                     shadow.service
+   Sun 2025-02-23 02:56:10 UTC       6h Sat 2025-02-22 18:38:44 UTC 1h 50min ago daily@mopidy-local-scan.timer    mopidy-local-scan.service
+   Sun 2025-02-23 09:57:33 UTC      13h Sat 2025-02-22 09:57:33 UTC      10h ago systemd-tmpfiles-clean.timer     systemd-tmpfiles-clean.service
+   Fri 2025-02-28 16:49:57 UTC   5 days Mon 2025-02-10 09:45:18 UTC            - archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+
+   4 timers listed.
 
 Notes
 -----
 
+- Adding the "any" meta source with snapcast
+- Scanning the local library regularity
+
 - Adding the snapcast dashboard to home assistant
 - Adding the snapcast integration
+
 
 New stuff
 ---------

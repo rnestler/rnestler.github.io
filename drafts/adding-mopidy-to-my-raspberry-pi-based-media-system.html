@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Adding mopidy to my Raspberry Pi Based Media System</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/adding-mopidy-to-my-raspberry-pi-based-media-system.html" rel="bookmark"
+           title="Permalink to Adding mopidy to my Raspberry Pi Based Media System">Adding mopidy to my Raspberry Pi Based Media System</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2025-02-22T00:00:00+01:00">
+                Published: Sa 22 Februar 2025
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2025.html">2025</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> <a href="https://blog.rnstlr.ch/tag/snapcast.html">snapcast</a> <a href="https://blog.rnstlr.ch/tag/mopidy.html">mopidy</a> </p>
+</footer><!-- /.post-info -->      <p>In <a class="reference external" href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html">a past blogpost</a> I
+described how I did set up a media system based on <a class="reference external" href="https://github.com/badaix/snapcast">snapcast</a> and <a class="reference external" href="https://github.com/librespot-org/librespot">librespot</a>.</p>
+<p>What I didn't get to yet was configuring <a class="reference external" href="https://mopidy.com/">mopidy</a> to
+play music from my NAS.</p>
+<div class="section" id="installing-mopidy">
+<h2>installing mopidy</h2>
+<p>Installing mopidy is as easy as <tt class="docutils literal">sudo pacman <span class="pre">-S</span> mopidy</tt>. Configuring snapcast
+and mopidy to play music works as follows:</p>
+<ol class="arabic">
+<li><p class="first">Editing <tt class="docutils literal">/etc/snapserver.conf</tt></p>
+<div class="highlight"><pre><span></span><span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">pipe:///run/snapserver/snapfifo?name=mopidy</span>
+</pre></div>
+</li>
+<li><p class="first">Editing <tt class="docutils literal">/etc/mopidy/mopidy.conf</tt> to configure mopidy's audio output</p>
+<div class="highlight"><pre><span></span><span class="k">[audio]</span>
+<span class="na">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">audioresample ! audioconvert ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/run/snapserver/snapfifo</span>
+</pre></div>
+</li>
+</ol>
+<p>To be able to play local files I wanted to use the <a class="reference external" href="https://mopidy.com/ext/local/">Mopidy-Local extension</a>. For that I needed to install the
+following packages from the AUR:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://aur.archlinux.org/packages/python-uritools">python-uritools</a> (dependency of mopidy-local)</li>
+<li><a class="reference external" href="https://aur.archlinux.org/packages/mopidy-local">mopidy-local</a></li>
+</ul>
+<p>To get access to the music collection of the NAS I mounted the path system wide
+via <tt class="docutils literal">/etc/fstab</tt>.</p>
+<p>To not store the credentials in plaintext in <tt class="docutils literal">/etc/fstab</tt> directly I created
+a credentials file in <tt class="docutils literal">/var/lib/private</tt>:</p>
+<div class="highlight"><pre><span></span><span class="c1"># /var/lib/private/nas-cifs-credentials</span>
+<span class="na">username</span><span class="o">=</span><span class="s">your_username</span>
+<span class="na">password</span><span class="o">=</span><span class="s">your_password</span>
+<span class="na">domain</span><span class="o">=</span><span class="s">your_domain</span><span class="w">  </span><span class="c1"># Optional, if applicable</span>
+</pre></div>
+<p>To give mopidy access to the files I looked for its user and group ID:</p>
+<div class="highlight"><pre><span></span>$ cat /etc/passwd|grep mopidy
+mopidy:x:46:46:Mopidy User:/var/lib/mopidy:/usr/bin/nologin
+</pre></div>
+<p>and put it together like this:</p>
+<div class="highlight"><pre><span></span>#/etc/fstab
+//$IP_OF_NAS/$PATH_TO_MUSIC  /mnt/music  cifs  credentials=/var/lib/private/nas-cifs-credentials,uid=46,gid=46  0  0
+</pre></div>
+<p>Then we need to tell the mopidy extension where our music is:</p>
+<div class="highlight"><pre><span></span><span class="c1">#/etc/mopidy/mopidy.conf</span>
+<span class="k">[local]</span>
+<span class="na">media_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/mnt/music</span>
+</pre></div>
+<p>And let it scan the directory:</p>
+<div class="highlight"><pre><span></span>$ sudo mopidyctl local scan
+</pre></div>
+</div>
+<div class="section" id="mopidy-mpd">
+<h2>mopidy-mpd</h2>
+<p>To control mopidy I chose to use the <a class="reference external" href="https://mopidy.com/ext/mpd/">mpoidy-mpd</a> extension, also available from the <a class="reference external" href="https://aur.archlinux.org/packages/mopidy-mpd">AUR</a>.</p>
+<p>To make it usable we need to make it listen on all interfaces, both IPv4 and IPv6:</p>
+<div class="highlight"><pre><span></span><span class="k">[mpd]</span>
+<span class="na">hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">::</span>
+</pre></div>
+<p>Trying to use it quickly revealed that the plugin is quite outdated and won't
+work with newer <tt class="docutils literal">mpd</tt> clients:</p>
+<div class="highlight"><pre><span></span>$ mpc
+warning: MPD 0.21 required
+mpd version: 0.19.0
+</pre></div>
+<p>Looking at GitHub I found <a class="reference external" href="https://github.com/mopidy/mopidy-mpd/issues/68">mopidy-mpd issue 68</a> and <a class="reference external" href="https://github.com/mopidy/mopidy-mpd/issues/47">mopidy-mpd issue 47</a> which confirmed that.</p>
+<p>So I decided not to try to use it and uninstalled it again.</p>
+</div>
+<div class="section" id="mopidy-iris">
+<h2>mopidy-iris</h2>
+<p><a class="reference external" href="https://github.com/jaedb/Iris/">mopidy-iris</a> looked like a popular and
+well-maintained web interface for mopidy.</p>
+<p>After installing and restarting mopidy it we get greeted by it's webinterface
+when accessing <a class="reference external" href="http://$MOPIDY_HOST/iris/">http://$MOPIDY_HOST/iris/</a>  🎉</p>
+<div class="figure align-center" style="width: 100%">
+<a class="reference external image-reference" href="https://blog.rnstlr.ch/images/mopidy/mopidy-iris-welcome.png">
+<img alt="mopidy-iris welcome screen" src="https://blog.rnstlr.ch/images/mopidy/mopidy-iris-welcome.png" style="width: 60%;" />
+</a>
+<p class="caption">mopidy-iris welcome screen</p>
+</div>
+</div>
+<div class="section" id="mopidy-snapcast-integration">
+<h2>mopidy snapcast integration</h2>
+<p>Snapcast supports reporting and controlling the player state of sources via
+controllscripts on the <a class="reference external" href="https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#sources">source configuration</a></p>
+<div class="highlight"><pre><span></span><span class="c1"># /etc/snapserver.conf</span>
+<span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">pipe:///run/snapserver/snapfifo?name=mopidy&amp;controlscript=meta_mopidy.py&amp;controlscriptparams=--mopidy-host=muzikskatolo.home</span>
+</pre></div>
+<p>I ran into a few issues issues:</p>
+<ul>
+<li><p class="first">The controlscript in <tt class="docutils literal"><span class="pre">/usr/share/snapserver/plug-ins/meta_mopidy.py</span></tt>
+wasn't marked as executable. This was fixed by the AUR package maintainer
+after <a class="reference external" href="https://aur.archlinux.org/packages/snapcast#comment-1008816">I reported it</a></p>
+</li>
+<li><p class="first">I didn't install the optional <tt class="docutils literal"><span class="pre">python-websocket-client</span></tt> dependency for
+<tt class="docutils literal">snapserver</tt> which lead to a crash:</p>
+<div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">snapserver</span><span class="o">/</span><span class="n">plug</span><span class="o">-</span><span class="n">ins</span><span class="o">/</span><span class="n">meta_mopidy</span><span class="o">.</span><span class="n">py</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s2">&quot;/usr/share/snapserver/plug-ins/meta_mopidy.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">25</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="kn">import</span> <span class="nn">websocket</span>
+<span class="ne">ModuleNotFoundError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="s1">&#39;websocket&#39;</span>
+</pre></div>
+<p>Installing it with <tt class="docutils literal">sudo pacman <span class="pre">-S</span> <span class="pre">--asdeps</span> <span class="pre">python-websocket-client</span></tt> fixed it.</p>
+</li>
+<li><p class="first">I needed to explicitly set the <tt class="docutils literal"><span class="pre">mopidy-host</span></tt> on the command line, since
+otherwise the generated links to the album art won't work since they would
+point to <cite>localhost</cite>.</p>
+</li>
+</ul>
+<p>Accessing the snapcast webinterface then allows to see the metadata of the
+playing song:</p>
+<div class="figure align-center" style="width: 100%">
+<a class="reference external image-reference" href="https://blog.rnstlr.ch/images/mopidy/mopidy-snapcast-integration.png">
+<img alt="mopidy metadata of the playing song displayed in the snapcast web interface" src="https://blog.rnstlr.ch/images/mopidy/mopidy-snapcast-integration.png" style="width: 60%;" />
+</a>
+</div>
+</div>
+<div class="section" id="snapcast-meta-sources">
+<h2>snapcast meta sources</h2>
+<p>Snapcast has a nice feature called <a class="reference external" href="https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#meta">meta sources</a>.</p>
+<p>It allows to just play the audio from the first active source:</p>
+<div class="highlight"><pre><span></span><span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">pipe:///run/snapserver/snapfifo?name=mopidy&amp;controlscript=meta_mopidy.py&amp;controlscriptparams=--mopidy-host=muzikskatolo.home</span>
+<span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">librespot:///usr/bin/librespot&gt;?name=librespot&amp;devicename=Snapcast</span>
+<span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">meta:///librespot/mopidy?name=any</span>
+</pre></div>
+<p>Here I configured a meta source named &quot;any&quot; which plays audio from librespot or
+mopidy.</p>
+</div>
+<div class="section" id="scanning-the-local-library-regularly">
+<h2>scanning the local library regularly</h2>
+<p>Running <tt class="docutils literal">sudo mopidyctl local scan</tt> manually get's tedious over time when I
+add new music. So I created a systemd unit and a timer to run it daily:</p>
+<div class="highlight"><pre><span></span><span class="c1"># /etc/systemd/system/mopidy-local-scan.service</span>
+<span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Mopidy music server</span>
+<span class="na">After</span><span class="o">=</span><span class="s">remote-fs.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">oneshot</span>
+<span class="na">User</span><span class="o">=</span><span class="s">mopidy</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/usr/bin/mopidy --config /usr/share/mopidy/conf.d:/etc/mopidy/mopidy.conf local scan</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="c1"># /etc/systemd/system/daily@.timer</span>
+<span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Daily timer for %i service</span>
+
+<span class="k">[Timer]</span>
+<span class="na">OnCalendar</span><span class="o">=</span><span class="s">*-*-* 02:00:00</span>
+<span class="na">AccuracySec</span><span class="o">=</span><span class="s">6h</span>
+<span class="na">RandomizedDelaySec</span><span class="o">=</span><span class="s">1h</span>
+<span class="na">Unit</span><span class="o">=</span><span class="s">%i.service</span>
+<span class="na">Persistent</span><span class="o">=</span><span class="s">true</span>
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
+</pre></div>
+<p>After creating the files we can reload systemd and enable the timer:</p>
+<div class="highlight"><pre><span></span>Created symlink &#39;/etc/systemd/system/timers.target.wants/daily@mopidy-local-scan.timer&#39; -&gt; &#39;/etc/systemd/system/daily@.timer&#39;.
+$ sudo systemctl list-timers  --all
+NEXT                            LEFT LAST                              PASSED UNIT                             ACTIVATES
+Sun 2025-02-23 00:00:00 UTC 3h 30min Sat 2025-02-22 09:42:48 UTC      10h ago shadow.timer                     shadow.service
+Sun 2025-02-23 02:56:10 UTC       6h Sat 2025-02-22 18:38:44 UTC 1h 50min ago daily@mopidy-local-scan.timer    mopidy-local-scan.service
+Sun 2025-02-23 09:57:33 UTC      13h Sat 2025-02-22 09:57:33 UTC      10h ago systemd-tmpfiles-clean.timer     systemd-tmpfiles-clean.service
+Fri 2025-02-28 16:49:57 UTC   5 days Mon 2025-02-10 09:45:18 UTC            - archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+
+4 timers listed.
+</pre></div>
+</div>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

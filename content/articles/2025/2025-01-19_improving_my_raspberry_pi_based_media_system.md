@@ -108,6 +108,20 @@ Looking at GitHub I found <https://github.com/mopidy/mopidy-mpd/issues/68> and
 [mopidy-iris](https://github.com/jaedb/Iris/) looked like a popolar and
 well-maintained web interface for mopidy.
 
+### mopidy snapcast integration
+
+ * Not marked executable -> `chmod +x ...`
+ * Deps not installed:
+```
+/usr/share/snapserver/plug-ins/meta_mopidy.py
+Traceback (most recent call last):
+  File "/usr/share/snapserver/plug-ins/meta_mopidy.py", line 25, in <module>
+    import websocket
+ModuleNotFoundError: No module named 'websocket'
+```
+ -> `sudo pacman -S --asdeps python-websockets`
+ -> `sudo pacman -S --asdeps extra/python-websocket-client`
+
 ## Notes
 
  * Adding the snapcast dashboard to home assistant

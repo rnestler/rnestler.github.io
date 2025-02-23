@@ -4,7 +4,6 @@ Adding mopidy to my Raspberry Pi Based Media System
 :tags: Raspberry Pi, Linux, ArchLinux, ARM, snapcast, mopidy
 :language: en
 :summary: Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy
-:status: draft
 
 In `a past blogpost
 <https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html>`_ I

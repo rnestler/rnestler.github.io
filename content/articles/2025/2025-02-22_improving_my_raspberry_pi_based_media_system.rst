@@ -54,7 +54,7 @@ a credentials file in ``/var/lib/private``:
    password=your_password
    domain=your_domain  # Optional, if applicable
 
-To give mopidy access to the files I looked for its user and group ID:
+To give mopidy access to the files, we need to know its user and group ID:
 
 .. code-block:: text
 
@@ -75,12 +75,16 @@ Then we need to tell the mopidy extension where our music is:
    #/etc/mopidy/mopidy.conf
    [local]
    media_dir = /mnt/music
+   scan_timeout = 5000
 
 And let it scan the directory:
 
 .. code-block:: text
 
    $ sudo mopidyctl local scan
+
+The rather long ``scan_timeout`` of 5s is needed since my NAS goes into power
+save mode when idle and needs some seconds for the initial response.
 
 mopidy-mpd
 ----------
@@ -89,7 +93,9 @@ To control mopidy I chose to use the `mpoidy-mpd
 <https://mopidy.com/ext/mpd/>`_ extension, also available from the `AUR
 <https://aur.archlinux.org/packages/mopidy-mpd>`_.
 
-To make it usable we need to make it listen on all interfaces, both IPv4 and IPv6:
+By default mopidy-mpd is only available from localhost. To make it usable from
+the network we need to configure it to listen on all interfaces for both IPv4
+and IPv6:
 
 .. code-block:: ini
 
@@ -109,16 +115,18 @@ Looking at GitHub I found `mopidy-mpd issue 68
 <https://github.com/mopidy/mopidy-mpd/issues/68>`_ and `mopidy-mpd issue 47
 <https://github.com/mopidy/mopidy-mpd/issues/47>`_ which confirmed that.
 
-So I decided not to try to use it and uninstalled it again.
+Because of that I anticipated a lot of interoperability issues with newer
+clients and decided not to use it and uninstalled it again.
 
 mopidy-iris
 -----------
 
-`mopidy-iris <https://github.com/jaedb/Iris/>`_ looked like a popular and
-well-maintained web interface for mopidy.
+Instead of using an mpd client there is the option to use web interfaces to
+controll mopidy. `mopidy-iris <https://github.com/jaedb/Iris/>`_ looked like a
+popular and well-maintained web interface for mopidy.
 
-After installing and restarting mopidy it we get greeted by it's webinterface
-when accessing http://$MOPIDY_HOST/iris/  🎉
+After installing and restarting mopidy we get greeted by it's webinterface when
+accessing http://$MOPIDY_HOST/iris/  🎉
 
 .. figure:: {static}/images/mopidy/mopidy-iris-welcome.png
     :target: {static}/images/mopidy/mopidy-iris-welcome.png
@@ -128,6 +136,18 @@ when accessing http://$MOPIDY_HOST/iris/  🎉
     :figwidth: 100%
 
     mopidy-iris welcome screen
+
+The interface is straightforward to use and allows to search and add music to
+the queue which is everything I want from it.
+
+.. figure:: {static}/images/mopidy/mopidy-playback.png
+    :target: {static}/images/mopidy/mopidy-playback.png
+    :alt: mopidy-iris playback
+    :align: center
+    :width: 60%
+    :figwidth: 100%
+
+    mopidy-iris playing an album
 
 mopidy snapcast integration
 ---------------------------
@@ -141,7 +161,7 @@ controllscripts on the `source configuration
    # /etc/snapserver.conf
    source = pipe:///run/snapserver/snapfifo?name=mopidy&controlscript=meta_mopidy.py&controlscriptparams=--mopidy-host=muzikskatolo.home
 
-I ran into a few issues issues:
+I ran into a few issues:
 
 - The controlscript in ``/usr/share/snapserver/plug-ins/meta_mopidy.py``
   wasn't marked as executable. This was fixed by the AUR package maintainer
@@ -166,7 +186,7 @@ I ran into a few issues issues:
   point to `localhost`.
 
 
-Accessing the snapcast webinterface then allows to see the metadata of the
+Accessing the snapcast webinterface then allows us to see the metadata of the
 playing song:
 
 .. figure:: {static}/images/mopidy/mopidy-snapcast-integration.png
@@ -228,9 +248,10 @@ add new music. So I created a systemd unit and a timer to run it daily:
    WantedBy=timers.target
 
 
-After creating the files we can reload systemd and enable the timer:
+After creating the files we can reload ``systemd`` and enable the timer:
 
 .. code-block:: text
+
    $ sudo systemctl daemon-reload
    $ sudo systemctl enable daily@mopidy-local-scan.timer
 
@@ -244,18 +265,7 @@ After creating the files we can reload systemd and enable the timer:
 
    4 timers listed.
 
-Notes
------
-
-- Adding the "any" meta source with snapcast
-- Scanning the local library regularity
-
-- Adding the snapcast dashboard to home assistant
-- Adding the snapcast integration
-
-
-New stuff
----------
-
-- `music-assistant/server <https://github.com/music-assistant/server>`_
+With mopidy, librespot and snapcast I have a nice solution to listen to the
+music I bought from `Bandcamp <https://bandcamp.com/>`_ and stream from Spotify
+in my home.
 

@@ -34,8 +34,8 @@
 
     <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2025-02-22T00:00:00+01:00">
-                Published: Sa 22 Februar 2025
+        <abbr class="published" title="2025-02-23T00:00:00+01:00">
+                Published: So 23 Februar 2025
         </abbr>
 
         <address class="vcard author">
@@ -77,7 +77,7 @@ a credentials file in <tt class="docutils literal">/var/lib/private</tt>:</p>
 <span class="na">password</span><span class="o">=</span><span class="s">your_password</span>
 <span class="na">domain</span><span class="o">=</span><span class="s">your_domain</span><span class="w">  </span><span class="c1"># Optional, if applicable</span>
 </pre></div>
-<p>To give mopidy access to the files I looked for its user and group ID:</p>
+<p>To give mopidy access to the files, we need to know its user and group ID:</p>
 <div class="highlight"><pre><span></span>$ cat /etc/passwd|grep mopidy
 mopidy:x:46:46:Mopidy User:/var/lib/mopidy:/usr/bin/nologin
 </pre></div>
@@ -89,15 +89,20 @@ mopidy:x:46:46:Mopidy User:/var/lib/mopidy:/usr/bin/nologin
 <div class="highlight"><pre><span></span><span class="c1">#/etc/mopidy/mopidy.conf</span>
 <span class="k">[local]</span>
 <span class="na">media_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/mnt/music</span>
+<span class="na">scan_timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">5000</span>
 </pre></div>
 <p>And let it scan the directory:</p>
 <div class="highlight"><pre><span></span>$ sudo mopidyctl local scan
 </pre></div>
+<p>The rather long <tt class="docutils literal">scan_timeout</tt> of 5s is needed since my NAS goes into power
+save mode when idle and needs some seconds for the initial response.</p>
 </div>
 <div class="section" id="mopidy-mpd">
 <h2>mopidy-mpd</h2>
 <p>To control mopidy I chose to use the <a class="reference external" href="https://mopidy.com/ext/mpd/">mpoidy-mpd</a> extension, also available from the <a class="reference external" href="https://aur.archlinux.org/packages/mopidy-mpd">AUR</a>.</p>
-<p>To make it usable we need to make it listen on all interfaces, both IPv4 and IPv6:</p>
+<p>By default mopidy-mpd is only available from localhost. To make it usable from
+the network we need to configure it to listen on all interfaces for both IPv4
+and IPv6:</p>
 <div class="highlight"><pre><span></span><span class="k">[mpd]</span>
 <span class="na">hostname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">::</span>
 </pre></div>
@@ -108,19 +113,29 @@ warning: MPD 0.21 required
 mpd version: 0.19.0
 </pre></div>
 <p>Looking at GitHub I found <a class="reference external" href="https://github.com/mopidy/mopidy-mpd/issues/68">mopidy-mpd issue 68</a> and <a class="reference external" href="https://github.com/mopidy/mopidy-mpd/issues/47">mopidy-mpd issue 47</a> which confirmed that.</p>
-<p>So I decided not to try to use it and uninstalled it again.</p>
+<p>Because of that I anticipated a lot of interoperability issues with newer
+clients and decided not to use it and uninstalled it again.</p>
 </div>
 <div class="section" id="mopidy-iris">
 <h2>mopidy-iris</h2>
-<p><a class="reference external" href="https://github.com/jaedb/Iris/">mopidy-iris</a> looked like a popular and
-well-maintained web interface for mopidy.</p>
-<p>After installing and restarting mopidy it we get greeted by it's webinterface
-when accessing <a class="reference external" href="http://$MOPIDY_HOST/iris/">http://$MOPIDY_HOST/iris/</a>  🎉</p>
+<p>Instead of using an mpd client there is the option to use web interfaces to
+controll mopidy. <a class="reference external" href="https://github.com/jaedb/Iris/">mopidy-iris</a> looked like a
+popular and well-maintained web interface for mopidy.</p>
+<p>After installing and restarting mopidy we get greeted by it's webinterface when
+accessing <a class="reference external" href="http://$MOPIDY_HOST/iris/">http://$MOPIDY_HOST/iris/</a>  🎉</p>
 <div class="figure align-center" style="width: 100%">
 <a class="reference external image-reference" href="https://blog.rnstlr.ch/images/mopidy/mopidy-iris-welcome.png">
 <img alt="mopidy-iris welcome screen" src="https://blog.rnstlr.ch/images/mopidy/mopidy-iris-welcome.png" style="width: 60%;" />
 </a>
 <p class="caption">mopidy-iris welcome screen</p>
+</div>
+<p>The interface is straightforward to use and allows to search and add music to
+the queue which is everything I want from it.</p>
+<div class="figure align-center" style="width: 100%">
+<a class="reference external image-reference" href="https://blog.rnstlr.ch/images/mopidy/mopidy-playback.png">
+<img alt="mopidy-iris playback" src="https://blog.rnstlr.ch/images/mopidy/mopidy-playback.png" style="width: 60%;" />
+</a>
+<p class="caption">mopidy-iris playing an album</p>
 </div>
 </div>
 <div class="section" id="mopidy-snapcast-integration">
@@ -130,7 +145,7 @@ controllscripts on the <a class="reference external" href="https://github.com/ba
 <div class="highlight"><pre><span></span><span class="c1"># /etc/snapserver.conf</span>
 <span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">pipe:///run/snapserver/snapfifo?name=mopidy&amp;controlscript=meta_mopidy.py&amp;controlscriptparams=--mopidy-host=muzikskatolo.home</span>
 </pre></div>
-<p>I ran into a few issues issues:</p>
+<p>I ran into a few issues:</p>
 <ul>
 <li><p class="first">The controlscript in <tt class="docutils literal"><span class="pre">/usr/share/snapserver/plug-ins/meta_mopidy.py</span></tt>
 wasn't marked as executable. This was fixed by the AUR package maintainer
@@ -151,7 +166,7 @@ otherwise the generated links to the album art won't work since they would
 point to <cite>localhost</cite>.</p>
 </li>
 </ul>
-<p>Accessing the snapcast webinterface then allows to see the metadata of the
+<p>Accessing the snapcast webinterface then allows us to see the metadata of the
 playing song:</p>
 <div class="figure align-center" style="width: 100%">
 <a class="reference external image-reference" href="https://blog.rnstlr.ch/images/mopidy/mopidy-snapcast-integration.png">
@@ -197,8 +212,11 @@ add new music. So I created a systemd unit and a timer to run it daily:</p>
 <span class="k">[Install]</span>
 <span class="na">WantedBy</span><span class="o">=</span><span class="s">timers.target</span>
 </pre></div>
-<p>After creating the files we can reload systemd and enable the timer:</p>
-<div class="highlight"><pre><span></span>Created symlink &#39;/etc/systemd/system/timers.target.wants/daily@mopidy-local-scan.timer&#39; -&gt; &#39;/etc/systemd/system/daily@.timer&#39;.
+<p>After creating the files we can reload <tt class="docutils literal">systemd</tt> and enable the timer:</p>
+<div class="highlight"><pre><span></span>$ sudo systemctl daemon-reload
+$ sudo systemctl enable daily@mopidy-local-scan.timer
+
+Created symlink &#39;/etc/systemd/system/timers.target.wants/daily@mopidy-local-scan.timer&#39; -&gt; &#39;/etc/systemd/system/daily@.timer&#39;.
 $ sudo systemctl list-timers  --all
 NEXT                            LEFT LAST                              PASSED UNIT                             ACTIVATES
 Sun 2025-02-23 00:00:00 UTC 3h 30min Sat 2025-02-22 09:42:48 UTC      10h ago shadow.timer                     shadow.service
@@ -208,6 +226,9 @@ Fri 2025-02-28 16:49:57 UTC   5 days Mon 2025-02-10 09:45:18 UTC            - ar
 
 4 timers listed.
 </pre></div>
+<p>With mopidy, librespot and snapcast I have a nice solution to listen to the
+music I bought from <a class="reference external" href="https://bandcamp.com/">Bandcamp</a> and stream from Spotify
+in my home.</p>
 </div>
 
     </div><!-- /.entry-content -->

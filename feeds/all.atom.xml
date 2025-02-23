@@ -1,5 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2024-09-29T00:00:00+02:00</updated><entry><title>Adding AdGuard Home to my Home Assistant</title><link href="https://blog.rnstlr.ch/adding-adguard-home-to-my-home-assistant.html" rel="alternate"></link><published>2024-09-29T00:00:00+02:00</published><updated>2024-09-29T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-09-29:/adding-adguard-home-to-my-home-assistant.html</id><summary type="html">&lt;p&gt;Setting up a AdGuard Home on my Home Assistant&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently noticed that home assistant offers an &lt;a href="https://github.com/hassio-addons/addon-adguard-home"&gt;AdGuard Home
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2025-02-23T00:00:00+01:00</updated><entry><title>Adding mopidy to my Raspberry Pi Based Media System</title><link href="https://blog.rnstlr.ch/adding-mopidy-to-my-raspberry-pi-based-media-system.html" rel="alternate"></link><published>2025-02-23T00:00:00+01:00</published><updated>2025-02-23T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2025-02-23:/adding-mopidy-to-my-raspberry-pi-based-media-system.html</id><summary type="html">&lt;p class="first last"&gt;Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;In &lt;a class="reference external" href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html"&gt;a past blogpost&lt;/a&gt; I
+described how I did set up a media system based on &lt;a class="reference external" href="https://github.com/badaix/snapcast"&gt;snapcast&lt;/a&gt; and &lt;a class="reference external" href="https://github.com/librespot-org/librespot"&gt;librespot&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;What I didn't get to yet was configuring &lt;a class="reference external" href="https://mopidy.com/"&gt;mopidy&lt;/a&gt; to
+play music from my NAS.&lt;/p&gt;
+&lt;div class="section" id="installing-mopidy"&gt;
+&lt;h2&gt;installing mopidy&lt;/h2&gt;
+&lt;p&gt;Installing mopidy is as easy as &lt;tt class="docutils literal"&gt;sudo pacman &lt;span class="pre"&gt;-S&lt;/span&gt; mopidy&lt;/tt&gt;. Configuring snapcast
+and mopidy to play music works as follows:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Editing &lt;tt class="docutils literal"&gt;/etc/snapserver.conf&lt;/tt&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;pipe:///run/snapserver/snapfifo?name=mopidy&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Editing &lt;tt class="docutils literal"&gt;/etc/mopidy/mopidy.conf&lt;/tt&gt; to configure mopidy's audio output&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[audio]&lt;/span&gt;
+&lt;span class="na"&gt;output&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;audioresample ! audioconvert ! audio/x-raw,rate=48000,channels=2,format=S16LE ! filesink location=/run/snapserver/snapfifo&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;To be able to play local files I wanted to use the &lt;a class="reference external" href="https://mopidy.com/ext/local/"&gt;Mopidy-Local extension&lt;/a&gt;. For that I needed to install the
+following packages from the AUR:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://aur.archlinux.org/packages/python-uritools"&gt;python-uritools&lt;/a&gt; (dependency of mopidy-local)&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://aur.archlinux.org/packages/mopidy-local"&gt;mopidy-local&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To get access to the music collection of the NAS I mounted the path system wide
+via &lt;tt class="docutils literal"&gt;/etc/fstab&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;To not store the credentials in plaintext in &lt;tt class="docutils literal"&gt;/etc/fstab&lt;/tt&gt; directly I created
+a credentials file in &lt;tt class="docutils literal"&gt;/var/lib/private&lt;/tt&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# /var/lib/private/nas-cifs-credentials&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;your_username&lt;/span&gt;
+&lt;span class="na"&gt;password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;your_password&lt;/span&gt;
+&lt;span class="na"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;your_domain&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# Optional, if applicable&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;To give mopidy access to the files, we need to know its user and group ID:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/passwd|grep mopidy
+mopidy:x:46:46:Mopidy User:/var/lib/mopidy:/usr/bin/nologin
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;and put it together like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#/etc/fstab
+//$IP_OF_NAS/$PATH_TO_MUSIC  /mnt/music  cifs  credentials=/var/lib/private/nas-cifs-credentials,uid=46,gid=46  0  0
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then we need to tell the mopidy extension where our music is:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#/etc/mopidy/mopidy.conf&lt;/span&gt;
+&lt;span class="k"&gt;[local]&lt;/span&gt;
+&lt;span class="na"&gt;media_dir&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;/mnt/music&lt;/span&gt;
+&lt;span class="na"&gt;scan_timeout&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;5000&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And let it scan the directory:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo mopidyctl local scan
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The rather long &lt;tt class="docutils literal"&gt;scan_timeout&lt;/tt&gt; of 5s is needed since my NAS goes into power
+save mode when idle and needs some seconds for the initial response.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mopidy-mpd"&gt;
+&lt;h2&gt;mopidy-mpd&lt;/h2&gt;
+&lt;p&gt;To control mopidy I chose to use the &lt;a class="reference external" href="https://mopidy.com/ext/mpd/"&gt;mpoidy-mpd&lt;/a&gt; extension, also available from the &lt;a class="reference external" href="https://aur.archlinux.org/packages/mopidy-mpd"&gt;AUR&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;By default mopidy-mpd is only available from localhost. To make it usable from
+the network we need to configure it to listen on all interfaces for both IPv4
+and IPv6:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[mpd]&lt;/span&gt;
+&lt;span class="na"&gt;hostname&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;::&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Trying to use it quickly revealed that the plugin is quite outdated and won't
+work with newer &lt;tt class="docutils literal"&gt;mpd&lt;/tt&gt; clients:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mpc
+warning: MPD 0.21 required
+mpd version: 0.19.0
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Looking at GitHub I found &lt;a class="reference external" href="https://github.com/mopidy/mopidy-mpd/issues/68"&gt;mopidy-mpd issue 68&lt;/a&gt; and &lt;a class="reference external" href="https://github.com/mopidy/mopidy-mpd/issues/47"&gt;mopidy-mpd issue 47&lt;/a&gt; which confirmed that.&lt;/p&gt;
+&lt;p&gt;Because of that I anticipated a lot of interoperability issues with newer
+clients and decided not to use it and uninstalled it again.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mopidy-iris"&gt;
+&lt;h2&gt;mopidy-iris&lt;/h2&gt;
+&lt;p&gt;Instead of using an mpd client there is the option to use web interfaces to
+controll mopidy. &lt;a class="reference external" href="https://github.com/jaedb/Iris/"&gt;mopidy-iris&lt;/a&gt; looked like a
+popular and well-maintained web interface for mopidy.&lt;/p&gt;
+&lt;p&gt;After installing and restarting mopidy we get greeted by it's webinterface when
+accessing &lt;a class="reference external" href="http://$MOPIDY_HOST/iris/"&gt;http://$MOPIDY_HOST/iris/&lt;/a&gt;  🎉&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 100%"&gt;
+&lt;a class="reference external image-reference" href="https://blog.rnstlr.ch/images/mopidy/mopidy-iris-welcome.png"&gt;
+&lt;img alt="mopidy-iris welcome screen" src="https://blog.rnstlr.ch/images/mopidy/mopidy-iris-welcome.png" style="width: 60%;" /&gt;
+&lt;/a&gt;
+&lt;p class="caption"&gt;mopidy-iris welcome screen&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The interface is straightforward to use and allows to search and add music to
+the queue which is everything I want from it.&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 100%"&gt;
+&lt;a class="reference external image-reference" href="https://blog.rnstlr.ch/images/mopidy/mopidy-playback.png"&gt;
+&lt;img alt="mopidy-iris playback" src="https://blog.rnstlr.ch/images/mopidy/mopidy-playback.png" style="width: 60%;" /&gt;
+&lt;/a&gt;
+&lt;p class="caption"&gt;mopidy-iris playing an album&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="mopidy-snapcast-integration"&gt;
+&lt;h2&gt;mopidy snapcast integration&lt;/h2&gt;
+&lt;p&gt;Snapcast supports reporting and controlling the player state of sources via
+controllscripts on the &lt;a class="reference external" href="https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#sources"&gt;source configuration&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# /etc/snapserver.conf&lt;/span&gt;
+&lt;span class="na"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;pipe:///run/snapserver/snapfifo?name=mopidy&amp;amp;controlscript=meta_mopidy.py&amp;amp;controlscriptparams=--mopidy-host=muzikskatolo.home&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I ran into a few issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;The controlscript in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;/usr/share/snapserver/plug-ins/meta_mopidy.py&lt;/span&gt;&lt;/tt&gt;
+wasn't marked as executable. This was fixed by the AUR package maintainer
+after &lt;a class="reference external" href="https://aur.archlinux.org/packages/snapcast#comment-1008816"&gt;I reported it&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;I didn't install the optional &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;python-websocket-client&lt;/span&gt;&lt;/tt&gt; dependency for
+&lt;tt class="docutils literal"&gt;snapserver&lt;/tt&gt; which lead to a crash:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;snapserver&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;plug&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ins&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;meta_mopidy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="n"&gt;Traceback&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;most&lt;/span&gt; &lt;span class="n"&gt;recent&lt;/span&gt; &lt;span class="n"&gt;call&lt;/span&gt; &lt;span class="n"&gt;last&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+  &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/usr/share/snapserver/plug-ins/meta_mopidy.py&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;module&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;websocket&lt;/span&gt;
+&lt;span class="ne"&gt;ModuleNotFoundError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;module&lt;/span&gt; &lt;span class="n"&gt;named&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;websocket&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Installing it with &lt;tt class="docutils literal"&gt;sudo pacman &lt;span class="pre"&gt;-S&lt;/span&gt; &lt;span class="pre"&gt;--asdeps&lt;/span&gt; &lt;span class="pre"&gt;python-websocket-client&lt;/span&gt;&lt;/tt&gt; fixed it.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;I needed to explicitly set the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;mopidy-host&lt;/span&gt;&lt;/tt&gt; on the command line, since
+otherwise the generated links to the album art won't work since they would
+point to &lt;cite&gt;localhost&lt;/cite&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Accessing the snapcast webinterface then allows us to see the metadata of the
+playing song:&lt;/p&gt;
+&lt;div class="figure align-center" style="width: 100%"&gt;
+&lt;a class="reference external image-reference" href="https://blog.rnstlr.ch/images/mopidy/mopidy-snapcast-integration.png"&gt;
+&lt;img alt="mopidy metadata of the playing song displayed in the snapcast web interface" src="https://blog.rnstlr.ch/images/mopidy/mopidy-snapcast-integration.png" style="width: 60%;" /&gt;
+&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="snapcast-meta-sources"&gt;
+&lt;h2&gt;snapcast meta sources&lt;/h2&gt;
+&lt;p&gt;Snapcast has a nice feature called &lt;a class="reference external" href="https://github.com/badaix/snapcast/blob/develop/doc/configuration.md#meta"&gt;meta sources&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It allows to just play the audio from the first active source:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="na"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;pipe:///run/snapserver/snapfifo?name=mopidy&amp;amp;controlscript=meta_mopidy.py&amp;amp;controlscriptparams=--mopidy-host=muzikskatolo.home&lt;/span&gt;
+&lt;span class="na"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;librespot:///usr/bin/librespot&amp;gt;?name=librespot&amp;amp;devicename=Snapcast&lt;/span&gt;
+&lt;span class="na"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;meta:///librespot/mopidy?name=any&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here I configured a meta source named &amp;quot;any&amp;quot; which plays audio from librespot or
+mopidy.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="scanning-the-local-library-regularly"&gt;
+&lt;h2&gt;scanning the local library regularly&lt;/h2&gt;
+&lt;p&gt;Running &lt;tt class="docutils literal"&gt;sudo mopidyctl local scan&lt;/tt&gt; manually get's tedious over time when I
+add new music. So I created a systemd unit and a timer to run it daily:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# /etc/systemd/system/mopidy-local-scan.service&lt;/span&gt;
+&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Mopidy music server&lt;/span&gt;
+&lt;span class="na"&gt;After&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;remote-fs.target&lt;/span&gt;
+
+&lt;span class="k"&gt;[Service]&lt;/span&gt;
+&lt;span class="na"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;oneshot&lt;/span&gt;
+&lt;span class="na"&gt;User&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;mopidy&lt;/span&gt;
+&lt;span class="na"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;/usr/bin/mopidy --config /usr/share/mopidy/conf.d:/etc/mopidy/mopidy.conf local scan&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# /etc/systemd/system/daily@.timer&lt;/span&gt;
+&lt;span class="k"&gt;[Unit]&lt;/span&gt;
+&lt;span class="na"&gt;Description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;Daily timer for %i service&lt;/span&gt;
+
+&lt;span class="k"&gt;[Timer]&lt;/span&gt;
+&lt;span class="na"&gt;OnCalendar&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;*-*-* 02:00:00&lt;/span&gt;
+&lt;span class="na"&gt;AccuracySec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;6h&lt;/span&gt;
+&lt;span class="na"&gt;RandomizedDelaySec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;1h&lt;/span&gt;
+&lt;span class="na"&gt;Unit&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;%i.service&lt;/span&gt;
+&lt;span class="na"&gt;Persistent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;true&lt;/span&gt;
+&lt;span class="k"&gt;[Install]&lt;/span&gt;
+&lt;span class="na"&gt;WantedBy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;timers.target&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After creating the files we can reload &lt;tt class="docutils literal"&gt;systemd&lt;/tt&gt; and enable the timer:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo systemctl daemon-reload
+$ sudo systemctl enable daily@mopidy-local-scan.timer
+
+Created symlink &amp;#39;/etc/systemd/system/timers.target.wants/daily@mopidy-local-scan.timer&amp;#39; -&amp;gt; &amp;#39;/etc/systemd/system/daily@.timer&amp;#39;.
+$ sudo systemctl list-timers  --all
+NEXT                            LEFT LAST                              PASSED UNIT                             ACTIVATES
+Sun 2025-02-23 00:00:00 UTC 3h 30min Sat 2025-02-22 09:42:48 UTC      10h ago shadow.timer                     shadow.service
+Sun 2025-02-23 02:56:10 UTC       6h Sat 2025-02-22 18:38:44 UTC 1h 50min ago daily@mopidy-local-scan.timer    mopidy-local-scan.service
+Sun 2025-02-23 09:57:33 UTC      13h Sat 2025-02-22 09:57:33 UTC      10h ago systemd-tmpfiles-clean.timer     systemd-tmpfiles-clean.service
+Fri 2025-02-28 16:49:57 UTC   5 days Mon 2025-02-10 09:45:18 UTC            - archlinux-keyring-wkd-sync.timer archlinux-keyring-wkd-sync.service
+
+4 timers listed.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;With mopidy, librespot and snapcast I have a nice solution to listen to the
+music I bought from &lt;a class="reference external" href="https://bandcamp.com/"&gt;Bandcamp&lt;/a&gt; and stream from Spotify
+in my home.&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="2025"></category><category term="Raspberry Pi"></category><category term="Linux"></category><category term="ArchLinux"></category><category term="ARM"></category><category term="snapcast"></category><category term="mopidy"></category></entry><entry><title>Adding AdGuard Home to my Home Assistant</title><link href="https://blog.rnstlr.ch/adding-adguard-home-to-my-home-assistant.html" rel="alternate"></link><published>2024-09-29T00:00:00+02:00</published><updated>2024-09-29T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2024-09-29:/adding-adguard-home-to-my-home-assistant.html</id><summary type="html">&lt;p&gt;Setting up a AdGuard Home on my Home Assistant&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently noticed that home assistant offers an &lt;a href="https://github.com/hassio-addons/addon-adguard-home"&gt;AdGuard Home
 add-on&lt;/a&gt;. While I already
 block adds and tracking in the web with &lt;a href="https://ublockorigin.com/"&gt;uBlock
 Origin&lt;/a&gt; on my laptops and Android phone, I'm still

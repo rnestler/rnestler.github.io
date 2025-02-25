@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Building an out-of-tree Rust Kernel Module Part Four</title>
+        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+        <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch </a></h1>
+                <nav><ul>
+                    <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                    <li><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
+                    <li class="active"><a href="https://blog.rnstlr.ch/category/2025.html">2025</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://blog.rnstlr.ch/drafts/building-an-out-of-tree-rust-kernel-module-part-four.html" rel="bookmark"
+           title="Permalink to Building an out-of-tree Rust Kernel Module Part Four">Building an out-of-tree Rust Kernel Module Part Four</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2025-02-25T00:00:00+01:00">
+                Published: Di 25 Februar 2025
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+        </address>
+<p>In <a href="https://blog.rnstlr.ch/category/2025.html">2025</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>
+</footer><!-- /.post-info -->      <p>In my <a href="https://aur.archlinux.org/packages/linux-rust#comment-990983">last blog post</a>, I showed how to build the ArchLinux kernel with Rust
+support enabled and also packaging the correct build metadata to support
+out-of-tree kernel modules.</p>
+<p>In the meantime I gave a presentation about it in the <a href="https://www.meetup.com/rust-zurich/events/293322905/?eventOrigin=group_events_list">Rust Zürisee Meetup</a> and
+kept the <a href="https://aur.archlinux.org/packages/linux-rust">AUR package</a> more or less up to date.</p>
+<p>Also some people got interested in enabling it for the official kernel build
+for ArchLinux<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> but hit some issues and the change got reverted again.</p>
+<h2>Building with the distro rust-bindgen</h2>
+<p>With the release of Linux 6.11, instead of a pinned version there should be an
+actual minimum version for the Rust toolchain to build the Linux with Rust
+support. See the <a href="https://lkml.org/lkml/2024/7/25/53">git pull request for 6.11</a> and the <a href="https://rust-for-linux.com/rust-version-policy">rust-version-policy</a> on
+<a href="https://rust-for-linux.com">https://rust-for-linux.com</a>.</p>
+<p>Using the distro packaged Rust toolchain should make it easier to be included
+in the official repositories some day, since using rustup to pin the version
+leads to issues when building in a clean chroot environment<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>.</p>
+<p>So in December 2024 I started with using rust-bindgen from the Arch
+repositories: <a href="https://github.com/rnestler/archpkg-linux-rust/pull/11">https://github.com/rnestler/archpkg-linux-rust/pull/11</a>. This
+lead into a roadblock when I noticed, that rust-bindgen 0.71.1 breaks the build
+of Linux 6.11 with Rust 1.78, while it worked just fine with rust-bindgen
+0.70.1.</p>
+<p>In January 2025, when updating to to the 6.12 version of the kernel I upgraded
+the PKGBUILD to use Rust 1.83 and the current ArchLinux version of
+rust-bindgen: <a href="https://github.com/rnestler/archpkg-linux-rust/pull/12/">https://github.com/rnestler/archpkg-linux-rust/pull/12/</a>. This
+seemed to work just fine.</p>
+<p>Do to unclarities how to ensure that the Rust version used to build the kernel
+is the same that will be used to build out-of-tree modules, I decided to still
+pin the Rust version used and only support building the kernel with rustup.</p>
+<h2>Building with the whole distro Rust toolchain</h2>
+<p>In February a nice pull-request hit my archpkg-linux-rust repo:
+<a href="https://github.com/rnestler/archpkg-linux-rust/pull/13">https://github.com/rnestler/archpkg-linux-rust/pull/13</a>. The author of it
+fixed a bug in the <code>PKGBUILD</code> and adapted it as well to build with <code>rustc</code> and
+<code>rust-src</code> from the repos.</p>
+<p>TODO:
+ * Show the provides mechanism of pacman and how it allows to support building with rustc and rustup</p>
+<h2>Looking forward</h2>
+<p>Since we can now build the Linux kernel with Rust support using the distro
+packages it should be possible to build it in a clean chroot environment and
+thus there shouldn't be much in the way of Rust support landing in official
+kernel packages.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>See the discussion in the official package repository: <a href="https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/63">https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/63</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>See the comments for the AUR package <a href="https://aur.archlinux.org/packages/linux-rust#comment-990983">https://aur.archlinux.org/packages/linux-rust#comment-990983</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="http://www.coredump.ch/">coredump</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                            <li><a href="https://github.com/rnestler">github</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

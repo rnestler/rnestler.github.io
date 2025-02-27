@@ -146,6 +146,10 @@ aside, nav, article, figure {
     display: block;
 }
 
+div.figure {
+    text-align: center;
+}
+
 /***** Layout *****/
 .body {clear: both; margin: 0 auto; max-width: 800px;}
 img { max-width: 100%; }
@@ -163,8 +167,8 @@ div.figure img, figure img {  /* to fill figure exactly */
     max-width: 100%;
 }
 div.figure p.caption, figure p.caption { /* margin provided by figure */
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 /*

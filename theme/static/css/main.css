@@ -326,6 +326,24 @@ div.figure p.caption, figure p.caption { /* margin provided by figure */
     max-width: 175px;
 }
 
+#extras div[class='social'] a {
+    background-repeat: no-repeat;
+    background-position: 3px 6px;
+    padding-left: 25px;
+}
+
+.social a[href*='github.com'] {
+    background-image: url('../images/icons/github.png');
+    background-size: 16px 16px;
+}
+.social a[href*='twitter.com'] {
+    background-image: url('../images/icons/twitter.png');
+}
+.social a[type$='atom+xml'], .social a[type$='rss+xml'] {
+    background-image: url('../images/icons/rss.png');
+}
+
+
 /*
 	About
 *****************/

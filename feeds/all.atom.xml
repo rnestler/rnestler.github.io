@@ -1,5 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2025-02-23T00:00:00+01:00</updated><entry><title>Adding mopidy to my Raspberry Pi Based Media System</title><link href="https://blog.rnstlr.ch/adding-mopidy-to-my-raspberry-pi-based-media-system.html" rel="alternate"></link><published>2025-02-23T00:00:00+01:00</published><updated>2025-02-23T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2025-02-23:/adding-mopidy-to-my-raspberry-pi-based-media-system.html</id><summary type="html">&lt;p class="first last"&gt;Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"></link><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"></link><id>https://blog.rnstlr.ch/</id><updated>2025-02-27T00:00:00+01:00</updated><entry><title>Building an out-of-tree Rust Kernel Module Part Four</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-four.html" rel="alternate"></link><published>2025-02-27T00:00:00+01:00</published><updated>2025-02-27T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2025-02-27:/building-an-out-of-tree-rust-kernel-module-part-four.html</id><summary type="html">&lt;p&gt;Building the Linux kernel with Rust support for ArchLinux&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my &lt;a href="/building-an-out-of-tree-rust-kernel-module-part-three.html"&gt;last blog post&lt;/a&gt;, I showed how to build the ArchLinux kernel with Rust
+support enabled and also packaging the correct build metadata to support
+out-of-tree kernel modules.&lt;/p&gt;
+&lt;p&gt;In the meantime I gave a presentation about it in the &lt;a href="https://www.meetup.com/rust-zurich/events/293322905/?eventOrigin=group_events_list"&gt;Rust Zürisee Meetup&lt;/a&gt; and
+kept the &lt;a href="https://aur.archlinux.org/packages/linux-rust"&gt;AUR package&lt;/a&gt; more or less up to date.&lt;/p&gt;
+&lt;p&gt;Also some people got interested in enabling it for the official kernel build
+for ArchLinux&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt; but hit some issues and the change got reverted again.&lt;/p&gt;
+&lt;h2&gt;Building with the distro rust-bindgen&lt;/h2&gt;
+&lt;p&gt;With the release of Linux 6.11, instead of a pinned version there should be an
+actual minimum version for the Rust toolchain to build the Linux with Rust
+support. See the &lt;a href="https://lkml.org/lkml/2024/7/25/53"&gt;git pull request for 6.11&lt;/a&gt; and the &lt;a href="https://rust-for-linux.com/rust-version-policy"&gt;rust-version-policy&lt;/a&gt; on
+&lt;a href="https://rust-for-linux.com"&gt;https://rust-for-linux.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Using the distro packaged Rust toolchain should make it easier to be included
+in the official repositories some day, since using rustup to pin the version
+leads to issues when building in a clean chroot environment&lt;sup id="fnref:2"&gt;&lt;a class="footnote-ref" href="#fn:2"&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;So in December 2024 I started with using rust-bindgen from the Arch
+repositories: &lt;a href="https://github.com/rnestler/archpkg-linux-rust/pull/11"&gt;https://github.com/rnestler/archpkg-linux-rust/pull/11&lt;/a&gt;. This
+lead into a roadblock when I noticed, that rust-bindgen 0.71.1 breaks the build
+of Linux 6.11 with Rust 1.78, while it worked just fine with rust-bindgen
+0.70.1.&lt;/p&gt;
+&lt;p&gt;In January 2025, when updating to to the 6.12 version of the kernel I upgraded
+the PKGBUILD to use Rust 1.83 and the current ArchLinux version of
+rust-bindgen: &lt;a href="https://github.com/rnestler/archpkg-linux-rust/pull/12/"&gt;https://github.com/rnestler/archpkg-linux-rust/pull/12/&lt;/a&gt;. This
+seemed to work just fine.&lt;/p&gt;
+&lt;p&gt;Do to unclarities how to ensure that the Rust version used to build the kernel
+is the same that will be used to build out-of-tree modules, I decided to still
+pin the Rust version used and only support building the kernel with rustup.&lt;/p&gt;
+&lt;h2&gt;Building with the whole distro Rust toolchain&lt;/h2&gt;
+&lt;p&gt;In February a nice pull-request hit my archpkg-linux-rust repo:
+&lt;a href="https://github.com/rnestler/archpkg-linux-rust/pull/13"&gt;https://github.com/rnestler/archpkg-linux-rust/pull/13&lt;/a&gt;. The author of it
+fixed a bug in the &lt;code&gt;PKGBUILD&lt;/code&gt; and adapted it as well to build with &lt;code&gt;rustc&lt;/code&gt; and
+&lt;code&gt;rust-src&lt;/code&gt; from the repos.&lt;/p&gt;
+&lt;p&gt;Since I didn't want to break building the package with rustup I decided to
+support both ways. This is made easy since we can just depend on &lt;code&gt;rust&lt;/code&gt; and
+&lt;code&gt;rust-src&lt;/code&gt; which are both also provided by the &lt;code&gt;rustup&lt;/code&gt; package:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ pacman -Qi rustup
+Name            : rustup
+Version         : 1.27.1-1
+Description     : The Rust toolchain installer
+Architecture    : x86_64
+URL             : https://github.com/rust-lang/rustup.rs
+Licenses        : MIT  Apache-2.0
+Groups          : None
+Provides        : rust  cargo  rust-nightly  cargo-nightly  rustfmt  rust-src  lib32-rust-libs  rust-musl  rust-wasm  rust-analyzer
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If &lt;code&gt;rustup&lt;/code&gt; is installed we ensure in the &lt;code&gt;PKGBUILD&lt;/code&gt; that the &lt;code&gt;rust-src&lt;/code&gt;
+component is also available:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;rustup&lt;span class="w"&gt; &lt;/span&gt;--help&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;/dev/null&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Installing rust-src&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;rustup&lt;span class="w"&gt; &lt;/span&gt;component&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;rust-src
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;To ease debugging if something in the toolchain isn't working we call the
+&lt;code&gt;rustavailable&lt;/code&gt; kernel make target, which will output if something is missing:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Verifying that Rust support is available&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;make&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;LLVM&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;rustavailable
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Since one of my main goals was to support building out-of-tree Rust kernel
+modules, I wanted to store the rust toolchain used, so that a user which has
+&lt;code&gt;rustup&lt;/code&gt; available can simply use the same Rust version to compile a kernel
+module. This turned out to be a bit tricker than expected.&lt;/p&gt;
+&lt;p&gt;Just doing the most straightforward thing:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;rustc&lt;span class="w"&gt; &lt;/span&gt;--version&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;cut&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="s1"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-f&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$srcdir&lt;/span&gt;&lt;span class="s2"&gt;/rust-toolchain&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;failed with the following error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;error: in /home/roughl/projects/archpkg/linux-rust/src/rust-toolchain: empty toolchain override file detected. Please remove it, or else specify the desired toolchain properties in the file
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The reason is, that the shell redirection of the output into a file
+(&lt;code&gt;&amp;gt;"$srcdir/rust-toolchain"), will first create the file empty, then start&lt;/code&gt;rustc&lt;code&gt;. Now the&lt;/code&gt;rustc&lt;code&gt;binstub from&lt;/code&gt;rustup&lt;code&gt;will see that there is a&lt;/code&gt;rust-toolchain&lt;code&gt;file present when doing the&lt;/code&gt;rustc --version` call, but since
+it is empty it complains.&lt;/p&gt;
+&lt;p&gt;To fix this issue we need to first determine the version and then pipe it into a file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;rust_version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;rustc&lt;span class="w"&gt; &lt;/span&gt;--version&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;cut&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="s1"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-f&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$rust_version&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$srcdir&lt;/span&gt;&lt;span class="s2"&gt;/rust-toolchain&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Looking forward&lt;/h2&gt;
+&lt;p&gt;Since we can now build the Linux kernel with Rust support using the distro
+packages it should be possible to build it in a clean chroot environment and
+thus there shouldn't be much in the way of Rust support landing in official
+kernel packages.&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;See the discussion in the official package repository: &lt;a href="https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/63"&gt;https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/63&lt;/a&gt;&amp;#160;&lt;a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;See the comments for the AUR package &lt;a href="https://aur.archlinux.org/packages/linux-rust#comment-990983"&gt;https://aur.archlinux.org/packages/linux-rust#comment-990983&lt;/a&gt;&amp;#160;&lt;a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content><category term="2025"></category><category term="rust"></category><category term="kernel"></category><category term="Linux"></category><category term="ArchLinux"></category></entry><entry><title>Adding mopidy to my Raspberry Pi Based Media System</title><link href="https://blog.rnstlr.ch/adding-mopidy-to-my-raspberry-pi-based-media-system.html" rel="alternate"></link><published>2025-02-23T00:00:00+01:00</published><updated>2025-02-23T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2025-02-23:/adding-mopidy-to-my-raspberry-pi-based-media-system.html</id><summary type="html">&lt;p class="first last"&gt;Setting up a media system on a Raspberry Pi 3 based on ArchLinux ARM, snapcast and mopidy&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;In &lt;a class="reference external" href="https://blog.rnstlr.ch/creating-a-raspberry-pi-based-media-system.html"&gt;a past blogpost&lt;/a&gt; I
 described how I did set up a media system based on &lt;a class="reference external" href="https://github.com/badaix/snapcast"&gt;snapcast&lt;/a&gt; and &lt;a class="reference external" href="https://github.com/librespot-org/librespot"&gt;librespot&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;What I didn't get to yet was configuring &lt;a class="reference external" href="https://mopidy.com/"&gt;mopidy&lt;/a&gt; to

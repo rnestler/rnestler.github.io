@@ -2,7 +2,6 @@ Title: Building an out-of-tree Rust Kernel Module Part Four
 Tags: rust, kernel, Linux, ArchLinux
 Language: en
 Summary: Building the Linux kernel with Rust support for ArchLinux
-Status: draft
 
 In my [last blog post], I showed how to build the ArchLinux kernel with Rust
 support enabled and also packaging the correct build metadata to support
@@ -119,7 +118,7 @@ kernel packages.
 [^1]: See the discussion in the official package repository: <https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/issues/63>
 [^2]: See the comments for the AUR package <https://aur.archlinux.org/packages/linux-rust#comment-990983>
 
-[last blog post]: https://aur.archlinux.org/packages/linux-rust#comment-990983
+[last blog post]: /building-an-out-of-tree-rust-kernel-module-part-three.html
 [Rust Zürisee Meetup]: https://www.meetup.com/rust-zurich/events/293322905/?eventOrigin=group_events_list
 [AUR package]: https://aur.archlinux.org/packages/linux-rust
 [git pull request for 6.11]: https://lkml.org/lkml/2024/7/25/53

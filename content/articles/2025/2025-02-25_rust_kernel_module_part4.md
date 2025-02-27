@@ -47,8 +47,67 @@ In February a nice pull-request hit my archpkg-linux-rust repo:
 fixed a bug in the `PKGBUILD` and adapted it as well to build with `rustc` and
 `rust-src` from the repos.
 
-TODO:
- * Show the provides mechanism of pacman and how it allows to support building with rustc and rustup
+Since I didn't want to break building the package with rustup I decided to
+support both ways. This is made easy since we can just depend on `rust` and
+`rust-src` which are both also provided by the `rustup` package:
+
+```text
+$ pacman -Qi rustup
+Name            : rustup
+Version         : 1.27.1-1
+Description     : The Rust toolchain installer
+Architecture    : x86_64
+URL             : https://github.com/rust-lang/rustup.rs
+Licenses        : MIT  Apache-2.0
+Groups          : None
+Provides        : rust  cargo  rust-nightly  cargo-nightly  rustfmt  rust-src  lib32-rust-libs  rust-musl  rust-wasm  rust-analyzer
+...
+```
+
+If `rustup` is installed we ensure in the `PKGBUILD` that the `rust-src`
+component is also available:
+
+```bash
+  if rustup --help >/dev/null 2>&1; then
+    echo "Installing rust-src"
+    rustup component add rust-src
+  fi
+```
+
+To ease debugging if something in the toolchain isn't working we call the
+`rustavailable` kernel make target, which will output if something is missing:
+
+```bash
+  echo "Verifying that Rust support is available"
+  make LLVM=1 rustavailable
+```
+
+Since one of my main goals was to support building out-of-tree Rust kernel
+modules, I wanted to store the rust toolchain used, so that a user which has
+`rustup` available can simply use the same Rust version to compile a kernel
+module. This turned out to be a bit tricker than expected.
+
+Just doing the most straightforward thing:
+```bash
+rustc --version | cut -d' ' -f 2 > "$srcdir/rust-toolchain"
+```
+
+failed with the following error:
+```text
+error: in /home/roughl/projects/archpkg/linux-rust/src/rust-toolchain: empty toolchain override file detected. Please remove it, or else specify the desired toolchain properties in the file
+```
+
+The reason is, that the shell redirection of the output into a file
+(`>"$srcdir/rust-toolchain"), will first create the file empty, then start
+`rustc`. Now the `rustc` binstub from `rustup` will see that there is a
+`rust-toolchain` file present when doing the `rustc --version` call, but since
+it is empty it complains.
+
+To fix this issue we need to first determine the version and then pipe it into a file:
+```bash
+  rust_version=$(rustc --version | cut -d' ' -f 2)
+  echo "$rust_version" > "$srcdir/rust-toolchain"
+```
 
 ## Looking forward
 

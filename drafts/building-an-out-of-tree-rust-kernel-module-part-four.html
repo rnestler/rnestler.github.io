@@ -76,8 +76,55 @@ pin the Rust version used and only support building the kernel with rustup.</p>
 <a href="https://github.com/rnestler/archpkg-linux-rust/pull/13">https://github.com/rnestler/archpkg-linux-rust/pull/13</a>. The author of it
 fixed a bug in the <code>PKGBUILD</code> and adapted it as well to build with <code>rustc</code> and
 <code>rust-src</code> from the repos.</p>
-<p>TODO:
- * Show the provides mechanism of pacman and how it allows to support building with rustc and rustup</p>
+<p>Since I didn't want to break building the package with rustup I decided to
+support both ways. This is made easy since we can just depend on <code>rust</code> and
+<code>rust-src</code> which are both also provided by the <code>rustup</code> package:</p>
+<div class="highlight"><pre><span></span><code>$ pacman -Qi rustup
+Name            : rustup
+Version         : 1.27.1-1
+Description     : The Rust toolchain installer
+Architecture    : x86_64
+URL             : https://github.com/rust-lang/rustup.rs
+Licenses        : MIT  Apache-2.0
+Groups          : None
+Provides        : rust  cargo  rust-nightly  cargo-nightly  rustfmt  rust-src  lib32-rust-libs  rust-musl  rust-wasm  rust-analyzer
+...
+</code></pre></div>
+
+<p>If <code>rustup</code> is installed we ensure in the <code>PKGBUILD</code> that the <code>rust-src</code>
+component is also available:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="k">if</span><span class="w"> </span>rustup<span class="w"> </span>--help<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Installing rust-src&quot;</span>
+<span class="w">    </span>rustup<span class="w"> </span>component<span class="w"> </span>add<span class="w"> </span>rust-src
+<span class="w">  </span><span class="k">fi</span>
+</code></pre></div>
+
+<p>To ease debugging if something in the toolchain isn't working we call the
+<code>rustavailable</code> kernel make target, which will output if something is missing:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Verifying that Rust support is available&quot;</span>
+<span class="w">  </span>make<span class="w"> </span><span class="nv">LLVM</span><span class="o">=</span><span class="m">1</span><span class="w"> </span>rustavailable
+</code></pre></div>
+
+<p>Since one of my main goals was to support building out-of-tree Rust kernel
+modules, I wanted to store the rust toolchain used, so that a user which has
+<code>rustup</code> available can simply use the same Rust version to compile a kernel
+module. This turned out to be a bit tricker than expected.</p>
+<p>Just doing the most straightforward thing:</p>
+<div class="highlight"><pre><span></span><code>rustc<span class="w"> </span>--version<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s1">&#39; &#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">2</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$srcdir</span><span class="s2">/rust-toolchain&quot;</span>
+</code></pre></div>
+
+<p>failed with the following error:</p>
+<div class="highlight"><pre><span></span><code>error: in /home/roughl/projects/archpkg/linux-rust/src/rust-toolchain: empty toolchain override file detected. Please remove it, or else specify the desired toolchain properties in the file
+</code></pre></div>
+
+<p>The reason is, that the shell redirection of the output into a file
+(<code>&gt;"$srcdir/rust-toolchain"), will first create the file empty, then start</code>rustc<code>. Now the</code>rustc<code>binstub from</code>rustup<code>will see that there is a</code>rust-toolchain<code>file present when doing the</code>rustc --version` call, but since
+it is empty it complains.</p>
+<p>To fix this issue we need to first determine the version and then pipe it into a file:</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nv">rust_version</span><span class="o">=</span><span class="k">$(</span>rustc<span class="w"> </span>--version<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s1">&#39; &#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">2</span><span class="k">)</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$rust_version</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$srcdir</span><span class="s2">/rust-toolchain&quot;</span>
+</code></pre></div>
+
 <h2>Looking forward</h2>
 <p>Since we can now build the Linux kernel with Rust support using the distro
 packages it should be possible to build it in a clean chroot environment and

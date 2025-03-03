@@ -52,9 +52,9 @@ kept the <a href="https://aur.archlinux.org/packages/linux-rust">AUR package</a>
 for ArchLinux<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> but hit some issues and the change got reverted again.</p>
 <h2>Building with the distro rust-bindgen</h2>
 <p>With the release of Linux 6.11, instead of a pinned version there should be an
-actual minimum version for the Rust toolchain to build the Linux with Rust
-support. See the <a href="https://lkml.org/lkml/2024/7/25/53">git pull request for 6.11</a> and the <a href="https://rust-for-linux.com/rust-version-policy">rust-version-policy</a> on
-<a href="https://rust-for-linux.com">https://rust-for-linux.com</a>.</p>
+actual minimum version for the Rust toolchain to build the Linux kernel with
+Rust support. See the <a href="https://lkml.org/lkml/2024/7/25/53">git pull request for 6.11</a> and the <a href="https://rust-for-linux.com/rust-version-policy">rust-version-policy</a>
+on <a href="https://rust-for-linux.com">https://rust-for-linux.com</a>.</p>
 <p>Using the distro packaged Rust toolchain should make it easier to be included
 in the official repositories some day, since using rustup to pin the version
 leads to issues when building in a clean chroot environment<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>.</p>
@@ -65,7 +65,7 @@ of Linux 6.11 with Rust 1.78, while it worked just fine with rust-bindgen
 0.70.1.</p>
 <p>In January 2025, when updating to to the 6.12 version of the kernel I upgraded
 the PKGBUILD to use Rust 1.83 and the current ArchLinux version of
-rust-bindgen: <a href="https://github.com/rnestler/archpkg-linux-rust/pull/12/">https://github.com/rnestler/archpkg-linux-rust/pull/12/</a>. This
+rust-bindgen: <a href="https://github.com/rnestler/archpkg-linux-rust/pull/12">https://github.com/rnestler/archpkg-linux-rust/pull/12</a>. This
 seemed to work just fine.</p>
 <p>Do to unclarities how to ensure that the Rust version used to build the kernel
 is the same that will be used to build out-of-tree modules, I decided to still
@@ -117,7 +117,9 @@ module. This turned out to be a bit tricker than expected.</p>
 </code></pre></div>
 
 <p>The reason is, that the shell redirection of the output into a file
-(<code>&gt;"$srcdir/rust-toolchain"), will first create the file empty, then start</code>rustc<code>. Now the</code>rustc<code>binstub from</code>rustup<code>will see that there is a</code>rust-toolchain<code>file present when doing the</code>rustc --version` call, but since
+(<code>&gt;"$srcdir/rust-toolchain"</code>), will first create the file empty, then start
+<code>rustc</code>. Now the <code>rustc</code> binstub from <code>rustup</code> will see that there is a
+<code>rust-toolchain</code> file present when doing the <code>rustc --version</code> call, but since
 it is empty it complains.</p>
 <p>To fix this issue we need to first determine the version and then pipe it into a file:</p>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nv">rust_version</span><span class="o">=</span><span class="k">$(</span>rustc<span class="w"> </span>--version<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s1">&#39; &#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">2</span><span class="k">)</span>

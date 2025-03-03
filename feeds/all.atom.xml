@@ -8,9 +8,9 @@ kept the &lt;a href="https://aur.archlinux.org/packages/linux-rust"&gt;AUR packa
 for ArchLinux&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt; but hit some issues and the change got reverted again.&lt;/p&gt;
 &lt;h2&gt;Building with the distro rust-bindgen&lt;/h2&gt;
 &lt;p&gt;With the release of Linux 6.11, instead of a pinned version there should be an
-actual minimum version for the Rust toolchain to build the Linux with Rust
-support. See the &lt;a href="https://lkml.org/lkml/2024/7/25/53"&gt;git pull request for 6.11&lt;/a&gt; and the &lt;a href="https://rust-for-linux.com/rust-version-policy"&gt;rust-version-policy&lt;/a&gt; on
-&lt;a href="https://rust-for-linux.com"&gt;https://rust-for-linux.com&lt;/a&gt;.&lt;/p&gt;
+actual minimum version for the Rust toolchain to build the Linux kernel with
+Rust support. See the &lt;a href="https://lkml.org/lkml/2024/7/25/53"&gt;git pull request for 6.11&lt;/a&gt; and the &lt;a href="https://rust-for-linux.com/rust-version-policy"&gt;rust-version-policy&lt;/a&gt;
+on &lt;a href="https://rust-for-linux.com"&gt;https://rust-for-linux.com&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Using the distro packaged Rust toolchain should make it easier to be included
 in the official repositories some day, since using rustup to pin the version
 leads to issues when building in a clean chroot environment&lt;sup id="fnref:2"&gt;&lt;a class="footnote-ref" href="#fn:2"&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
@@ -21,7 +21,7 @@ of Linux 6.11 with Rust 1.78, while it worked just fine with rust-bindgen
 0.70.1.&lt;/p&gt;
 &lt;p&gt;In January 2025, when updating to to the 6.12 version of the kernel I upgraded
 the PKGBUILD to use Rust 1.83 and the current ArchLinux version of
-rust-bindgen: &lt;a href="https://github.com/rnestler/archpkg-linux-rust/pull/12/"&gt;https://github.com/rnestler/archpkg-linux-rust/pull/12/&lt;/a&gt;. This
+rust-bindgen: &lt;a href="https://github.com/rnestler/archpkg-linux-rust/pull/12"&gt;https://github.com/rnestler/archpkg-linux-rust/pull/12&lt;/a&gt;. This
 seemed to work just fine.&lt;/p&gt;
 &lt;p&gt;Do to unclarities how to ensure that the Rust version used to build the kernel
 is the same that will be used to build out-of-tree modules, I decided to still
@@ -73,7 +73,9 @@ module. This turned out to be a bit tricker than expected.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The reason is, that the shell redirection of the output into a file
-(&lt;code&gt;&amp;gt;"$srcdir/rust-toolchain"), will first create the file empty, then start&lt;/code&gt;rustc&lt;code&gt;. Now the&lt;/code&gt;rustc&lt;code&gt;binstub from&lt;/code&gt;rustup&lt;code&gt;will see that there is a&lt;/code&gt;rust-toolchain&lt;code&gt;file present when doing the&lt;/code&gt;rustc --version` call, but since
+(&lt;code&gt;&amp;gt;"$srcdir/rust-toolchain"&lt;/code&gt;), will first create the file empty, then start
+&lt;code&gt;rustc&lt;/code&gt;. Now the &lt;code&gt;rustc&lt;/code&gt; binstub from &lt;code&gt;rustup&lt;/code&gt; will see that there is a
+&lt;code&gt;rust-toolchain&lt;/code&gt; file present when doing the &lt;code&gt;rustc --version&lt;/code&gt; call, but since
 it is empty it complains.&lt;/p&gt;
 &lt;p&gt;To fix this issue we need to first determine the version and then pipe it into a file:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;rust_version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;rustc&lt;span class="w"&gt; &lt;/span&gt;--version&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;cut&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="s1"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-f&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;

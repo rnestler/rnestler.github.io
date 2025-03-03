@@ -16,9 +16,9 @@ for ArchLinux[^1] but hit some issues and the change got reverted again.
 ## Building with the distro rust-bindgen
 
 With the release of Linux 6.11, instead of a pinned version there should be an
-actual minimum version for the Rust toolchain to build the Linux with Rust
-support. See the [git pull request for 6.11] and the [rust-version-policy] on
-<https://rust-for-linux.com>.
+actual minimum version for the Rust toolchain to build the Linux kernel with
+Rust support. See the [git pull request for 6.11] and the [rust-version-policy]
+on <https://rust-for-linux.com>.
 
 Using the distro packaged Rust toolchain should make it easier to be included
 in the official repositories some day, since using rustup to pin the version
@@ -32,7 +32,7 @@ of Linux 6.11 with Rust 1.78, while it worked just fine with rust-bindgen
 
 In January 2025, when updating to to the 6.12 version of the kernel I upgraded
 the PKGBUILD to use Rust 1.83 and the current ArchLinux version of
-rust-bindgen: <https://github.com/rnestler/archpkg-linux-rust/pull/12/>. This
+rust-bindgen: <https://github.com/rnestler/archpkg-linux-rust/pull/12>. This
 seemed to work just fine.
 
 Do to unclarities how to ensure that the Rust version used to build the kernel
@@ -97,7 +97,7 @@ error: in /home/roughl/projects/archpkg/linux-rust/src/rust-toolchain: empty too
 ```
 
 The reason is, that the shell redirection of the output into a file
-(`>"$srcdir/rust-toolchain"), will first create the file empty, then start
+(`>"$srcdir/rust-toolchain"`), will first create the file empty, then start
 `rustc`. Now the `rustc` binstub from `rustup` will see that there is a
 `rust-toolchain` file present when doing the `rustc --version` call, but since
 it is empty it complains.

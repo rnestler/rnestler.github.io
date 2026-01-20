@@ -452,7 +452,7 @@ package&lt;/a&gt; which continued to
 work and also didn't need any changes to the &lt;code&gt;PKGBUILD&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Adding librespot to snapcast was as easy as adding the following source to
 &lt;code&gt;/etc/snapserver.conf&lt;/code&gt; (&lt;sup id="fnref:2"&gt;&lt;a class="footnote-ref" href="#fn:2"&gt;2&lt;/a&gt;&lt;/sup&gt;):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;source = librespot:///usr/bin/librespot&amp;gt;?name=librespot&amp;amp;devicename=Snapcast
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;source = librespot:///usr/bin/librespot?name=librespot&amp;amp;devicename=Snapcast
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;I then did setup the &lt;code&gt;snapclient&lt;/code&gt; on my existing kodi Raspberry Pi and on the

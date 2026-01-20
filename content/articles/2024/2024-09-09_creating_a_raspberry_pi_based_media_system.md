@@ -417,7 +417,7 @@ work and also didn't need any changes to the `PKGBUILD`.
 Adding librespot to snapcast was as easy as adding the following source to
 `/etc/snapserver.conf` ([^2]):
 ```
-source = librespot:///usr/bin/librespot>?name=librespot&devicename=Snapcast
+source = librespot:///usr/bin/librespot?name=librespot&devicename=Snapcast
 ```
 
 I then did setup the `snapclient` on my existing kodi Raspberry Pi and on the

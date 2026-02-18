@@ -162,6 +162,11 @@ img.left, figure.left, div.figure.align-left {
     margin: 0 2em 2em 0;
 }
 
+img.center {
+    margin: 0 auto;
+    display: block;
+}
+
 /* .rst support */
 div.figure img, figure img {  /* to fill figure exactly */
     max-width: 100%;

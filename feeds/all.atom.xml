@@ -298,17 +298,13 @@ add-on.&lt;/p&gt;
 docs&lt;/a&gt;
 one should configure the network to use a static IP address:
 &lt;a href="http://homeassistant.local:8123/config/network"&gt;http://homeassistant.local:8123/config/network&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;
-&lt;img alt="The Home Assistant network configuration" src="https://blog.rnstlr.ch/images/home_assistant/home_assistant_network_configuration.png"&gt;
-&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="The Home Assistant network configuration" class="center" src="https://blog.rnstlr.ch/images/home_assistant/home_assistant_network_configuration.png"&gt;&lt;/p&gt;
 &lt;h1&gt;Configuring AdGuard Home&lt;/h1&gt;
 &lt;p&gt;For some reason the AdGuard Home add-on only listens on the local interface
 instead of all interfaces so it won't be reachable from outside. As instructed
 by &lt;a href="https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9"&gt;https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9&lt;/a&gt;
 I changed the add-on configuration accordingly:&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;
-&lt;img alt="The Home Assistant AdGuard add-on configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_addon_configuration.png" width="80%"&gt;
-&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="The Home Assistant AdGuard add-on configuration" class="center" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_addon_configuration.png" width="80%"&gt;&lt;/p&gt;
 &lt;h1&gt;Configuring Router&lt;/h1&gt;
 &lt;p&gt;There are two main ways to set up your router when wanting to use AdGuard Home:&lt;/p&gt;
 &lt;ol&gt;
@@ -321,33 +317,23 @@ the AdGuard Home DNS server.&lt;/p&gt;
 &lt;p&gt;Since I didn't want to break stuff in my network I decided to first go with
 option one. Also I kept one of the original DNS servers just in case for the
 first test run.&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;
-&lt;img alt="Router DNS configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration.png" width="80%"&gt;
-&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Router DNS configuration" class="center" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration.png" width="80%"&gt;&lt;/p&gt;
 &lt;h1&gt;Statistics&lt;/h1&gt;
 &lt;p&gt;After a few days of usage without any problems the statistics looked like this:&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;
-&lt;img alt="AdGuard statistics" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics.png" width="80%"&gt;
-&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="AdGuard statistics" class="center" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics.png" width="80%"&gt;&lt;/p&gt;
 &lt;p&gt;As you can see there are quite some blocked requests and all request originate
 from one client, my router.&lt;/p&gt;
 &lt;h1&gt;Use AdGuard Directly as the DNS Server&lt;/h1&gt;
 &lt;p&gt;Since the usage went without any problems I decided to configure my router to
 directly use AdGuard Home as the DNS server for its clients.&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;
-&lt;img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration_2.png"&gt;
-&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Router DHCP configuration" class="center" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_router_configuration_2.png"&gt;&lt;/p&gt;
 &lt;p&gt;To make sure that the important local names still resolve (NAS, HomeAssistant,
 SnapCast, ...) I added them manually as DNS rewrites.&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;
-&lt;img alt="Router DHCP configuration" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_dns_rewrites.png" width="80%"&gt;
-&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Router DHCP configuration" class="center" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_dns_rewrites.png" width="80%"&gt;&lt;/p&gt;
 &lt;p&gt;When using the DNS server directly we see in the statistics which clients
 create the most DNS queries and can also get some insight in what domains are
 queried by the WiFi switches for example.&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;
-&lt;img alt="AdGuard statistics for individual clients" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics_2.png" width="80%"&gt;
-&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="AdGuard statistics for individual clients" class="center" src="https://blog.rnstlr.ch/images/home_assistant/adguard_home_statistics_2.png" width="80%"&gt;&lt;/p&gt;
 &lt;h1&gt;IPv6 troubles&lt;/h1&gt;
 &lt;p&gt;I also noticed that around 25% of the requests are still coming from the
 router. Since all clients should use the AdGuard DNS server directly, this
@@ -771,9 +757,7 @@ Default Audio Device
 
 &lt;p&gt;I now enjoy nice multi-room synced audio while being able to easily control
 volume from my smart phone:&lt;/p&gt;
-&lt;p&gt;&lt;center&gt;
-&lt;img alt="Snapcast web interface" src="https://blog.rnstlr.ch/images/snapcast/snapcast-webinterface.png" width="80%"&gt;
-&lt;/center&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Snapcast web interface" class="center" src="https://blog.rnstlr.ch/images/snapcast/snapcast-webinterface.png" width="80%"&gt;&lt;/p&gt;
 &lt;h2&gt;Outlook&lt;/h2&gt;
 &lt;p&gt;The next things I want to look at is setting up &lt;a href="https://mopidy.com/"&gt;mopidy&lt;/a&gt;
 to stream music from my NAS and also to integrate snapcast into &lt;a href="https://blog.rnstlr.ch/setting-up-home-assistant-on-the-raspberry-pi-3.html"&gt;my home

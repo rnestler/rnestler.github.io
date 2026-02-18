@@ -20,9 +20,9 @@ docs](https://github.com/hassio-addons/addon-adguard-home/blob/main/adguard/DOCS
 one should configure the network to use a static IP address:
 <http://homeassistant.local:8123/config/network>
 
-<center>
-![The Home Assistant network configuration]({static}/images/home_assistant/home_assistant_network_configuration.png)
-</center>
+
+![The Home Assistant network configuration]({static}/images/home_assistant/home_assistant_network_configuration.png){.center}
+
 
 # Configuring AdGuard Home
 
@@ -31,9 +31,7 @@ instead of all interfaces so it won't be reachable from outside. As instructed
 by <https://community.home-assistant.io/t/adguard-listening-on-127-0-0-1-instead-of-the-hassio-ip/310137/9>
 I changed the add-on configuration accordingly:
 
-<center>
-![The Home Assistant AdGuard add-on configuration]({static}/images/home_assistant/adguard_home_addon_configuration.png){width=80%}
-</center>
+![The Home Assistant AdGuard add-on configuration]({static}/images/home_assistant/adguard_home_addon_configuration.png){width=80% .center}
 
 # Configuring Router
 
@@ -50,17 +48,13 @@ Since I didn't want to break stuff in my network I decided to first go with
 option one. Also I kept one of the original DNS servers just in case for the
 first test run.
 
-<center>
-![Router DNS configuration]({static}/images/home_assistant/adguard_home_router_configuration.png){width=80%}
-</center>
+![Router DNS configuration]({static}/images/home_assistant/adguard_home_router_configuration.png){width=80% .center}
 
 # Statistics
 
 After a few days of usage without any problems the statistics looked like this:
 
-<center>
-![AdGuard statistics]({static}/images/home_assistant/adguard_home_statistics.png){width=80%}
-</center>
+![AdGuard statistics]({static}/images/home_assistant/adguard_home_statistics.png){width=80% .center}
 
 As you can see there are quite some blocked requests and all request originate
 from one client, my router.
@@ -70,24 +64,18 @@ from one client, my router.
 Since the usage went without any problems I decided to configure my router to
 directly use AdGuard Home as the DNS server for its clients.
 
-<center>
-![Router DHCP configuration]({static}/images/home_assistant/adguard_home_router_configuration_2.png)
-</center>
+![Router DHCP configuration]({static}/images/home_assistant/adguard_home_router_configuration_2.png){.center}
 
 To make sure that the important local names still resolve (NAS, HomeAssistant,
 SnapCast, ...) I added them manually as DNS rewrites.
 
-<center>
-![Router DHCP configuration]({static}/images/home_assistant/adguard_home_dns_rewrites.png){width=80%}
-</center>
+![Router DHCP configuration]({static}/images/home_assistant/adguard_home_dns_rewrites.png){width=80% .center}
 
 When using the DNS server directly we see in the statistics which clients
 create the most DNS queries and can also get some insight in what domains are
 queried by the WiFi switches for example.
 
-<center>
-![AdGuard statistics for individual clients]({static}/images/home_assistant/adguard_home_statistics_2.png){width=80%}
-</center>
+![AdGuard statistics for individual clients]({static}/images/home_assistant/adguard_home_statistics_2.png){width=80% .center}
 
 # IPv6 troubles
 

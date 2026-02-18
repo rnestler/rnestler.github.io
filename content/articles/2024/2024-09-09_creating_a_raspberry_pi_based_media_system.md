@@ -457,9 +457,7 @@ bind_to_address = ::
 I now enjoy nice multi-room synced audio while being able to easily control
 volume from my smart phone:
 
-<center>
-![Snapcast web interface]({static}/images/snapcast/snapcast-webinterface.png){width=80%}
-</center>
+![Snapcast web interface]({static}/images/snapcast/snapcast-webinterface.png){width=80% .center}
 
 
 ## Outlook

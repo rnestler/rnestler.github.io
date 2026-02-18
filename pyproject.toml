@@ -6,5 +6,6 @@ requires-python = ">=3.10.8,<3.11"
 dependencies = [
     "pelican>=4.7.0,<5.0",
     "ghp-import>=2.0.2,<3.0",
-    "Markdown>=3.3.6,<4.0",
+    "Markdown>=3.3.6,<3.8",
+    "markdown-it-py>=3.0.0,<3.1.0",
 ]

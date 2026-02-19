@@ -2,7 +2,7 @@
 name = "blog-rnstlr-ch"
 version = "0.1.0"
 description = "The pelican project for my blog"
-requires-python = ">=3.10.8,<3.11"
+requires-python = ">=3.11.8,<3.12"
 dependencies = [
     "pelican>=4.7.0,<5.0",
     "ghp-import>=2.0.2,<3.0",

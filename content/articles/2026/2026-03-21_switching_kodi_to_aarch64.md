@@ -47,3 +47,21 @@ MAKEFLAGS="-j4"
 yay distccd-alarm-armv8 
 sudo systemctl start distccd-armv8.service
 ```
+
+
+## Building my own dashboard
+
+ * Cross compiling for ArchLinuxARM
+ * Creating a ArchLinuxARM Docker container
+ * Cargo cross
+
+No fonts installed
+
+```
+Using FemtoVG OpenGL renderer
+Rendering at 1920x1080
+
+thread 'main' (14238) panicked at /cargo/registry/src/index.crates.io-1949cf8c6b5b557f/fontique-0.7.0/src/backend/fontconfig.rs:685:61:
+called `Result::unwrap()` on an `Err` value: NoMatch
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                        <meta charset="utf-8" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                        <meta name="generator" content="Pelican" />
+                        <title>Switching my Raspberry Pi 3 running Kodi to aarch64</title>
+                        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+                                <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+    <meta name="description" content="Switching my Raspberry Pi 3 B+ which runs Kodi to aarch64" />
+        </head>
+
+        <body id="index" class="home">
+                <header id="banner" class="body">
+                        <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch</a></h1>
+                        <nav><ul>
+                                                <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2025.html">2025</a></li>
+                        </ul></nav>
+                </header><!-- /#banner -->
+  <section id="content" class="body">
+    <article>
+      <header>
+        <h1 class="entry-title">
+          <a href="https://blog.rnstlr.ch/drafts/switching-my-raspberry-pi-3-running-kodi-to-aarch64.html" rel="bookmark"
+             title="Permalink to Switching my Raspberry Pi 3 running Kodi to aarch64">Switching my Raspberry Pi 3 running Kodi to aarch64</a></h1>
+      </header>
+
+      <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2026-03-21T00:00:00+01:00">
+                Published: Sa 21 März 2026
+        </abbr>
+
+                <address class="vcard author">
+                        By                                 <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+                </address>
+        <p>In <a href="https://blog.rnstlr.ch/category/2026.html">2026</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> <a href="https://blog.rnstlr.ch/tag/kodi.html">Kodi</a> </p>        
+</footer><!-- /.post-info -->        <p>Back in <a href="//installing-archlinux-arm-on-the-raspberry-pi-3.html">2023</a> I set up
+my Raspberry Pi 3 B+ with Kodi and it served me well, even if the hardware is
+quite low power.</p>
+<h2>Kodi crashing to start</h2>
+<p>TODO</p>
+<div class="highlight"><pre><span></span><code>What error was shown exactly?
+</code></pre></div>
+
+<h1>Seting up snapcast</h1>
+<p>Following my own instructions from a <a href="//creating-a-raspberry-pi-based-media-system.html">previous
+blogpost</a> I set up the
+snapcast client.</p>
+<h2>Cross Compiling snapcast</h2>
+<p>I followed again the guide from the <a href="https://wiki.archlinux.org/title/Distcc#Cross_compiling_with_distcc">ArchLinux distcc wiki
+page</a>,
+just changing from the armv7 ot the armv8 toolchain:</p>
+<h3>Distcc Master System (Raspberry Pi)</h3>
+<div class="highlight"><pre><span></span><code>sudo pacman -S distcc
+sudo vim /etc/makepkg.conf
+<span class="gh">#</span> Edit / add the following lines
+BUILDENV=(distcc color !ccache check !sign)
+DISTCC_HOSTS=&quot;$IP_OF_SLAVE:3636&quot;
+MAKEFLAGS=&quot;-j4&quot;
+</code></pre></div>
+
+<h3>Distcc Slave System (Desktop PC)</h3>
+<div class="highlight"><pre><span></span><code>yay distccd-alarm-armv8 
+sudo systemctl start distccd-armv8.service
+</code></pre></div>
+
+<h2>Building my own dashboard</h2>
+<ul>
+<li>Cross compiling for ArchLinuxARM</li>
+<li>Creating a ArchLinuxARM Docker container</li>
+<li>Cargo cross</li>
+</ul>
+<p>No fonts installed</p>
+<div class="highlight"><pre><span></span><code><span class="k">Using</span><span class="w"> </span><span class="n">FemtoVG</span><span class="w"> </span><span class="n">OpenGL</span><span class="w"> </span><span class="n">renderer</span>
+<span class="n">Rendering</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="n">1920x1080</span>
+
+<span class="n">thread</span><span class="w"> </span><span class="s1">&#39;main&#39;</span><span class="w"> </span><span class="p">(</span><span class="mi">14238</span><span class="p">)</span><span class="w"> </span><span class="n">panicked</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="o">/</span><span class="n">cargo</span><span class="o">/</span><span class="n">registry</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="k">index</span><span class="p">.</span><span class="n">crates</span><span class="p">.</span><span class="k">io</span><span class="o">-</span><span class="n">1949cf8c6b5b557f</span><span class="o">/</span><span class="n">fontique</span><span class="o">-</span><span class="mf">0.7.0</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">backend</span><span class="o">/</span><span class="n">fontconfig</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="mi">685</span><span class="o">:</span><span class="mi">61</span><span class="o">:</span>
+<span class="n">called</span><span class="w"> </span><span class="n n-Quoted">`Result::unwrap()`</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n n-Quoted">`Err`</span><span class="w"> </span><span class="k">value</span><span class="o">:</span><span class="w"> </span><span class="n">NoMatch</span>
+<span class="n">note</span><span class="o">:</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n n-Quoted">`RUST_BACKTRACE=1`</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">display</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">backtrace</span>
+</code></pre></div>
+      </div><!-- /.entry-content -->
+
+    </article>
+  </section>
+                <section id="extras" class="body">
+                                <div class="blogroll">
+                                        <h2>links</h2>
+                                        <ul>
+                                                        <li><a href="http://getpelican.com/">Pelican</a></li>
+                                                        <li><a href="http://python.org/">Python.org</a></li>
+                                                        <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                                                        <li><a href="http://www.coredump.ch/">coredump</a></li>
+                                        </ul>
+                                </div><!-- /.blogroll -->
+                                <div class="social">
+                                        <h2>social</h2>
+                                        <ul>
+                                                        <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                                                        <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                                                        <li><a href="https://github.com/rnestler">github</a></li>
+                                        </ul>
+                                </div><!-- /.social -->
+                </section><!-- /#extras -->
+
+                <footer id="contentinfo" class="body">
+                        <address id="about" class="vcard body">
+                                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                        </address><!-- /#about -->
+
+                        <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                </footer><!-- /#contentinfo -->
+
+        </body>
+</html>

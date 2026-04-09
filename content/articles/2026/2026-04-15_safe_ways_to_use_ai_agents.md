@@ -27,12 +27,33 @@ Summary: Investigating ways to easily isolate AI agents to reduce risks in runni
 
 ## Introduction
 
- * We started using AI coding agents and also creating agents to automate tasks
- * During this we got aware of risks, I can also recommend watching the
-   "Agentic ProbLLMs: Exploiting AI Computer-Use and Coding Agents" by Johann
-   Rehberger at the 39c3 conference
- * This is a pragmatic solution that helps developers isolate agents while
-   still keeping things simple.
+At [Renuo] we started using AI coding agents (like [Claude Code], [OpenCode] or
+[Antigravity]) for development, and I also started using them for personal
+projects like my [Raspberry Dashboard]. Additionally we started building our own
+AI agent which is integrated in [Redmine], our ticketing and project
+management system.
+
+During this, we became aware of the security risks involved: by default these
+agents run with full user permissions -- they can read and write files, execute
+commands, and access credentials on the host system.
+
+Johann Rehberger's 39c3 talk [Agentic ProbLLMs: Exploiting AI Computer-Use
+and Coding Agents][39c3-talk] shows how prompt injection can lead to remote
+code execution and credential exfiltration in agents like Claude Code and
+GitHub Copilot. I recommend watching it.
+
+In this post we'll take a look at these risks and the pragmatic solutions we
+came up with to keep a balance between developer experience and security.
+
+[Renuo]: https://www.renuo.ch
+[Claude Code]: https://code.claude.com/docs/
+[OpenCode]: https://opencode.ai/
+[Antigravity]: https://antigravity.google/
+[Raspberry Dashboard]: https://github.com/rnestler/raspberry-dashboard
+[Redmine]: https://www.redmine.org/
+[39c3-talk]: https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents
+
+
 
 ## Risks of AI Agents
 

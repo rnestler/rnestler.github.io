@@ -43,35 +43,106 @@
                 </address>
         <p>In <a href="https://blog.rnstlr.ch/category/2026.html">2026</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/ai-agents.html">AI Agents</a> <a href="https://blog.rnstlr.ch/tag/sandboxing.html">Sandboxing</a> </p>        
-</footer><!-- /.post-info -->        <h1>Notes</h1>
-<h2>Resources</h2>
+</footer><!-- /.post-info -->        <p>At <a href="https://www.renuo.ch">Renuo</a> we started using AI coding agents (like <a href="https://code.claude.com/docs/">Claude Code</a>, <a href="https://opencode.ai/">OpenCode</a> or
+<a href="https://antigravity.google/">Antigravity</a>) for development, and I also started using them for personal
+projects like my <a href="https://github.com/rnestler/raspberry-dashboard">Raspberry Dashboard</a>. Additionally we started building our own
+AI agent which is integrated in <a href="https://www.redmine.org/">Redmine</a>, our ticketing and project
+management system.</p>
+<p>During this, we became aware of the security risks involved: by default these
+agents run with full user permissions -- they can read and write files, execute
+commands, and access credentials on the host system.</p>
+<p>Johann Rehberger's 39c3 talk <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">Agentic ProbLLMs: Exploiting AI Computer-Use
+and Coding Agents</a> shows how prompt injection can lead to remote
+code execution and credential exfiltration in agents like Claude Code and
+GitHub Copilot. I recommend watching it.</p>
+<p>In this post we'll take a look at these risks and the pragmatic solutions we
+came up with to keep a balance between developer experience and security.</p>
+<h1>Risks of AI Agents</h1>
+<blockquote>
+<p>LLMs are probabilistic -- a 1% chance of disaster makes it a matter of when,
+not if.
+-- <a href="https://agent-safehouse.dev/">Agent Safehouse</a></p>
+</blockquote>
+<p>Most AI coding agents run with the same permissions as the user who started
+them. They have access to the file system, can execute arbitrary shell commands,
+and inherit all credentials available in the environment. Since LLMs are
+susceptible to prompt injection -- malicious instructions hidden in code,
+documentation, or web content -- this creates a real attack surface.</p>
+<p>The risks boil down to a few categories:</p>
+<ul>
+<li>
+<p><strong>Exposing credentials</strong>: Agents have access to environment variables,
+    config files, and credential stores. A prompt injection can trick an agent
+    into exfiltrating API keys or access tokens to an attacker-controlled
+    server.</p>
+</li>
+<li>
+<p><strong>Malware installation</strong>: Agents can be tricked into downloading and
+   executing malicious code, for example through poisoned dependencies or
+   malicious instructions in README files.</p>
+</li>
+<li>
+<p><strong>Destructive actions on the local machine</strong>: An agent might delete files,
+   overwrite configurations, or corrupt a local database -- through prompt
+   injection or simply by making a wrong decision.</p>
+</li>
+<li>
+<p><strong>Destructive actions on remote systems</strong>: Agents often have access to CLI
+   tools that interact with production infrastructure. In one real case, an
+   agent hit a deployment quota limit and decided to delete existing apps via
+   <code>nctl delete</code> instead of requesting a quota increase.</p>
+</li>
+</ul>
+<p>For a deeper look at these attack vectors see the <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">39c3 talk</a>
+referenced in the introduction.</p>
+<h1>Mitigation Strategies</h1>
+<ul>
+<li>Trade off between developer convenience and security / safety<ul>
+<li>Permission fatigue</li>
+<li>Local setup vs. needing to maintain a functional sandbox environement / Dockerfile</li>
+</ul>
+</li>
+<li>Manual approval: Permission fatigue, configuration errors</li>
+<li>Agent specific configuration: Bash commands can find tricky ways to
+   circumvent stuff. No protection against web injected remote code execution</li>
+<li>Ways of isolation<ul>
+<li>Docker containers / Devcontainers. Mention gfrörli API PR
+  https://github.com/gfroerli/api/pull/356</li>
+<li>Sandboxing<ul>
+<li>builtin (claude)</li>
+<li>agent safehouse</li>
+<li>nono.sh</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>Pragmatic Sandboxing</h2>
+<ul>
+<li>For custom agents<ul>
+<li>Use Docker containers and limit availability of secrets</li>
+<li>Set things up outside of agent (example clone the repo, install
+  dependencies)</li>
+</ul>
+</li>
+<li>For dev machines<ul>
+<li>Use sandboxing tools with out-of-the-box profiles for common AI agents</li>
+</ul>
+</li>
+</ul>
+<h1>Further Resources</h1>
 <ul>
 <li>https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html</li>
+</ul>
+<h1>Notes</h1>
+<h2>Resources</h2>
+<ul>
 <li>https://docs.google.com/document/d/1ONlU5b8wehuoehDSsaHrosZ0FrByEJdl9DuUMW8qGiI/edit?tab=t.0</li>
 <li>https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents</li>
 </ul>
 <h2>Topics</h2>
 <ul>
-<li>By default AI agents have <em>full</em> system access</li>
-<li>AI agents are easily tricked into downloading and running malware</li>
 <li>What can go wrong</li>
-<li>Exposing credentials</li>
-<li>Malware installs</li>
-<li>Destructive actions on local machine</li>
-<li>Destructive actions on remove machines (nctl delete apps)</li>
-<li>Trade off between developer convenience and security / safety</li>
-<li>Ways of isolation</li>
-<li>Docker containers / Devcontainers</li>
-<li>Sandboxing (agent safehouse, nono.sh)</li>
-</ul>
-<h2>Introduction</h2>
-<ul>
-<li>We started using AI coding agents and also creating agents to automate tasks</li>
-<li>During this we got aware of risks, I can also recommend watching the
-   "Agentic ProbLLMs: Exploiting AI Computer-Use and Coding Agents " by Johann
-   Rehberger at the 39c3 conference</li>
-<li>This is a pragmatic solution that helps developers isolate agents while
-   still keeping things simple.</li>
 </ul>
       </div><!-- /.entry-content -->
 

@@ -4,29 +4,6 @@ Language: en
 Status: draft
 Summary: Investigating ways to easily isolate AI agents to reduce risks in running them.
 
-# Notes
-
-## Resources
-
- * https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html
- * https://docs.google.com/document/d/1ONlU5b8wehuoehDSsaHrosZ0FrByEJdl9DuUMW8qGiI/edit?tab=t.0
- * https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents
-
-## Topics
-
- * By default AI agents have *full* system access
- * AI agents are easily tricked into downloading and running malware
- * What can go wrong
- * Trade off between developer convenience and security / safety
-   * Permission fatigue
-   * Local setup vs. needing to maintain a functional sandbox environement / Dockerfile
- * Ways of isolation
-   * Docker containers / Devcontainers. Mention gfrörli API PR https://github.com/gfroerli/api/pull/356
-   * Sandboxing (builtin (claude) agent safehouse, nono.sh)
-
-
-## Introduction
-
 At [Renuo] we started using AI coding agents (like [Claude Code], [OpenCode] or
 [Antigravity]) for development, and I also started using them for personal
 projects like my [Raspberry Dashboard]. Additionally we started building our own
@@ -53,13 +30,77 @@ came up with to keep a balance between developer experience and security.
 [Redmine]: https://www.redmine.org/
 [39c3-talk]: https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents
 
+# Risks of AI Agents
 
+> LLMs are probabilistic -- a 1% chance of disaster makes it a matter of when,
+> not if.
+> -- [Agent Safehouse](https://agent-safehouse.dev/)
 
-## Risks of AI Agents
+Most AI coding agents run with the same permissions as the user who started
+them. They have access to the file system, can execute arbitrary shell commands,
+and inherit all credentials available in the environment. Since LLMs are
+susceptible to prompt injection -- malicious instructions hidden in code,
+documentation, or web content -- this creates a real attack surface.
 
- * Summarize findings of "Agentic ProbLLMs: Exploiting AI Computer-Use and Coding Agents"
- * Simplify them into
-   * Exposing credentials
-   * Malware installs
-   * Destructive actions on local machine
-   * Destructive actions on remove machines (nctl delete apps example)
+The risks boil down to a few categories:
+
+ *  **Exposing credentials**: Agents have access to environment variables,
+    config files, and credential stores. A prompt injection can trick an agent
+    into exfiltrating API keys or access tokens to an attacker-controlled
+    server.
+
+ * **Malware installation**: Agents can be tricked into downloading and
+   executing malicious code, for example through poisoned dependencies or
+   malicious instructions in README files.
+
+ * **Destructive actions on the local machine**: An agent might delete files,
+   overwrite configurations, or corrupt a local database -- through prompt
+   injection or simply by making a wrong decision.
+
+ * **Destructive actions on remote systems**: Agents often have access to CLI
+   tools that interact with production infrastructure. In one real case, an
+   agent hit a deployment quota limit and decided to delete existing apps via
+   `nctl delete` instead of requesting a quota increase.
+
+For a deeper look at these attack vectors see the [39c3 talk][39c3-talk]
+referenced in the introduction.
+
+# Mitigation Strategies
+
+ * Trade off between developer convenience and security / safety
+    * Permission fatigue
+    * Local setup vs. needing to maintain a functional sandbox environement / Dockerfile
+ * Manual approval: Permission fatigue, configuration errors
+ * Agent specific configuration: Bash commands can find tricky ways to
+   circumvent stuff. No protection against web injected remote code execution
+ * Ways of isolation
+    * Docker containers / Devcontainers. Mention gfrörli API PR
+      https://github.com/gfroerli/api/pull/356
+    * Sandboxing
+        * builtin (claude)
+        * agent safehouse
+        * nono.sh
+
+## Pragmatic Sandboxing
+
+ * For custom agents
+    * Use Docker containers and limit availability of secrets
+    * Set things up outside of agent (example clone the repo, install
+      dependencies)
+ * For dev machines
+    * Use sandboxing tools with out-of-the-box profiles for common AI agents
+
+# Further Resources
+
+ * https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html
+
+# Notes
+
+## Resources
+
+ * https://docs.google.com/document/d/1ONlU5b8wehuoehDSsaHrosZ0FrByEJdl9DuUMW8qGiI/edit?tab=t.0
+ * https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents
+
+## Topics
+
+ * What can go wrong

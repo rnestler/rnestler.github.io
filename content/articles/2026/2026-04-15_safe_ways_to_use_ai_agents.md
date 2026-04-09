@@ -17,21 +17,28 @@ Summary: Investigating ways to easily isolate AI agents to reduce risks in runni
  * By default AI agents have *full* system access
  * AI agents are easily tricked into downloading and running malware
  * What can go wrong
-   * Exposing credentials
-   * Malware installs
-   * Destructive actions on local machine
-   * Destructive actions on remove machines (nctl delete apps)
  * Trade off between developer convenience and security / safety
+   * Permission fatigue
+   * Local setup vs. needing to maintain a functional sandbox environement / Dockerfile
  * Ways of isolation
-   * Docker containers / Devcontainers
-   * Sandboxing (agent safehouse, nono.sh)
+   * Docker containers / Devcontainers. Mention gfrörli API PR https://github.com/gfroerli/api/pull/356
+   * Sandboxing (builtin (claude) agent safehouse, nono.sh)
 
 
 ## Introduction
 
  * We started using AI coding agents and also creating agents to automate tasks
  * During this we got aware of risks, I can also recommend watching the
-   "Agentic ProbLLMs: Exploiting AI Computer-Use and Coding Agents " by Johann
+   "Agentic ProbLLMs: Exploiting AI Computer-Use and Coding Agents" by Johann
    Rehberger at the 39c3 conference
  * This is a pragmatic solution that helps developers isolate agents while
    still keeping things simple.
+
+## Risks of AI Agents
+
+ * Summarize findings of "Agentic ProbLLMs: Exploiting AI Computer-Use and Coding Agents"
+ * Simplify them into
+   * Exposing credentials
+   * Malware installs
+   * Destructive actions on local machine
+   * Destructive actions on remove machines (nctl delete apps example)

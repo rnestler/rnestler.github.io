@@ -42,6 +42,11 @@ and inherit all credentials available in the environment. Since LLMs are
 susceptible to prompt injection -- malicious instructions hidden in code,
 documentation, or web content -- this creates a real attack surface.
 
+<figure>
+<img src="{static}/images/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
+<figcaption>Image source: <a href="https://embracethered.com/">embracethered.com</a> by Johann Rehberger</figcaption>
+</figure>
+
 The risks boil down to a few categories:
 
  *  **Exposing credentials**: Agents have access to environment variables,

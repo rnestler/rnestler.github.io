@@ -43,7 +43,7 @@ susceptible to prompt injection -- malicious instructions hidden in code,
 documentation, or web content -- this creates a real attack surface.
 
 <figure>
-<img src="{static}/images/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
+<img src="{static}/images/ai_agents/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
 <figcaption>Image source: <a href="https://embracethered.com/">embracethered.com</a> by Johann Rehberger</figcaption>
 </figure>
 
@@ -63,9 +63,30 @@ The risks boil down to a few categories:
    injection or simply by making a wrong decision.
 
  * **Destructive actions on remote systems**: Agents often have access to CLI
-   tools that interact with production infrastructure. In one real case, an
-   agent hit a deployment quota limit and decided to delete existing apps via
-   `nctl delete` instead of requesting a quota increase.
+   tools that interact with production infrastructure.
+
+I asked some developer what incidents they had happen with AI agents so far.
+Here are a few examples:
+
+> I don't have the session anymore, but while working on a redmine integration,
+> it found out that I had a REDMINE_API_KEY in my ENV variables and started
+> fetching data from our production redmine.
+> -- Alesandro Rodi
+
+> While it wasn't a major issue, it was frustrating when database migration
+> errors caused the development database to be deleted and recreated, as I
+> often lost data I needed to keep.
+> -- Bruno Costanzo
+
+> While I was testing our claude code skill to deploy web-apps to deplo.io, the
+> agent hit the quota limit of the number of apps. To solve this it decided
+> it's best to delete existing apps with `nctl delete app`. Luckily it asked
+> for confirmation before going ahead.
+> -- Josua Schmid
+
+We didn't have a case yet were things went seriously wrong, mostly because we
+don't let the agents run unattended. But it was enough to trigger us to really
+think about how to improve the situation.
 
 For a deeper look at these attack vectors see the [39c3 talk][39c3-talk]
 referenced in the introduction.

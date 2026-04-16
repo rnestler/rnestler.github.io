@@ -65,26 +65,29 @@ The risks boil down to a few categories:
  * **Destructive actions on remote systems**: Agents often have access to CLI
    tools that interact with production infrastructure.
 
-I asked some developer what incidents they had happen with AI agents so far.
+I asked some developers what incidents they had happen with AI agents so far.
 Here are a few examples:
 
 > I don't have the session anymore, but while working on a redmine integration,
 > it found out that I had a REDMINE_API_KEY in my ENV variables and started
 > fetching data from our production redmine.
+>
 > -- Alesandro Rodi
 
 > While it wasn't a major issue, it was frustrating when database migration
 > errors caused the development database to be deleted and recreated, as I
 > often lost data I needed to keep.
+>
 > -- Bruno Costanzo
 
 > While I was testing our claude code skill to deploy web-apps to deplo.io, the
 > agent hit the quota limit of the number of apps. To solve this it decided
 > it's best to delete existing apps with `nctl delete app`. Luckily it asked
 > for confirmation before going ahead.
+>
 > -- Josua Schmid
 
-We didn't have a case yet were things went seriously wrong, mostly because we
+We didn't have a case yet where things went seriously wrong, mostly because we
 don't let the agents run unattended. But it was enough to trigger us to really
 think about how to improve the situation.
 
@@ -158,11 +161,11 @@ This will allow `git commit` but block `git push` commands.
 
 The issues with these systems are:
 
- * **Agent specific** There is no way to specify rules for all agents
- * **Difficult to be exhaustive** You may specify a deny rule like
+ * **Agent specific:** There is no way to specify rules for all agents
+ * **Difficult to be exhaustive:** You may specify a deny rule like
    `Read(.env)`, but the agent may access it with a bash tool like cat or grep.
    So you would need to deny `Bash(cat .env)` as well.
- * **Easily overridden** The rules live in the repository itself, so agents can
+ * **Easily overridden:** The rules live in the repository itself, so agents can
    change them themself. Claude code even creates `.claude/settings.local.json`
    and puts it in your *global* `~/.config/git/ignore` as
    `**/.claude/settings.local.json`, so you won't even notice changes to that

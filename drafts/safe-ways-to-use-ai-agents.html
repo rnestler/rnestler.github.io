@@ -96,24 +96,24 @@ documentation, or web content -- this creates a real attack surface.</p>
    tools that interact with production infrastructure.</p>
 </li>
 </ul>
-<p>I asked some developer what incidents they had happen with AI agents so far.
+<p>I asked some developers what incidents they had happen with AI agents so far.
 Here are a few examples:</p>
 <blockquote>
 <p>I don't have the session anymore, but while working on a redmine integration,
 it found out that I had a REDMINE_API_KEY in my ENV variables and started
-fetching data from our production redmine.
--- Alesandro Rodi</p>
+fetching data from our production redmine.</p>
+<p>-- Alesandro Rodi</p>
 <p>While it wasn't a major issue, it was frustrating when database migration
 errors caused the development database to be deleted and recreated, as I
-often lost data I needed to keep.
--- Bruno Costanzo</p>
+often lost data I needed to keep.</p>
+<p>-- Bruno Costanzo</p>
 <p>While I was testing our claude code skill to deploy web-apps to deplo.io, the
 agent hit the quota limit of the number of apps. To solve this it decided
 it's best to delete existing apps with <code>nctl delete app</code>. Luckily it asked
-for confirmation before going ahead.
--- Josua Schmid</p>
+for confirmation before going ahead.</p>
+<p>-- Josua Schmid</p>
 </blockquote>
-<p>We didn't have a case yet were things went seriously wrong, mostly because we
+<p>We didn't have a case yet where things went seriously wrong, mostly because we
 don't let the agents run unattended. But it was enough to trigger us to really
 think about how to improve the situation.</p>
 <p>For a deeper look at these attack vectors see the <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">39c3 talk</a>
@@ -169,16 +169,18 @@ Code's permission system</a> for example allows to pattern match shell commands:
 <span class="p">}</span>
 </code></pre></div>
 
-<p>The issues with these systems are:
- * <strong>Agent specific</strong> There is no way to specify rules for all agents
- * <strong>Difficult to be exhaustive</strong> You may specify a deny rule like
+<p>The issues with these systems are:</p>
+<ul>
+<li><strong>Agent specific:</strong> There is no way to specify rules for all agents</li>
+<li><strong>Difficult to be exhaustive:</strong> You may specify a deny rule like
    <code>Read(.env)</code>, but the agent may access it with a bash tool like cat or grep.
-   So you would need to deny <code>Bash(cat .env)</code> as well.
- * <strong>Easily overridden</strong> The rules live in the repository itself, so agents can
+   So you would need to deny <code>Bash(cat .env)</code> as well.</li>
+<li><strong>Easily overridden:</strong> The rules live in the repository itself, so agents can
    change them themself. Claude code even creates <code>.claude/settings.local.json</code>
    and puts it in your <em>global</em> <code>~/.config/git/ignore</code> as
    <code>**/.claude/settings.local.json</code>, so you won't even notice changes to that
-   file.</p>
+   file.</li>
+</ul>
 <h2>Sandboxing</h2>
 <ul>
 <li>Trade off between developer convenience and security / safety<ul>

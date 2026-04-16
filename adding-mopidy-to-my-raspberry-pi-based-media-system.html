@@ -156,7 +156,7 @@ after <a class="reference external" href="https://aur.archlinux.org/packages/sna
 <div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">snapserver</span><span class="o">/</span><span class="n">plug</span><span class="o">-</span><span class="n">ins</span><span class="o">/</span><span class="n">meta_mopidy</span><span class="o">.</span><span class="n">py</span>
 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
   <span class="n">File</span> <span class="s2">&quot;/usr/share/snapserver/plug-ins/meta_mopidy.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">25</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-    <span class="kn">import</span> <span class="nn">websocket</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">websocket</span>
 <span class="ne">ModuleNotFoundError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="s1">&#39;websocket&#39;</span>
 </pre></div>
 <p>Installing it with <tt class="docutils literal">sudo pacman <span class="pre">-S</span> <span class="pre">--asdeps</span> <span class="pre">python-websocket-client</span></tt> fixed it.</p>

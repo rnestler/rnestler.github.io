@@ -69,7 +69,7 @@ and inherit all credentials available in the environment. Since LLMs are
 susceptible to prompt injection -- malicious instructions hidden in code,
 documentation, or web content -- this creates a real attack surface.</p>
 <figure>
-<img src="https://blog.rnstlr.ch/images/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
+<img src="https://blog.rnstlr.ch/images/ai_agents/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
 <figcaption>Image source: <a href="https://embracethered.com/">embracethered.com</a> by Johann Rehberger</figcaption>
 </figure>
 
@@ -93,14 +93,93 @@ documentation, or web content -- this creates a real attack surface.</p>
 </li>
 <li>
 <p><strong>Destructive actions on remote systems</strong>: Agents often have access to CLI
-   tools that interact with production infrastructure. In one real case, an
-   agent hit a deployment quota limit and decided to delete existing apps via
-   <code>nctl delete</code> instead of requesting a quota increase.</p>
+   tools that interact with production infrastructure.</p>
 </li>
 </ul>
+<p>I asked some developer what incidents they had happen with AI agents so far.
+Here are a few examples:</p>
+<blockquote>
+<p>I don't have the session anymore, but while working on a redmine integration,
+it found out that I had a REDMINE_API_KEY in my ENV variables and started
+fetching data from our production redmine.
+-- Alesandro Rodi</p>
+<p>While it wasn't a major issue, it was frustrating when database migration
+errors caused the development database to be deleted and recreated, as I
+often lost data I needed to keep.
+-- Bruno Costanzo</p>
+<p>While I was testing our claude code skill to deploy web-apps to deplo.io, the
+agent hit the quota limit of the number of apps. To solve this it decided
+it's best to delete existing apps with <code>nctl delete app</code>. Luckily it asked
+for confirmation before going ahead.
+-- Josua Schmid</p>
+</blockquote>
+<p>We didn't have a case yet were things went seriously wrong, mostly because we
+don't let the agents run unattended. But it was enough to trigger us to really
+think about how to improve the situation.</p>
 <p>For a deeper look at these attack vectors see the <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">39c3 talk</a>
 referenced in the introduction.</p>
 <h1>Mitigation Strategies</h1>
+<p>So what can we do about this? It boils down to the following strategies:</p>
+<ul>
+<li><strong>Hope</strong>: Instruct the agent not to do destructive things.</li>
+<li><strong>Manual approval</strong>: Configure the agents to ask before everything.</li>
+<li><strong>Agent specific configuration</strong>: Disallow the agent to read certain files
+   or execute certain commands.</li>
+<li><strong>Isolation</strong>: Run the agents in VMs, Dockercontainer or a sandboxing tool.</li>
+</ul>
+<h2>Hope / Prompt Begging</h2>
+<p>The major issue with just asking the LLM not to do desctructive things via
+prompting is that it may just not work.</p>
+<figure>
+<img src="https://blog.rnstlr.ch/images/ai_agents/agent-safehouse-fail-example.png" alt="Prompt begging failure" width="100%">
+<figcaption>Image source: <a href="https://agent-safehouse.dev/">agent-safehouse.dev</a></figcaption>
+</figure>
+
+<h2>Manual approval</h2>
+<p>While manually approving everything the agent does sounds secure in practice it
+leads to <strong>Approval fatigue</strong>: The repeated approving causes us to pay less
+attention to what we're approving.</p>
+<p>Also it will lead to less productivity due to the constant interruptions and we
+can't let the agents run in the background.</p>
+<h2>Agent specific configuration</h2>
+<p>Most agents can be configured to allow and deny patterns of actions. <a href="https://code.claude.com/docs/en/permissions">Claude
+Code's permission system</a> for example allows to pattern match shell commands:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;permissions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;allow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;Bash(git commit *)&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;deny&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;Bash(git push *)&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>This will allow <code>git commit</code> but block <code>git push</code> commands.</p>
+<p><a href="https://opencode.ai/docs/permissions/">OpenCode's permission system</a> works similarly:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://opencode.ai/config.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;permission&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;bash&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;git commit *&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;allow&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;git push *&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;deny&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The issues with these systems are:
+ * <strong>Agent specific</strong> There is no way to specify rules for all agents
+ * <strong>Difficult to be exhaustive</strong> You may specify a deny rule like
+   <code>Read(.env)</code>, but the agent may access it with a bash tool like cat or grep.
+   So you would need to deny <code>Bash(cat .env)</code> as well.
+ * <strong>Easily overridden</strong> The rules live in the repository itself, so agents can
+   change them themself. Claude code even creates <code>.claude/settings.local.json</code>
+   and puts it in your <em>global</em> <code>~/.config/git/ignore</code> as
+   <code>**/.claude/settings.local.json</code>, so you won't even notice changes to that
+   file.</p>
+<h2>Sandboxing</h2>
 <ul>
 <li>Trade off between developer convenience and security / safety<ul>
 <li>Permission fatigue</li>

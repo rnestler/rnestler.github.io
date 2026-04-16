@@ -117,11 +117,16 @@ prompting is that it may just not work.
 ## Manual approval
 
 While manually approving everything the agent does sounds secure, in practice it
-leads to **Approval fatigue**: The repeated approving causes us to pay less
-attention to what we're approving.
+leads to **approval fatigue**: repeatedly approving actions causes us to pay less
+attention to what we're actually approving.
 
-Also it will lead to less productivity due to the constant interruptions and we
-can't let the agents run in the background.
+It also kills productivity -- constant interruptions prevent agents from running
+in the background.
+
+There is also the issue of over-permissive allowing: At one point while trying
+out Antigravity, I accidentally allowed executing *every* bash command instead
+of just the command it just executed. Since the agent just continued executing
+stuff I needed to stop it.
 
 ## Agent specific configuration
 

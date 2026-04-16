@@ -157,6 +157,7 @@ This will allow `git commit` but block `git push` commands.
 [OpenCode's permission system]: https://opencode.ai/docs/permissions/
 
 The issues with these systems are:
+
  * **Agent specific** There is no way to specify rules for all agents
  * **Difficult to be exhaustive** You may specify a deny rule like
    `Read(.env)`, but the agent may access it with a bash tool like cat or grep.

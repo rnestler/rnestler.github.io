@@ -102,11 +102,11 @@ So what can we do about this? It boils down to the following strategies:
  * **Manual approval**: Configure the agents to ask before everything.
  * **Agent specific configuration**: Disallow the agent to read certain files
    or execute certain commands.
- * **Isolation**: Run the agents in VMs, Dockercontainer or a sandboxing tool.
+ * **Isolation**: Run the agents in VMs, Docker containers or a sandboxing tool.
 
 ## Hope / Prompt Begging
 
-The major issue with just asking the LLM not to do desctructive things via
+The major issue with just asking the LLM not to do destructive things via
 prompting is that it may just not work.
 
 <figure>
@@ -116,7 +116,7 @@ prompting is that it may just not work.
 
 ## Manual approval
 
-While manually approving everything the agent does sounds secure in practice it
+While manually approving everything the agent does sounds secure, in practice it
 leads to **Approval fatigue**: The repeated approving causes us to pay less
 attention to what we're approving.
 
@@ -126,7 +126,7 @@ can't let the agents run in the background.
 ## Agent specific configuration
 
 Most agents can be configured to allow and deny patterns of actions. [Claude
-Code's permission system] for example allows to pattern match shell commands:
+Code's permission system] for example allows you to pattern match shell commands:
 
 ```json
 {
@@ -166,7 +166,7 @@ The issues with these systems are:
    `Read(.env)`, but the agent may access it with a bash tool like cat or grep.
    So you would need to deny `Bash(cat .env)` as well.
  * **Easily overridden:** The rules live in the repository itself, so agents can
-   change them themself. Claude code even creates `.claude/settings.local.json`
+   change them themselves. Claude code even creates `.claude/settings.local.json`
    and puts it in your *global* `~/.config/git/ignore` as
    `**/.claude/settings.local.json`, so you won't even notice changes to that
    file.

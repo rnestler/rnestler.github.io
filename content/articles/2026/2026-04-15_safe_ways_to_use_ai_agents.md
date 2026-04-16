@@ -93,6 +93,82 @@ referenced in the introduction.
 
 # Mitigation Strategies
 
+So what can we do about this? It boils down to the following strategies:
+
+ * **Hope**: Instruct the agent not to do destructive things.
+ * **Manual approval**: Configure the agents to ask before everything.
+ * **Agent specific configuration**: Disallow the agent to read certain files
+   or execute certain commands.
+ * **Isolation**: Run the agents in VMs, Dockercontainer or a sandboxing tool.
+
+## Hope / Prompt Begging
+
+The major issue with just asking the LLM not to do desctructive things via
+prompting is that it may just not work.
+
+<figure>
+<img src="{static}/images/ai_agents/agent-safehouse-fail-example.png" alt="Prompt begging failure" width="100%">
+<figcaption>Image source: <a href="https://agent-safehouse.dev/">agent-safehouse.dev</a></figcaption>
+</figure>
+
+## Manual approval
+
+While manually approving everything the agent does sounds secure in practice it
+leads to **Approval fatigue**: The repeated approving causes us to pay less
+attention to what we're approving.
+
+Also it will lead to less productivity due to the constant interruptions and we
+can't let the agents run in the background.
+
+## Agent specific configuration
+
+Most agents can be configured to allow and deny patterns of actions. [Claude
+Code's permission system] for example allows to pattern match shell commands:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit *)"
+    ],
+    "deny": [
+      "Bash(git push *)"
+    ]
+  }
+}
+```
+
+This will allow `git commit` but block `git push` commands.
+
+[OpenCode's permission system] works similarly:
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "bash": {
+      "git commit *": "allow",
+      "git push *": "deny"
+    }
+  }
+}
+```
+
+[Claude Code's permission system]: https://code.claude.com/docs/en/permissions
+[OpenCode's permission system]: https://opencode.ai/docs/permissions/
+
+The issues with these systems are:
+ * **Agent specific** There is no way to specify rules for all agents
+ * **Difficult to be exhaustive** You may specify a deny rule like
+   `Read(.env)`, but the agent may access it with a bash tool like cat or grep.
+   So you would need to deny `Bash(cat .env)` as well.
+ * **Easily overridden** The rules live in the repository itself, so agents can
+   change them themself. Claude code even creates `.claude/settings.local.json`
+   and puts it in your *global* `~/.config/git/ignore` as
+   `**/.claude/settings.local.json`, so you won't even notice changes to that
+   file.
+
+## Sandboxing
+
  * Trade off between developer convenience and security / safety
     * Permission fatigue
     * Local setup vs. needing to maintain a functional sandbox environement / Dockerfile

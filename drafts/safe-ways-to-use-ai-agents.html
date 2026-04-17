@@ -49,7 +49,7 @@ projects like my <a href="https://github.com/rnestler/raspberry-dashboard">Raspb
 AI agent which is integrated in <a href="https://www.redmine.org/">Redmine</a>, our ticketing and project
 management system.</p>
 <p>During this, we became aware of the security risks involved: by default these
-agents run with full user permissions -- they can read and write files, execute
+agents run with full user permissions: They can read and write files, execute
 commands, and access credentials on the host system.</p>
 <p>Johann Rehberger's 39c3 talk <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">Agentic ProbLLMs: Exploiting AI Computer-Use
 and Coding Agents</a> shows how prompt injection can lead to remote
@@ -66,8 +66,8 @@ not if.
 <p>Most AI coding agents run with the same permissions as the user who started
 them. They have access to the file system, can execute arbitrary shell commands,
 and inherit all credentials available in the environment. Since LLMs are
-susceptible to prompt injection -- malicious instructions hidden in code,
-documentation, or web content -- this creates a real attack surface.</p>
+susceptible to prompt injection, (malicious instructions hidden in code,
+documentation, or web content) this creates a real attack surface.</p>
 <figure>
 <img src="https://blog.rnstlr.ch/images/ai_agents/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
 <figcaption>Image source: <a href="https://embracethered.com/">embracethered.com</a> by Johann Rehberger</figcaption>
@@ -102,20 +102,20 @@ Here are a few examples:</p>
 <p>I don't have the session anymore, but while working on a redmine integration,
 it found out that I had a REDMINE_API_KEY in my ENV variables and started
 fetching data from our production redmine.</p>
-<p>-- Alesandro Rodi</p>
+<p>-- Alessandro Rodi</p>
 <p>While it wasn't a major issue, it was frustrating when database migration
 errors caused the development database to be deleted and recreated, as I
-often lost data I needed to keep.</p>
+often lost test-data I wanted to keep.</p>
 <p>-- Bruno Costanzo</p>
 <p>While I was testing our claude code skill to deploy web-apps to deplo.io, the
-agent hit the quota limit of the number of apps. To solve this it decided
-it's best to delete existing apps with <code>nctl delete app</code>. Luckily it asked
-for confirmation before going ahead.</p>
+agent hit the quota limit of the number of apps in the test organization. To
+solve this it decided it's best to delete existing apps with <code>nctl delete
+app</code>. It did ask for confirmation though before going ahead.</p>
 <p>-- Josua Schmid</p>
 </blockquote>
 <p>We didn't have a case yet where things went seriously wrong, mostly because we
-don't let the agents run unattended. But it was enough to trigger us to really
-think about how to improve the situation.</p>
+don't let the agents run unattended and use test environments. But it was
+enough to trigger us to really think about how to improve the situation.</p>
 <p>For a deeper look at these attack vectors see the <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">39c3 talk</a>
 referenced in the introduction.</p>
 <h1>Mitigation Strategies</h1>
@@ -125,10 +125,10 @@ referenced in the introduction.</p>
 <li><strong>Manual approval</strong>: Configure the agents to ask before everything.</li>
 <li><strong>Agent specific configuration</strong>: Disallow the agent to read certain files
    or execute certain commands.</li>
-<li><strong>Isolation</strong>: Run the agents in VMs, Dockercontainer or a sandboxing tool.</li>
+<li><strong>Isolation</strong>: Run the agents in VMs, Docker containers or a sandboxing tool.</li>
 </ul>
 <h2>Hope / Prompt Begging</h2>
-<p>The major issue with just asking the LLM not to do desctructive things via
+<p>The major issue with just asking the LLM not to do destructive things via
 prompting is that it may just not work.</p>
 <figure>
 <img src="https://blog.rnstlr.ch/images/ai_agents/agent-safehouse-fail-example.png" alt="Prompt begging failure" width="100%">
@@ -136,14 +136,18 @@ prompting is that it may just not work.</p>
 </figure>
 
 <h2>Manual approval</h2>
-<p>While manually approving everything the agent does sounds secure in practice it
-leads to <strong>Approval fatigue</strong>: The repeated approving causes us to pay less
-attention to what we're approving.</p>
-<p>Also it will lead to less productivity due to the constant interruptions and we
-can't let the agents run in the background.</p>
+<p>While manually approving everything the agent does sounds secure, in practice it
+leads to <strong>approval fatigue</strong>: repeatedly approving actions causes us to pay less
+attention to what we're actually approving.</p>
+<p>It also kills productivity: Constant interruptions prevent agents from running
+in the background.</p>
+<p>There is also the issue of over-permissive allowing: At one point while trying
+out Antigravity, I accidentally allowed executing <em>every</em> bash command instead
+of just the command it just executed. Since the agent just continued executing
+stuff I needed to stop it.</p>
 <h2>Agent specific configuration</h2>
 <p>Most agents can be configured to allow and deny patterns of actions. <a href="https://code.claude.com/docs/en/permissions">Claude
-Code's permission system</a> for example allows to pattern match shell commands:</p>
+Code's permission system</a> for example allows you to pattern match shell commands:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;permissions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;allow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -171,15 +175,18 @@ Code's permission system</a> for example allows to pattern match shell commands:
 
 <p>The issues with these systems are:</p>
 <ul>
-<li><strong>Agent specific:</strong> There is no way to specify rules for all agents</li>
-<li><strong>Difficult to be exhaustive:</strong> You may specify a deny rule like
-   <code>Read(.env)</code>, but the agent may access it with a bash tool like cat or grep.
-   So you would need to deny <code>Bash(cat .env)</code> as well.</li>
-<li><strong>Easily overridden:</strong> The rules live in the repository itself, so agents can
-   change them themself. Claude code even creates <code>.claude/settings.local.json</code>
-   and puts it in your <em>global</em> <code>~/.config/git/ignore</code> as
-   <code>**/.claude/settings.local.json</code>, so you won't even notice changes to that
-   file.</li>
+<li><strong>Agent specific:</strong> There is no way to specify rules across all agents.</li>
+<li><strong>Deny-lists can't be exhaustive:</strong> You may specify a deny rule like
+   <code>Read(.env)</code>, but the agent can access the same file through a bash tool --
+   <code>cat .env</code>, <code>grep . .env</code>, <code>python -c "print(open('.env').read())"</code>, and so
+   on. Deny-lists fundamentally can't cover the infinite ways to access a
+   resource.</li>
+<li><strong>Easily overridden:</strong> The rules live in the repository itself and may be
+   modified during normal usage. Claude Code for example creates
+   <code>.claude/settings.local.json</code> and puts it in your <em>global</em>
+   <code>~/.config/git/ignore</code> as <code>**/.claude/settings.local.json</code> -- so you won't
+   even notice changes to that file. And other agents will simply ignore these
+   config files entirely.</li>
 </ul>
 <h2>Sandboxing</h2>
 <ul>

@@ -72,7 +72,7 @@ Here are a few examples:
 > it found out that I had a REDMINE_API_KEY in my ENV variables and started
 > fetching data from our production redmine.
 >
-> -- Alesandro Rodi
+> -- Alessandro Rodi
 
 > While it wasn't a major issue, it was frustrating when database migration
 > errors caused the development database to be deleted and recreated, as I

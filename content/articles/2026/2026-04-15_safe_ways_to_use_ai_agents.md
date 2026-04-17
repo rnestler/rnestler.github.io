@@ -11,7 +11,7 @@ AI agent which is integrated in [Redmine], our ticketing and project
 management system.
 
 During this, we became aware of the security risks involved: by default these
-agents run with full user permissions -- they can read and write files, execute
+agents run with full user permissions: They can read and write files, execute
 commands, and access credentials on the host system.
 
 Johann Rehberger's 39c3 talk [Agentic ProbLLMs: Exploiting AI Computer-Use
@@ -39,8 +39,8 @@ came up with to keep a balance between developer experience and security.
 Most AI coding agents run with the same permissions as the user who started
 them. They have access to the file system, can execute arbitrary shell commands,
 and inherit all credentials available in the environment. Since LLMs are
-susceptible to prompt injection -- malicious instructions hidden in code,
-documentation, or web content -- this creates a real attack surface.
+susceptible to prompt injection, (malicious instructions hidden in code,
+documentation, or web content) this creates a real attack surface.
 
 <figure>
 <img src="{static}/images/ai_agents/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
@@ -120,7 +120,7 @@ While manually approving everything the agent does sounds secure, in practice it
 leads to **approval fatigue**: repeatedly approving actions causes us to pay less
 attention to what we're actually approving.
 
-It also kills productivity -- constant interruptions prevent agents from running
+It also kills productivity: Constant interruptions prevent agents from running
 in the background.
 
 There is also the issue of over-permissive allowing: At one point while trying

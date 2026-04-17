@@ -76,20 +76,20 @@ Here are a few examples:
 
 > While it wasn't a major issue, it was frustrating when database migration
 > errors caused the development database to be deleted and recreated, as I
-> often lost data I needed to keep.
+> often lost test-data I wanted to keep.
 >
 > -- Bruno Costanzo
 
 > While I was testing our claude code skill to deploy web-apps to deplo.io, the
-> agent hit the quota limit of the number of apps. To solve this it decided
-> it's best to delete existing apps with `nctl delete app`. Luckily it asked
-> for confirmation before going ahead.
+> agent hit the quota limit of the number of apps in the test organization. To
+> solve this it decided it's best to delete existing apps with `nctl delete
+> app`. It did ask for confirmation though before going ahead.
 >
 > -- Josua Schmid
 
 We didn't have a case yet where things went seriously wrong, mostly because we
-don't let the agents run unattended. But it was enough to trigger us to really
-think about how to improve the situation.
+don't let the agents run unattended and use test environments. But it was
+enough to trigger us to really think about how to improve the situation.
 
 For a deeper look at these attack vectors see the [39c3 talk][39c3-talk]
 referenced in the introduction.

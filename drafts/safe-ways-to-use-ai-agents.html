@@ -175,27 +175,71 @@ Code's permission system</a> for example allows you to pattern match shell comma
 
 <p>The issues with these systems are:</p>
 <ul>
-<li><strong>Agent specific:</strong> There is no way to specify rules across all agents.</li>
-<li><strong>Deny-lists can't be exhaustive:</strong> You may specify a deny rule like
-   <code>Read(.env)</code>, but the agent can access the same file through a bash tool --
+<li><strong>Agent specific</strong>: There is no way to specify rules across all agents.</li>
+<li><strong>Deny-lists can't be exhaustive</strong>: You may specify a deny rule like
+   <code>Read(.env)</code>, but the agent can access the same file through a bash tool:
    <code>cat .env</code>, <code>grep . .env</code>, <code>python -c "print(open('.env').read())"</code>, and so
    on. Deny-lists fundamentally can't cover the infinite ways to access a
    resource.</li>
-<li><strong>Easily overridden:</strong> The rules live in the repository itself and may be
+<li><strong>Easily overridden</strong>: The rules live in the repository itself and may be
    modified during normal usage. Claude Code for example creates
    <code>.claude/settings.local.json</code> and puts it in your <em>global</em>
-   <code>~/.config/git/ignore</code> as <code>**/.claude/settings.local.json</code> -- so you won't
+   <code>~/.config/git/ignore</code> as <code>**/.claude/settings.local.json</code>. So you won't
    even notice changes to that file. And other agents will simply ignore these
    config files entirely.</li>
 </ul>
 <h2>Sandboxing</h2>
+<p>To really provide protection we need to externally sandbox AI agents using
+operation system level protection. But completely isolating agents makes them
+also completely useless: In the end you want to work them on your code and
+interact in some way with the environment. The following table should
+illustrate the level of isolation provided:</p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Properties</th>
+<th>Isolation Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VM</td>
+<td>Full isolation. Only interaction via virtual network</td>
+<td>Very High</td>
+</tr>
+<tr>
+<td>Containers</td>
+<td>Kernel namespaces. CGroups. Limited access to files, processes and other ressources</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Sandboxes</td>
+<td>Landlock LSM / Seatbelt</td>
+<td>Configuration Dependent</td>
+</tr>
+</tbody>
+</table>
+<p>What sandboxing technique to use also depends on the use case:</p>
+<ul>
+<li><strong>Local Agents</strong>: You want to give them access to your local project and
+   probably some development tools. So a separate VM or even a Docker container
+   needs a lot of setup</li>
+<li><strong>Standalone Agent</strong>: It will run on it's own server / VM anyways. Further
+   you want to have it run in a reproducible environment and not mess with the
+   operating system. So running it inside a container makes sense.</li>
+</ul>
+<h3>Devcontainers</h3>
+<p>If you are using <a href="https://containers.dev/">Devcontainers</a> for your development needs a quick way to give
+the agent a somewhat isolated environment is to run it inside that container as
+well. In an open-source project I help maintain we recently added exactly that:
+<a href="https://github.com/gfroerli/api/pull/356">https://github.com/gfroerli/api/pull/356</a></p>
 <ul>
 <li>Trade off between developer convenience and security / safety<ul>
 <li>Permission fatigue</li>
 <li>Local setup vs. needing to maintain a functional sandbox environement / Dockerfile</li>
 </ul>
 </li>
-<li>Manual approval: Permission fatigue, configuration errors</li>
 <li>Agent specific configuration: Bash commands can find tricky ways to
    circumvent stuff. No protection against web injected remote code execution</li>
 <li>Ways of isolation<ul>

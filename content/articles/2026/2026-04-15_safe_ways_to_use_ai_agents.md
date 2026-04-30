@@ -181,10 +181,40 @@ The issues with these systems are:
 
 ## Sandboxing
 
+To really provide protection we need to externally sandbox AI agents using
+operation system level protection. But completely isolating agents makes them
+also completely useless: In the end you want to work them on your code and
+interact in some way with the environment. The following table should
+illustrate the level of isolation provided:
+
+|Technique   |Properties                                        |Isolation Level|
+|------------|--------------------------------------------------|---------------|
+| VM         | Full isolation. Only interaction via virtual network | Very High |
+| Containers | Kernel namespaces. CGroups. Limited access to files, processes and other ressources| High |
+| Sandboxes  | Landlock LSM / Seatbelt| Configuration Dependent |
+
+What sandboxing technique to use also depends on the use case:
+
+ * **Local Agents**: You want to give them access to your local project and
+   probably some development tools. So a separate VM or even a Docker container
+   needs a lot of setup
+ * **Standalone Agent**: It will run on it's own server / VM anyways. Further
+   you want to have it run in a reproducible environment and not mess with the
+   operating system. So running it inside a container makes sense.
+
+### Devcontainers
+
+If you are using [Devcontainers] for your development needs a quick way to give
+the agent a somewhat isolated environment is to run it inside that container as
+well. In an open-source project I help maintain we recently added exactly that:
+<https://github.com/gfroerli/api/pull/356>
+
+
+[Devcontainers]: https://containers.dev/
+
  * Trade off between developer convenience and security / safety
     * Permission fatigue
     * Local setup vs. needing to maintain a functional sandbox environement / Dockerfile
- * Manual approval: Permission fatigue, configuration errors
  * Agent specific configuration: Bash commands can find tricky ways to
    circumvent stuff. No protection against web injected remote code execution
  * Ways of isolation

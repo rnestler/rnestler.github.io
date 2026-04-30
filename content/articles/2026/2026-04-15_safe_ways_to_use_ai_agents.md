@@ -166,15 +166,18 @@ This will allow `git commit` but block `git push` commands.
 
 The issues with these systems are:
 
- * **Agent specific:** There is no way to specify rules for all agents
- * **Difficult to be exhaustive:** You may specify a deny rule like
-   `Read(.env)`, but the agent may access it with a bash tool like cat or grep.
-   So you would need to deny `Bash(cat .env)` as well.
- * **Easily overridden:** The rules live in the repository itself, so agents can
-   change them themselves. Claude code even creates `.claude/settings.local.json`
-   and puts it in your *global* `~/.config/git/ignore` as
-   `**/.claude/settings.local.json`, so you won't even notice changes to that
-   file.
+ * **Agent specific**: There is no way to specify rules across all agents.
+ * **Deny-lists can't be exhaustive**: You may specify a deny rule like
+   `Read(.env)`, but the agent can access the same file through a bash tool:
+   `cat .env`, `grep . .env`, `python -c "print(open('.env').read())"`, and so
+   on. Deny-lists fundamentally can't cover the infinite ways to access a
+   resource.
+ * **Easily overridden**: The rules live in the repository itself and may be
+   modified during normal usage. Claude Code for example creates
+   `.claude/settings.local.json` and puts it in your *global*
+   `~/.config/git/ignore` as `**/.claude/settings.local.json`. So you won't
+   even notice changes to that file. And other agents will simply ignore these
+   config files entirely.
 
 ## Sandboxing
 

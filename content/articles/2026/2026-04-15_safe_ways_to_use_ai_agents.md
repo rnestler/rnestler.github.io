@@ -209,42 +209,72 @@ the agent a somewhat isolated environment is to run it inside that container as
 well. In an open-source project I help maintain we recently added exactly that:
 <https://github.com/gfroerli/api/pull/356>
 
+But at Renuo we rarely use Devcontainers for our setups: We prefer local
+environments which are easier to debug and inspect.
 
 [Devcontainers]: https://containers.dev/
 
- * Trade off between developer convenience and security / safety
-    * Permission fatigue
-    * Local setup vs. needing to maintain a functional sandbox environement / Dockerfile
- * Agent specific configuration: Bash commands can find tricky ways to
-   circumvent stuff. No protection against web injected remote code execution
- * Ways of isolation
-    * Docker containers / Devcontainers. Mention gfrörli API PR
-      https://github.com/gfroerli/api/pull/356
-    * Sandboxing
-        * builtin (claude)
-        * agent safehouse
-        * nono.sh
+### Builtin Sandboxing
 
-## Pragmatic Sandboxing
+Some AI agents support sandboxing in their own runtime. See [Claude Code
+Sandboxing](https://code.claude.com/docs/en/sandboxing) for example. The downsides here are again:
 
- * For custom agents
-    * Use Docker containers and limit availability of secrets
-    * Set things up outside of agent (example clone the repo, install
-      dependencies)
- * For dev machines
-    * Use sandboxing tools with out-of-the-box profiles for common AI agents
+ * Agent specific
+ * Hard to get the configuration right [^1]
+ * At least for Claude Code it only affects the Bash tool, not the Read and
+   Write tools!
 
-# Further Resources
+### Specialized Sandboxing Tools
 
- * https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html
+In the end we came up with the following two tools which use kernel level
+sandboxing to limit what agents can do:
 
-# Notes
+ * **[Agent Safehouse]**: Uses macOS [Seatbelt] to only give the agent access
+   to what it really needs.
+ * **[nono]**: Uses [Landlock] on Linux and [Seatbelt] on macOS. It doesn't
+   just provide Kernel isolation, but also undo & rollback, audit trail, supply
+   chain provenance, runtime supervision and environment variable filtering.
 
-## Resources
+These tools have the following characteristics:
 
- * https://docs.google.com/document/d/1ONlU5b8wehuoehDSsaHrosZ0FrByEJdl9DuUMW8qGiI/edit?tab=t.0
- * https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents
+ * They enforce irrevocable  allow-list based blocking at the kernel level.
+ * They work with all agents
+ * Configuration is separate from the agent and can be separately tested:
 
-## Topics
+<figure>
 
- * What can go wrong
+```text
+$ nono run --allow-cwd ls ~/.ssh
+...
+ls: cannot open directory '~/.ssh': Permission denied
+...
+```
+
+<figcaption>nono denying access to ssh credentials</figcaption>
+</figure>
+
+
+[Agent Safehouse]: https://agent-safehouse.dev/
+[macOS Seatbelt]: https://theapplewiki.com/wiki/Dev:Seatbelt
+[nono]: https://nono.sh/
+[Landlock]: https://landlock.io/
+
+## Summary
+
+In the end it is, as usual, a tradeoff between developer convenience and
+security: Giving the AI agent access to everything is the most convenient, but
+a recipe for disaster. At Renuo we came up with the following rough guidelines
+
+ * For custom agents running independently: Use VMs, Docker containers and
+   limit the availability of credentials as much as possible. It's better to
+   let the AI agent do it's task and then let your custom runtime push code,
+   respond to tickets etc. 
+ * For developer machines: Use sandboxing tools with out-of-the-box profiles
+   for common AI agents. Still don't let it run in `--yolo` / unattended mode:
+   Keep yourself in the loop, but you can be more permissive in what commands
+   you allow it to run without confirmation. Take special care of credentials
+   that are exposed via environment variables.
+
+[^1]: In one occasion while testing the sandboxing feature of Claude I had it
+    assure me that its access to a file were blocked by the sandbox, even if
+    the sandbox couldn't be started because of missing system dependencies!

@@ -234,53 +234,72 @@ illustrate the level of isolation provided:</p>
 the agent a somewhat isolated environment is to run it inside that container as
 well. In an open-source project I help maintain we recently added exactly that:
 <a href="https://github.com/gfroerli/api/pull/356">https://github.com/gfroerli/api/pull/356</a></p>
+<p>But at Renuo we rarely use Devcontainers for our setups: We prefer local
+environments which are easier to debug and inspect.</p>
+<h3>Builtin Sandboxing</h3>
+<p>Some AI agents support sandboxing in their own runtime. See <a href="https://code.claude.com/docs/en/sandboxing">Claude Code
+Sandboxing</a> for example. The downsides here are again:</p>
 <ul>
-<li>Trade off between developer convenience and security / safety<ul>
-<li>Permission fatigue</li>
-<li>Local setup vs. needing to maintain a functional sandbox environement / Dockerfile</li>
+<li>Agent specific</li>
+<li>Hard to get the configuration right <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></li>
+<li>At least for Claude Code it only affects the Bash tool, not the Read and
+   Write tools!</li>
 </ul>
-</li>
-<li>Agent specific configuration: Bash commands can find tricky ways to
-   circumvent stuff. No protection against web injected remote code execution</li>
-<li>Ways of isolation<ul>
-<li>Docker containers / Devcontainers. Mention gfrörli API PR
-  https://github.com/gfroerli/api/pull/356</li>
-<li>Sandboxing<ul>
-<li>builtin (claude)</li>
-<li>agent safehouse</li>
-<li>nono.sh</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2>Pragmatic Sandboxing</h2>
+<h3>Specialized Sandboxing Tools</h3>
+<p>In the end we came up with the following two tools which use kernel level
+sandboxing to limit what agents can do:</p>
 <ul>
-<li>For custom agents<ul>
-<li>Use Docker containers and limit availability of secrets</li>
-<li>Set things up outside of agent (example clone the repo, install
-  dependencies)</li>
+<li><strong><a href="https://agent-safehouse.dev/">Agent Safehouse</a></strong>: Uses macOS [Seatbelt] to only give the agent access
+   to what it really needs.</li>
+<li><strong><a href="https://nono.sh/">nono</a></strong>: Uses <a href="https://landlock.io/">Landlock</a> on Linux and [Seatbelt] on macOS. It doesn't
+   just provide Kernel isolation, but also undo &amp; rollback, audit trail, supply
+   chain provenance, runtime supervision and environment variable filtering.</li>
 </ul>
+<p>These tools have the following characteristics:</p>
+<ul>
+<li>They enforce irrevocable  allow-list based blocking at the kernel level.</li>
+<li>They work with all agents</li>
+<li>Configuration is separate from the agent and can be separately tested:</li>
+</ul>
+<figure>
+
+
+<div class="highlight"><pre><span></span><code>$ nono run --allow-cwd ls ~/.ssh
+...
+ls: cannot open directory &#39;~/.ssh&#39;: Permission denied
+...
+</code></pre></div>
+
+
+
+<figcaption>nono denying access to ssh credentials</figcaption>
+</figure>
+
+<h2>Summary</h2>
+<p>In the end it is, as usual, a tradeoff between developer convenience and
+security: Giving the AI agent access to everything is the most convenient, but
+a recipe for disaster. At Renuo we came up with the following rough guidelines</p>
+<ul>
+<li>For custom agents running independently: Use VMs, Docker containers and
+   limit the availability of credentials as much as possible. It's better to
+   let the AI agent do it's task and then let your custom runtime push code,
+   respond to tickets etc. </li>
+<li>For developer machines: Use sandboxing tools with out-of-the-box profiles
+   for common AI agents. Still don't let it run in <code>--yolo</code> / unattended mode:
+   Keep yourself in the loop, but you can be more permissive in what commands
+   you allow it to run without confirmation. Take special care of credentials
+   that are exposed via environment variables.</li>
+</ul>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>In one occasion while testing the sandboxing feature of Claude I had it
+assure me that its access to a file were blocked by the sandbox, even if
+the sandbox couldn't be started because of missing system dependencies!&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
-<li>For dev machines<ul>
-<li>Use sandboxing tools with out-of-the-box profiles for common AI agents</li>
-</ul>
-</li>
-</ul>
-<h1>Further Resources</h1>
-<ul>
-<li>https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html</li>
-</ul>
-<h1>Notes</h1>
-<h2>Resources</h2>
-<ul>
-<li>https://docs.google.com/document/d/1ONlU5b8wehuoehDSsaHrosZ0FrByEJdl9DuUMW8qGiI/edit?tab=t.0</li>
-<li>https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents</li>
-</ul>
-<h2>Topics</h2>
-<ul>
-<li>What can go wrong</li>
-</ul>
+</ol>
+</div>
       </div><!-- /.entry-content -->
 
     </article>

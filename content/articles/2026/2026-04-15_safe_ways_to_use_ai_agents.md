@@ -63,7 +63,9 @@ The risks boil down to a few categories:
    injection or simply by making a wrong decision.
 
  * **Destructive actions on remote systems**: Agents often have access to CLI
-   tools that interact with production infrastructure.
+   tools that can interact with production infrastructure. Think `kubectl
+   delete`, `terraform destroy`, `nctl delete`, or maybe even simply a database
+   client connected to prod.
 
 I asked some developers what incidents they had happen with AI agents so far.
 Here are a few examples:

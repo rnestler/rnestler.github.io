@@ -1,4 +1,4 @@
-Title: Safe Ways to Use AI agents
+Title: Safe Ways to Use AI Agents
 Tags: AI Agents, Sandboxing
 Language: en
 Status: draft
@@ -49,7 +49,7 @@ documentation, or web content) this creates a real attack surface.
 
 The risks boil down to a few categories:
 
- *  **Exposing credentials**: Agents have access to environment variables,
+ * **Exposing credentials**: Agents have access to environment variables,
     config files, and credential stores. A prompt injection can trick an agent
     into exfiltrating API keys or access tokens to an attacker-controlled
     server.
@@ -166,7 +166,7 @@ This will allow `git commit` but block `git push` commands.
 
 The issues with these systems are:
 
- * **Agent specific**: There is no way to specify rules across all agents.
+ * **Agent-specific**: There is no way to specify rules across all agents.
  * **Deny-lists can't be exhaustive**: You may specify a deny rule like
    `Read(.env)`, but the agent can access the same file through a bash tool:
    `cat .env`, `grep . .env`, `python -c "print(open('.env').read())"`, and so
@@ -179,32 +179,32 @@ The issues with these systems are:
    even notice changes to that file. And other agents will simply ignore these
    config files entirely.
 
-## Sandboxing
+## Isolation
 
 To really provide protection we need to externally sandbox AI agents using
-operation system level protection. But completely isolating agents makes them
-also completely useless: In the end you want to work them on your code and
+operating system level protection. But completely isolating agents makes them
+also completely useless: In the end you want them to work on your code and
 interact in some way with the environment. The following table should
 illustrate the level of isolation provided:
 
 |Technique   |Properties                                        |Isolation Level|
 |------------|--------------------------------------------------|---------------|
 | VM         | Full isolation. Only interaction via virtual network | Very High |
-| Containers | Kernel namespaces. CGroups. Limited access to files, processes and other ressources| High |
+| Containers | Kernel namespaces, cgroups. Limited access to files, processes and other resources| High |
 | Sandboxes  | Landlock LSM / Seatbelt| Configuration Dependent |
 
 What sandboxing technique to use also depends on the use case:
 
  * **Local Agents**: You want to give them access to your local project and
    probably some development tools. So a separate VM or even a Docker container
-   needs a lot of setup
- * **Standalone Agent**: It will run on it's own server / VM anyways. Further
+   needs a lot of setup.
+ * **Standalone Agent**: It will run on its own server / VM anyways. Further
    you want to have it run in a reproducible environment and not mess with the
    operating system. So running it inside a container makes sense.
 
 ### Devcontainers
 
-If you are using [Devcontainers] for your development needs a quick way to give
+If you are using [Devcontainers] for your development needs, a quick way to give
 the agent a somewhat isolated environment is to run it inside that container as
 well. In an open-source project I help maintain we recently added exactly that:
 <https://github.com/gfroerli/api/pull/356>
@@ -219,7 +219,7 @@ environments which are easier to debug and inspect.
 Some AI agents support sandboxing in their own runtime. See [Claude Code
 Sandboxing](https://code.claude.com/docs/en/sandboxing) for example. The downsides here are again:
 
- * Agent specific
+ * Agent-specific
  * Hard to get the configuration right [^1]
  * At least for Claude Code it only affects the Bash tool, not the Read and
    Write tools!
@@ -232,12 +232,12 @@ sandboxing to limit what agents can do:
  * **[Agent Safehouse]**: Uses macOS [Seatbelt] to only give the agent access
    to what it really needs.
  * **[nono]**: Uses [Landlock] on Linux and [Seatbelt] on macOS. It doesn't
-   just provide Kernel isolation, but also undo & rollback, audit trail, supply
+   just provide kernel isolation, but also undo & rollback, audit trail, supply
    chain provenance, runtime supervision and environment variable filtering.
 
 These tools have the following characteristics:
 
- * They enforce irrevocable  allow-list based blocking at the kernel level.
+ * They enforce irrevocable allow-list based blocking at the kernel level.
  * They work with all agents
  * Configuration is separate from the agent and can be separately tested:
 
@@ -263,7 +263,7 @@ ls: cannot open directory '~/.ssh': Permission denied
 
 In the end it is, as usual, a tradeoff between developer convenience and
 security: Giving the AI agent access to everything is the most convenient, but
-a recipe for disaster. At Renuo we came up with the following rough guidelines
+a recipe for disaster. At Renuo we came up with the following rough guidelines:
 
  * For custom agents running independently: Use VMs, Docker containers and
    limit the availability of credentials as much as possible. It's better to

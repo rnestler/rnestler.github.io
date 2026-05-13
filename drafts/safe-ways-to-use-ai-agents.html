@@ -224,7 +224,7 @@ illustrate the level of isolation provided:</p>
 <ul>
 <li><strong>Local Agents</strong>: You want to give them access to your local project and
    probably some development tools. So a separate VM or even a Docker container
-   needs a lot of setup</li>
+   needs a lot of setup.</li>
 <li><strong>Standalone Agent</strong>: It will run on it's own server / VM anyways. Further
    you want to have it run in a reproducible environment and not mess with the
    operating system. So running it inside a container makes sense.</li>
@@ -249,9 +249,9 @@ Sandboxing</a> for example. The downsides here are again:</p>
 <p>In the end we came up with the following two tools which use kernel level
 sandboxing to limit what agents can do:</p>
 <ul>
-<li><strong><a href="https://agent-safehouse.dev/">Agent Safehouse</a></strong>: Uses macOS [Seatbelt] to only give the agent access
+<li><strong><a href="https://agent-safehouse.dev/">Agent Safehouse</a></strong>: Uses macOS <a href="https://theapplewiki.com/wiki/Dev:Seatbelt">Seatbelt</a> to only give the agent access
    to what it really needs.</li>
-<li><strong><a href="https://nono.sh/">nono</a></strong>: Uses <a href="https://landlock.io/">Landlock</a> on Linux and [Seatbelt] on macOS. It doesn't
+<li><strong><a href="https://nono.sh/">nono</a></strong>: Uses <a href="https://landlock.io/">Landlock</a> on Linux and <a href="https://theapplewiki.com/wiki/Dev:Seatbelt">Seatbelt</a> on macOS. It doesn't
    just provide Kernel isolation, but also undo &amp; rollback, audit trail, supply
    chain provenance, runtime supervision and environment variable filtering.</li>
 </ul>

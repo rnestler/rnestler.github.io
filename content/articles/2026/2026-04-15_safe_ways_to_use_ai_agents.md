@@ -255,7 +255,7 @@ ls: cannot open directory '~/.ssh': Permission denied
 
 
 [Agent Safehouse]: https://agent-safehouse.dev/
-[macOS Seatbelt]: https://theapplewiki.com/wiki/Dev:Seatbelt
+[Seatbelt]: https://theapplewiki.com/wiki/Dev:Seatbelt
 [nono]: https://nono.sh/
 [Landlock]: https://landlock.io/
 

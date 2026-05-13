@@ -125,8 +125,8 @@ in the background.
 
 There is also the issue of over-permissive allowing: At one point while trying
 out Antigravity, I accidentally allowed executing *every* bash command instead
-of just the command it just executed. Since the agent just continued executing
-stuff I needed to stop it.
+of only the one it had requested. Since the agent then just continued executing
+stuff, I needed to stop it.
 
 ## Agent specific configuration
 
@@ -173,11 +173,10 @@ The issues with these systems are:
    on. Deny-lists fundamentally can't cover the infinite ways to access a
    resource.
  * **Easily overridden**: The rules live in the repository itself and may be
-   modified during normal usage. Claude Code for example creates
-   `.claude/settings.local.json` and puts it in your *global*
-   `~/.config/git/ignore` as `**/.claude/settings.local.json`. So you won't
-   even notice changes to that file. And other agents will simply ignore these
-   config files entirely.
+   modified during normal usage. Claude Code, for example, creates
+   `.claude/settings.local.json` and adds it to your *global*
+   `~/.config/git/ignore`. So changes to that file won't even show up in `git
+   status`. And other agents will simply ignore these config files entirely.
 
 ## Isolation
 
@@ -226,7 +225,7 @@ Sandboxing](https://code.claude.com/docs/en/sandboxing) for example. The downsid
 
 ### Specialized Sandboxing Tools
 
-In the end we came up with the following two tools which use kernel level
+In the end we settled on the following two tools which use kernel level
 sandboxing to limit what agents can do:
 
  * **[Agent Safehouse]**: Uses macOS [Seatbelt] to only give the agent access
@@ -267,13 +266,13 @@ a recipe for disaster. At Renuo we came up with the following rough guidelines:
 
  * For custom agents running independently: Use VMs, Docker containers and
    limit the availability of credentials as much as possible. It's better to
-   let the AI agent do it's task and then let your custom runtime push code,
-   respond to tickets etc. 
+   let the AI agent do its task and then let your custom runtime push code,
+   respond to tickets etc.
  * For developer machines: Use sandboxing tools with out-of-the-box profiles
-   for common AI agents. Still don't let it run in `--yolo` / unattended mode:
-   Keep yourself in the loop, but you can be more permissive in what commands
-   you allow it to run without confirmation. Take special care of credentials
-   that are exposed via environment variables.
+   for common AI agents. Still don't let them run in `--yolo` / unattended
+   mode: Keep yourself in the loop, but you can be more permissive in what
+   commands you allow them to run without confirmation. Take special care of
+   credentials that are exposed via environment variables.
 
 [^1]: In one occasion while testing the sandboxing feature of Claude I had it
     assure me that its access to a file were blocked by the sandbox, even if

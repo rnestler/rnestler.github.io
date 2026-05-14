@@ -203,6 +203,9 @@ What sandboxing technique to use also depends on the use case:
    you want to have it run in a reproducible environment and not mess with the
    operating system. So running it inside a container makes sense.
 
+Here we'll focus on **Local Agents** as used by developers on their own
+machines.
+
 ### Devcontainers
 
 If you are using [Devcontainers] for your development needs, a quick way to give
@@ -254,6 +257,14 @@ ls: cannot open directory '~/.ssh': Permission denied
 <figcaption>nono denying access to ssh credentials</figcaption>
 </figure>
 
+So now we already limited quite a lot what an agent can do. But one thing that
+is still left are credentials: The agent can still access credentials which are
+in the project folder (like a `.env` file) or which are stored in environment
+variables (this may be a good point to check if you have some tokens stored in
+your `~/.bashrc`, `~/.profile`, `~/.zshrc` or wherever. We really shouldn't,
+but sometimes we developers are lazy...).
+
+Nono comes with a nice way to filter environment variables[^2]:
 
 [Agent Safehouse]: https://agent-safehouse.dev/
 [Seatbelt]: https://theapplewiki.com/wiki/Dev:Seatbelt
@@ -279,3 +290,5 @@ a recipe for disaster. At Renuo we came up with the following rough guidelines:
 [^1]: In one occasion while testing the sandboxing feature of Claude I had it
     assure me that its access to a file were blocked by the sandbox, even if
     the sandbox couldn't be started because of missing system dependencies!
+[^2]: Which got implemented quite quickly after I proposed it:
+    <https://github.com/always-further/nono/issues/688>

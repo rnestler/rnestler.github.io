@@ -264,12 +264,67 @@ variables (this may be a good point to check if you have some tokens stored in
 your `~/.bashrc`, `~/.profile`, `~/.zshrc` or wherever. We really shouldn't,
 but sometimes we developers are lazy...).
 
-Nono comes with a nice way to filter environment variables[^2]:
+<figure>
+
+```text
+$ echo $TEST_ENV_TOKEN
+my-secret
+$ nono run --profile claude --allow-cwd -- claude 
+...
+❯ Show me the content of TEST_ENV_TOKEN
+
+● Bash(echo "$TEST_ENV_TOKEN")
+  ⎿  my-secret
+
+● TEST_ENV_TOKEN=my-secret
+```
+
+<figcaption>claude happily accessing tokens from the environment</figcaption>
+</figure>
+
+Nono comes with a nice way to [filter environment variables][^2]. This isn't
+enabled by default, but we can easily create a custom profile that filters
+environment variables:
+
+<figure>
+
+```json
+{
+  "extends": "claude",
+  "environment": {
+    "allow_vars": ["PATH", "HOME", "TERM", "LANG"]
+  }
+}
+```
+<figcaption>Custom profile at <code>~/.config/nono/profiles/claude-filter-env.json</code> </figcaption>
+</figure>
+
+Now `claude` will only have access to the save subset of environment variables
+that we allow it:
+
+<figure>
+
+```text
+$ echo $TEST_ENV_TOKEN
+my-secret
+$ nono run --profile claude-filter-env --allow-cwd -- claude
+...
+❯ Show me the content of TEST_ENV_TOKEN.
+
+● Bash(echo "$TEST_ENV_TOKEN")
+  ⎿  (No output)
+
+● TEST_ENV_TOKEN is unset (or empty) in this shell.
+```
+
+<figcaption>claude can't see the content of <code>$TEST_ENV_TOKEN</code> </figcaption>
+</figure>
 
 [Agent Safehouse]: https://agent-safehouse.dev/
 [Seatbelt]: https://theapplewiki.com/wiki/Dev:Seatbelt
 [nono]: https://nono.sh/
 [Landlock]: https://landlock.io/
+[filter environment variables]: https://nono.sh/docs/cli/features/environment
 
 ## Summary
 

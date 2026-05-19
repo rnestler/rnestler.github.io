@@ -4,7 +4,7 @@
                         <meta charset="utf-8" />
                         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                         <meta name="generator" content="Pelican" />
-                        <title>Safe Ways to Use AI agents</title>
+                        <title>Safe Ways to Use AI Agents</title>
                         <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
                                 <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
     <meta name="description" content="Investigating ways to easily isolate AI agents to reduce risks in running them." />
@@ -29,7 +29,7 @@
       <header>
         <h1 class="entry-title">
           <a href="https://blog.rnstlr.ch/drafts/safe-ways-to-use-ai-agents.html" rel="bookmark"
-             title="Permalink to Safe Ways to Use AI agents">Safe Ways to Use AI agents</a></h1>
+             title="Permalink to Safe Ways to Use AI Agents">Safe Ways to Use AI Agents</a></h1>
       </header>
 
       <div class="entry-content">
@@ -93,7 +93,9 @@ documentation, or web content) this creates a real attack surface.</p>
 </li>
 <li>
 <p><strong>Destructive actions on remote systems</strong>: Agents often have access to CLI
-   tools that interact with production infrastructure.</p>
+   tools that can interact with production infrastructure. Think <code>kubectl
+   delete</code>, <code>terraform destroy</code>, <code>nctl delete</code>, or maybe even simply a database
+   client connected to prod.</p>
 </li>
 </ul>
 <p>I asked some developers what incidents they had happen with AI agents so far.
@@ -143,8 +145,8 @@ attention to what we're actually approving.</p>
 in the background.</p>
 <p>There is also the issue of over-permissive allowing: At one point while trying
 out Antigravity, I accidentally allowed executing <em>every</em> bash command instead
-of just the command it just executed. Since the agent just continued executing
-stuff I needed to stop it.</p>
+of only the one it had requested. Since the agent then just continued executing
+stuff, I needed to stop it.</p>
 <h2>Agent specific configuration</h2>
 <p>Most agents can be configured to allow and deny patterns of actions. <a href="https://code.claude.com/docs/en/permissions">Claude
 Code's permission system</a> for example allows you to pattern match shell commands:</p>
@@ -175,23 +177,22 @@ Code's permission system</a> for example allows you to pattern match shell comma
 
 <p>The issues with these systems are:</p>
 <ul>
-<li><strong>Agent specific</strong>: There is no way to specify rules across all agents.</li>
+<li><strong>Agent-specific</strong>: There is no way to specify rules across all agents.</li>
 <li><strong>Deny-lists can't be exhaustive</strong>: You may specify a deny rule like
    <code>Read(.env)</code>, but the agent can access the same file through a bash tool:
    <code>cat .env</code>, <code>grep . .env</code>, <code>python -c "print(open('.env').read())"</code>, and so
    on. Deny-lists fundamentally can't cover the infinite ways to access a
    resource.</li>
 <li><strong>Easily overridden</strong>: The rules live in the repository itself and may be
-   modified during normal usage. Claude Code for example creates
-   <code>.claude/settings.local.json</code> and puts it in your <em>global</em>
-   <code>~/.config/git/ignore</code> as <code>**/.claude/settings.local.json</code>. So you won't
-   even notice changes to that file. And other agents will simply ignore these
-   config files entirely.</li>
+   modified during normal usage. Claude Code, for example, creates
+   <code>.claude/settings.local.json</code> and adds it to your <em>global</em>
+   <code>~/.config/git/ignore</code>. So changes to that file won't even show up in <code>git
+   status</code>. And other agents will simply ignore these config files entirely.</li>
 </ul>
-<h2>Sandboxing</h2>
+<h2>Isolation</h2>
 <p>To really provide protection we need to externally sandbox AI agents using
-operation system level protection. But completely isolating agents makes them
-also completely useless: In the end you want to work them on your code and
+operating system level protection. But completely isolating agents makes them
+also completely useless: In the end you want them to work on your code and
 interact in some way with the environment. The following table should
 illustrate the level of isolation provided:</p>
 <table>
@@ -210,7 +211,7 @@ illustrate the level of isolation provided:</p>
 </tr>
 <tr>
 <td>Containers</td>
-<td>Kernel namespaces. CGroups. Limited access to files, processes and other ressources</td>
+<td>Kernel namespaces, cgroups. Limited access to files, processes and other resources</td>
 <td>High</td>
 </tr>
 <tr>
@@ -225,12 +226,14 @@ illustrate the level of isolation provided:</p>
 <li><strong>Local Agents</strong>: You want to give them access to your local project and
    probably some development tools. So a separate VM or even a Docker container
    needs a lot of setup.</li>
-<li><strong>Standalone Agent</strong>: It will run on it's own server / VM anyways. Further
+<li><strong>Standalone Agent</strong>: It will run on its own server / VM anyways. Further
    you want to have it run in a reproducible environment and not mess with the
    operating system. So running it inside a container makes sense.</li>
 </ul>
+<p>Here we'll focus on <strong>Local Agents</strong> as used by developers on their own
+machines.</p>
 <h3>Devcontainers</h3>
-<p>If you are using <a href="https://containers.dev/">Devcontainers</a> for your development needs a quick way to give
+<p>If you are using <a href="https://containers.dev/">Devcontainers</a> for your development needs, a quick way to give
 the agent a somewhat isolated environment is to run it inside that container as
 well. In an open-source project I help maintain we recently added exactly that:
 <a href="https://github.com/gfroerli/api/pull/356">https://github.com/gfroerli/api/pull/356</a></p>
@@ -240,24 +243,24 @@ environments which are easier to debug and inspect.</p>
 <p>Some AI agents support sandboxing in their own runtime. See <a href="https://code.claude.com/docs/en/sandboxing">Claude Code
 Sandboxing</a> for example. The downsides here are again:</p>
 <ul>
-<li>Agent specific</li>
+<li>Agent-specific</li>
 <li>Hard to get the configuration right <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></li>
 <li>At least for Claude Code it only affects the Bash tool, not the Read and
    Write tools!</li>
 </ul>
 <h3>Specialized Sandboxing Tools</h3>
-<p>In the end we came up with the following two tools which use kernel level
+<p>In the end we settled on the following two tools which use kernel level
 sandboxing to limit what agents can do:</p>
 <ul>
 <li><strong><a href="https://agent-safehouse.dev/">Agent Safehouse</a></strong>: Uses macOS <a href="https://theapplewiki.com/wiki/Dev:Seatbelt">Seatbelt</a> to only give the agent access
    to what it really needs.</li>
 <li><strong><a href="https://nono.sh/">nono</a></strong>: Uses <a href="https://landlock.io/">Landlock</a> on Linux and <a href="https://theapplewiki.com/wiki/Dev:Seatbelt">Seatbelt</a> on macOS. It doesn't
-   just provide Kernel isolation, but also undo &amp; rollback, audit trail, supply
+   just provide kernel isolation, but also undo &amp; rollback, audit trail, supply
    chain provenance, runtime supervision and environment variable filtering.</li>
 </ul>
 <p>These tools have the following characteristics:</p>
 <ul>
-<li>They enforce irrevocable  allow-list based blocking at the kernel level.</li>
+<li>They enforce irrevocable allow-list based blocking at the kernel level.</li>
 <li>They work with all agents</li>
 <li>Configuration is separate from the agent and can be separately tested:</li>
 </ul>
@@ -275,20 +278,86 @@ ls: cannot open directory &#39;~/.ssh&#39;: Permission denied
 <figcaption>nono denying access to ssh credentials</figcaption>
 </figure>
 
+<p>So now we already limited quite a lot what an agent can do. But one thing that
+is still left are credentials: The agent can still access credentials which are
+in the project folder (like a <code>.env</code> file) or which are stored in environment
+variables (this may be a good point to check if you have some tokens stored in
+your <code>~/.bashrc</code>, <code>~/.profile</code>, <code>~/.zshrc</code> or wherever. We really shouldn't,
+but sometimes we developers are lazy...).</p>
+<figure>
+
+
+<div class="highlight"><pre><span></span><code>$ echo $TEST_ENV_TOKEN
+my-secret
+$ nono run --profile claude --allow-cwd -- claude 
+...
+❯ Show me the content of TEST_ENV_TOKEN
+
+● Bash(echo &quot;$TEST_ENV_TOKEN&quot;)
+  ⎿  my-secret
+
+● TEST_ENV_TOKEN=my-secret
+</code></pre></div>
+
+
+
+<figcaption>claude happily accessing tokens from the environment</figcaption>
+</figure>
+
+<p>Nono comes with a nice way to <a href="https://nono.sh/docs/cli/features/environment">filter environment variables</a><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. This isn't
+enabled by default, but we can easily create a custom profile that filters
+environment variables:</p>
+<figure>
+
+
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;extends&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;allow_vars&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HOME&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TERM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LANG&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<figcaption>Custom profile at <code>~/.config/nono/profiles/claude-filter-env.json</code> </figcaption>
+</figure>
+
+<p>Now <code>claude</code> will only have access to the save subset of environment variables
+that we allow it:</p>
+<figure>
+
+
+<div class="highlight"><pre><span></span><code>$ echo $TEST_ENV_TOKEN
+my-secret
+$ nono run --profile claude-filter-env --allow-cwd -- claude
+...
+❯ Show me the content of TEST_ENV_TOKEN.
+
+● Bash(echo &quot;$TEST_ENV_TOKEN&quot;)
+  ⎿  (No output)
+
+● TEST_ENV_TOKEN is unset (or empty) in this shell.
+</code></pre></div>
+
+
+
+<figcaption>claude can't see the content of <code>$TEST_ENV_TOKEN</code> </figcaption>
+</figure>
+
 <h2>Summary</h2>
 <p>In the end it is, as usual, a tradeoff between developer convenience and
 security: Giving the AI agent access to everything is the most convenient, but
-a recipe for disaster. At Renuo we came up with the following rough guidelines</p>
+a recipe for disaster. At Renuo we came up with the following rough guidelines:</p>
 <ul>
 <li>For custom agents running independently: Use VMs, Docker containers and
    limit the availability of credentials as much as possible. It's better to
-   let the AI agent do it's task and then let your custom runtime push code,
-   respond to tickets etc. </li>
+   let the AI agent do its task and then let your custom runtime push code,
+   respond to tickets etc.</li>
 <li>For developer machines: Use sandboxing tools with out-of-the-box profiles
-   for common AI agents. Still don't let it run in <code>--yolo</code> / unattended mode:
-   Keep yourself in the loop, but you can be more permissive in what commands
-   you allow it to run without confirmation. Take special care of credentials
-   that are exposed via environment variables.</li>
+   for common AI agents. Still don't let them run in <code>--yolo</code> / unattended
+   mode: Keep yourself in the loop, but you can be more permissive in what
+   commands you allow them to run without confirmation. Take special care of
+   credentials that are exposed via environment variables.</li>
 </ul>
 <div class="footnote">
 <hr>
@@ -297,6 +366,10 @@ a recipe for disaster. At Renuo we came up with the following rough guidelines</
 <p>In one occasion while testing the sandboxing feature of Claude I had it
 assure me that its access to a file were blocked by the sandbox, even if
 the sandbox couldn't be started because of missing system dependencies!&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Which got implemented quite quickly after I proposed it:
+<a href="https://github.com/always-further/nono/issues/688">https://github.com/always-further/nono/issues/688</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

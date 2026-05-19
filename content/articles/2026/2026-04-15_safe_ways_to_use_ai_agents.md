@@ -10,7 +10,7 @@ projects like my [Raspberry Dashboard]. Additionally we started building our own
 AI agent which is integrated in [Redmine], our ticketing and project
 management system.
 
-During this, we became aware of the security risks involved: by default these
+During this, we became aware of the security risks involved: By default these
 agents run with full user permissions: They can read and write files, execute
 commands, and access credentials on the host system.
 
@@ -39,8 +39,8 @@ came up with to keep a balance between developer experience and security.
 Most AI coding agents run with the same permissions as the user who started
 them. They have access to the file system, can execute arbitrary shell commands,
 and inherit all credentials available in the environment. Since LLMs are
-susceptible to prompt injection, (malicious instructions hidden in code,
-documentation, or web content) this creates a real attack surface.
+susceptible to prompt injection (malicious instructions hidden in code,
+documentation, or web content), this creates a real attack surface.
 
 <figure>
 <img src="{static}/images/ai_agents/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
@@ -258,9 +258,9 @@ ls: cannot open directory '~/.ssh': Permission denied
 <figcaption>nono denying access to ssh credentials</figcaption>
 </figure>
 
-So now we already limited quite a lot what an agent can do. But one thing that
-is still left are credentials: The agent can still access credentials which are
-in the project folder (like a `.env` file) or which are stored in environment
+By now we've already limited a lot of what an agent can do. But one thing
+remains: Credentials. The agent can still access credentials which are in the
+project folder (like a `.env` file) or which are stored in environment
 variables (this may be a good point to check if you have some tokens stored in
 your `~/.bashrc`, `~/.profile`, `~/.zshrc` or wherever. We really shouldn't,
 but sometimes we developers are lazy...).
@@ -270,7 +270,7 @@ but sometimes we developers are lazy...).
 ```text
 $ echo $TEST_ENV_TOKEN
 my-secret
-$ nono run --profile claude --allow-cwd -- claude 
+$ nono run --profile claude --allow-cwd -- claude
 ...
 ❯ Show me the content of TEST_ENV_TOKEN
 
@@ -300,7 +300,7 @@ environment variables:
 <figcaption>Custom profile at <code>~/.config/nono/profiles/claude-filter-env.json</code> </figcaption>
 </figure>
 
-Now `claude` will only have access to the save subset of environment variables
+Now `claude` will only have access to the safe subset of environment variables
 that we allow it:
 
 <figure>
@@ -343,8 +343,8 @@ a recipe for disaster. At Renuo we came up with the following rough guidelines:
    commands you allow them to run without confirmation. Take special care of
    credentials that are exposed via environment variables.
 
-[^1]: In one occasion while testing the sandboxing feature of Claude I had it
-    assure me that its access to a file were blocked by the sandbox, even if
+[^1]: On one occasion while testing the sandboxing feature of Claude I had it
+    assure me that its access to a file was blocked by the sandbox, even if
     the sandbox couldn't be started because of missing system dependencies!
 [^2]: Which got implemented quite quickly after I proposed it:
     <https://github.com/always-further/nono/issues/688>

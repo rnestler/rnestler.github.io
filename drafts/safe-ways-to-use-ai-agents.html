@@ -48,7 +48,7 @@
 projects like my <a href="https://github.com/rnestler/raspberry-dashboard">Raspberry Dashboard</a>. Additionally we started building our own
 AI agent which is integrated in <a href="https://www.redmine.org/">Redmine</a>, our ticketing and project
 management system.</p>
-<p>During this, we became aware of the security risks involved: by default these
+<p>During this, we became aware of the security risks involved: By default these
 agents run with full user permissions: They can read and write files, execute
 commands, and access credentials on the host system.</p>
 <p>Johann Rehberger's 39c3 talk <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">Agentic ProbLLMs: Exploiting AI Computer-Use
@@ -66,8 +66,8 @@ not if.
 <p>Most AI coding agents run with the same permissions as the user who started
 them. They have access to the file system, can execute arbitrary shell commands,
 and inherit all credentials available in the environment. Since LLMs are
-susceptible to prompt injection, (malicious instructions hidden in code,
-documentation, or web content) this creates a real attack surface.</p>
+susceptible to prompt injection (malicious instructions hidden in code,
+documentation, or web content), this creates a real attack surface.</p>
 <figure>
 <img src="https://blog.rnstlr.ch/images/ai_agents/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
 <figcaption>Image source: <a href="https://embracethered.com/">embracethered.com</a> by Johann Rehberger</figcaption>
@@ -260,8 +260,9 @@ sandboxing to limit what agents can do:</p>
 </ul>
 <p>These tools have the following characteristics:</p>
 <ul>
-<li>They enforce irrevocable allow-list based blocking at the kernel level.</li>
+<li>They enforce irrevocable allow-list based blocking at the kernel level</li>
 <li>They work with all agents</li>
+<li>They use sane defaults to protect credentials on your system</li>
 <li>Configuration is separate from the agent and can be separately tested:</li>
 </ul>
 <figure>
@@ -278,9 +279,9 @@ ls: cannot open directory &#39;~/.ssh&#39;: Permission denied
 <figcaption>nono denying access to ssh credentials</figcaption>
 </figure>
 
-<p>So now we already limited quite a lot what an agent can do. But one thing that
-is still left are credentials: The agent can still access credentials which are
-in the project folder (like a <code>.env</code> file) or which are stored in environment
+<p>By now we've already limited a lot of what an agent can do. But one thing
+remains: Credentials. The agent can still access credentials which are in the
+project folder (like a <code>.env</code> file) or which are stored in environment
 variables (this may be a good point to check if you have some tokens stored in
 your <code>~/.bashrc</code>, <code>~/.profile</code>, <code>~/.zshrc</code> or wherever. We really shouldn't,
 but sometimes we developers are lazy...).</p>
@@ -289,7 +290,7 @@ but sometimes we developers are lazy...).</p>
 
 <div class="highlight"><pre><span></span><code>$ echo $TEST_ENV_TOKEN
 my-secret
-$ nono run --profile claude --allow-cwd -- claude 
+$ nono run --profile claude --allow-cwd -- claude
 ...
 ❯ Show me the content of TEST_ENV_TOKEN
 
@@ -313,7 +314,7 @@ environment variables:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;extends&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;allow_vars&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HOME&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TERM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LANG&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="nt">&quot;allow_vars&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HOME&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TERM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LANG&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LC_*&quot;</span><span class="p">]</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -322,7 +323,7 @@ environment variables:</p>
 <figcaption>Custom profile at <code>~/.config/nono/profiles/claude-filter-env.json</code> </figcaption>
 </figure>
 
-<p>Now <code>claude</code> will only have access to the save subset of environment variables
+<p>Now <code>claude</code> will only have access to the safe subset of environment variables
 that we allow it:</p>
 <figure>
 
@@ -363,8 +364,8 @@ a recipe for disaster. At Renuo we came up with the following rough guidelines:<
 <hr>
 <ol>
 <li id="fn:1">
-<p>In one occasion while testing the sandboxing feature of Claude I had it
-assure me that its access to a file were blocked by the sandbox, even if
+<p>On one occasion while testing the sandboxing feature of Claude I had it
+assure me that its access to a file was blocked by the sandbox, even if
 the sandbox couldn't be started because of missing system dependencies!&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">

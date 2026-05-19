@@ -241,8 +241,9 @@ sandboxing to limit what agents can do:
 
 These tools have the following characteristics:
 
- * They enforce irrevocable allow-list based blocking at the kernel level.
+ * They enforce irrevocable allow-list based blocking at the kernel level
  * They work with all agents
+ * They use sane defaults to protect credentials on your system
  * Configuration is separate from the agent and can be separately tested:
 
 <figure>
@@ -292,7 +293,7 @@ environment variables:
 {
   "extends": "claude",
   "environment": {
-    "allow_vars": ["PATH", "HOME", "TERM", "LANG"]
+    "allow_vars": ["PATH", "HOME", "TERM", "LANG", "LC_*"]
   }
 }
 ```

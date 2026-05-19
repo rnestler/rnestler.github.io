@@ -175,6 +175,11 @@ div.figure p.caption, figure p.caption { /* margin provided by figure */
     margin-top: 1em;
     margin-bottom: 1em;
 }
+figure figcaption {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
 
 /*
 	Header

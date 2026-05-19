@@ -1,4 +1,3 @@
-PY?=python3
 PELICAN?=pelican
 PELICANOPTS=-t theme
 
@@ -9,7 +8,6 @@ CONFFILE=$(BASEDIR)/pelicanconf.py
 PUBLISHCONF=$(BASEDIR)/publishconf.py
 
 GITHUB_PAGES_BRANCH=gh-pages
-
 
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)
@@ -22,23 +20,20 @@ ifeq ($(RELATIVE), 1)
 endif
 
 help:
-	@echo 'Makefile for a pelican Web site                                           '
-	@echo '                                                                          '
-	@echo 'Usage:                                                                    '
-	@echo '   make html                           (re)generate the web site          '
-	@echo '   make clean                          remove the generated files         '
-	@echo '   make regenerate                     regenerate files upon modification '
-	@echo '   make publish                        generate using production settings '
+	@echo 'Makefile for a pelican Web site'
+	@echo ''
+	@echo 'Usage:'
+	@echo '   make html                           (re)generate the web site'
+	@echo '   make clean                          remove the generated files'
+	@echo '   make regenerate                     regenerate files upon modification'
+	@echo '   make publish                        generate using production settings'
 	@echo '   make serve [PORT=8000]              serve site at http://localhost:8000'
-	@echo '   make serve-global [SERVER=0.0.0.0]  serve (as root) to $(SERVER):80    '
-	@echo '   make devserver [PORT=8000]          serve and regenerate together      '
-	@echo '   make ssh_upload                     upload the web site via SSH        '
-	@echo '   make rsync_upload                   upload the web site via rsync+ssh  '
-	@echo '   make github                         upload the web site via gh-pages   '
-	@echo '                                                                          '
-	@echo 'Set the DEBUG variable to 1 to enable debugging, e.g. make DEBUG=1 html   '
-	@echo 'Set the RELATIVE variable to 1 to enable relative urls                    '
-	@echo '                                                                          '
+	@echo '   make serve-global [SERVER=0.0.0.0]  serve to all interfaces'
+	@echo '   make devserver [PORT=8000]          serve and regenerate together'
+	@echo '   make github                         publish and deploy to gh-pages'
+	@echo ''
+	@echo 'Set the DEBUG variable to 1 to enable debugging, e.g. make DEBUG=1 html'
+	@echo 'Set the RELATIVE variable to 1 to enable relative urls'
 
 html:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
@@ -57,12 +52,11 @@ else
 endif
 
 serve-global:
-ifdef SERVER
-	$(PELICAN) -l $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS) -p $(PORT) -b $(SERVER)
+ifdef PORT
+	$(PELICAN) -l $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS) -p $(PORT) -b $(or $(SERVER),0.0.0.0)
 else
-	$(PELICAN) -l $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS) -p $(PORT) -b 0.0.0.0
+	$(PELICAN) -l $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS) -b $(or $(SERVER),0.0.0.0)
 endif
-
 
 devserver:
 ifdef PORT
@@ -78,5 +72,4 @@ github: publish
 	ghp-import -m "Generate Pelican site" -b $(GITHUB_PAGES_BRANCH) $(OUTPUTDIR)
 	git push origin $(GITHUB_PAGES_BRANCH)
 
-
-.PHONY: html help clean regenerate serve serve-global devserver stopserver publish github
+.PHONY: html help clean regenerate serve serve-global devserver publish github

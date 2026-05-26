@@ -1,5 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"/><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"/><id>https://blog.rnstlr.ch/</id><updated>2025-02-27T00:00:00+01:00</updated><entry><title>Building an out-of-tree Rust Kernel Module Part Four</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-four.html" rel="alternate"/><published>2025-02-27T00:00:00+01:00</published><updated>2025-02-27T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2025-02-27:/building-an-out-of-tree-rust-kernel-module-part-four.html</id><summary type="html">&lt;p&gt;Building the Linux kernel with Rust support for ArchLinux&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my &lt;a href="/building-an-out-of-tree-rust-kernel-module-part-three.html"&gt;last blog post&lt;/a&gt;, I showed how to build the ArchLinux kernel with Rust
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"/><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"/><id>https://blog.rnstlr.ch/</id><updated>2026-05-26T00:00:00+02:00</updated><entry><title>Safe Ways to Use AI Agents</title><link href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html" rel="alternate"/><published>2026-05-26T00:00:00+02:00</published><updated>2026-05-26T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2026-05-26:/safe-ways-to-use-ai-agents.html</id><summary type="html">&lt;p&gt;Investigating ways to easily isolate AI agents to reduce risks in running them.&lt;/p&gt;</summary><content type="html">&lt;p&gt;At &lt;a href="https://www.renuo.ch"&gt;Renuo&lt;/a&gt; we started using AI coding agents (like &lt;a href="https://code.claude.com/docs/"&gt;Claude Code&lt;/a&gt;, &lt;a href="https://opencode.ai/"&gt;OpenCode&lt;/a&gt; or
+&lt;a href="https://antigravity.google/"&gt;Antigravity&lt;/a&gt;) for development, and I also started using them for personal
+projects like my &lt;a href="https://github.com/rnestler/raspberry-dashboard"&gt;Raspberry Dashboard&lt;/a&gt;. Additionally we started building our own
+AI agent which is integrated in &lt;a href="https://www.redmine.org/"&gt;Redmine&lt;/a&gt;, our ticketing and project
+management system.&lt;/p&gt;
+&lt;p&gt;During this, we became aware of the security risks involved: By default these
+agents run with full user permissions: They can read and write files, execute
+commands, and access credentials on the host system.&lt;/p&gt;
+&lt;p&gt;Johann Rehberger's 39c3 talk &lt;a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents"&gt;Agentic ProbLLMs: Exploiting AI Computer-Use
+and Coding Agents&lt;/a&gt; shows how prompt injection can lead to remote
+code execution and credential exfiltration in agents like Claude Code and
+GitHub Copilot. I recommend watching it.&lt;/p&gt;
+&lt;p&gt;In this post we'll take a look at these risks and the pragmatic solutions we
+came up with to keep a balance between developer experience and security.&lt;/p&gt;
+&lt;h1&gt;Risks of AI Agents&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;LLMs are probabilistic -- a 1% chance of disaster makes it a matter of when,
+not if.
+-- &lt;a href="https://agent-safehouse.dev/"&gt;Agent Safehouse&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Most AI coding agents run with the same permissions as the user who started
+them. They have access to the file system, can execute arbitrary shell commands,
+and inherit all credentials available in the environment. Since LLMs are
+susceptible to prompt injection (malicious instructions hidden in code,
+documentation, or web content), this creates a real attack surface.&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src="https://blog.rnstlr.ch/images/ai_agents/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%"&gt;
+&lt;figcaption&gt;Image source: &lt;a href="https://embracethered.com/"&gt;embracethered.com&lt;/a&gt; by Johann Rehberger&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The risks boil down to a few categories:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Exposing credentials&lt;/strong&gt;: Agents have access to environment variables,
+    config files, and credential stores. A prompt injection can trick an agent
+    into exfiltrating API keys or access tokens to an attacker-controlled
+    server.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Malware installation&lt;/strong&gt;: Agents can be tricked into downloading and
+   executing malicious code, for example through poisoned dependencies or
+   malicious instructions in README files.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Destructive actions on the local machine&lt;/strong&gt;: An agent might delete files,
+   overwrite configurations, or corrupt a local database -- through prompt
+   injection or simply by making a wrong decision.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Destructive actions on remote systems&lt;/strong&gt;: Agents often have access to CLI
+   tools that can interact with production infrastructure. Think &lt;code&gt;kubectl
+   delete&lt;/code&gt;, &lt;code&gt;terraform destroy&lt;/code&gt;, &lt;code&gt;nctl delete&lt;/code&gt;, or maybe even simply a database
+   client connected to prod.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I asked some developers what incidents they had happen with AI agents so far.
+Here are a few examples:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I don't have the session anymore, but while working on a redmine integration,
+it found out that I had a REDMINE_API_KEY in my ENV variables and started
+fetching data from our production redmine.&lt;/p&gt;
+&lt;p&gt;-- Alessandro Rodi&lt;/p&gt;
+&lt;p&gt;While it wasn't a major issue, it was frustrating when database migration
+errors caused the development database to be deleted and recreated, as I
+often lost test-data I wanted to keep.&lt;/p&gt;
+&lt;p&gt;-- Bruno Costanzo&lt;/p&gt;
+&lt;p&gt;While I was testing our claude code skill to deploy web-apps to deplo.io, the
+agent hit the quota limit of the number of apps in the test organization. To
+solve this it decided it's best to delete existing apps with &lt;code&gt;nctl delete
+app&lt;/code&gt;. It did ask for confirmation though before going ahead.&lt;/p&gt;
+&lt;p&gt;-- Josua Schmid&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;We didn't have a case yet where things went seriously wrong, mostly because we
+don't let the agents run unattended and use test environments. But it was
+enough to trigger us to really think about how to improve the situation.&lt;/p&gt;
+&lt;p&gt;For a deeper look at these attack vectors see the &lt;a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents"&gt;39c3 talk&lt;/a&gt;
+referenced in the introduction.&lt;/p&gt;
+&lt;h1&gt;Mitigation Strategies&lt;/h1&gt;
+&lt;p&gt;So what can we do about this? It boils down to the following strategies:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hope&lt;/strong&gt;: Instruct the agent not to do destructive things.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Manual approval&lt;/strong&gt;: Configure the agents to ask before everything.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Agent specific configuration&lt;/strong&gt;: Disallow the agent to read certain files
+   or execute certain commands.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Isolation&lt;/strong&gt;: Run the agents in VMs, Docker containers or a sandboxing tool.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Hope / Prompt Begging&lt;/h2&gt;
+&lt;p&gt;The major issue with just asking the LLM not to do destructive things via
+prompting is that it may just not work.&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src="https://blog.rnstlr.ch/images/ai_agents/agent-safehouse-fail-example.png" alt="Prompt begging failure" width="100%"&gt;
+&lt;figcaption&gt;Image source: &lt;a href="https://agent-safehouse.dev/"&gt;agent-safehouse.dev&lt;/a&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2&gt;Manual approval&lt;/h2&gt;
+&lt;p&gt;While manually approving everything the agent does sounds secure, in practice it
+leads to &lt;strong&gt;approval fatigue&lt;/strong&gt;: repeatedly approving actions causes us to pay less
+attention to what we're actually approving.&lt;/p&gt;
+&lt;p&gt;It also kills productivity: Constant interruptions prevent agents from running
+in the background.&lt;/p&gt;
+&lt;p&gt;There is also the issue of over-permissive allowing: At one point while trying
+out Antigravity, I accidentally allowed executing &lt;em&gt;every&lt;/em&gt; bash command instead
+of only the one it had requested. Since the agent then just continued executing
+stuff, I needed to stop it.&lt;/p&gt;
+&lt;h2&gt;Agent specific configuration&lt;/h2&gt;
+&lt;p&gt;Most agents can be configured to allow and deny patterns of actions. &lt;a href="https://code.claude.com/docs/en/permissions"&gt;Claude
+Code's permission system&lt;/a&gt; for example allows you to pattern match shell commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;permissions&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;allow&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Bash(git commit *)&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;deny&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Bash(git push *)&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will allow &lt;code&gt;git commit&lt;/code&gt; but block &lt;code&gt;git push&lt;/code&gt; commands.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://opencode.ai/docs/permissions/"&gt;OpenCode's permission system&lt;/a&gt; works similarly:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;$schema&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;https://opencode.ai/config.json&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;permission&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;bash&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;git commit *&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;allow&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;git push *&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;deny&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The issues with these systems are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Agent-specific&lt;/strong&gt;: There is no way to specify rules across all agents.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Deny-lists can't be exhaustive&lt;/strong&gt;: You may specify a deny rule like
+   &lt;code&gt;Read(.env)&lt;/code&gt;, but the agent can access the same file through a bash tool:
+   &lt;code&gt;cat .env&lt;/code&gt;, &lt;code&gt;grep . .env&lt;/code&gt;, &lt;code&gt;python -c "print(open('.env').read())"&lt;/code&gt;, and so
+   on. Deny-lists fundamentally can't cover the infinite ways to access a
+   resource.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Easily overridden&lt;/strong&gt;: The rules live in the repository itself and may be
+   modified during normal usage. Claude Code, for example, creates
+   &lt;code&gt;.claude/settings.local.json&lt;/code&gt; and adds it to your &lt;em&gt;global&lt;/em&gt;
+   &lt;code&gt;~/.config/git/ignore&lt;/code&gt;. So changes to that file won't even show up in &lt;code&gt;git
+   status&lt;/code&gt;. And other agents will simply ignore these config files entirely.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Isolation&lt;/h2&gt;
+&lt;p&gt;To really provide protection we need to externally sandbox AI agents using
+operating system level protection. But completely isolating agents makes them
+also completely useless: In the end you want them to work on your code and
+interact in some way with the environment. The following table should
+illustrate the level of isolation provided:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Technique&lt;/th&gt;
+&lt;th&gt;Properties&lt;/th&gt;
+&lt;th&gt;Isolation Level&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;VM&lt;/td&gt;
+&lt;td&gt;Full isolation. Only interaction via virtual network&lt;/td&gt;
+&lt;td&gt;Very High&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Containers&lt;/td&gt;
+&lt;td&gt;Kernel namespaces, cgroups. Limited access to files, processes and other resources&lt;/td&gt;
+&lt;td&gt;High&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sandboxes&lt;/td&gt;
+&lt;td&gt;Landlock LSM / Seatbelt&lt;/td&gt;
+&lt;td&gt;Configuration Dependent&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;What sandboxing technique to use also depends on the use case:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Local Agents&lt;/strong&gt;: You want to give them access to your local project and
+   probably some development tools. So a separate VM or even a Docker container
+   needs a lot of setup.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Standalone Agent&lt;/strong&gt;: It will run on its own server / VM anyways. Further
+   you want to have it run in a reproducible environment and not mess with the
+   operating system. So running it inside a container makes sense.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here we'll focus on &lt;strong&gt;Local Agents&lt;/strong&gt; as used by developers on their own
+machines.&lt;/p&gt;
+&lt;h3&gt;Devcontainers&lt;/h3&gt;
+&lt;p&gt;If you are using &lt;a href="https://containers.dev/"&gt;Devcontainers&lt;/a&gt; for your development needs, a quick way to give
+the agent a somewhat isolated environment is to run it inside that container as
+well. In an open-source project I help maintain we recently added exactly that:
+&lt;a href="https://github.com/gfroerli/api/pull/356"&gt;https://github.com/gfroerli/api/pull/356&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;But at Renuo we rarely use Devcontainers for our setups: We prefer local
+environments which are easier to debug and inspect.&lt;/p&gt;
+&lt;h3&gt;Builtin Sandboxing&lt;/h3&gt;
+&lt;p&gt;Some AI agents support sandboxing in their own runtime. See &lt;a href="https://code.claude.com/docs/en/sandboxing"&gt;Claude Code
+Sandboxing&lt;/a&gt; for example. The downsides here are again:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Agent-specific&lt;/li&gt;
+&lt;li&gt;Hard to get the configuration right &lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;At least for Claude Code it only affects the Bash tool, not the Read and
+   Write tools!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Specialized Sandboxing Tools&lt;/h3&gt;
+&lt;p&gt;In the end we settled on the following two tools which use kernel level
+sandboxing to limit what agents can do:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="https://agent-safehouse.dev/"&gt;Agent Safehouse&lt;/a&gt;&lt;/strong&gt;: Uses macOS &lt;a href="https://theapplewiki.com/wiki/Dev:Seatbelt"&gt;Seatbelt&lt;/a&gt; to only give the agent access
+   to what it really needs.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="https://nono.sh/"&gt;nono&lt;/a&gt;&lt;/strong&gt;: Uses &lt;a href="https://landlock.io/"&gt;Landlock&lt;/a&gt; on Linux and &lt;a href="https://theapplewiki.com/wiki/Dev:Seatbelt"&gt;Seatbelt&lt;/a&gt; on macOS. It doesn't
+   just provide kernel isolation, but also undo &amp;amp; rollback, audit trail, supply
+   chain provenance, runtime supervision and environment variable filtering.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These tools have the following characteristics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;They enforce irrevocable allow-list based blocking at the kernel level&lt;/li&gt;
+&lt;li&gt;They work with all agents&lt;/li&gt;
+&lt;li&gt;They use sane defaults to protect credentials on your system&lt;/li&gt;
+&lt;li&gt;Configuration is separate from the agent and can be separately tested:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ nono run --allow-cwd ls ~/.ssh
+...
+ls: cannot open directory &amp;#39;~/.ssh&amp;#39;: Permission denied
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;figcaption&gt;nono denying access to ssh credentials&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;By now we've already limited a lot of what an agent can do. But one thing
+remains: Credentials. The agent can still access credentials which are in the
+project folder (like a &lt;code&gt;.env&lt;/code&gt; file) or which are stored in environment
+variables (this may be a good point to check if you have some tokens stored in
+your &lt;code&gt;~/.bashrc&lt;/code&gt;, &lt;code&gt;~/.profile&lt;/code&gt;, &lt;code&gt;~/.zshrc&lt;/code&gt; or wherever. We really shouldn't,
+but sometimes we developers are lazy...).&lt;/p&gt;
+&lt;figure&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ echo $TEST_ENV_TOKEN
+my-secret
+$ nono run --profile claude --allow-cwd -- claude
+...
+❯ Show me the content of TEST_ENV_TOKEN
+
+● Bash(echo &amp;quot;$TEST_ENV_TOKEN&amp;quot;)
+  ⎿  my-secret
+
+● TEST_ENV_TOKEN=my-secret
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;figcaption&gt;claude happily accessing tokens from the environment&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Nono comes with a nice way to &lt;a href="https://nono.sh/docs/cli/features/environment"&gt;filter environment variables&lt;/a&gt;&lt;sup id="fnref:2"&gt;&lt;a class="footnote-ref" href="#fn:2"&gt;2&lt;/a&gt;&lt;/sup&gt;. This isn't
+enabled by default, but we can easily create a custom profile that filters
+environment variables:&lt;/p&gt;
+&lt;figure&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;extends&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;claude&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;environment&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;allow_vars&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;PATH&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;HOME&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;TERM&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;LANG&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;LC_*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;figcaption&gt;Custom profile at &lt;code&gt;~/.config/nono/profiles/claude-filter-env.json&lt;/code&gt; &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Now &lt;code&gt;claude&lt;/code&gt; will only have access to the safe subset of environment variables
+that we allow it:&lt;/p&gt;
+&lt;figure&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ echo $TEST_ENV_TOKEN
+my-secret
+$ nono run --profile claude-filter-env --allow-cwd -- claude
+...
+❯ Show me the content of TEST_ENV_TOKEN.
+
+● Bash(echo &amp;quot;$TEST_ENV_TOKEN&amp;quot;)
+  ⎿  (No output)
+
+● TEST_ENV_TOKEN is unset (or empty) in this shell.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+
+&lt;figcaption&gt;claude can't see the content of &lt;code&gt;$TEST_ENV_TOKEN&lt;/code&gt; &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;In the end it is, as usual, a tradeoff between developer convenience and
+security: Giving the AI agent access to everything is the most convenient, but
+a recipe for disaster. At Renuo we came up with the following rough guidelines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For custom agents running independently: Use VMs, Docker containers and
+   limit the availability of credentials as much as possible. It's better to
+   let the AI agent do its task and then let your custom runtime push code,
+   respond to tickets etc.&lt;/li&gt;
+&lt;li&gt;For developer machines: Use sandboxing tools with out-of-the-box profiles
+   for common AI agents. Still don't let them run in &lt;code&gt;--yolo&lt;/code&gt; / unattended
+   mode: Keep yourself in the loop, but you can be more permissive in what
+   commands you allow them to run without confirmation. Take special care of
+   credentials that are exposed via environment variables.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;On one occasion while testing the sandboxing feature of Claude I had it
+assure me that its access to a file was blocked by the sandbox, even if
+the sandbox couldn't be started because of missing system dependencies!&amp;#160;&lt;a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;Which got implemented quite quickly after I proposed it:
+&lt;a href="https://github.com/always-further/nono/issues/688"&gt;https://github.com/always-further/nono/issues/688&lt;/a&gt;&amp;#160;&lt;a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content><category term="2026"/><category term="AI Agents"/><category term="Sandboxing"/></entry><entry><title>Building an out-of-tree Rust Kernel Module Part Four</title><link href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-four.html" rel="alternate"/><published>2025-02-27T00:00:00+01:00</published><updated>2025-02-27T00:00:00+01:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2025-02-27:/building-an-out-of-tree-rust-kernel-module-part-four.html</id><summary type="html">&lt;p&gt;Building the Linux kernel with Rust support for ArchLinux&lt;/p&gt;</summary><content type="html">&lt;p&gt;In my &lt;a href="/building-an-out-of-tree-rust-kernel-module-part-three.html"&gt;last blog post&lt;/a&gt;, I showed how to build the ArchLinux kernel with Rust
 support enabled and also packaging the correct build metadata to support
 out-of-tree kernel modules.&lt;/p&gt;
 &lt;p&gt;In the meantime I gave a presentation about it in the &lt;a href="https://www.meetup.com/rust-zurich/events/293322905/?eventOrigin=group_events_list"&gt;Rust Zürisee Meetup&lt;/a&gt; and

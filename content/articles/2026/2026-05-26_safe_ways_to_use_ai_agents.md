@@ -1,7 +1,6 @@
 Title: Safe Ways to Use AI Agents
 Tags: AI Agents, Sandboxing
 Language: en
-Status: draft
 Summary: Investigating ways to easily isolate AI agents to reduce risks in running them.
 
 At [Renuo] we started using AI coding agents (like [Claude Code], [OpenCode] or

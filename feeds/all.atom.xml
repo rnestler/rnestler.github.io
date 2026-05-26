@@ -316,6 +316,7 @@ a recipe for disaster. At Renuo we came up with the following rough guidelines:&
    commands you allow them to run without confirmation. Take special care of
    credentials that are exposed via environment variables.&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;Have comments? Discuss on &lt;a href="https://news.ycombinator.com/item?id=48281751"&gt;Hacker News&lt;/a&gt;.&lt;/p&gt;
 &lt;div class="footnote"&gt;
 &lt;hr&gt;
 &lt;ol&gt;

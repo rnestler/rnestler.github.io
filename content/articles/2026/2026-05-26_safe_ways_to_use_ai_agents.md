@@ -347,5 +347,3 @@ a recipe for disaster. At Renuo we came up with the following rough guidelines:
     the sandbox couldn't be started because of missing system dependencies!
 [^2]: Which got implemented quite quickly after I proposed it:
     <https://github.com/always-further/nono/issues/688>
-
-Have comments? Discuss on [Hacker News](https://news.ycombinator.com/item?id=48281751).

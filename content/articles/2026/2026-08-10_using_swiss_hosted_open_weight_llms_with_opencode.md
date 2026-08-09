@@ -102,8 +102,27 @@ In the next screen paste your API token which you can create with the
 
 # Using It
 
+My first experience in using it was that it feels faster than using Claude Code
+with the Opus models. According to benchmarks Kimi 2.6 should be comparable to
+the Opus 4.x models.[^2]
+
+I had one occasion where it seemed to block for around a minute on a very
+simple task. Maybe the server was overloaded there?
+
+[^2]: See <https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6>, <https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/>, <https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/>
+
 [Personal experience with Kimi K2.6]
 
 # Summary
 
+I love being able to use a Swiss hosted open weight LLM for the following reasons:
+
+ * **Digital sovereignty**: I feel less dependant on a single American
+ * **No vendor lock in**: I can freely choose which agentic CLI to use
+ * **Supporting a domestic company**: I like to support local businesses
+
+While I miss some of the power Claude Code gives me with their frontier models,
+I think in the long-term I'll benefit more from using open weight models with
+open tools.
 [Recap and links]
+

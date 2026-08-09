@@ -8,15 +8,15 @@ When I started using LLM based AI agents I first tried [OpenCode] for the
 following reasons:
 
  * It's open source, which I generally prefer
- * One can use it with plenty of different LLM providers
+ * It works with plenty of different LLM providers
 
 I initially used it with the default [OpenCode Zen] provider, but quickly hit
 limits of the free plan. I then got myself a Claude Pro subscription and used
 it with that. But at some point Anthropic disallowed using their subscriptions
-with other tools than Claude Code.[^1]
+with tools other than Claude Code.[^1]
 
 After trying to use an Anthropic API key for some time, I quickly noticed how
-much more expensive it is and switched to using Claude Code and keep using the
+much more expensive it is and switched to using Claude Code and kept using the
 subscription.
 
 [OpenCode Zen]: https://opencode.ai/zen

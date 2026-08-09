@@ -59,9 +59,7 @@ You will need the following:
 
 # Configuring the Provider
 
-Run `/connect` in the OpenCode TUI, scroll down to **Other**, choose a provider ID like `infomaniak`, and paste your API token.
-
-Then add the following to your `~/.config/opencode/opencode.json`:
+Add the following to your `~/.config/opencode/opencode.json`:
 
 ```json
 {
@@ -69,7 +67,7 @@ Then add the following to your `~/.config/opencode/opencode.json`:
   "provider": {
     "infomaniak": {
       "npm": "@ai-sdk/openai-compatible",
-      "name": "Infomaniak AI",
+      "name": "Infomaniak AI Tools",
       "options": {
         "baseURL": "https://api.infomaniak.com/2/ai/{product_id}/openai/v1"
       },
@@ -86,7 +84,21 @@ Then add the following to your `~/.config/opencode/opencode.json`:
 
 Make sure to replace `{product_id}` with the numeric ID of your AI Services product.
 
-[Gotchas / Notes]
+Run `/connect` in the OpenCode TUI
+
+
+<figure>
+<img src="{static}/images/opencode_infomaniak/opencode_connect_provider.png" alt="OpenCode TUI /connect autocompletion" width="100%">
+</figure>
+
+and select our custom provider.
+
+<figure>
+<img src="{static}/images/opencode_infomaniak/opencode_choose_provider.png" alt="OpenCode TUI select provider" width="100%">
+</figure>
+
+In the next screen paste your API token which you can create with the
+[Infomaniak Manager] as well.
 
 # Using It
 

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                        <meta charset="utf-8" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                        <meta name="generator" content="Pelican" />
+                        <title>Using Swiss hosted open weight LLMs with OpenCode</title>
+                        <link rel="stylesheet" href="https://blog.rnstlr.ch/theme/css/main.css" />
+                                <link href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="blog.rnstlr.ch Atom Feed" />
+    <meta name="description" content="Configuring OpenCode to use Infomaniak AI Tools' OpenAI-compatible API for sovereign, Swiss-hosted open weight LLMs." />
+        </head>
+
+        <body id="index" class="home">
+                <header id="banner" class="body">
+                        <h1><a href="https://blog.rnstlr.ch/">blog.rnstlr.ch</a></h1>
+                        <nav><ul>
+                                                <li><a href="https://blog.rnstlr.ch/category/2013.html">2013</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2015.html">2015</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2016.html">2016</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2017.html">2017</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2022.html">2022</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2023.html">2023</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2024.html">2024</a></li>
+                                                <li><a href="https://blog.rnstlr.ch/category/2025.html">2025</a></li>
+                                                <li class="active"><a href="https://blog.rnstlr.ch/category/2026.html">2026</a></li>
+                        </ul></nav>
+                </header><!-- /#banner -->
+  <section id="content" class="body">
+    <article>
+      <header>
+        <h1 class="entry-title">
+          <a href="https://blog.rnstlr.ch/drafts/using-swiss-hosted-open-weight-llms-with-opencode.html" rel="bookmark"
+             title="Permalink to Using Swiss hosted open weight LLMs with OpenCode">Using Swiss hosted open weight LLMs with OpenCode</a></h1>
+      </header>
+
+      <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2026-08-10T00:00:00+02:00">
+                Published: Mo 10 August 2026
+        </abbr>
+
+                <address class="vcard author">
+                        By                                 <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+                </address>
+        <p>In <a href="https://blog.rnstlr.ch/category/2026.html">2026</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/ai-agents.html">AI Agents</a> <a href="https://blog.rnstlr.ch/tag/opencode.html">OpenCode</a> <a href="https://blog.rnstlr.ch/tag/infomaniak.html">Infomaniak</a> <a href="https://blog.rnstlr.ch/tag/privacy.html">Privacy</a> </p>        
+</footer><!-- /.post-info -->        <p>When I started using LLM based AI agents I first tried <a href="https://opencode.ai/">OpenCode</a> for the
+following reasons:</p>
+<ul>
+<li>It's open source, which I generally prefer</li>
+<li>It works with plenty of different LLM providers</li>
+</ul>
+<p>I initially used it with the default <a href="https://opencode.ai/zen">OpenCode Zen</a> provider, but quickly hit
+limits of the free plan. I then got myself a Claude Pro subscription and used
+it with that. But at some point Anthropic disallowed using their subscriptions
+with tools other than Claude Code.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>After trying to use an Anthropic API key for some time, I quickly noticed how
+much more expensive it is and switched to using Claude Code and kept using the
+subscription.</p>
+<p>But this whole thing made me realize how dependent I am on a single company
+which almost forces me to use their proprietary tool and I'm also sending quite
+a lot of data to them through my use of their services.</p>
+<p>All that lead me to research which providers of LLMs exist in Switzerland.
+<a href="https://mydata.ch/schweizer-ki-anbieter">https://mydata.ch/schweizer-ki-anbieter</a> gives a nice overview of some
+existing providers. Infomaniak stood out because they have an affordable pay by
+use plan and have some decent open weight models available.</p>
+<h1>Prerequisites</h1>
+<p>You will need the following:</p>
+<ul>
+<li>An <a href="https://www.infomaniak.com/en/hosting/ai-services">Infomaniak</a> account with AI Services enabled (1 million free credits are included)</li>
+<li>Your AI <code>product_id</code> from the <a href="https://manager.infomaniak.com">Infomaniak Manager</a></li>
+<li>An API token scoped to AI Services</li>
+<li><a href="https://opencode.ai/">OpenCode</a> installed</li>
+</ul>
+<h1>Configuring the Provider</h1>
+<p>Add the following to your <code>~/.config/opencode/opencode.json</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://opencode.ai/config.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;infomaniak&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;npm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@ai-sdk/openai-compatible&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Infomaniak AI Tools&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;baseURL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://api.infomaniak.com/2/ai/{product_id}/openai/v1&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;models&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;moonshotai/Kimi-K2.6&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Kimi K2.6&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">256000</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">32768</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Make sure to replace <code>{product_id}</code> with the numeric ID of your AI Services product.</p>
+<p>Run <code>/connect</code> in the OpenCode TUI</p>
+<figure>
+<img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_connect_provider.png" alt="OpenCode TUI /connect autocompletion" width="100%">
+</figure>
+
+<p>and select our custom provider.</p>
+<figure>
+<img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_choose_provider.png" alt="OpenCode TUI select provider" width="100%">
+</figure>
+
+<p>In the next screen paste your API token which you can create with the
+<a href="https://manager.infomaniak.com">Infomaniak Manager</a> as well.</p>
+<h1>Using It</h1>
+<p>My first experience in using it was that it feels faster than using Claude Code
+with the Opus models. According to benchmarks Kimi 2.6 should be comparable to
+the Opus 4.x models.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<p>I had one occasion where it seemed to block for around a minute on a very
+simple task. Maybe the server was overloaded there?</p>
+<p>[Personal experience with Kimi K2.6]</p>
+<h1>Summary</h1>
+<p>I love being able to use a Swiss hosted open weight LLM for the following reasons:</p>
+<ul>
+<li><strong>Digital sovereignty</strong>: I feel less dependant on a single American</li>
+<li><strong>No vendor lock in</strong>: I can freely choose which agentic CLI to use</li>
+<li><strong>Supporting a domestic company</strong>: I like to support local businesses</li>
+</ul>
+<p>While I miss some of the power Claude Code gives me with their frontier models,
+I think in the long-term I'll benefit more from using open weight models with
+open tools.
+[Recap and links]</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>See <a href="https://news.ycombinator.com/item?id=47444748">discussion on HN</a>
+from that time, the <a href="https://opencode.ai/docs/providers#anthropic">OpenCode Anthropic provider
+docs</a></p>
+<blockquote>
+<p>There are plugins that allow you to use your Claude Pro/Max models with
+OpenCode. Anthropic explicitly prohibits this.</p>
+</blockquote>
+<p>and the <a href="https://www.anthropic.com/legal/consumer-terms">Anthropic ToS</a></p>
+<blockquote>
+<p>You may not access or use, or help another person to access or use, our
+Services in the following ways:
+...
+7. Except when you are accessing our Services via an Anthropic API Key or
+   where we otherwise explicitly permit it, to access the Services
+   through automated or non-human means, whether through a bot, script,
+   or otherwise.</p>
+</blockquote>
+<p><a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>See <a href="https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6">https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6</a>, <a href="https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/">https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/</a>, <a href="https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/">https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+      </div><!-- /.entry-content -->
+
+    </article>
+  </section>
+                <section id="extras" class="body">
+                                <div class="blogroll">
+                                        <h2>links</h2>
+                                        <ul>
+                                                        <li><a href="http://getpelican.com/">Pelican</a></li>
+                                                        <li><a href="http://python.org/">Python.org</a></li>
+                                                        <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                                                        <li><a href="http://www.coredump.ch/">coredump</a></li>
+                                        </ul>
+                                </div><!-- /.blogroll -->
+                                <div class="social">
+                                        <h2>social</h2>
+                                        <ul>
+                                                        <li><a href="https://blog.rnstlr.ch/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                                                        <li><a href="https://twitter.com/rnstlr">twitter</a></li>
+                                                        <li><a href="https://github.com/rnestler">github</a></li>
+                                        </ul>
+                                </div><!-- /.social -->
+                </section><!-- /#extras -->
+
+                <footer id="contentinfo" class="body">
+                        <address id="about" class="vcard body">
+                                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                        </address><!-- /#about -->
+
+                        <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                </footer><!-- /#contentinfo -->
+
+        </body>
+</html>

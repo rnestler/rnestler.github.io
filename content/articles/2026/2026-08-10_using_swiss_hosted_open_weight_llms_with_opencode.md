@@ -39,7 +39,7 @@ But this whole thing made me realize how dependent I am on a single company
 which almost forces me to use their proprietary tool and I'm also sending quite
 a lot of data to them through my use of their services.
 
-All that lead me to research which providers of LLMs exist in Switzerland.
+All that led me to research which providers of LLMs exist in Switzerland.
 <https://mydata.ch/schweizer-ki-anbieter> gives a nice overview of some
 existing providers. Infomaniak stood out because they have an affordable pay by
 use plan and have some decent open weight models available.
@@ -117,8 +117,8 @@ simple task. Maybe the server was overloaded there?
 
 I love being able to use a Swiss hosted open weight LLM for the following reasons:
 
- * **Digital sovereignty**: I feel less dependant on a single American
- * **No vendor lock in**: I can freely choose which agentic CLI to use
+ * **Digital sovereignty**: I feel less dependent on a single American
+ * **No vendor lock-in**: I can freely choose which agentic CLI to use
  * **Supporting a domestic company**: I like to support local businesses
 
 While I miss some of the power Claude Code gives me with their frontier models,

@@ -107,7 +107,17 @@ with the Opus models. According to benchmarks Kimi 2.6 should be comparable to
 the Opus 4.x models.[^2]
 
 I had one occasion where it seemed to block for around a minute on a very
-simple task. Maybe the server was overloaded there?
+simple task. Maybe the server was overloaded there? Other than that it felt
+faster than using Opus 4.8 with my Claude Pro subscription.
+
+<figure>
+<img src="{static}/images/opencode_infomaniak/opencode_running.png" alt="OpenCode running with Kimi-K2.6" width="100%">
+<figcaption>OpenCode running with Kimi K2.6 supporting me with this blog post</figcaption>
+</figure>
+
+What I'm missing from Claude are the interactive forms it uses to ask me
+questions where I can just select one of the suggested answers or provide my
+own.
 
 [^2]: See <https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6>, <https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/>, <https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/>
 

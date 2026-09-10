@@ -8,7 +8,7 @@ restructured text source files.
 ## Prepare environement
 
 ```
-asdf install
+mise install
 uv sync
 source .venv/bin/activate
 ```

@@ -138,6 +138,39 @@ promising for example.</p>
 <p>Also I'm not sure what differences in the experience are due to the different
 LLM and which due to the changed harness. To more objectively compare the
 models I should probably use both with OpenCode.</p>
+<h1>Costs</h1>
+<p>Comparing the costs per token is quite straightforward (USD converted at
+CHF 0.81 per US dollar, as of September 2026):</p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Infomaniak Kimi K2.6<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></th>
+<th>Anthropic Opus 4.8<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>CHF 0.60 / 1M</td>
+<td>$5 (CHF 4.05) / 1M</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>CHF 3.00 / 1M</td>
+<td>$25 (CHF 20.25) / 1M</td>
+</tr>
+</tbody>
+</table>
+<p>So Anthropic is almost 7x as expensive compared to Infomaniak.</p>
+<p>For August 2026 I used my 1 million free credits in two days and the rest of my
+usage came to CHF 16.10. But for September, where I started using it more
+frequently and for bigger tasks, I already reached CHF 22.00 on the 10th,
+probably ending up using around CHF 60. When using the Anthropic API this would
+result in approximately CHF 400, assuming roughly the same token usage.</p>
+<p>But with the Claude Pro plan it looks different: compared to the fixed price of
+the Claude Pro subscription of CHF 14 per month, Infomaniak costs me around 4x
+as much.</p>
 <h1>Summary</h1>
 <p>I love being able to use a Swiss hosted open weight LLM for the following reasons:</p>
 <ul>
@@ -147,7 +180,8 @@ models I should probably use both with OpenCode.</p>
 </ul>
 <p>While I miss some of the power Claude Code gives me with their frontier models,
 I think in the long-term I'll benefit more from using open weight models with
-open tools.</p>
+open tools. The downside is of course that it is way more expensive than using
+the Claude Pro subscription.</p>
 <div class="footnote">
 <hr>
 <ol>
@@ -176,6 +210,12 @@ Services in the following ways:
 </li>
 <li id="fn:3">
 <p>See my previous blog post <a href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html">Safe Ways to Use AI Agents</a> on the topic of sandboxing&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>See the <a href="https://www.infomaniak.com/en/hosting/ai-services/prices">Infomaniak AI Tools pricing</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>See the <a href="https://platform.claude.com/docs/en/about-claude/pricing">Claude Platform pricing</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

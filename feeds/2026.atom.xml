@@ -93,6 +93,39 @@ promising for example.&lt;/p&gt;
 &lt;p&gt;Also I'm not sure what differences in the experience are due to the different
 LLM and which due to the changed harness. To more objectively compare the
 models I should probably use both with OpenCode.&lt;/p&gt;
+&lt;h1&gt;Costs&lt;/h1&gt;
+&lt;p&gt;Comparing the costs per token is quite straightforward (USD converted at
+CHF 0.81 per US dollar, as of September 2026):&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Provider&lt;/th&gt;
+&lt;th&gt;Infomaniak Kimi K2.6&lt;sup id="fnref:4"&gt;&lt;a class="footnote-ref" href="#fn:4"&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/th&gt;
+&lt;th&gt;Anthropic Opus 4.8&lt;sup id="fnref:5"&gt;&lt;a class="footnote-ref" href="#fn:5"&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Input&lt;/td&gt;
+&lt;td&gt;CHF 0.60 / 1M&lt;/td&gt;
+&lt;td&gt;$5 (CHF 4.05) / 1M&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Output&lt;/td&gt;
+&lt;td&gt;CHF 3.00 / 1M&lt;/td&gt;
+&lt;td&gt;$25 (CHF 20.25) / 1M&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;So Anthropic is almost 7x as expensive compared to Infomaniak.&lt;/p&gt;
+&lt;p&gt;For August 2026 I used my 1 million free credits in two days and the rest of my
+usage came to CHF 16.10. But for September, where I started using it more
+frequently and for bigger tasks, I already reached CHF 22.00 on the 10th,
+probably ending up using around CHF 60. When using the Anthropic API this would
+result in approximately CHF 400, assuming roughly the same token usage.&lt;/p&gt;
+&lt;p&gt;But with the Claude Pro plan it looks different: compared to the fixed price of
+the Claude Pro subscription of CHF 14 per month, Infomaniak costs me around 4x
+as much.&lt;/p&gt;
 &lt;h1&gt;Summary&lt;/h1&gt;
 &lt;p&gt;I love being able to use a Swiss hosted open weight LLM for the following reasons:&lt;/p&gt;
 &lt;ul&gt;
@@ -102,7 +135,8 @@ models I should probably use both with OpenCode.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;While I miss some of the power Claude Code gives me with their frontier models,
 I think in the long-term I'll benefit more from using open weight models with
-open tools.&lt;/p&gt;
+open tools. The downside is of course that it is way more expensive than using
+the Claude Pro subscription.&lt;/p&gt;
 &lt;div class="footnote"&gt;
 &lt;hr&gt;
 &lt;ol&gt;
@@ -131,6 +165,12 @@ Services in the following ways:
 &lt;/li&gt;
 &lt;li id="fn:3"&gt;
 &lt;p&gt;See my previous blog post &lt;a href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html"&gt;Safe Ways to Use AI Agents&lt;/a&gt; on the topic of sandboxing&amp;#160;&lt;a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:4"&gt;
+&lt;p&gt;See the &lt;a href="https://www.infomaniak.com/en/hosting/ai-services/prices"&gt;Infomaniak AI Tools pricing&lt;/a&gt;&amp;#160;&lt;a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:5"&gt;
+&lt;p&gt;See the &lt;a href="https://platform.claude.com/docs/en/about-claude/pricing"&gt;Claude Platform pricing&lt;/a&gt;&amp;#160;&lt;a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;</content><category term="2026"/><category term="AI Agents"/><category term="OpenCode"/><category term="Infomaniak"/><category term="Privacy"/></entry><entry><title>Safe Ways to Use AI Agents</title><link href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html" rel="alternate"/><published>2026-05-26T00:00:00+02:00</published><updated>2026-05-26T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2026-05-26:/safe-ways-to-use-ai-agents.html</id><summary type="html">&lt;p&gt;Investigating ways to easily isolate AI agents to reduce risks in running them.&lt;/p&gt;</summary><content type="html">&lt;p&gt;At &lt;a href="https://www.renuo.ch"&gt;Renuo&lt;/a&gt; we started using AI coding agents (like &lt;a href="https://code.claude.com/docs/"&gt;Claude Code&lt;/a&gt;, &lt;a href="https://opencode.ai/"&gt;OpenCode&lt;/a&gt; or

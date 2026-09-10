@@ -2,7 +2,6 @@ Title: Using Swiss hosted open weight LLMs with OpenCode
 Tags: AI Agents, OpenCode, Infomaniak, Privacy
 Language: en
 Summary: Configuring OpenCode to use Infomaniak AI Tools' OpenAI-compatible API for sovereign, Swiss-hosted open weight LLMs.
-Status: draft
 
 When I started using LLM based AI agents I first tried [OpenCode] for the
 following reasons:

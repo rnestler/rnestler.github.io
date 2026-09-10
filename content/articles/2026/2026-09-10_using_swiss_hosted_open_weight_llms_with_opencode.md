@@ -138,6 +138,31 @@ models I should probably use both with OpenCode.
 [^2]: See <https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6>, <https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/>, <https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/>
 [^3]: See my previous blog post [Safe Ways to Use AI Agents](https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html) on the topic of sandboxing
 
+# Costs
+
+Comparing the costs per token is quite straightforward (USD converted at
+CHF 0.81 per US dollar, as of September 2026):
+
+|Provider|Infomaniak Kimi K2.6[^4]|Anthropic Opus 4.8[^5]|
+|------|--------------------|--------------------------|
+|Input |CHF 0.60 / 1M       | $5 (CHF 4.05) / 1M       |
+|Output|CHF 3.00 / 1M       | $25 (CHF 20.25) / 1M     |
+
+So Anthropic is almost 7x as expensive compared to Infomaniak.
+
+For August 2026 I used my 1 million free credits in two days and the rest of my
+usage came to CHF 16.10. But for September, where I started using it more
+frequently and for bigger tasks, I already reached CHF 22.00 on the 10th,
+probably ending up using around CHF 60. When using the Anthropic API this would
+result in approximately CHF 400, assuming roughly the same token usage.
+
+But with the Claude Pro plan it looks different: compared to the fixed price of
+the Claude Pro subscription of CHF 14 per month, Infomaniak costs me around 4x
+as much.
+
+[^4]: See the [Infomaniak AI Tools pricing](https://www.infomaniak.com/en/hosting/ai-services/prices)
+[^5]: See the [Claude Platform pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+
 # Summary
 
 I love being able to use a Swiss hosted open weight LLM for the following reasons:
@@ -148,4 +173,5 @@ I love being able to use a Swiss hosted open weight LLM for the following reason
 
 While I miss some of the power Claude Code gives me with their frontier models,
 I think in the long-term I'll benefit more from using open weight models with
-open tools.
+open tools. The downside is of course that it is way more expensive than using
+the Claude Pro subscription.

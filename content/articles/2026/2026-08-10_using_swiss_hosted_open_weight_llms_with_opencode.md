@@ -115,24 +115,39 @@ faster than using Opus 4.8 with my Claude Pro subscription.
 <figcaption>OpenCode running with Kimi K2.6 supporting me with this blog post</figcaption>
 </figure>
 
-What I'm missing from Claude are the interactive forms it uses to ask me
-questions where I can just select one of the suggested answers or provide my
-own.
+What I'm missing from Claude are:
 
+ * That it uses interactive forms heavily during plan mode to ask me questions
+   where I can just select one of the suggested answers or provide my own.
+ * [Auto-mode], permission fatigue is real and together with nono.sh sandboxing
+   auto mode feels like a very good compromise to me.[^3]
+
+<figure>
+<img src="{static}/images/opencode_infomaniak/claude_code_questions.png" alt="Claude Code asking questions" width="100%">
+<figcaption>Claude Code asking questions before going ahead.</figcaption>
+</figure>
+
+I guess there are plugins for OpenCode to achieve a similar feature set as I'm
+used to from Claude.
+<https://github.com/the-perfect-developer/the-perfect-opencode/tree/main> looks
+promising for example.
+
+Also I'm not sure what differences in the experience are due to the different
+LLM and which due to the changed harness. To more objectively compare the
+models I should probably use both with OpenCode.
+
+[Auto-Mode]: https://claude.com/blog/auto-mode
 [^2]: See <https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6>, <https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/>, <https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/>
-
-[Personal experience with Kimi K2.6]
+[^3]: See my previous blog post [Safe Ways to Use AI Agents](https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html) on the topic of sandboxing
 
 # Summary
 
 I love being able to use a Swiss hosted open weight LLM for the following reasons:
 
- * **Digital sovereignty**: I feel less dependent on a single American
+ * **Digital sovereignty**: I feel less dependent on a single American company
  * **No vendor lock-in**: I can freely choose which agentic CLI to use
  * **Supporting a domestic company**: I like to support local businesses
 
 While I miss some of the power Claude Code gives me with their frontier models,
 I think in the long-term I'll benefit more from using open weight models with
 open tools.
-[Recap and links]
-

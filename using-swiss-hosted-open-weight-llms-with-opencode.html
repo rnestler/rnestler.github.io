@@ -29,14 +29,14 @@
     <article>
       <header>
         <h1 class="entry-title">
-          <a href="https://blog.rnstlr.ch/drafts/using-swiss-hosted-open-weight-llms-with-opencode.html" rel="bookmark"
+          <a href="https://blog.rnstlr.ch/using-swiss-hosted-open-weight-llms-with-opencode.html" rel="bookmark"
              title="Permalink to Using Swiss hosted open weight LLMs with OpenCode">Using Swiss hosted open weight LLMs with OpenCode</a></h1>
       </header>
 
       <div class="entry-content">
 <footer class="post-info">
-        <abbr class="published" title="2026-08-10T00:00:00+02:00">
-                Published: Mo 10 August 2026
+        <abbr class="published" title="2026-09-10T00:00:00+02:00">
+                Published: Do 10 September 2026
         </abbr>
 
                 <address class="vcard author">
@@ -60,7 +60,7 @@ subscription.</p>
 <p>But this whole thing made me realize how dependent I am on a single company
 which almost forces me to use their proprietary tool and I'm also sending quite
 a lot of data to them through my use of their services.</p>
-<p>All that lead me to research which providers of LLMs exist in Switzerland.
+<p>All that led me to research which providers of LLMs exist in Switzerland.
 <a href="https://mydata.ch/schweizer-ki-anbieter">https://mydata.ch/schweizer-ki-anbieter</a> gives a nice overview of some
 existing providers. Infomaniak stood out because they have an affordable pay by
 use plan and have some decent open weight models available.</p>
@@ -108,23 +108,46 @@ use plan and have some decent open weight models available.</p>
 <p>In the next screen paste your API token which you can create with the
 <a href="https://manager.infomaniak.com">Infomaniak Manager</a> as well.</p>
 <h1>Using It</h1>
-<p>My first experience in using it was that it feels faster than using Claude Code
-with the Opus models. According to benchmarks Kimi 2.6 should be comparable to
-the Opus 4.x models.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<p>My first impression was that it feels faster than using Claude Code with the
+Opus models. According to benchmarks Kimi 2.6 should be comparable to the Opus
+4.x models.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
 <p>I had one occasion where it seemed to block for around a minute on a very
-simple task. Maybe the server was overloaded there?</p>
-<p>[Personal experience with Kimi K2.6]</p>
+simple task. Maybe the server was overloaded there? Other than that it felt
+faster than using Opus 4.8 with my Claude Pro subscription.</p>
+<figure>
+<img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_running.png" alt="OpenCode running with Kimi-K2.6" width="100%">
+<figcaption>OpenCode running with Kimi K2.6 supporting me with this blog post</figcaption>
+</figure>
+
+<p>What I'm missing from Claude are:</p>
+<ul>
+<li>That it uses interactive forms heavily during plan mode to ask me questions
+   where I can just select one of the suggested answers or provide my own.</li>
+<li><a href="https://claude.com/blog/auto-mode">Auto-mode</a>, permission fatigue is real and together with nono.sh sandboxing
+   auto mode feels like a very good compromise to me.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></li>
+</ul>
+<figure>
+<img src="https://blog.rnstlr.ch/images/opencode_infomaniak/claude_code_questions.png" alt="Claude Code asking questions" width="100%">
+<figcaption>Claude Code asking questions before going ahead.</figcaption>
+</figure>
+
+<p>I guess there are plugins for OpenCode to achieve a similar feature set as I'm
+used to from Claude.
+<a href="https://github.com/the-perfect-developer/the-perfect-opencode/tree/main">https://github.com/the-perfect-developer/the-perfect-opencode/tree/main</a> looks
+promising for example.</p>
+<p>Also I'm not sure what differences in the experience are due to the different
+LLM and which due to the changed harness. To more objectively compare the
+models I should probably use both with OpenCode.</p>
 <h1>Summary</h1>
 <p>I love being able to use a Swiss hosted open weight LLM for the following reasons:</p>
 <ul>
-<li><strong>Digital sovereignty</strong>: I feel less dependant on a single American</li>
-<li><strong>No vendor lock in</strong>: I can freely choose which agentic CLI to use</li>
+<li><strong>Digital sovereignty</strong>: I feel less dependent on a single American company</li>
+<li><strong>No vendor lock-in</strong>: I can freely choose which agentic CLI to use</li>
 <li><strong>Supporting a domestic company</strong>: I like to support local businesses</li>
 </ul>
 <p>While I miss some of the power Claude Code gives me with their frontier models,
 I think in the long-term I'll benefit more from using open weight models with
-open tools.
-[Recap and links]</p>
+open tools.</p>
 <div class="footnote">
 <hr>
 <ol>
@@ -150,6 +173,9 @@ Services in the following ways:
 </li>
 <li id="fn:2">
 <p>See <a href="https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6">https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6</a>, <a href="https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/">https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/</a>, <a href="https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/">https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>See my previous blog post <a href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html">Safe Ways to Use AI Agents</a> on the topic of sandboxing&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

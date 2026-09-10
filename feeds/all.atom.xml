@@ -1,5 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"/><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"/><id>https://blog.rnstlr.ch/</id><updated>2026-05-26T00:00:00+02:00</updated><entry><title>Safe Ways to Use AI Agents</title><link href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html" rel="alternate"/><published>2026-05-26T00:00:00+02:00</published><updated>2026-05-26T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2026-05-26:/safe-ways-to-use-ai-agents.html</id><summary type="html">&lt;p&gt;Investigating ways to easily isolate AI agents to reduce risks in running them.&lt;/p&gt;</summary><content type="html">&lt;p&gt;At &lt;a href="https://www.renuo.ch"&gt;Renuo&lt;/a&gt; we started using AI coding agents (like &lt;a href="https://code.claude.com/docs/"&gt;Claude Code&lt;/a&gt;, &lt;a href="https://opencode.ai/"&gt;OpenCode&lt;/a&gt; or
+<feed xmlns="http://www.w3.org/2005/Atom"><title>blog.rnstlr.ch</title><link href="https://blog.rnstlr.ch/" rel="alternate"/><link href="https://blog.rnstlr.ch/feeds/all.atom.xml" rel="self"/><id>https://blog.rnstlr.ch/</id><updated>2026-09-10T00:00:00+02:00</updated><entry><title>Using Swiss hosted open weight LLMs with OpenCode</title><link href="https://blog.rnstlr.ch/using-swiss-hosted-open-weight-llms-with-opencode.html" rel="alternate"/><published>2026-09-10T00:00:00+02:00</published><updated>2026-09-10T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2026-09-10:/using-swiss-hosted-open-weight-llms-with-opencode.html</id><summary type="html">&lt;p&gt;Configuring OpenCode to use Infomaniak AI Tools' OpenAI-compatible API for sovereign, Swiss-hosted open weight LLMs.&lt;/p&gt;</summary><content type="html">&lt;p&gt;When I started using LLM based AI agents I first tried &lt;a href="https://opencode.ai/"&gt;OpenCode&lt;/a&gt; for the
+following reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It's open source, which I generally prefer&lt;/li&gt;
+&lt;li&gt;It works with plenty of different LLM providers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I initially used it with the default &lt;a href="https://opencode.ai/zen"&gt;OpenCode Zen&lt;/a&gt; provider, but quickly hit
+limits of the free plan. I then got myself a Claude Pro subscription and used
+it with that. But at some point Anthropic disallowed using their subscriptions
+with tools other than Claude Code.&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;After trying to use an Anthropic API key for some time, I quickly noticed how
+much more expensive it is and switched to using Claude Code and kept using the
+subscription.&lt;/p&gt;
+&lt;p&gt;But this whole thing made me realize how dependent I am on a single company
+which almost forces me to use their proprietary tool and I'm also sending quite
+a lot of data to them through my use of their services.&lt;/p&gt;
+&lt;p&gt;All that led me to research which providers of LLMs exist in Switzerland.
+&lt;a href="https://mydata.ch/schweizer-ki-anbieter"&gt;https://mydata.ch/schweizer-ki-anbieter&lt;/a&gt; gives a nice overview of some
+existing providers. Infomaniak stood out because they have an affordable pay by
+use plan and have some decent open weight models available.&lt;/p&gt;
+&lt;h1&gt;Prerequisites&lt;/h1&gt;
+&lt;p&gt;You will need the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An &lt;a href="https://www.infomaniak.com/en/hosting/ai-services"&gt;Infomaniak&lt;/a&gt; account with AI Services enabled (1 million free credits are included)&lt;/li&gt;
+&lt;li&gt;Your AI &lt;code&gt;product_id&lt;/code&gt; from the &lt;a href="https://manager.infomaniak.com"&gt;Infomaniak Manager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;An API token scoped to AI Services&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://opencode.ai/"&gt;OpenCode&lt;/a&gt; installed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Configuring the Provider&lt;/h1&gt;
+&lt;p&gt;Add the following to your &lt;code&gt;~/.config/opencode/opencode.json&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;$schema&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;https://opencode.ai/config.json&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;provider&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;infomaniak&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;npm&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;@ai-sdk/openai-compatible&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Infomaniak AI Tools&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;options&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;baseURL&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;https://api.infomaniak.com/2/ai/{product_id}/openai/v1&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;models&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;moonshotai/Kimi-K2.6&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Kimi K2.6&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;limit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;context&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;256000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;&amp;quot;output&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32768&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Make sure to replace &lt;code&gt;{product_id}&lt;/code&gt; with the numeric ID of your AI Services product.&lt;/p&gt;
+&lt;p&gt;Run &lt;code&gt;/connect&lt;/code&gt; in the OpenCode TUI&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_connect_provider.png" alt="OpenCode TUI /connect autocompletion" width="100%"&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;and select our custom provider.&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_choose_provider.png" alt="OpenCode TUI select provider" width="100%"&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;In the next screen paste your API token which you can create with the
+&lt;a href="https://manager.infomaniak.com"&gt;Infomaniak Manager&lt;/a&gt; as well.&lt;/p&gt;
+&lt;h1&gt;Using It&lt;/h1&gt;
+&lt;p&gt;My first impression was that it feels faster than using Claude Code with the
+Opus models. According to benchmarks Kimi 2.6 should be comparable to the Opus
+4.x models.&lt;sup id="fnref:2"&gt;&lt;a class="footnote-ref" href="#fn:2"&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;I had one occasion where it seemed to block for around a minute on a very
+simple task. Maybe the server was overloaded there? Other than that it felt
+faster than using Opus 4.8 with my Claude Pro subscription.&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_running.png" alt="OpenCode running with Kimi-K2.6" width="100%"&gt;
+&lt;figcaption&gt;OpenCode running with Kimi K2.6 supporting me with this blog post&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;What I'm missing from Claude are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;That it uses interactive forms heavily during plan mode to ask me questions
+   where I can just select one of the suggested answers or provide my own.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://claude.com/blog/auto-mode"&gt;Auto-mode&lt;/a&gt;, permission fatigue is real and together with nono.sh sandboxing
+   auto mode feels like a very good compromise to me.&lt;sup id="fnref:3"&gt;&lt;a class="footnote-ref" href="#fn:3"&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure&gt;
+&lt;img src="https://blog.rnstlr.ch/images/opencode_infomaniak/claude_code_questions.png" alt="Claude Code asking questions" width="100%"&gt;
+&lt;figcaption&gt;Claude Code asking questions before going ahead.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;I guess there are plugins for OpenCode to achieve a similar feature set as I'm
+used to from Claude.
+&lt;a href="https://github.com/the-perfect-developer/the-perfect-opencode/tree/main"&gt;https://github.com/the-perfect-developer/the-perfect-opencode/tree/main&lt;/a&gt; looks
+promising for example.&lt;/p&gt;
+&lt;p&gt;Also I'm not sure what differences in the experience are due to the different
+LLM and which due to the changed harness. To more objectively compare the
+models I should probably use both with OpenCode.&lt;/p&gt;
+&lt;h1&gt;Summary&lt;/h1&gt;
+&lt;p&gt;I love being able to use a Swiss hosted open weight LLM for the following reasons:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Digital sovereignty&lt;/strong&gt;: I feel less dependent on a single American company&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;No vendor lock-in&lt;/strong&gt;: I can freely choose which agentic CLI to use&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Supporting a domestic company&lt;/strong&gt;: I like to support local businesses&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;While I miss some of the power Claude Code gives me with their frontier models,
+I think in the long-term I'll benefit more from using open weight models with
+open tools.&lt;/p&gt;
+&lt;div class="footnote"&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id="fn:1"&gt;
+&lt;p&gt;See &lt;a href="https://news.ycombinator.com/item?id=47444748"&gt;discussion on HN&lt;/a&gt;
+from that time, the &lt;a href="https://opencode.ai/docs/providers#anthropic"&gt;OpenCode Anthropic provider
+docs&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There are plugins that allow you to use your Claude Pro/Max models with
+OpenCode. Anthropic explicitly prohibits this.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;and the &lt;a href="https://www.anthropic.com/legal/consumer-terms"&gt;Anthropic ToS&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You may not access or use, or help another person to access or use, our
+Services in the following ways:
+...
+7. Except when you are accessing our Services via an Anthropic API Key or
+   where we otherwise explicitly permit it, to access the Services
+   through automated or non-human means, whether through a bot, script,
+   or otherwise.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:2"&gt;
+&lt;p&gt;See &lt;a href="https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6"&gt;https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6&lt;/a&gt;, &lt;a href="https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/"&gt;https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/&lt;/a&gt;, &lt;a href="https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/"&gt;https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/&lt;/a&gt;&amp;#160;&lt;a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id="fn:3"&gt;
+&lt;p&gt;See my previous blog post &lt;a href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html"&gt;Safe Ways to Use AI Agents&lt;/a&gt; on the topic of sandboxing&amp;#160;&lt;a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;</content><category term="2026"/><category term="AI Agents"/><category term="OpenCode"/><category term="Infomaniak"/><category term="Privacy"/></entry><entry><title>Safe Ways to Use AI Agents</title><link href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html" rel="alternate"/><published>2026-05-26T00:00:00+02:00</published><updated>2026-05-26T00:00:00+02:00</updated><author><name>rnestler</name></author><id>tag:blog.rnstlr.ch,2026-05-26:/safe-ways-to-use-ai-agents.html</id><summary type="html">&lt;p&gt;Investigating ways to easily isolate AI agents to reduce risks in running them.&lt;/p&gt;</summary><content type="html">&lt;p&gt;At &lt;a href="https://www.renuo.ch"&gt;Renuo&lt;/a&gt; we started using AI coding agents (like &lt;a href="https://code.claude.com/docs/"&gt;Claude Code&lt;/a&gt;, &lt;a href="https://opencode.ai/"&gt;OpenCode&lt;/a&gt; or
 &lt;a href="https://antigravity.google/"&gt;Antigravity&lt;/a&gt;) for development, and I also started using them for personal
 projects like my &lt;a href="https://github.com/rnestler/raspberry-dashboard"&gt;Raspberry Dashboard&lt;/a&gt;. Additionally we started building our own
 AI agent which is integrated in &lt;a href="https://www.redmine.org/"&gt;Redmine&lt;/a&gt;, our ticketing and project

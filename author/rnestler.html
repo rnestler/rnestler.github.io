@@ -27,7 +27,165 @@
 
                 <aside id="featured" class="body">
                     <article>
-                        <h1 class="entry-title"><a href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html">Safe Ways to Use AI Agents</a></h1>
+                        <h1 class="entry-title"><a href="https://blog.rnstlr.ch/using-swiss-hosted-open-weight-llms-with-opencode.html">Using Swiss hosted open weight LLMs with OpenCode</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2026-09-10T00:00:00+02:00">
+                Published: Do 10 September 2026
+        </abbr>
+
+                <address class="vcard author">
+                        By                                 <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
+                </address>
+        <p>In <a href="https://blog.rnstlr.ch/category/2026.html">2026</a>.</p>
+<p>tags: <a href="https://blog.rnstlr.ch/tag/ai-agents.html">AI Agents</a> <a href="https://blog.rnstlr.ch/tag/opencode.html">OpenCode</a> <a href="https://blog.rnstlr.ch/tag/infomaniak.html">Infomaniak</a> <a href="https://blog.rnstlr.ch/tag/privacy.html">Privacy</a> </p>        
+</footer><!-- /.post-info --><p>When I started using LLM based AI agents I first tried <a href="https://opencode.ai/">OpenCode</a> for the
+following reasons:</p>
+<ul>
+<li>It's open source, which I generally prefer</li>
+<li>It works with plenty of different LLM providers</li>
+</ul>
+<p>I initially used it with the default <a href="https://opencode.ai/zen">OpenCode Zen</a> provider, but quickly hit
+limits of the free plan. I then got myself a Claude Pro subscription and used
+it with that. But at some point Anthropic disallowed using their subscriptions
+with tools other than Claude Code.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<p>After trying to use an Anthropic API key for some time, I quickly noticed how
+much more expensive it is and switched to using Claude Code and kept using the
+subscription.</p>
+<p>But this whole thing made me realize how dependent I am on a single company
+which almost forces me to use their proprietary tool and I'm also sending quite
+a lot of data to them through my use of their services.</p>
+<p>All that led me to research which providers of LLMs exist in Switzerland.
+<a href="https://mydata.ch/schweizer-ki-anbieter">https://mydata.ch/schweizer-ki-anbieter</a> gives a nice overview of some
+existing providers. Infomaniak stood out because they have an affordable pay by
+use plan and have some decent open weight models available.</p>
+<h1>Prerequisites</h1>
+<p>You will need the following:</p>
+<ul>
+<li>An <a href="https://www.infomaniak.com/en/hosting/ai-services">Infomaniak</a> account with AI Services enabled (1 million free credits are included)</li>
+<li>Your AI <code>product_id</code> from the <a href="https://manager.infomaniak.com">Infomaniak Manager</a></li>
+<li>An API token scoped to AI Services</li>
+<li><a href="https://opencode.ai/">OpenCode</a> installed</li>
+</ul>
+<h1>Configuring the Provider</h1>
+<p>Add the following to your <code>~/.config/opencode/opencode.json</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://opencode.ai/config.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;infomaniak&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;npm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@ai-sdk/openai-compatible&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Infomaniak AI Tools&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;baseURL&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://api.infomaniak.com/2/ai/{product_id}/openai/v1&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;models&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;moonshotai/Kimi-K2.6&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Kimi K2.6&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">256000</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">32768</span><span class="w"> </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Make sure to replace <code>{product_id}</code> with the numeric ID of your AI Services product.</p>
+<p>Run <code>/connect</code> in the OpenCode TUI</p>
+<figure>
+<img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_connect_provider.png" alt="OpenCode TUI /connect autocompletion" width="100%">
+</figure>
+
+<p>and select our custom provider.</p>
+<figure>
+<img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_choose_provider.png" alt="OpenCode TUI select provider" width="100%">
+</figure>
+
+<p>In the next screen paste your API token which you can create with the
+<a href="https://manager.infomaniak.com">Infomaniak Manager</a> as well.</p>
+<h1>Using It</h1>
+<p>My first impression was that it feels faster than using Claude Code with the
+Opus models. According to benchmarks Kimi 2.6 should be comparable to the Opus
+4.x models.<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></p>
+<p>I had one occasion where it seemed to block for around a minute on a very
+simple task. Maybe the server was overloaded there? Other than that it felt
+faster than using Opus 4.8 with my Claude Pro subscription.</p>
+<figure>
+<img src="https://blog.rnstlr.ch/images/opencode_infomaniak/opencode_running.png" alt="OpenCode running with Kimi-K2.6" width="100%">
+<figcaption>OpenCode running with Kimi K2.6 supporting me with this blog post</figcaption>
+</figure>
+
+<p>What I'm missing from Claude are:</p>
+<ul>
+<li>That it uses interactive forms heavily during plan mode to ask me questions
+   where I can just select one of the suggested answers or provide my own.</li>
+<li><a href="https://claude.com/blog/auto-mode">Auto-mode</a>, permission fatigue is real and together with nono.sh sandboxing
+   auto mode feels like a very good compromise to me.<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></li>
+</ul>
+<figure>
+<img src="https://blog.rnstlr.ch/images/opencode_infomaniak/claude_code_questions.png" alt="Claude Code asking questions" width="100%">
+<figcaption>Claude Code asking questions before going ahead.</figcaption>
+</figure>
+
+<p>I guess there are plugins for OpenCode to achieve a similar feature set as I'm
+used to from Claude.
+<a href="https://github.com/the-perfect-developer/the-perfect-opencode/tree/main">https://github.com/the-perfect-developer/the-perfect-opencode/tree/main</a> looks
+promising for example.</p>
+<p>Also I'm not sure what differences in the experience are due to the different
+LLM and which due to the changed harness. To more objectively compare the
+models I should probably use both with OpenCode.</p>
+<h1>Summary</h1>
+<p>I love being able to use a Swiss hosted open weight LLM for the following reasons:</p>
+<ul>
+<li><strong>Digital sovereignty</strong>: I feel less dependent on a single American company</li>
+<li><strong>No vendor lock-in</strong>: I can freely choose which agentic CLI to use</li>
+<li><strong>Supporting a domestic company</strong>: I like to support local businesses</li>
+</ul>
+<p>While I miss some of the power Claude Code gives me with their frontier models,
+I think in the long-term I'll benefit more from using open weight models with
+open tools.</p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>See <a href="https://news.ycombinator.com/item?id=47444748">discussion on HN</a>
+from that time, the <a href="https://opencode.ai/docs/providers#anthropic">OpenCode Anthropic provider
+docs</a></p>
+<blockquote>
+<p>There are plugins that allow you to use your Claude Pro/Max models with
+OpenCode. Anthropic explicitly prohibits this.</p>
+</blockquote>
+<p>and the <a href="https://www.anthropic.com/legal/consumer-terms">Anthropic ToS</a></p>
+<blockquote>
+<p>You may not access or use, or help another person to access or use, our
+Services in the following ways:
+...
+7. Except when you are accessing our Services via an Anthropic API Key or
+   where we otherwise explicitly permit it, to access the Services
+   through automated or non-human means, whether through a bot, script,
+   or otherwise.</p>
+</blockquote>
+<p><a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>See <a href="https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6">https://benchlm.ai/compare/claude-opus-4-6-vs-kimi-2-6</a>, <a href="https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/">https://codersera.com/blog/kimi-k2-6-vs-claude-opus-4-7/</a>, <a href="https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/">https://codingfleet.com/blog/claude-opus-4-8-vs-kimi-k2-6/</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>See my previous blog post <a href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html">Safe Ways to Use AI Agents</a> on the topic of sandboxing&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>                    </article>
+                </aside><!-- /#featured -->
+                    <section id="content" class="body">
+                        <h1>Other articles</h1>
+                        <hr />
+                        <ol id="posts-list" class="hfeed">
+
+                <li><article class="hentry">
+                    <header>
+                        <h1><a href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html" rel="bookmark"
+                               title="Permalink to Safe Ways to Use AI Agents">Safe Ways to Use AI Agents</a></h1>
+                    </header>
+
+                    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2026-05-26T00:00:00+02:00">
                 Published: Di 26 Mai 2026
@@ -38,342 +196,10 @@
                 </address>
         <p>In <a href="https://blog.rnstlr.ch/category/2026.html">2026</a>.</p>
 <p>tags: <a href="https://blog.rnstlr.ch/tag/ai-agents.html">AI Agents</a> <a href="https://blog.rnstlr.ch/tag/sandboxing.html">Sandboxing</a> </p>        
-</footer><!-- /.post-info --><p>At <a href="https://www.renuo.ch">Renuo</a> we started using AI coding agents (like <a href="https://code.claude.com/docs/">Claude Code</a>, <a href="https://opencode.ai/">OpenCode</a> or
-<a href="https://antigravity.google/">Antigravity</a>) for development, and I also started using them for personal
-projects like my <a href="https://github.com/rnestler/raspberry-dashboard">Raspberry Dashboard</a>. Additionally we started building our own
-AI agent which is integrated in <a href="https://www.redmine.org/">Redmine</a>, our ticketing and project
-management system.</p>
-<p>During this, we became aware of the security risks involved: By default these
-agents run with full user permissions: They can read and write files, execute
-commands, and access credentials on the host system.</p>
-<p>Johann Rehberger's 39c3 talk <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">Agentic ProbLLMs: Exploiting AI Computer-Use
-and Coding Agents</a> shows how prompt injection can lead to remote
-code execution and credential exfiltration in agents like Claude Code and
-GitHub Copilot. I recommend watching it.</p>
-<p>In this post we'll take a look at these risks and the pragmatic solutions we
-came up with to keep a balance between developer experience and security.</p>
-<h1>Risks of AI Agents</h1>
-<blockquote>
-<p>LLMs are probabilistic -- a 1% chance of disaster makes it a matter of when,
-not if.
--- <a href="https://agent-safehouse.dev/">Agent Safehouse</a></p>
-</blockquote>
-<p>Most AI coding agents run with the same permissions as the user who started
-them. They have access to the file system, can execute arbitrary shell commands,
-and inherit all credentials available in the environment. Since LLMs are
-susceptible to prompt injection (malicious instructions hidden in code,
-documentation, or web content), this creates a real attack surface.</p>
-<figure>
-<img src="https://blog.rnstlr.ch/images/ai_agents/agentic-probllms-screenshot-promt-injection.png" alt="Prompt Injection TTPs overview from Johann Rehberger's talk" width="100%">
-<figcaption>Image source: <a href="https://embracethered.com/">embracethered.com</a> by Johann Rehberger</figcaption>
-</figure>
-
-<p>The risks boil down to a few categories:</p>
-<ul>
-<li>
-<p><strong>Exposing credentials</strong>: Agents have access to environment variables,
-    config files, and credential stores. A prompt injection can trick an agent
-    into exfiltrating API keys or access tokens to an attacker-controlled
-    server.</p>
-</li>
-<li>
-<p><strong>Malware installation</strong>: Agents can be tricked into downloading and
-   executing malicious code, for example through poisoned dependencies or
-   malicious instructions in README files.</p>
-</li>
-<li>
-<p><strong>Destructive actions on the local machine</strong>: An agent might delete files,
-   overwrite configurations, or corrupt a local database -- through prompt
-   injection or simply by making a wrong decision.</p>
-</li>
-<li>
-<p><strong>Destructive actions on remote systems</strong>: Agents often have access to CLI
-   tools that can interact with production infrastructure. Think <code>kubectl
-   delete</code>, <code>terraform destroy</code>, <code>nctl delete</code>, or maybe even simply a database
-   client connected to prod.</p>
-</li>
-</ul>
-<p>I asked some developers what incidents they had happen with AI agents so far.
-Here are a few examples:</p>
-<blockquote>
-<p>I don't have the session anymore, but while working on a redmine integration,
-it found out that I had a REDMINE_API_KEY in my ENV variables and started
-fetching data from our production redmine.</p>
-<p>-- Alessandro Rodi</p>
-<p>While it wasn't a major issue, it was frustrating when database migration
-errors caused the development database to be deleted and recreated, as I
-often lost test-data I wanted to keep.</p>
-<p>-- Bruno Costanzo</p>
-<p>While I was testing our claude code skill to deploy web-apps to deplo.io, the
-agent hit the quota limit of the number of apps in the test organization. To
-solve this it decided it's best to delete existing apps with <code>nctl delete
-app</code>. It did ask for confirmation though before going ahead.</p>
-<p>-- Josua Schmid</p>
-</blockquote>
-<p>We didn't have a case yet where things went seriously wrong, mostly because we
-don't let the agents run unattended and use test environments. But it was
-enough to trigger us to really think about how to improve the situation.</p>
-<p>For a deeper look at these attack vectors see the <a href="https://media.ccc.de/v/39c3-agentic-probllms-exploiting-ai-computer-use-and-coding-agents">39c3 talk</a>
-referenced in the introduction.</p>
-<h1>Mitigation Strategies</h1>
-<p>So what can we do about this? It boils down to the following strategies:</p>
-<ul>
-<li><strong>Hope</strong>: Instruct the agent not to do destructive things.</li>
-<li><strong>Manual approval</strong>: Configure the agents to ask before everything.</li>
-<li><strong>Agent specific configuration</strong>: Disallow the agent to read certain files
-   or execute certain commands.</li>
-<li><strong>Isolation</strong>: Run the agents in VMs, Docker containers or a sandboxing tool.</li>
-</ul>
-<h2>Hope / Prompt Begging</h2>
-<p>The major issue with just asking the LLM not to do destructive things via
-prompting is that it may just not work.</p>
-<figure>
-<img src="https://blog.rnstlr.ch/images/ai_agents/agent-safehouse-fail-example.png" alt="Prompt begging failure" width="100%">
-<figcaption>Image source: <a href="https://agent-safehouse.dev/">agent-safehouse.dev</a></figcaption>
-</figure>
-
-<h2>Manual approval</h2>
-<p>While manually approving everything the agent does sounds secure, in practice it
-leads to <strong>approval fatigue</strong>: repeatedly approving actions causes us to pay less
-attention to what we're actually approving.</p>
-<p>It also kills productivity: Constant interruptions prevent agents from running
-in the background.</p>
-<p>There is also the issue of over-permissive allowing: At one point while trying
-out Antigravity, I accidentally allowed executing <em>every</em> bash command instead
-of only the one it had requested. Since the agent then just continued executing
-stuff, I needed to stop it.</p>
-<h2>Agent specific configuration</h2>
-<p>Most agents can be configured to allow and deny patterns of actions. <a href="https://code.claude.com/docs/en/permissions">Claude
-Code's permission system</a> for example allows you to pattern match shell commands:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;permissions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;allow&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="s2">&quot;Bash(git commit *)&quot;</span>
-<span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;deny&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="s2">&quot;Bash(git push *)&quot;</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>This will allow <code>git commit</code> but block <code>git push</code> commands.</p>
-<p><a href="https://opencode.ai/docs/permissions/">OpenCode's permission system</a> works similarly:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://opencode.ai/config.json&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;permission&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;bash&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;git commit *&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;allow&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;git push *&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;deny&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>The issues with these systems are:</p>
-<ul>
-<li><strong>Agent-specific</strong>: There is no way to specify rules across all agents.</li>
-<li><strong>Deny-lists can't be exhaustive</strong>: You may specify a deny rule like
-   <code>Read(.env)</code>, but the agent can access the same file through a bash tool:
-   <code>cat .env</code>, <code>grep . .env</code>, <code>python -c "print(open('.env').read())"</code>, and so
-   on. Deny-lists fundamentally can't cover the infinite ways to access a
-   resource.</li>
-<li><strong>Easily overridden</strong>: The rules live in the repository itself and may be
-   modified during normal usage. Claude Code, for example, creates
-   <code>.claude/settings.local.json</code> and adds it to your <em>global</em>
-   <code>~/.config/git/ignore</code>. So changes to that file won't even show up in <code>git
-   status</code>. And other agents will simply ignore these config files entirely.</li>
-</ul>
-<h2>Isolation</h2>
-<p>To really provide protection we need to externally sandbox AI agents using
-operating system level protection. But completely isolating agents makes them
-also completely useless: In the end you want them to work on your code and
-interact in some way with the environment. The following table should
-illustrate the level of isolation provided:</p>
-<table>
-<thead>
-<tr>
-<th>Technique</th>
-<th>Properties</th>
-<th>Isolation Level</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>VM</td>
-<td>Full isolation. Only interaction via virtual network</td>
-<td>Very High</td>
-</tr>
-<tr>
-<td>Containers</td>
-<td>Kernel namespaces, cgroups. Limited access to files, processes and other resources</td>
-<td>High</td>
-</tr>
-<tr>
-<td>Sandboxes</td>
-<td>Landlock LSM / Seatbelt</td>
-<td>Configuration Dependent</td>
-</tr>
-</tbody>
-</table>
-<p>What sandboxing technique to use also depends on the use case:</p>
-<ul>
-<li><strong>Local Agents</strong>: You want to give them access to your local project and
-   probably some development tools. So a separate VM or even a Docker container
-   needs a lot of setup.</li>
-<li><strong>Standalone Agent</strong>: It will run on its own server / VM anyways. Further
-   you want to have it run in a reproducible environment and not mess with the
-   operating system. So running it inside a container makes sense.</li>
-</ul>
-<p>Here we'll focus on <strong>Local Agents</strong> as used by developers on their own
-machines.</p>
-<h3>Devcontainers</h3>
-<p>If you are using <a href="https://containers.dev/">Devcontainers</a> for your development needs, a quick way to give
-the agent a somewhat isolated environment is to run it inside that container as
-well. In an open-source project I help maintain we recently added exactly that:
-<a href="https://github.com/gfroerli/api/pull/356">https://github.com/gfroerli/api/pull/356</a></p>
-<p>But at Renuo we rarely use Devcontainers for our setups: We prefer local
-environments which are easier to debug and inspect.</p>
-<h3>Builtin Sandboxing</h3>
-<p>Some AI agents support sandboxing in their own runtime. See <a href="https://code.claude.com/docs/en/sandboxing">Claude Code
-Sandboxing</a> for example. The downsides here are again:</p>
-<ul>
-<li>Agent-specific</li>
-<li>Hard to get the configuration right <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></li>
-<li>At least for Claude Code it only affects the Bash tool, not the Read and
-   Write tools!</li>
-</ul>
-<h3>Specialized Sandboxing Tools</h3>
-<p>In the end we settled on the following two tools which use kernel level
-sandboxing to limit what agents can do:</p>
-<ul>
-<li><strong><a href="https://agent-safehouse.dev/">Agent Safehouse</a></strong>: Uses macOS <a href="https://theapplewiki.com/wiki/Dev:Seatbelt">Seatbelt</a> to only give the agent access
-   to what it really needs.</li>
-<li><strong><a href="https://nono.sh/">nono</a></strong>: Uses <a href="https://landlock.io/">Landlock</a> on Linux and <a href="https://theapplewiki.com/wiki/Dev:Seatbelt">Seatbelt</a> on macOS. It doesn't
-   just provide kernel isolation, but also undo &amp; rollback, audit trail, supply
-   chain provenance, runtime supervision and environment variable filtering.</li>
-</ul>
-<p>These tools have the following characteristics:</p>
-<ul>
-<li>They enforce irrevocable allow-list based blocking at the kernel level</li>
-<li>They work with all agents</li>
-<li>They use sane defaults to protect credentials on your system</li>
-<li>Configuration is separate from the agent and can be separately tested:</li>
-</ul>
-<figure>
-
-
-<div class="highlight"><pre><span></span><code>$ nono run --allow-cwd ls ~/.ssh
-...
-ls: cannot open directory &#39;~/.ssh&#39;: Permission denied
-...
-</code></pre></div>
-
-
-
-<figcaption>nono denying access to ssh credentials</figcaption>
-</figure>
-
-<p>By now we've already limited a lot of what an agent can do. But one thing
-remains: Credentials. The agent can still access credentials which are in the
-project folder (like a <code>.env</code> file) or which are stored in environment
-variables (this may be a good point to check if you have some tokens stored in
-your <code>~/.bashrc</code>, <code>~/.profile</code>, <code>~/.zshrc</code> or wherever. We really shouldn't,
-but sometimes we developers are lazy...).</p>
-<figure>
-
-
-<div class="highlight"><pre><span></span><code>$ echo $TEST_ENV_TOKEN
-my-secret
-$ nono run --profile claude --allow-cwd -- claude
-...
-❯ Show me the content of TEST_ENV_TOKEN
-
-● Bash(echo &quot;$TEST_ENV_TOKEN&quot;)
-  ⎿  my-secret
-
-● TEST_ENV_TOKEN=my-secret
-</code></pre></div>
-
-
-
-<figcaption>claude happily accessing tokens from the environment</figcaption>
-</figure>
-
-<p>Nono comes with a nice way to <a href="https://nono.sh/docs/cli/features/environment">filter environment variables</a><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. This isn't
-enabled by default, but we can easily create a custom profile that filters
-environment variables:</p>
-<figure>
-
-
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;extends&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;environment&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;allow_vars&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HOME&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;TERM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LANG&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;LC_*&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-
-<figcaption>Custom profile at <code>~/.config/nono/profiles/claude-filter-env.json</code> </figcaption>
-</figure>
-
-<p>Now <code>claude</code> will only have access to the safe subset of environment variables
-that we allow it:</p>
-<figure>
-
-
-<div class="highlight"><pre><span></span><code>$ echo $TEST_ENV_TOKEN
-my-secret
-$ nono run --profile claude-filter-env --allow-cwd -- claude
-...
-❯ Show me the content of TEST_ENV_TOKEN.
-
-● Bash(echo &quot;$TEST_ENV_TOKEN&quot;)
-  ⎿  (No output)
-
-● TEST_ENV_TOKEN is unset (or empty) in this shell.
-</code></pre></div>
-
-
-
-<figcaption>claude can't see the content of <code>$TEST_ENV_TOKEN</code> </figcaption>
-</figure>
-
-<h2>Summary</h2>
-<p>In the end it is, as usual, a tradeoff between developer convenience and
-security: Giving the AI agent access to everything is the most convenient, but
-a recipe for disaster. At Renuo we came up with the following rough guidelines:</p>
-<ul>
-<li>For custom agents running independently: Use VMs, Docker containers and
-   limit the availability of credentials as much as possible. It's better to
-   let the AI agent do its task and then let your custom runtime push code,
-   respond to tickets etc.</li>
-<li>For developer machines: Use sandboxing tools with out-of-the-box profiles
-   for common AI agents. Still don't let them run in <code>--yolo</code> / unattended
-   mode: Keep yourself in the loop, but you can be more permissive in what
-   commands you allow them to run without confirmation. Take special care of
-   credentials that are exposed via environment variables.</li>
-</ul>
-<div class="footnote">
-<hr>
-<ol>
-<li id="fn:1">
-<p>On one occasion while testing the sandboxing feature of Claude I had it
-assure me that its access to a file was blocked by the sandbox, even if
-the sandbox couldn't be started because of missing system dependencies!&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:2">
-<p>Which got implemented quite quickly after I proposed it:
-<a href="https://github.com/always-further/nono/issues/688">https://github.com/always-further/nono/issues/688</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>                    </article>
-                </aside><!-- /#featured -->
-                    <section id="content" class="body">
-                        <h1>Other articles</h1>
-                        <hr />
-                        <ol id="posts-list" class="hfeed">
+</footer><!-- /.post-info -->                        <p>Investigating ways to easily isolate AI agents to reduce risks in running them.</p>
+                        <a class="readmore" href="https://blog.rnstlr.ch/safe-ways-to-use-ai-agents.html">read more</a>
+                    </div><!-- /.entry-content -->
+                </article></li>
 
                 <li><article class="hentry">
                     <header>
@@ -549,28 +375,6 @@ the sandbox couldn't be started because of missing system dependencies!&#160;<a 
 <p>tags: <a href="https://blog.rnstlr.ch/tag/raspberry-pi.html">Raspberry Pi</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> <a href="https://blog.rnstlr.ch/tag/arm.html">ARM</a> </p>        
 </footer><!-- /.post-info -->                        <p>Replacing my RetroPie installation with ArchLinux ARM on my Raspberry Pi 3</p>
                         <a class="readmore" href="https://blog.rnstlr.ch/installing-archlinux-arm-on-the-raspberry-pi-3.html">read more</a>
-                    </div><!-- /.entry-content -->
-                </article></li>
-
-                <li><article class="hentry">
-                    <header>
-                        <h1><a href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html" rel="bookmark"
-                               title="Permalink to Building an out-of-tree Rust Kernel Module Part Three">Building an out-of-tree Rust Kernel Module Part Three</a></h1>
-                    </header>
-
-                    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2023-06-15T00:00:00+02:00">
-                Published: Do 15 Juni 2023
-        </abbr>
-
-                <address class="vcard author">
-                        By                                 <a class="url fn" href="https://blog.rnstlr.ch/author/rnestler.html">rnestler</a>
-                </address>
-        <p>In <a href="https://blog.rnstlr.ch/category/2023.html">2023</a>.</p>
-<p>tags: <a href="https://blog.rnstlr.ch/tag/rust.html">rust</a> <a href="https://blog.rnstlr.ch/tag/kernel.html">kernel</a> <a href="https://blog.rnstlr.ch/tag/linux.html">Linux</a> <a href="https://blog.rnstlr.ch/tag/archlinux.html">ArchLinux</a> </p>        
-</footer><!-- /.post-info -->                        <p>Trying to build a hello world out-of-tree Rust kernel module for Linux. Part Three.</p>
-                        <a class="readmore" href="https://blog.rnstlr.ch/building-an-out-of-tree-rust-kernel-module-part-three.html">read more</a>
                     </div><!-- /.entry-content -->
                 </article></li>
                     </ol><!-- /#posts-list -->

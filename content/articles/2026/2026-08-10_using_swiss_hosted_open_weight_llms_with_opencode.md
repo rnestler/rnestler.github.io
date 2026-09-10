@@ -102,9 +102,9 @@ In the next screen paste your API token which you can create with the
 
 # Using It
 
-My first experience in using it was that it feels faster than using Claude Code
-with the Opus models. According to benchmarks Kimi 2.6 should be comparable to
-the Opus 4.x models.[^2]
+My first impression was that it feels faster than using Claude Code with the
+Opus models. According to benchmarks Kimi 2.6 should be comparable to the Opus
+4.x models.[^2]
 
 I had one occasion where it seemed to block for around a minute on a very
 simple task. Maybe the server was overloaded there? Other than that it felt

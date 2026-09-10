@@ -9,12 +9,12 @@ following reasons:&lt;/p&gt;
 limits of the free plan. I then got myself a Claude Pro subscription and used
 it with that. But at some point Anthropic disallowed using their subscriptions
 with tools other than Claude Code.&lt;sup id="fnref:1"&gt;&lt;a class="footnote-ref" href="#fn:1"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p&gt;After trying to use an Anthropic API key for some time, I quickly noticed how
-much more expensive it is and switched to using Claude Code and kept using the
+&lt;p&gt;After trying to use an Anthropic API key for some time, I noticed how much more
+expensive it is and switched to using Claude Code and kept using the
 subscription.&lt;/p&gt;
 &lt;p&gt;But this whole thing made me realize how dependent I am on a single company
-which almost forces me to use their proprietary tool and I'm also sending quite
-a lot of data to them through my use of their services.&lt;/p&gt;
+which almost forces me to use their proprietary tool. On top of that I'm
+sending quite a lot of data to them through my use of their services.&lt;/p&gt;
 &lt;p&gt;All that led me to research which providers of LLMs exist in Switzerland.
 &lt;a href="https://mydata.ch/schweizer-ki-anbieter"&gt;https://mydata.ch/schweizer-ki-anbieter&lt;/a&gt; gives a nice overview of some
 existing providers. Infomaniak stood out because they have an affordable pay by
@@ -64,7 +64,7 @@ use plan and have some decent open weight models available.&lt;/p&gt;
 &lt;a href="https://manager.infomaniak.com"&gt;Infomaniak Manager&lt;/a&gt; as well.&lt;/p&gt;
 &lt;h1&gt;Using It&lt;/h1&gt;
 &lt;p&gt;My first impression was that it feels faster than using Claude Code with the
-Opus models. According to benchmarks Kimi 2.6 should be comparable to the Opus
+Opus models. According to benchmarks Kimi K2.6 should be comparable to the Opus
 4.x models.&lt;sup id="fnref:2"&gt;&lt;a class="footnote-ref" href="#fn:2"&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;I had one occasion where it seemed to block for around a minute on a very
 simple task. Maybe the server was overloaded there? Other than that it felt

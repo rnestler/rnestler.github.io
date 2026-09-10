@@ -14,8 +14,8 @@ limits of the free plan. I then got myself a Claude Pro subscription and used
 it with that. But at some point Anthropic disallowed using their subscriptions
 with tools other than Claude Code.[^1]
 
-After trying to use an Anthropic API key for some time, I quickly noticed how
-much more expensive it is and switched to using Claude Code and kept using the
+After trying to use an Anthropic API key for some time, I noticed how much more
+expensive it is and switched to using Claude Code and kept using the
 subscription.
 
 [OpenCode Zen]: https://opencode.ai/zen
@@ -35,8 +35,8 @@ subscription.
     >    or otherwise.
 
 But this whole thing made me realize how dependent I am on a single company
-which almost forces me to use their proprietary tool and I'm also sending quite
-a lot of data to them through my use of their services.
+which almost forces me to use their proprietary tool. On top of that I'm
+sending quite a lot of data to them through my use of their services.
 
 All that led me to research which providers of LLMs exist in Switzerland.
 <https://mydata.ch/schweizer-ki-anbieter> gives a nice overview of some
@@ -85,7 +85,6 @@ Make sure to replace `{product_id}` with the numeric ID of your AI Services prod
 
 Run `/connect` in the OpenCode TUI
 
-
 <figure>
 <img src="{static}/images/opencode_infomaniak/opencode_connect_provider.png" alt="OpenCode TUI /connect autocompletion" width="100%">
 </figure>
@@ -102,7 +101,7 @@ In the next screen paste your API token which you can create with the
 # Using It
 
 My first impression was that it feels faster than using Claude Code with the
-Opus models. According to benchmarks Kimi 2.6 should be comparable to the Opus
+Opus models. According to benchmarks Kimi K2.6 should be comparable to the Opus
 4.x models.[^2]
 
 I had one occasion where it seemed to block for around a minute on a very

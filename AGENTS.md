@@ -8,7 +8,7 @@ Source branch: `main`, built output pushed to `gh-pages`.
 ## Setup
 
 ```sh
-asdf install                  # Python 3.11 via .tool-versions
+mise install                  # Python 3.11 via .tool-versions
 uv sync                       # Install deps into .venv/
 source .venv/bin/activate
 ```

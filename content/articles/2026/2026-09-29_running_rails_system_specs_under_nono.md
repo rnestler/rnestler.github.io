@@ -8,8 +8,8 @@ When I use agentic AI development harnesses like [Claude Code] or [OpenCode] I
 always sandbox them using [nono] to be comfortable to let them work on their
 own.
 
-While this works great most of the time and it's quite straight forward to
-create new profile to give the agent the correct permissions:
+While this works great most of the time and it's quite straightforward to
+create a new profile to give the agent the correct permissions:
 
 ```json
 {
@@ -61,7 +61,7 @@ While the agent can work very well already with just running the model and
 request specs, every now and then it would be useful if it could run the
 end-to-end / system specs by itself as well.
 
-The main problem is, that browser require quite some access to the system and
+The main problem is that browsers require quite a lot of access to the system and
 thus are very difficult to sandbox. The initial error when trying to execute the system specs looked like this:
 
 ```
@@ -244,7 +244,7 @@ pub fn get_metadata(log: &Logger, cache_path: &Option<PathBuf>) -> Metadata {
 ...
 ```
 
-Also it shows once again, that a bare `.unrwap()` is just bad style in Rust,
+Also it shows once again, that a bare `.unwrap()` is just bad style in Rust,
 since it completely hides errors from the user. I opened a PR to fix this [^1].
 
 So creating a custom selenium profile with the following content fixes running
@@ -326,9 +326,9 @@ rspec ./spec/system/logins/profile_spec.rb:16 # Profile can update profile infor
 ```
 
 Since our CI runs in a Docker container we were already aware that browser
-sandboxes don't work with outer sandboxing since the browser lack access to
+sandboxes don't work with outer sandboxing since the browser lacks access to
 create the sandboxes. So we already had the following in our code to pass
-`--no-sandbox` to te browser during CI:
+`--no-sandbox` to the browser during CI:
 
 ```ruby
 Capybara.register_driver :headless_chrome do |app|
@@ -347,11 +347,11 @@ browsers use `/dev/shm`. So we have two options here:
  * Allow access to `/dev/shm`
  * Pass the `--disable-dev-shm-usage` flag
 
-Allowing `/dev/shm` lead the process to block forever. Passing
-`--disable-dev-shm-usage` lead to the same crash.
+Allowing `/dev/shm` led the process to block forever. Passing
+`--disable-dev-shm-usage` led to the same crash.
 
 It turns out that selenium / chromedriver also wants to use `/tmp` to store a
-temporary profile. So adding both `/dev/shm` and `/tmp` to to profile fixed it.
+temporary profile. So adding both `/dev/shm` and `/tmp` to the profile fixed it.
 
 ```json
 {

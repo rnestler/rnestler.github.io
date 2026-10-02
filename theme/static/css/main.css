@@ -175,6 +175,11 @@ div.figure p.caption, figure p.caption { /* margin provided by figure */
     margin-top: 1em;
     margin-bottom: 1em;
 }
+figure figcaption {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
 
 /*
 	Header
@@ -229,7 +234,7 @@ div.figure p.caption, figure p.caption { /* margin provided by figure */
     color: #fff;
     display: inline-block;
     height: 30px;
-    padding: 5px 1.5em;
+    padding: 5px 1em;
     text-decoration: none;
 }
 #banner nav a:hover, #banner nav a:active,
@@ -263,20 +268,6 @@ div.figure p.caption, figure p.caption { /* margin provided by figure */
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
 }
-
-#featured figure {
-    border: 2px solid #eee;
-    float: right;
-    margin: 0.786em 2em 0 5em;
-    max-width: 248px;
-}
-#featured figure img {display: block; float: right;}
-
-#featured h2 {color: #C74451; font-size: 1.714em; margin-bottom: 0.333em;}
-#featured h3 {font-size: 1.429em; margin-bottom: .5em;}
-
-#featured h3 a:link, #featured h3 a:visited {color: #000305; text-decoration: none;}
-#featured h3 a:hover, #featured h3 a:active {color: #fff;}
 
 /*
 	Body

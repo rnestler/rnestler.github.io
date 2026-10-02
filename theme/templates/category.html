@@ -22,13 +22,11 @@
                 </div><!-- /.entry-content -->
             </article></li>
             {% if loop.last %}
-                {% if loop.length > 1 or articles_page.has_other_pages() %}
-                    </ol><!-- /#posts-list -->
-                    {% if articles_page.has_other_pages() %}
-                        {% include 'pagination.html' %}
-                    {% endif %}
-                    </section><!-- /#content -->
+                </ol><!-- /#posts-list -->
+                {% if articles_page.has_other_pages() %}
+                    {% include 'pagination.html' %}
                 {% endif %}
+                </section><!-- /#content -->
             {% endif %}
         {% endfor %}
     {% else %}

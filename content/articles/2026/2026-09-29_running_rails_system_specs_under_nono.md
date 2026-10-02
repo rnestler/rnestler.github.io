@@ -9,7 +9,45 @@ always sandbox them using [nono] to be comfortable to let them work on their
 own.
 
 While this works great most of the time and it's quite straight forward to
-create new profile to give the agent the correct permissions. But for system
+create new profile to give the agent the correct permissions:
+
+```json
+{
+  "meta": {
+    "name": "rails",
+    "version": "0.1.0"
+  },
+  "filesystem": {
+    "allow": [
+      "$HOME/.cache/rubocop_cache"
+    ],
+    "read": [
+      "$HOME/.local/share/mise/installs/ruby",
+      "$HOME/.local/share/mise/installs/node/",
+      "$HOME/.local/share/ruby-advisory-db",
+      "$HOME/.cache/Cypress",
+      "$HOME/.config/yarn"
+    ],
+    "read_file": [
+      "/etc/passwd",
+      "~/.yarnrc"
+    ],
+    "unix_socket": [
+      "/var/run/postgresql/.s.PGSQL.5432"
+    ]
+  },
+  "environment": {
+    "set_vars": {
+      "BUNDLE_USER_CONFIG": "/dev/null"
+    }
+  },
+  "workdir": {
+    "access": "readwrite"
+  }
+}
+```
+
+I just added permissions whenever the agent ran into issues. But for system
 specs, which need to run a (headless) browser it was quite tough to get it
 working.
 

@@ -263,53 +263,134 @@ selenium-manager in nono:
 }
 ```
 
-[^1]: https://github.com/SeleniumHQ/selenium/pull/18087
-
-### Shared memory
-
-Chrome wants `/dev/shm`. nono restricts that. Giving it access to `/dev/shm`
-led to the process hanging. Just telling it not to use it fixed it.
-
-
-## The Fix
-
-`rails_helper.rb` or `spec/support/capybara.rb`:
-
-```ruby
-Capybara.register_driver :nono_chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument("--headless=new")
-  options.add_argument("--disable-dev-shm-usage")
-  # TODO: any other flags?
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-end
-
-Capybara.javascript_driver = :nono_chrome
+Running it with that verifies it works:
 ```
-
-And the nono invocation:
-
-```bash
-nono run --allow /usr/bin/chromium --allow /dev/shm -- rspec spec/system
-```
-
-Or a profile:
-
-```json
+$ nono run --allow-cwd --profile rails --extends selenium selenium-manager --browser chrome --language-binding ruby --output json
 {
-  "extends": "opencode",
-  "paths": {
-    "/usr/bin/chromium": "read",
-    "/dev/shm": "readwrite"
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": 1790946998,
+      "message": "Driver path: /usr/bin/chromedriver"
+    },
+    {
+      "level": "INFO",
+      "timestamp": 1790946998,
+      "message": "Browser path: /usr/sbin/chromium"
+    }
+  ],
+  "result": {
+    "code": 0,
+    "message": "",
+    "driver_path": "/usr/bin/chromedriver",
+    "browser_path": "/usr/sbin/chromium"
   }
 }
 ```
 
-## Verification
+[^1]: https://github.com/SeleniumHQ/selenium/pull/18087
 
-Run the suite. It passes. Attach a screenshot.
 
-## What still breaks?
+### Browser Sandbox and Shared memory
 
-Downloads? Screenshots to a restricted path? Needs testing.
+Running the specs still failed though but with way less backtrace spam:
+
+```
+$ NO_COVERAGE=true nono run --profile claude-rails --extends selenium --allow-cwd bundle exec rspec ./spec/system/logins/profile_spec.rb:16
+
+Failures:
+
+  1) Profile can update profile information
+     Got 0 failures and 3 other errors:
+
+     1.1) Failure/Error: page.driver.browser.manage.window.resize_to(1920, 1080)
+
+          Selenium::WebDriver::Error::SessionNotCreatedError:
+            session not created: Chrome instance exited. Examine ChromeDriver verbose log to determine the cause.
+          # ./spec/rails_helper.rb:122:in 'block (2 levels) in <top (required)>'
+          # ./spec/rails_helper.rb:158:in 'block (3 levels) in <top (required)>'
+          # ./spec/rails_helper.rb:158:in 'block (2 levels) in <top (required)>'
+          # ------------------
+          # --- Caused by: ---
+          # Selenium::WebDriver::Error::WebDriverError:
+          #   #0 0x564d9f7cf30f <unknown>
+
+... small backtrace and repetitions of the same error
+
+Finished in 1.45 seconds (files took 1.66 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./spec/system/logins/profile_spec.rb:16 # Profile can update profile information
+```
+
+Since our CI runs in a Docker container we were already aware that browser
+sandboxes don't work with outer sandboxing since the browser lack access to
+create the sandboxes. So we already had the following in our code to pass
+`--no-sandbox` to te browser during CI:
+
+```ruby
+Capybara.register_driver :headless_chrome do |app|
+  Capybara::Selenium::Driver.new(app,
+    browser: :chrome,
+    options: Selenium::WebDriver::Chrome::Options.new.tap do |opts|
+      opts.args << "--headless" if ENV.fetch("HEADLESS_CHROME", "true") != "false"
+      opts.args << "--no-sandbox" if ENV["CI"].present?
+    end)
+end
+```
+
+But running it with `--no-sandbox` still errored. Some research told me that
+browsers use `/dev/shm`. So we have two options here:
+
+ * Allow access to `/dev/shm`
+ * Pass the `--disable-dev-shm-usage` flag
+
+Allowing `/dev/shm` lead the process to block forever. Passing
+`--disable-dev-shm-usage` lead to the same crash.
+
+It turns out that selenium / chromedriver also wants to use `/tmp` to store a
+temporary profile. So adding both `/dev/shm` and `/tmp` to to profile fixed it.
+
+```json
+{
+  "meta": {
+    "name": "selenium"
+  },
+  "filesystem": {
+    "allow": [
+      "$HOME/.cache/selenium/",
+      "/dev/shm",
+      "/tmp"
+    ]
+  }
+}
+```
+
+Using that we had working specs :tada:
+
+```
+$ NO_COVERAGE=true CI=true nono run --profile claude-rails --extends selenium --allow-cwd bundle exec rspec ./spec/system/logins/profile_spec.rb:16
+
+...
+
+Profile
+  can update profile information
+
+Top 1 slowest examples (6.39 seconds, 99.9% of total time):
+  Profile can update profile information
+    6.39 seconds ./spec/system/logins/profile_spec.rb:16
+
+Finished in 6.39 seconds (files took 2.49 seconds to load)
+1 example, 0 failures
+```
+
+
+## Some considerations
+
+TODO:
+
+ * Point out the default write only /tmp access
+ * Would --disable-dev-shm-usage be better?
+ * Should we use a separate TMPDIR for our profiles?
